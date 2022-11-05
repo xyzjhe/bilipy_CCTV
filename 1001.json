@@ -1,4 +1,4 @@
-//友情提醒：本接口中的网络资源均来自于网络和各位互联网大佬（特别感谢应用多多）的仓库，经各种整合而成，仅供测试使用，如有冒犯请联系删除。
+﻿//友情提醒：本接口中的网络资源均来自于网络和各位互联网大佬（特别感谢应用多多）的仓库，经各种整合而成，仅供测试使用，如有冒犯请联系删除。
 {
   "spider":"https://agit.ai/deadrain/TVbox/raw/branch/master/1031.jar;md5;5724B167958A4E46CE04B226149F39D5",
   "wallpaper":"",
@@ -1480,8 +1480,9 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://gitea.com/qiaoji/jar/raw/branch/main/bili.json"
-    }
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
+    },
+    {"key":"csp_xpath_yinghua","name":"樱花动漫(XP)","type":3,"api":"csp_XPath","searchable":1,"quickSearch":1,"filterable":0,"ext":"https://freed.yuanhsing.cf/TVBox/MaooXP/yinghua2.json"}//自己添加的
     ],
 
     "parses": [
