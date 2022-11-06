@@ -1679,8 +1679,9 @@
 	"name":"②秒播",
     "type":1,
     "url":"http://27.124.4.42:4567/jhjson/ceshi.php?url=",
-    "ext":{"flag":["qiyi","qq","letv","sohu","youku","mgtv","bilibili","wasu","xigua","1905"]}},
+    "ext":{"flag":["qiyi","qq","letv","sohu","youku","mgtv","bilibili","wasu","xigua","1905"]},
     "jar":"https://gitea.com/95369149/TVBox/raw/branch/main/top95.jar"
+    }
 //fuqi不能用，鸿途太慢
     ],
     "flags": [
