@@ -1549,9 +1549,7 @@
           "sohu",
           "xigua",
           "fun",
-          "风行",
-          "Bili",
-          "B站"
+          "风行"
         ],
         "header": {
           "User-Agent": "Mozilla/5.0"
@@ -1675,13 +1673,27 @@
             "type": 1,
             "url": "http://211.99.99.236:4567/jhjson/ceshi.php?url="
         },
-        {
-	"name":"②秒播",
-    "type":1,
-    "url":"http://27.124.4.42:4567/jhjson/ceshi.php?url=",
-    "ext":{"flag":["qiyi","qq","letv","sohu","youku","mgtv","bilibili","wasu","xigua","1905"]},
-    "jar":"https://gitea.com/95369149/TVBox/raw/branch/main/top95.jar"
-    }
+       {
+			"name": "飞捷",
+			"type": 1,
+			"url": "https://fjkkk.cn/toujiexisiquanjia.php?url=",
+			"ext": {
+				"flag": [
+					"qq",
+					"腾讯",
+					"letv",
+					"乐视",
+					"mgtv",
+					"芒果",
+					"youku",
+					"优酷",
+					"qiyi",
+					"iqiyi",
+					"爱奇艺",
+					"奇艺"
+				]
+			}
+		}
 //fuqi不能用，鸿途太慢
     ],
     "flags": [
