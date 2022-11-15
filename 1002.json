@@ -1487,14 +1487,14 @@
     "key":"csp_xpath_yinghua",
     "name":"樱花动漫(XP)",
     "type":3,
+    "jar":"https://freed.yuanhsing.cf/TVBox/MaooXB2/XBiubiuLA4.jar"
     "api":"csp_XPath",
     "searchable":1,
     "quickSearch":1,
     "filterable":0,
     "ext":"https://freed.yuanhsing.cf/TVBox/MaooXP/yinghua2.json",
-    "jar":"https://freed.yuanhsing.cf/TVBox/MaooXB2/XBiubiuLA4.jar"
-    },
-    {
+    
+    },{
         "key": "mtv_xp_皮皮视频",
         "name": "官方┃皮皮视频",
         "type": 0,
@@ -1503,7 +1503,7 @@
         "quickSearch": 1,
         "filterable": 0,
         "categories": ["综艺", "动漫", "动作片", "喜剧片", "爱情片", "科幻片", "恐怖片", "剧情片", "战争片", "国产剧", "港台剧", "日韩剧", "欧美剧", "惊悚片", "犯罪片", "冒险片", "悬疑片", "动画片", "武侠片"]
-    }//自己添加的
+    }
     ],
 
     "parses": [
@@ -1682,183 +1682,19 @@
               "name": "江湖8",
             "type": 1,
             "url": "http://211.99.99.236:4567/jhjson/ceshi.php?url="
-        },
-    {
-          "name": "盘古",
-          "type": 1,
-          "url": "https://www.pangujiexi.com/jiexi/?url=",
-          "ext": {
-            "flag": [
-              "qiyi",
-              "iqiyi",
-              "奇艺",
-              "爱奇艺",
-              "qq",
-              "腾讯",
-              "youku",
-              "优酷",
-              "pptv",
-              "PPTV",
-              "letv",
-              "乐视",
-              "bilibili",
-              "哔哩哔哩",
-              "哔哩",
-              "mgtv",
-              "芒果",
-              "xigua",
-              "西瓜",
-              "sohu",
-              "搜狐",
-              "cntv",
-             "cctv",
-              "央视",
-              "1905",
-              "m1905"
-            ]
-          }
-        },
-    {
-          "name": "多维",
-          "type": 1,
-          "url": "http://jx.ivito.cn/?url=",
-          "ext": {
-            "flag": [
-              "qiyi",
-              "iqiyi",
-              "奇艺",
-              "爱奇艺",
-              "qq",
-              "腾讯",
-              "youku",
-              "优酷",
-              "pptv",
-              "PPTV",
-              "letv",
-              "乐视",
-              "bilibili",
-              "哔哩哔哩",
-              "哔哩",
-              "mgtv",
-              "芒果",
-              "xigua",
-              "西瓜",
-              "sohu",
-              "搜狐",
-              "cntv",
-             "cctv",
-              "央视",
-              "1905",
-              "m1905"
-            ]
-          },
-    {
-          "name": "无名",
-          "type": 1,
-          "url": "https://www.1717yun.com/jx/ty.php?url=",
-          "ext": {
-            "flag": [
-              "qiyi",
-              "iqiyi",
-              "奇艺",
-              "爱奇艺",
-              "qq",
-              "腾讯",
-              "youku",
-              "优酷",
-              "pptv",
-              "PPTV",
-              "letv",
-              "乐视",
-              "bilibili",
-              "哔哩哔哩",
-              "哔哩",
-              "mgtv",
-              "芒果",
-              "xigua",
-              "西瓜",
-              "sohu",
-              "搜狐",
-              "cntv",
-             "cctv",
-              "央视",
-              "1905",
-              "m1905"
-            ]
-          },
-    {
-          "name": "思古3",
-          "type": 1,
-          "url": "https://43.240.74.102:4433/?url=",
-          "ext": {
-            "flag": [
-              "qiyi",
-              "iqiyi",
-              "奇艺",
-              "爱奇艺",
-              "qq",
-              "腾讯",
-              "youku",
-              "优酷",
-              "pptv",
-              "PPTV",
-              "letv",
-              "乐视",
-              "bilibili",
-              "哔哩哔哩",
-              "哔哩",
-              "mgtv",
-              "芒果",
-              "xigua",
-              "西瓜",
-              "sohu",
-              "搜狐",
-              "cntv",
-             "cctv",
-              "央视",
-              "1905",
-              "m1905"
-            ]
-          },
-    {
-          "name": "小将",
-          "type": 0,
-          "url": "https://www.kpezp.cn/jlexi.php?url=",
-          "ext": {
-            "flag": [
-              "qiyi",
-              "iqiyi",
-              "奇艺",
-              "爱奇艺",
-              "qq",
-              "腾讯",
-              "youku",
-              "优酷",
-              "pptv",
-              "PPTV",
-              "letv",
-              "乐视",
-              "bilibili",
-              "哔哩哔哩",
-              "哔哩",
-              "mgtv",
-              "芒果",
-              "xigua",
-              "西瓜",
-              "sohu",
-              "搜狐",
-              "cntv",
-             "cctv",
-              "央视",
-              "1905",
-              "m1905"
-            ]
-          },
-        {
-              "name": "无名小站",
-            "type": 1,
-            "url": "http://www.82190555.com/index/qqvod.php?url="
-        }
+        }, {
+        "name": "思古3",
+        "type": 0,
+        "url": "https://jsap.attakids.com/?url="
+    }, {
+        "name": "无名小站",
+        "type": 0,
+        "url": "http://www.82190555.com/index/qqvod.php?url="
+    }, {
+        "name": "多维",
+        "type": 0,
+        "url": "http://jx.ivito.cn/?url="
+    }
 //fuqi不能用，鸿途太慢
     ],
     "flags": [
