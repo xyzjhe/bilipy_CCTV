@@ -1679,9 +1679,14 @@
         "url": "https://jsap.attakids.com/?url="
     },
     {
-        "name": "无名小站",
+        "name": "无名",
         "type": 0,
-        "url": "http://www.82190555.com/index/qqvod.php?url="
+        "url": "https://jx.aidouer.net/?url="
+    },
+    {
+        "name": "盘古",
+        "type": 0,
+        "url": "https://www.pangujiexi.com/jiexi/?url=""
     }
 //fuqi不能用，鸿途太慢
     ],
