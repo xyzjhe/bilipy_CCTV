@@ -1685,16 +1685,19 @@
     },
     {
         "name": "盘古",
-        "type": 0,
+        "type": 1,
         "url": "https://www.pangujiexi.com/jiexi/?url="
     },
     {
-        "name": "系统",
-        "type": 0,
+        "name": "bozrc1",
+        "type": 1,
         "url": "https://jx.bozrc.com:4433/player/?url="
     },
-    {"name":"GGTV","type":1,"url":"https://play.fuqizhishi.com/jx1/API.php?appkey=iiiixiaobai&url="}
-//fuqi不能用，鸿途太慢
+    {
+         "name": "多维",
+          "type": 1,
+          "url": "http://jx.ivito.cn/?url="
+    },//fuqi不能用，鸿途太慢
     ],
     "flags": [
         "youku",
