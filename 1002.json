@@ -1685,19 +1685,25 @@
     },
     {
         "name": "盘古",
-        "type": 1,
+        "type": 0,
         "url": "https://www.pangujiexi.com/jiexi/?url="
     },
     {
         "name": "bozrc1",
-        "type": 1,
+        "type": 0,
         "url": "https://jx.bozrc.com:4433/player/?url="
     },
     {
          "name": "多维",
-          "type": 1,
+          "type": 0,
           "url": "http://jx.ivito.cn/?url="
-    },//fuqi不能用，鸿途太慢
+    },
+    {
+         "name": "LB",
+          "type": 0,
+          "url": "https://svip.bljiex.cc/?v="
+    }
+    //fuqi不能用，鸿途太慢
     ],
     "flags": [
         "youku",
