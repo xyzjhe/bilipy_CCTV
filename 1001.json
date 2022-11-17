@@ -16,16 +16,7 @@
     }
   ],
   "sites": [
-      {
-	    "key":"T4_douban",
-	    "name":"🍀豆瓣高分",
-	    "type":4,
-	    "api":"http://top.fuqizhishi.com/vod",
-	    "searchable":1,
-	    "quickSearch":1,
-	    "filterable":1
-      },
-      {
+       {
             "key": "csp_Kunyu77",
             "name": "🍁酷云七七",
             "type": 3,
@@ -33,6 +24,16 @@
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1
+       },
+       {
+            "key": "SPQQ",
+            "name": "🐧腾讯(官)",
+            "type": 3,
+            "api": "csp_QQ",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1,
+            "jar":"https://gitlab.com/duomv/duo/-/raw/main/jar/jun97.jar;md5;BE69D0C9E96E8637BA98436236C82BF6"
        },
          {
       "key": "Bili",
@@ -1423,32 +1424,72 @@
     }//自己添加的
     ],
 
-    "parses": [
+      "parses": [
+       {"name":"解析聚合","type":3,"url":"Demo"},
+{"name":"Json并发","type":2,"url":"Parallel"},
+{"name":"Json轮询","type":2,"url":"Sequence"},
         {
-            "name": "解析聚合",
-            "type": 3,
-            "url": "Demo"
-        },
+		"name": "云you解析①",
+		"type": 1,
+		"url": "http://chaloli.cn/home/api?type=ys&uid=1&key=ekloswzABCGHKLOT58&url="
+	}, 
         {
-            "name": "Web聚合",
-            "type": 3,
-            "url": "Web"
-        },
-        {
-            "name": "Json并发",
-            "type": 2,
-            "url": "Parallel"
-        },
-        {
-            "name": "Json轮询",
-            "type": 2,
-            "url": "Sequence"
-        },
-        {
-            "name": "okjx6",
-            "type": 0,
-            "url": "https://okjx.cc/?url="
-        },
+	    "name":"OK",
+	    "type":0,
+	    "url":"https://okjx.cc/?url="
+	},
+	{
+		"name": "牛逼解析",
+		"type": 0,
+		"url": "https://nbjx.vip/?url="
+	}, 
+	{
+		"name": "parwix",
+		"type": 0,
+		"url": "https://jx.parwix.com:4433/player/?url="
+	},
+	{
+		"name": "rx2",
+		"type": 1,
+		"url": "http://rxjx.kuanjv.com/allm3u8.php?url="
+	}, {
+		"name": "可与",
+		"type": 1,
+		"url": "http://newjiexi.gotka.top/keyu3.php?url=",
+		"ext": {
+			"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
+		}    
+	}, 
+	{
+		"name": "酷享影视",
+		"type": 1,
+		"url": "http://pandown.pro/app/kxjx.php?url=",
+		"ext": {
+			"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
+		}    
+	}, 
+	{
+		"name": "未知",
+		"type": 0,
+		"url": "https://h5.freejson.xyz/player/?url=",
+		"ext": {
+			"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
+		}    
+	},
+	
+{"name":"恩哥", "type":1,"url":"http://newjiexi.gotka.top/keyu3.php?url=","ext":{"flag":[ "qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","letv","乐视","pptv","PPTV","sohu","bilibili","哔哩哔哩","哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}}},
+
+ 
+   {
+		"name": "OKjx综合",
+		"type": 0,
+		"url": "https://okjx.cc/?url="
+	},
+   {
+    "name": "OKjx嗅探",
+    "type": 0,
+    "url": "https://okjx.cc/?url="
+    },
         {
           "name": "LB",
           "type": 0,
@@ -1464,52 +1505,10 @@
         "type": 0,
         "url": "https://www.pangujiexi.com/jiexi/?url="
     }, 
-        {
-      "name":"fuqizhishi2",
-      "type":1,
-      "url":"https://play.fuqizhishi.com/jx2/API.php?appkey=iiiixiaobai&url=",
-      "ext": {
-        "flag": [
-          "qiyi",
-          "imgo",
-          "爱奇艺",
-          "奇艺",
-          "qq",
-          "腾讯",
-          "youku",
-          "优酷",
-          "pptv",
-          "PPTV",
-          "letv",
-          "乐视",
-          "leshi",
-          "bilibili",
-          "哔哩哔哩",
-          "哔哩",
-          "mgtv",
-          "芒果",
-          "sohu",
-          "xigua",
-          "fun",
-          "风行"
-        ],
-        "header": {
-          "User-Agent": "Mozilla/5.0"
-        }
-      }
-    },
-     {
-		        "name": "free5",
-		        "type": 0,
-	        	"url": "https://h5.freejson.xyz/player/?url=",
-		        "ext": {
-			      "flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
-		       }    
-	      },
     {
-        "name": "云解析(测试)",
+        "name": "云解析",
         "type": 0,
-        "url": "https://sb.5gseo.net/?url="
+        "url": "https://jx.aidouer.net/?url="
     }
     //fuqi不能用，鸿途太慢
     ],
