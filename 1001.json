@@ -1428,6 +1428,11 @@
        {"name":"解析聚合","type":3,"url":"Demo"},
 {"name":"Json并发","type":2,"url":"Parallel"},
 {"name":"Json轮询","type":2,"url":"Sequence"},
+	{
+		"name": "rx2",
+		"type": 1,
+		"url": "http://rxjx.kuanjv.com/allm3u8.php?url="
+	},
         {
 		"name": "云you解析①",
 		"type": 1,
@@ -1449,10 +1454,6 @@
 		"url": "https://jx.parwix.com:4433/player/?url="
 	},
 	{
-		"name": "rx2",
-		"type": 1,
-		"url": "http://rxjx.kuanjv.com/allm3u8.php?url="
-	}, {
 		"name": "可与",
 		"type": 1,
 		"url": "http://newjiexi.gotka.top/keyu3.php?url=",
@@ -1489,12 +1490,18 @@
     "name": "OKjx嗅探",
     "type": 0,
     "url": "https://okjx.cc/?url="
+    }, 
+    {
+        "name": "云解析",
+        "type": 0,
+        "url": "https://jx.aidouer.net/?url="
     },
         {
           "name": "LB",
           "type": 0,
           "url": "https://svip.bljiex.cc/?v="
         },
+        {"name":"爱酷嗅探","type":0,"url":"https://jx.zhanlangbu.com/?url="},
 	{
         "name": "思古3",
         "type": 0,
@@ -1504,11 +1511,6 @@
         "name": "盘古",
         "type": 0,
         "url": "https://www.pangujiexi.com/jiexi/?url="
-    }, 
-    {
-        "name": "云解析",
-        "type": 0,
-        "url": "https://jx.aidouer.net/?url="
     }
     //fuqi不能用，鸿途太慢
     ],
