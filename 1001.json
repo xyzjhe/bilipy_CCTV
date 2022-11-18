@@ -1434,18 +1434,10 @@
 		"url": "http://rxjx.kuanjv.com/allm3u8.php?url="
 	},
         {
-		"name": "云you解析①",
-		"type": 1,
-		"url": "http://chaloli.cn/home/api?type=ys&uid=1&key=ekloswzABCGHKLOT58&url="
-	}, 
-	{
-		"name": "酷享影视",
-		"type": 1,
-		"url": "http://pandown.pro/app/kxjx.php?url=",
-		"ext": {
-			"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
-		}    
-	}, 
+        "name": "虾米",
+        "type": 0,
+        "url": "https://jx.xmflv.com/?url="
+        }, 
         {
 	    "name":"OK",
 	    "type":0,

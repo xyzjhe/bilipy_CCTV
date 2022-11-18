@@ -1505,7 +1505,7 @@
  \"分类url\":\"http://www.2kuke.com/list/{cateId}_{catePg}.html\",
  \"年份\":\"2000-2022\",
  \"筛选\":\"1\"
- }"
+ }",
 "jar":"https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
  }
  //自己添加的
@@ -1587,8 +1587,76 @@
         "type": 0,
         "url": "https://jx.xmflv.com/?url="
     },
-    {"name":"夜幕","type":0,"url":"https://www.yemu.xyz/?url=","ext":{"flag":["qq","腾讯","qiyi","iqiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","letv","乐视","pptv","PPTV","sohu","bilibili","哔哩哔哩","哔哩"]}},
-    {"name": "keyu","type": 1,"url": "http://newjiexi.gotka.top/keyu3.php?url=","ext": {"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header": {"User-Agent": "okhttp/4.1.0"}}}
+    {"name": "keyu","type": 1,"url": "http://newjiexi.gotka.top/keyu3.php?url=","ext": {"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header": {"User-Agent": "okhttp/4.1.0"}}},
+    {"name": "keyu","type": 1,"url": "http://newjiexi.gotka.top/keyu3.php?url=","ext": {"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header": {"User-Agent": "okhttp/4.1.0"}}}, {
+    "name": "酷云",
+    "url": "http://43.139.29.179:5705/parse/api/酷云.js?url=",
+    "type": 1,
+    "ext": {
+     "flag": [
+      "qiyi",
+      "imgo",
+      "爱奇艺",
+      "奇艺",
+      "qq",
+      "腾讯",
+      "youku",
+      "优酷",
+      "pptv",
+      "PPTV",
+      "letv",
+      "乐视",
+      "leshi",
+      "bilibili",
+      "哔哩哔哩",
+      "哔哩",
+      "mgtv",
+      "芒果",
+      "sohu",
+      "xigua",
+      "fun",
+      "风行"
+     ],
+     "header": {
+      "User-Agent": "Mozilla/5.0"
+     }
+    }
+   },
+{
+    "name": "江湖",
+    "url": "http://43.139.29.179:5705/parse/api/江湖.js?url=",
+    "type": 1,
+    "ext": {
+     "flag": [
+      "qiyi",
+      "imgo",
+      "爱奇艺",
+      "奇艺",
+      "qq",
+      "腾讯",
+      "youku",
+      "优酷",
+      "pptv",
+      "PPTV",
+      "letv",
+      "乐视",
+      "leshi",
+      "bilibili",
+      "哔哩哔哩",
+      "哔哩",
+      "mgtv",
+      "芒果",
+      "sohu",
+      "xigua",
+      "fun",
+      "风行"
+     ],
+     "header": {
+      "User-Agent": "Mozilla/5.0"
+     }
+    }
+   },
+ {"name": "维多","type": 1,"url": "https://jx.ivito.cn/?url="}
     //fuqi不能用，鸿途太慢
     ],
     "flags": [
