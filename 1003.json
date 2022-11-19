@@ -1491,6 +1491,7 @@
  "searchable": 1,
  "quickSearch": 1,
  "filterable": 0,
+"jar":"https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar",
  "ext": "{
  \"免嗅\":\"0\",
  \"副标题\":\"class=\\\"pic-text text-right\\\">&&</span>\",
@@ -1505,9 +1506,7 @@
  \"分类url\":\"http://www.2kuke.com/list/{cateId}_{catePg}.html\",
  \"年份\":\"2000-2022\",
  \"筛选\":\"1\"
- }",
-"jar":"https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
- }
+ }"}
  //自己添加的
     ],
 

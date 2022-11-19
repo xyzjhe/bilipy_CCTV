@@ -1504,7 +1504,7 @@
 		}    
 	}, 
         {
-        "name": "虾米(测试)",
+        "name": "虾米",
         "type": 0,
         "url": "https://jx.xmflv.com/?url="
         },
@@ -1557,7 +1557,42 @@
         "type": 0,
         "url": "https://www.pangujiexi.com/jiexi/?url="
     },
-    {"name": "keyu","type": 1,"url": "http://newjiexi.gotka.top/keyu3.php?url=","ext": {"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header": {"User-Agent": "okhttp/4.1.0"}}}
+    {
+    "name": "BT5V(测试,直接)",
+    "url": "https://rx.bt5v.com/json/jsonindex.php/?url=",
+    "type": 1,
+    "ext": {
+     "flag": [
+      "qiyi",
+      "imgo",
+      "爱奇艺",
+      "奇艺",
+      "qq",
+      "腾讯",
+      "youku",
+      "优酷",
+      "pptv",
+      "PPTV",
+      "letv",
+      "乐视",
+      "leshi",
+      "bilibili",
+      "哔哩哔哩",
+      "哔哩",
+      "mgtv",
+      "芒果",
+      "sohu",
+      "xigua",
+      "fun",
+      "风行"
+     ],
+     "header": {
+      "User-Agent": "Mozilla/5.0"
+     }
+    }
+   },
+   {"name": "OK解析(测试)","type": 1,"url": "https://okjx.cc/?url="}
+
     //fuqi不能用，鸿途太慢
     ],
     "flags": [
