@@ -546,7 +546,7 @@
       "api": "csp_Bili",
       "searchable": 0,
       "quickSearch": 0,
-      "filterable": 1,
+      "filterable": 0,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/Bili/%E5%93%94%E5%93%A9%E5%A5%97%E9%A4%90.json"
     },
     {
@@ -1487,9 +1487,6 @@
     ],
 
     "parses": [
-       {"name":"解析聚合","type":3,"url":"Demo"},
-{"name":"Json并发","type":2,"url":"Parallel"},
-{"name":"Json轮询","type":2,"url":"Sequence"},
 	{
 		"name": "rx2",
 		"type": 1,
@@ -1583,9 +1580,7 @@
         "type": 0,
         "url": "https://www.pangujiexi.com/jiexi/?url="
     },
-   {"name": "OK解析(测试)","type": 1,"url": "https://okjx.cc/?url="},
-   {"name": "PPJ蓝光解析(测试)","type": 1,"url": "https://bf.ppjbk.cn/?url="}
-
+ {"name":"云解析-2","type":0,"url":"https://jx.ergan.top/?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}}
     ],
     "flags": [
         "youku",
