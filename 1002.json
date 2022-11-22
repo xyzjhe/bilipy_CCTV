@@ -25,6 +25,13 @@
             "quickSearch": 1,
             "searchable": 1
       },
+    {
+      "key": "drpy_js_6vFilm",
+      "name": "6v电影",
+      "type": 3,
+      "api": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/drpy.min.js",
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/6vFilm.js"
+    },
       {
 	    "key":"T4_douban",
 	    "name":"🍀豆瓣高分",
@@ -1494,8 +1501,8 @@
 		"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_bilivd.py"
 	},
 	{
-		"key": "py_cctv",
-		"name": "央视",
+		"key": "py_cctv1",
+		"name": "央视B站(测试)",
 		"type": 3,
 		"api": "py_cctv",
 		"searchable": 0,
