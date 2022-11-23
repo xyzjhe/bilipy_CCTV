@@ -1485,39 +1485,10 @@
         "url": "https://www.pangujiexi.com/jiexi/?url="
     },
     {
-            "name": "钢铁侠(需要先注册)",
-            "url": "https://json.freejx.in/?url=",
-            "type": 1,
-            "ext": {
-                "flag": [
-                    "qiyi",
-                    "imgo",
-                    "爱奇艺",
-                    "奇艺",
-                    "qq",
-                    "腾讯",
-                    "youku",
-                    "优酷",
-                    "pptv",
-                    "PPTV",
-                    "letv",
-                    "乐视",
-                    "leshi",
-                    "bilibili",
-                    "哔哩哔哩",
-                    "哔哩",
-                    "mgtv",
-                    "芒果",
-                    "sohu",
-                    "xigua",
-                    "fun",
-                    "风行"
-                ],
-                "header": {
-                    "User-Agent": "Mozilla/5.0"
-                }
-            }
-        }
+        "name": "不解析",
+        "type": 0,
+        "url": ""
+    }
     ],
     "flags": [
         "youku",
