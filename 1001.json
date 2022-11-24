@@ -1411,17 +1411,8 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0
-    },
-    {
-    "key":"csp_xpath_yinghua",
-    "name":"樱花动漫(XP)",
-    "type":3,
-    "api":"csp_XPath",
-    "searchable":1,
-    "quickSearch":1,
-    "filterable":0,
-    "ext":"https://freed.yuanhsing.cf/TVBox/MaooXP/yinghua2.json"
-    }//自己添加的
+    }
+    //自己添加的
     ],
 
       "parses": [
@@ -1483,11 +1474,6 @@
         "name": "盘古",
         "type": 0,
         "url": "https://www.pangujiexi.com/jiexi/?url="
-    },
-    {
-        "name": "不解析",
-        "type": 0,
-        "url": ""
     }
     ],
     "flags": [
