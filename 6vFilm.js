@@ -2,7 +2,8 @@ var rule = {
     title: '6vFilm',
     host: 'https://www.66s.cc',
     // homeUrl:'/',
-    url: '/fyclass/page/fypage/',
+	///fyclass/index_fypage.html
+    url: '/fyclass/',
     searchUrl: '/?s=**&post_type=post',
     searchable: 0, //是否启用全局搜索,
     quickSearch: 0, //是否启用快速搜索,
@@ -19,7 +20,7 @@ var rule = {
     lazy: 'js:let purl=input.split("|")[0];let referer=input.split("|")[1];let zm=input.split("|")[2];print("purl:"+purl);print("referer:"+referer);print("zm:"+zm);let myua="okhttp/3.15";if(/ddrkey/.test(purl)){let ret=request(purl,{Referer:referer,withHeaders:true,"User-Agent":myua});log(ret);input=purl}else{let html=request(purl,{headers:{Referer:referer,"User-Agent":myua}});print(html);try{input=JSON.parse(html).url||{}}catch(e){input=purl}}',
     limit: 6,
     //推荐:'.indexShowBox;ul&&li;a&&title;img&&data-src;.s1&&Text;a&&href',
-    double: false, // 推荐内容是否双层定位
+    double: true, // 推荐内容是否双层定位
     一级: '.mainleft&&thumbnail;a:src&&Text;&&href',
     二级: {
         "title": ".post-title&&Text;.cat-links&&Text",
