@@ -116,6 +116,27 @@
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
          },
+         {
+      "key":"mtv_pc_阿里盘搜",
+      "name":"搜索┃阿里盘搜",
+      "type":3,
+      "api":"csp_AliPS",
+      "searchable":1,
+      "quickSearch":1,
+      "filterable":1,
+      "ext":"8f0b3f0dc1834f309f077ea5549e99a8"
+      },
+    {
+    "key": "csp_xBPQ_酷客影视",
+    "name": "xBPQ | 酷客影视",
+    "type": 3,"api": "csp_xBPQ",
+    "searchable": 1,
+    "quickSearch": 1,
+    "filterable": 0,
+    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
+    "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
+    }
+	 ,
           {
             "key": "XMM",
             "name": "😻小猫咪",
@@ -1491,16 +1512,6 @@
             "searchable": 1,
             "quickSearch": 1
 
-    },
-    {
-    "key": "csp_xBPQ_酷客影视",
-    "name": "xBPQ | 酷客影视",
-    "type": 3,"api": "csp_xBPQ",
-    "searchable": 1,
-    "quickSearch": 1,
-    "filterable": 0,
-    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
-    "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
     }
 
     ],
