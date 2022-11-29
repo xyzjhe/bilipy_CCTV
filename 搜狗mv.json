@@ -25,13 +25,13 @@
     "filterdata": {
               },
      //分类是否二次截取
-    "cat_YN_twice": "0",
+    "cat_YN_twice": "1",
     "cat_twice_pre": "class=\"mvlist\"",
     "cat_twice_suf": "</div>",
         //分类数组截取前
     "cat_arr_pre": "target=\"_blank\"",
      //分类数组截取后
-    "cat_arr_suf": "height",
+    "cat_arr_suf": "<span>",
       //分类截取片单图片，截取前缀&&截取后缀
     "cat_pic": "_src=\"&&\"",
         //分类截取片单标题，截取前缀&&截取后缀
@@ -120,4 +120,3 @@
     //手动嗅探视频链接关键字，每个用#隔开
     "VideoFormat":".mp4#.m3u8#.flv#is_play_url=1#item/video#kaiyanapp#qianpailive" 
 }
-0
