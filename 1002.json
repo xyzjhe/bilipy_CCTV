@@ -125,9 +125,18 @@
     "filterable": 0,
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
     "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
-    }
-	 ,
-          {
+    },
+    {
+      "key": "csp_xpath_酷狗MV",
+      "name": "🐶酷狗MV",
+      "type": 3,
+      "api": "csp_XYQBiu",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0,
+      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E9%85%B7%E7%8B%97MV.json"
+    },
+    {
             "key": "XMM",
             "name": "😻小猫咪",
             "type": 1,
@@ -678,16 +687,6 @@
       "quickSearch": 0,
       "filterable": 0,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E7%BD%91%E6%98%93CC.json"
-    },
-    {
-      "key": "csp_xpath_酷狗MV",
-      "name": "🐶酷狗MV",
-      "type": 3,
-      "api": "csp_XYQBiu",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E9%85%B7%E7%8B%97MV.json"
     },
     {
       "key": "csp_xpath_kuqimv",
