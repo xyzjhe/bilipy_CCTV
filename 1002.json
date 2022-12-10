@@ -185,6 +185,16 @@
       "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
     },
     {
+      "key": "泥巴",
+      "name": "泥巴",
+      "type": 3,
+      "api": "csp_Nbys",
+      "searchable": 1,
+      "filterable": 1,
+      "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
+    }
+    ,
+    {
             "key": "XMM",
             "name": "😻小猫咪",
             "type": 1,
