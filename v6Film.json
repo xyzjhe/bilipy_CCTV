@@ -31,7 +31,8 @@
 "搜索链接": "href=\"&&\"",
 //"分类url": "{cateId}-{area}-{by}-{class}-----{catePg}---{year}/",
 "分类url": "https://www.66s.cc/{cateId}/index_{catePg}.html
-"分类": "喜剧片$xijupian#动作片$dongzuopian#爱情片$aiqingpian#科幻片$",
-//"类型": "1--动作片$6#喜剧片$7#爱情片$8#科幻片$9#恐怖片$10#剧情片$11#战争片$12||2--国产剧$13#港台剧$14#日韩剧$15#欧美剧$16",
+"分类": "喜剧片$xijupian#科幻片$kehuanpian#综艺$zongyi#动漫$dongman",
 "筛选": "0"
+
+
 }

@@ -180,9 +180,9 @@
      "name": "🐶6v电影",
       "type": 3,
       "api": "csp_xBPQ",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 0,
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/src/branch/master/v6Film.json"
     },
     {
