@@ -165,6 +165,7 @@
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
     "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
     },
+    {"key":"csp_biubiu_打驴动漫","name":"🥒打驴动漫(XB)","type":3,"api":"csp_XBiubiu","searchable":1,"quickSearch":1,"filterable":0,"ext":"https://freed.yuanhsing.cf/TVBox/MaooXB2/打驴动漫.json"},
     {
       "key": "csp_xpath_酷狗MV",
       "name": "🐶酷狗MV",
@@ -174,16 +175,6 @@
       "quickSearch": 0,
       "filterable": 0,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E9%85%B7%E7%8B%97MV.json"
-    },
-    {
-      "key": "csp_xBPQ_6v",
-     "name": "🐶6v电影",
-      "type": 3,
-      "api": "csp_xBPQ",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/src/branch/master/v6Film.json"
     },
     {
             "key": "XMM",
