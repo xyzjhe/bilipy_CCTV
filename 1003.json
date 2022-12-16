@@ -1,7 +1,7 @@
 ﻿//友情提醒：本接口中的网络资源均来自于网络和各位互联网大佬（特别感谢应用多多）的仓库，经各种整合而成，仅供测试使用，如有冒犯请联系删除。
 {
   "spider":"https://agit.ai/deadrain/TVbox/raw/branch/master/1031.jar;md5;5724B167958A4E46CE04B226149F39D5",
-  "wallpaper":"",
+  "wallpaper":"http://www.kf666888.cn/api/tvbox/img",
   "lives": [
     {
       "group": "redirect",
@@ -25,16 +25,6 @@
             "quickSearch": 1,
             "searchable": 1
       },
-    {
-      "key": "csp_xpath_6v",
-      "name": "🐶6v电影",
-      "type": 3,
-      "api": "csp_XPath",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/src/branch/master/v6Film.json"
-    },
       {
 	    "key":"T4_douban",
 	    "name":"🍀豆瓣高分",
@@ -44,15 +34,6 @@
 	    "quickSearch":1,
 	    "filterable":1
       },
-      {
-            "key": "csp_Kunyu77",
-            "name": "🍁酷云七七",
-            "type": 3,
-            "api": "csp_Kunyu77",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1
-       },
        {
             "key": "SPQQ",
             "name": "🐧腾讯(官)",
@@ -127,6 +108,54 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
          },
     {
+      "key": "百度",
+      "name": "百度",
+      "type": 1,
+      "api": "https://api.apibdzy.com/api.php/provide/vod/",
+      "searchable": 1,
+      "filterable": 0,
+      "categories": [
+        "国产动漫",
+        "日韩动漫",
+        "大陆剧",
+        "欧美剧",
+        "韩剧",
+        "日剧",
+        "动作片",
+        "喜剧片",
+        "爱情片",
+        "科幻片",
+        "恐怖片",
+        "剧情片",
+        "战争片"
+      ]
+    },
+    {
+      "key": "快播",
+      "name": "快播",
+      "type": 1,
+      "api": "https://www.kuaibozy.com/api.php/provide/vod/",
+      "searchable": 1,
+      "filterable": 0,
+      "categories": [
+        "动漫",
+        "国产剧",
+        "日韩剧",
+        "港台剧",
+        "欧美剧",
+        "泰剧",
+        "动作片",
+        "喜剧片",
+        "爱情片",
+        "科幻片",
+        "恐怖片",
+        "剧情片",
+        "战争片",
+        "纪录片",
+        "综艺"
+      ]
+    },
+    {
     "key": "csp_xBPQ_酷客影视",
     "name": "xBPQ | 酷客影视",
     "type": 3,"api": "csp_xBPQ",
@@ -135,9 +164,28 @@
     "filterable": 0,
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
     "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
-    }
-	 ,
-          {
+    },
+    {
+      "key": "csp_xpath_mj",
+      "name": "🎤追美剧",
+      "type": 3,
+      "api": "csp_XYQBiu",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/anzhuotan.json"
+    },
+      {
+      "key": "csp_xpath_酷狗MV",
+      "name": "🐶酷狗MV",
+      "type": 3,
+      "api": "csp_XYQBiu",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 0,
+      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E9%85%B7%E7%8B%97MV.json"
+    },
+    {
             "key": "XMM",
             "name": "😻小猫咪",
             "type": 1,
@@ -688,16 +736,6 @@
       "quickSearch": 0,
       "filterable": 0,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E7%BD%91%E6%98%93CC.json"
-    },
-    {
-      "key": "csp_xpath_酷狗MV",
-      "name": "🐶酷狗MV",
-      "type": 3,
-      "api": "csp_XYQBiu",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/%E9%85%B7%E7%8B%97MV.json"
     },
     {
       "key": "csp_xpath_kuqimv",
@@ -1512,6 +1550,15 @@
             "searchable": 1,
             "quickSearch": 1
 
+    },
+    {
+            "key": "csp_Kunyu77",
+            "name": "🍁酷云七七",
+            "type": 3,
+            "api": "csp_Kunyu77",
+            "searchable": 1,
+            "quickSearch": 1,
+            "filterable": 1
     }
 
     ],
@@ -1785,7 +1832,7 @@
     },
  {"name":"诺诺","type":0,"url":"https://www.ckmov.com/?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}},
 {"name":"M1907","type":0,"url":"https://z1.m1907.top/?jx=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}},
-{"name":"1717云(测试)","type":0,"url":"https://ckmov.ccyjjd.com/ckmov/?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}}
+{"name":"OK(测试)","type":0,"url":"https://ckmov.ccyjjd.com/ckmov/?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}}
     ],
     "flags": [
         "youku",
