@@ -37,7 +37,7 @@
     //分类数组截取后
     "cat_arr_suf": "/li>",
     //分类截取片单图片，截取前缀&&截取后缀
-    "cat_pic": "url(\"&&\");",
+    "cat_pic": "original=\"&&\";",
     //分类截取片单标题，截取前缀&&截取后缀
     "cat_title": "title=\"&&\"",
     //分类截取片单副标题，截取前缀&&截取后缀
@@ -144,7 +144,7 @@
     //集数链接，截取前缀&&截取后缀
     "epi_url": "href=\"&&\"",
     //集数链接补前缀
-    "epiurl_prefix": "http://www.619k.com/",
+    "epiurl_prefix": "http://www.619k.com",
     //集数链接补后缀
     "epiurl_suffix": "",
     
