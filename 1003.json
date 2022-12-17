@@ -156,14 +156,14 @@
       ]
     },
     {
-    "key": "csp_xBPQ_酷客影视",
-    "name": "xBPQ | 酷客影视",
-    "type": 3,"api": "csp_xBPQ",
-    "searchable": 1,
-    "quickSearch": 1,
+    "key": "csp_xpath_酷客影视",
+    "name": "测试| 酷客影视",
+    "type": 3,
+    "api": "csp_XYQBiu",
+    "searchable": 0,
+    "quickSearch": 0,
     "filterable": 0,
-    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
-    "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
+    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukewang.json"
     },
     {
       "key": "csp_xpath_mj",
