@@ -38,7 +38,7 @@
     //分类数组截取后
     "cat_arr_suf": "/li>",
     //分类截取片单图片，截取前缀&&截取后缀
-    "cat_pic": "(\"&&\")",
+    "cat_pic": "original=\"&&\"",
     //分类截取片单标题，截取前缀&&截取后缀
     "cat_title": "title=\"&&\"",
     //分类截取片单副标题，截取前缀&&截取后缀
@@ -108,16 +108,16 @@
     //线路是否二次截取
     "tab_YN_twice": "1",
     //线路二次截取前
-    "tab_twice_pre": "<div class=\"playbtn o_play\">",
+    "tab_twice_pre": "<div class=\"play_source",
     //线路二次截取后
-    "tab_twice_suf": "</div>",
+    "tab_twice_suf": "class=\"pannel",
     
     //线路截取数组前
     "tab_arr_pre": "href=\"",
     //线路截取数组后
-    "tab_arr_suf": "\"",
+    "tab_arr_suf": "\""",
     //线路标题，截取前缀&&截取后缀
-    "tab_title": "</i>&&</a>",
+    "tab_title": "</i>&&</a></div>",
     
     //列表是否二次截取
     "list_YN_twice": "0",
@@ -126,9 +126,9 @@
     //列表二次截取后
     "list_twice_suf": "空",
     //列表数组截取前，必须
-    "list_arr_pre": "空",
+    "list_arr_pre": "href=\"",
     //列表数组截取后，必须
-    "list_arr_suf": "空",
+    "list_arr_suf": "\"",
     
     //集数是否二次截取
     "epi_YN_twice": "1",
