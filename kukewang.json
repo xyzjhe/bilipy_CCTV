@@ -106,16 +106,16 @@
     
     //线路截取区域，如果不需要请把tab_title或tab_arr_pre置空或者全部不要填。
     //线路是否二次截取
-    "tab_YN_twice": "1",
+    "tab_YN_twice": "0",
     //线路二次截取前
-    "tab_twice_pre": "<div class=\"play_source",
+    "tab_twice_pre": "",
     //线路二次截取后
-    "tab_twice_suf": "class=\"pannel",
+    "tab_twice_suf": "",
     
     //线路截取数组前
-    "tab_arr_pre": "href=\"",
+    "tab_arr_pre": "<div class=\"play_source",
     //线路截取数组后
-    "tab_arr_suf": "\""",
+    "tab_arr_suf": "class=\"pannel",
     //线路标题，截取前缀&&截取后缀
     "tab_title": "</i>&&</a></div>",
     
@@ -126,14 +126,14 @@
     //列表二次截取后
     "list_twice_suf": "空",
     //列表数组截取前，必须
-    "list_arr_pre": "href=\"",
+    "list_arr_pre": "class=\"content_playlist",
     //列表数组截取后，必须
-    "list_arr_suf": "\"",
+    "list_arr_suf": "</ul>",
     
     //集数是否二次截取
     "epi_YN_twice": "1",
     //集数二次截取前
-    "epi_twice_pre": "<ul class=\"content_playlist",
+    "epi_twice_pre": "class=\"content_playlist",
     //集数二次截取后
     "epi_twice_suf": "</ul>",
     //集数数组截取前，必须
