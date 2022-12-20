@@ -119,12 +119,12 @@
     //线路标题，截取前缀&&截取后缀
     "tab_title": "alt=\"&&\"",
     
-    //列表是否二次截取
-    "list_YN_twice": "1",
+    //列表是否二次截取 ,播放地址集合区
+    "list_YN_twice": "0",
     //列表二次截取前
-    "list_twice_pre": "class=\"content_playlist",
+    "list_twice_pre": "",
     //列表二次截取后
-    "list_twice_suf": "class=\"listshow",
+    "list_twice_suf": "",
     //列表数组截取前，必须
     "list_arr_pre": "class=\"content_playlist",
     //列表数组截取后，必须
@@ -137,11 +137,11 @@
     //集数二次截取后
     "epi_twice_suf": "",
     //集数数组截取前，必须
-    "epi_arr_pre": "<li",
+    "epi_arr_pre": "<li><a",
     //集数数组截取后，必须
     "epi_arr_suf": "</li>",
     //集数标题，截取前缀&&截取后缀
-    "epi_title": ">&&</a>",
+    "epi_title": "\">&&</a>",
     //集数链接，截取前缀&&截取后缀
     "epi_url": "href=\"&&\"",
     //集数链接补前缀
