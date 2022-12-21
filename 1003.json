@@ -166,6 +166,16 @@
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukewang.json"
     },
     {
+    "key": "csp_xpath_动漫岛",
+    "name": "测试| 动漫岛",
+    "type": 3,
+    "api": "csp_XYQBiu",
+    "searchable": 0,
+    "quickSearch": 0,
+    "filterable": 0,
+    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
+    },
+    {
       "key": "csp_xpath_mj",
       "name": "🎤追美剧",
       "type": 3,
