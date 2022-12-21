@@ -141,11 +141,11 @@
     //集数数组截取后，必须
     "epi_arr_suf": "</li>",
     //集数标题，截取前缀&&截取后缀
-    "epi_title": "\">&&</a>",
+    "epi_title": ">&&<",
     //集数链接，截取前缀&&截取后缀
     "epi_url": "href=\"&&\"",
     //集数链接补前缀
-    "epiurl_prefix": "http://www.619k.com",
+    "epiurl_prefix": "",
     //集数链接补后缀
     "epiurl_suffix": "",
     
