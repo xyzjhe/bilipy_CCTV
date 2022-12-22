@@ -8,7 +8,7 @@
     "author": "蓝海地星人",
     //请求头UA,不填则默认okhttp/3.12.11，可填MOBILE_UA或PC_UA使用内置的手机版或电脑版UA
     //习惯查看手机源码写建议用手机版UA，习惯查看PC版源码写建议用电脑版UA
-    "UserAgent":"PC_UA",
+    "UserAgent":"MOBILE_UA",
     //请求头Referer参数，如果只是播放页需要，填WebView即可引用播放页的链接作嗅探Referer参数。
     //一般很少用，留空或删除
     "Referer":"WebView",
@@ -21,9 +21,9 @@
     //分类链接,{cateId}是分类，{catePg}是页码,第一页没有页码的可以这样写 第二页链接[firstPage=第一页的链接]
     "class_url": "https://www.66s.cc/{cateId}/index_{catePg}.html",
     //分类名，分类1&分类2&分类3
-    "class_name": "喜剧片&动作片&爱情片&科幻片",
+    "class_name": "喜剧片&动作片",
     //分类名替换词，替换词1&替换词2&替换词3，替换词包含英文&的用两个中文＆＆代替，示例：＆＆id=0&＆＆id=1
-    "class_value": "xijupian&dongzuopian&aiqingpian&kehuanpian",
+    "class_value": "xijupian&dongzuopian",
     //筛选数据，json格式，参考xpath的筛选写法
     "filterdata":{},
     //分类是否二次截取
