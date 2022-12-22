@@ -156,11 +156,11 @@
       ]
     },
     {
-    "key": "csp_xpath_酷客影视",
-    "name": "测试| 酷客影视",
+    "key": "csp_xpath_团夕影视",
+    "name": "测试| 团夕影视",
     "type": 3,
     "api": "csp_XYQBiu",
-    "searchable": 0,
+    "searchable": 1,
     "quickSearch": 0,
     "filterable": 0,
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukewang.json"
@@ -170,20 +170,20 @@
     "name": "测试| 动漫岛",
     "type": 3,
     "api": "csp_XYQBiu",
-    "searchable": 0,
+    "searchable": 1,
     "quickSearch": 0,
     "filterable": 0,
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
     },
     {
-      "key": "csp_xpath_mj",
-      "name": "🎤追美剧",
+      "key": "csp_xpath_6v",
+      "name": "[测试]6v电影",
       "type": 3,
       "api": "csp_XYQBiu",
-      "searchable": 0,
+      "searchable": 1,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/anzhuotan.json"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/6vFilm.json"
     },
       {
       "key": "csp_xpath_酷狗MV",
