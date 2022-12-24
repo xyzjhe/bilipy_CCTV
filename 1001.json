@@ -16,15 +16,6 @@
     }
   ],
   "sites": [
-       {
-            "key": "360_spider",
-            "name": "🌈360影视",
-            "api": "csp_SP360",
-            "type": 3,
-            "filterable": 1,
-            "quickSearch": 1,
-            "searchable": 1
-       }, 
         {
       "key": "快播",
       "name": "快播",
@@ -50,16 +41,16 @@
         "综艺"
       ]
     },
-       {
-            "key": "SPQQ",
-            "name": "🐧腾讯(官)",
+     {
+            "key": "csp_新视觉",
+            "name": "🍁新视觉",
             "type": 3,
-            "api": "csp_QQ",
+            "api": "csp_Xinsj",
             "searchable": 1,
             "quickSearch": 1,
             "filterable": 1,
-            "jar":"https://gitlab.com/duomv/duo/-/raw/main/jar/jun97.jar;md5;BE69D0C9E96E8637BA98436236C82BF6"
-       },
+	    "jar":"http://101.34.67.237/files/新视觉.jar"
+        },
          {
       "key": "Bili",
       "name": "B站",
@@ -71,15 +62,15 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
          },
           {
-            "key": "XMM",
-            "name": "😻小猫咪",
-            "type": 1,
-            "api": "https://zy.xiaomaomi.cc/api.php/provide/vod/",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-            "categories": ["国产剧", "日韩剧", "港台剧", "欧美剧", "综艺", "动漫", "动作片", "科幻片", "战争片", "喜剧片", "爱情片", "恐怖片", "剧情片"]
-          },
+    "key": "csp_xpath_动漫岛",
+    "name": "动漫岛",
+    "type": 3,
+    "api": "csp_XYQBiu",
+    "searchable": 1,
+    "quickSearch": 0,
+    "filterable": 0,
+    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
+    },
 	  {
     "key": "csp_xBPQ_酷客影视",
     "name": "xBPQ | 酷客影视",
