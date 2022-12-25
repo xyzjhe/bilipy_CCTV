@@ -166,14 +166,14 @@
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
     },
     {
-      "key": "csp_xpath_no",
-      "name": "[测试]NO视频",
+      "key": "csp_xpath_yhdm",
+      "name": "[测试]樱花动漫",
       "type": 3,
       "api": "csp_XYQBiu",
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/NO.json"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/yhdm.json"
     },
     {
       "key": "py_cctv",
