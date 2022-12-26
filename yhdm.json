@@ -120,15 +120,15 @@
     "tab_title": "tab\">&&<",
     
     //列表是否二次截取 ,播放地址集合区
-    "list_YN_twice": "0",
+    "list_YN_twice": "1",
     //列表二次截取前
-    "list_twice_pre": "",
+    "list_twice_pre": "id=\"playlist",
     //列表二次截取后
-    "list_twice_suf": "",
+    "list_twice_suf": "</div>",
     //列表数组截取前，必须
-    "list_arr_pre": "class=\"tab-content myui-panel_bd",
+    "list_arr_pre": "<ul",
     //列表数组截取后，必须
-    "list_arr_suf": "class=\"myui-panel",
+    "list_arr_suf": "</ul>",
     
     //集数是否二次截取
     "epi_YN_twice": "0",
