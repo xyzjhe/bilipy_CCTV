@@ -17,6 +17,15 @@
   ],
   "sites": [
       {
+            "key": "ks",
+            "name": "🌈快速启动",
+            "api": "csp_SP360",
+            "type": 0,
+            "filterable": 0,
+            "quickSearch": 0,
+            "searchable": 0
+      },
+      {
             "key": "360_spider",
             "name": "🌈360影视",
             "api": "csp_SP360",
@@ -167,7 +176,7 @@
     },
     {
       "key": "csp_xpath_yhdm",
-      "name": "[测试]樱花动漫",
+      "name": "樱花动漫",
       "type": 3,
       "api": "csp_XYQBiu",
       "searchable": 1,
@@ -177,14 +186,14 @@
     },
     {
     "key": "csp_xBPQ_酷客影视",
-    "name": "酷客影视",
-   "type": 3,
-      "api": "csp_XYQBiu",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json"
-    },
+    "name": "xBPQ | 酷客影视",
+    "type": 3,"api": "csp_xBPQ",
+    "searchable": 1,
+    "quickSearch": 1,
+    "filterable": 0,
+    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
+    "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
+   },
       {
       "key": "csp_xpath_酷狗MV",
       "name": "🐶酷狗MV",
