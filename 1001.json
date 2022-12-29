@@ -17,6 +17,15 @@
   ],
   "sites": [
          {
+            "key": "ks",
+            "name": "🌈快速启动(按菜单键选择站点)",
+            "api": "csp_SP360",
+            "type": 0,
+            "filterable": 0,
+            "quickSearch": 0,
+            "searchable": 0
+      },
+         {
       "key": "百度",
       "name": "百度",
       "type": 1,
@@ -94,17 +103,16 @@
     "filterable": 0,
     "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
     },
-	  {
-    "key": "csp_xBPQ_酷客影视",
-    "name": "xBPQ | 酷客影视",
-    "type": 3,
-    "api": "csp_xBPQ",
-    "searchable": 1,
-    "quickSearch": 1,
-    "filterable": 0,
-    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json",
-    "jar": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/index.jar"
-          },
+    {
+      "key": "csp_xpath_yhdm",
+      "name": "樱花动漫",
+      "type": 3,
+      "api": "csp_XYQBiu",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/yhdm.json"
+    },
           {
           "key": "csp_Nmys",
           "name": "👨‍🌾农民影视",

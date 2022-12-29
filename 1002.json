@@ -17,6 +17,15 @@
   ],
   "sites": [
       {
+            "key": "ks",
+            "name": "🌈快速启动(按菜单键选择站点)",
+            "api": "csp_SP360",
+            "type": 0,
+            "filterable": 0,
+            "quickSearch": 0,
+            "searchable": 0
+      },
+      {
             "key": "360_spider",
             "name": "🌈360影视",
             "api": "csp_SP360",
