@@ -134,23 +134,13 @@
     },
     {
       "key": "py_cctv",
-      "name": "❤️CCTV",
+      "name": "CCTV",
       "type": 3,
       "api": "py_cctv",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv.py"
-    },
-    {
-      "key": "csp_xBPQ_电影先生",
-      "name": "🤵电影先生",
-      "type": 3,
-      "api": "csp_xBPQ",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/filmMr.json"
     },
     {
       "key": "csp_xpath_独播库",
