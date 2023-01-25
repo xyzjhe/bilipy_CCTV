@@ -21,10 +21,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		cateManual = {
 			"央视大全": "CCTV",
-			"电视剧":"Film",
-			"动画片":"cartoon",
-			"纪录片":"documentary",
-			"特别节目":"especially"
+			"电视剧": "Film",
+			"动画片": "cartoon",
+			"纪录片": "documentary",
+			"特别节目": "especially"
 
 		}
 		classes = []
