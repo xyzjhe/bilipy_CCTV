@@ -25,7 +25,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"动画片": "cartoon",
 			"纪录片": "documentary",
 			"特别节目": "especially"
-
 		}
 		classes = []
 		for k in cateManual:
