@@ -20,7 +20,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"央大全": "CCTV",
+			"央视大全": "CCTV",
 			"电视剧": "Film",
 			"动画片": "cartoon",
 			"纪录片": "documentary",
@@ -176,5 +176,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	}
 
 	def localProxy(self,param):
+		return [200, "video/MP2T", action, ""]
+        def localProxuuy(self,param):
 		return [200, "video/MP2T", action, ""]
         
