@@ -177,7 +177,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
-        def localProxy(self,tid,pg,filter,extend):
+        def works(self,tid,pg,filter,extend):
                 month = ""
 		year = ""
 		if 'month' in extend.keys():
