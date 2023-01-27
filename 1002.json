@@ -184,6 +184,16 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv.py"
     },
     {
+      "key": "py_cctv",
+      "name": "CCTV_片库",
+      "type": 3,
+      "api": "py_cctv",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv_1.py"
+    },
+    {
 "key":"mtv_xp_皮皮视频",
 "name":"皮皮视频(官)",
 "type":0,
