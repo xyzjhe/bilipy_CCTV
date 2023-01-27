@@ -66,9 +66,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 			suffix = suffix + '&' + key + '=' + filterMap[key]
 		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
 		jo = self.fetch(url,headers=self.header).json()
+		videos = []
 		if tid=="CCTV" || tid=="节目":
 			vodList = jo['response']['docs']
-			videos = []
 			for vod in vodList:
 				lastVideo = vod['lastVIDE']['videoSharedCode']
 				if len(lastVideo) == 0:
@@ -83,8 +83,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 					"vod_pic":img,
 					"vod_remarks":''
 				})
-                else:
-		videos = []	
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
