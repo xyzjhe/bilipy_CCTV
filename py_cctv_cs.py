@@ -68,7 +68,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		jo = self.fetch(url,headers=self.header).json()
 		videos = []
 		vodList = []
-		if tid=="CCTV" || tid=="节目":
+		if tid=="CCTV" or tid=="节目":
 			vodList = jo['response']['docs']
 			for vod in vodList:
 				lastVideo = vod['lastVIDE']['videoSharedCode']
