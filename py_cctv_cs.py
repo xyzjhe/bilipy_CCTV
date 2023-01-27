@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		cateManual = {
 			"节目": "CCTV",
-			"电视剧10": "Film",
+			"电视剧11": "Film",
 			"动画片": "cartoon",
 			"纪录片": "documentary",
 			"特别节目": "especially"
@@ -65,17 +65,32 @@ class Spider(Spider):  # 元类 默认的元类 type
 				filterMap[key] = extend[key]
 			suffix = suffix + '&' + key + '=' + filterMap[key]
 		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
-		videos = []
-		if tid=="CCTV" or tid=="节目":
-			videos=self.get_userid(urlTxt=url)
+		if len(tid)>0:
+			jo = self.fetch(url,headers=self.header).json()
+			vodList = jo['response']['docs']
+			videos = []
+			for vod in vodList:
+				lastVideo = vod['lastVIDE']['videoSharedCode']
+				if len(lastVideo) == 0:
+					lastVideo = '_'
+				guid = prefix+'###'+vod['column_name']+'###'+lastVideo+'###'+vod['column_logo']
+				# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
+				title = vod['column_name']
+				img = vod['column_logo']
+				videos.append({
+					"vod_id":guid,
+					"vod_name":title,
+					"vod_pic":img,
+					"vod_remarks":''
+				})
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
-	def get_userid(self,urlTxt):
-		jo = self.fetch(urlTxt,headers=self.header).json()
+	def get_userid(self,url):
+		jo = self.fetch(url,headers=self.header).json()
 		vodList = jo['response']['docs']
 		videos = []
 		for vod in vodList:
