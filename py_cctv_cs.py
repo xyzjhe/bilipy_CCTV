@@ -65,7 +65,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				filterMap[key] = extend[key]
 			suffix = suffix + '&' + key + '=' + filterMap[key]
 		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
-		if len(tid)>0:
+		if 9>0:
 			jo = self.fetch(url,headers=self.header).json()
 			vodList = jo['response']['docs']
 			videos = []
