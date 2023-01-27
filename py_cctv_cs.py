@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		cateManual = {
 			"节目": "CCTV",
-			"电视剧7": "Film",
+			"电视剧8": "Film",
 			"动画片": "cartoon",
 			"纪录片": "documentary",
 			"特别节目": "especially"
@@ -66,22 +66,25 @@ class Spider(Spider):  # 元类 默认的元类 type
 			suffix = suffix + '&' + key + '=' + filterMap[key]
 		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
 		jo = self.fetch(url,headers=self.header).json()
-		vodList = jo['response']['docs']
-		videos = []
-		for vod in vodList:
-			lastVideo = vod['lastVIDE']['videoSharedCode']
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid = prefix+'###'+vod['column_name']+'###'+lastVideo+'###'+vod['column_logo']
-			# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
-			title = vod['column_name']
-			img = vod['column_logo']
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
+		if tid=="CCTV" || tid=="节目":
+			vodList = jo['response']['docs']
+			videos = []
+			for vod in vodList:
+				lastVideo = vod['lastVIDE']['videoSharedCode']
+				if len(lastVideo) == 0:
+					lastVideo = '_'
+				guid = prefix+'###'+vod['column_name']+'###'+lastVideo+'###'+vod['column_logo']
+				# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
+				title = vod['column_name']
+				img = vod['column_logo']
+				videos.append({
+					"vod_id":guid,
+					"vod_name":title,
+					"vod_pic":img,
+					"vod_remarks":''
+				})
+                else:
+		videos = []	
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
