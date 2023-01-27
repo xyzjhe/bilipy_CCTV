@@ -67,6 +67,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
 		jo = self.fetch(url,headers=self.header).json()
 		videos = []
+		vodList = []
 		if tid=="CCTV" || tid=="节目":
 			vodList = jo['response']['docs']
 			for vod in vodList:
