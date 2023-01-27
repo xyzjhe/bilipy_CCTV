@@ -87,26 +87,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['pagecount'] = 9999
 		result['limit'] = 90
 		result['total'] = 999999
-		return result
-	def get_userid(self,url):
-		jo = self.fetch(url,headers=self.header).json()
-		vodList = jo['response']['docs']
-		videos = []
-		for vod in vodList:
-			lastVideo = vod['lastVIDE']['videoSharedCode']
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid = prefix+'###'+vod['column_name']+'###'+lastVideo+'###'+vod['column_logo']
-			# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
-			title = vod['column_name']
-			img = vod['column_logo']
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-                return videos
+		return resul
 	def detailContent(self,array):
 		aid = array[0].split('###')
 		tid = aid[0]
