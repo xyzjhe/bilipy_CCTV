@@ -89,29 +89,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['total'] = 999999
 		return result
 	def get_userid(self):
-		#获取自己的userid(cookies拥有者)
-		url = 'http://api.bilibili.com/x/space/myinfo'
-		rsp = self.fetch(url, cookies=self.getCookie())
-		content = rsp.text
-		jo = json.loads(content)
-		if jo['code'] == 0:
-		    return jo['data']['mid']
-        def getCookie(self):
-		cookies_str = self.fetch("https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/cookie.txt").text
-		cookies_dic = dict([co.strip().split('=') for co in cookies_str.split(';')])
-		rsp = session()
-		cookies_jar = utils.cookiejar_from_dict(cookies_dic)
-		rsp.cookies = cookies_jar
-		content = self.fetch("http://api.bilibili.com/x/web-interface/nav", cookies=rsp.cookies)
-		res = json.loads(content.text)
-		if res["code"] == 0:
-		    self.login = True
-		    self.cookies = rsp.cookies
-		else:
-		    rsp = self.fetch("https://www.bilibili.com/")
-		    self.cookies = rsp.cookies
-		    self.login = False
-		return rsp.cookies
+		pass
 	def detailContent(self,array):
 		aid = array[0].split('###')
 		tid = aid[0]
