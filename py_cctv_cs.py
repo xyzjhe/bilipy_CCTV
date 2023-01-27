@@ -177,12 +177,4 @@ class Spider(Spider):  # 元类 默认的元类 type
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
-        def get_userid(self):
-		#获取自己的userid(cookies拥有者)
-		url = 'http://api.bilibili.com/x/space/myinfo'
-		rsp = self.fetch(url, cookies=self.getCookie())
-		content = rsp.text
-		jo = json.loads(content)
-		if jo['code'] == 0:
-		    return jo['data']['mid']
         
