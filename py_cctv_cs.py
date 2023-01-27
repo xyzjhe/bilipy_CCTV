@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		cateManual = {
 			"节目": "CCTV",
-			"电视剧": "Film",
+			"电视剧7": "Film",
 			"动画片": "cartoon",
 			"纪录片": "documentary",
 			"特别节目": "especially"
@@ -65,6 +65,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 				filterMap[key] = extend[key]
 			suffix = suffix + '&' + key + '=' + filterMap[key]
 		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
+		videos = []
+		if tid=="CCTV" || tid=="节目":
+			videos=self.get_complete(url=url);
+		result['list'] = videos
+		result['page'] = pg
+		result['pagecount'] = 9999
+		result['limit'] = 90
+		result['total'] = 999999
+		return result
+	def get_complete(self,url):
 		jo = self.fetch(url,headers=self.header).json()
 		vodList = jo['response']['docs']
 		videos = []
@@ -82,14 +92,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_pic":img,
 				"vod_remarks":''
 			})
-		result['list'] = videos
-		result['page'] = pg
-		result['pagecount'] = 9999
-		result['limit'] = 90
-		result['total'] = 999999
-		return result
-	def get_userid(self):
-		pass
+                return videos
 	def detailContent(self,array):
 		aid = array[0].split('###')
 		tid = aid[0]
