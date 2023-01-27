@@ -17,14 +17,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pass
 	def manualVideoCheck(self):
 		pass
+		//取分类名
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"节目": "CCTV",
-			"电视剧11": "Film",
-			"动画片": "cartoon",
-			"纪录片": "documentary",
-			"特别节目": "especially"
+			"央视大全": "CCTV"
 		}
 		classes = []
 		for k in cateManual:
@@ -41,6 +38,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
+		//取节目目录
 	def categoryContent(self,tid,pg,filter,extend):		
 		result = {}
 		month = ""
@@ -88,25 +86,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
-	def get_userid(self,url):
-		jo = self.fetch(url,headers=self.header).json()
-		vodList = jo['response']['docs']
-		videos = []
-		for vod in vodList:
-			lastVideo = vod['lastVIDE']['videoSharedCode']
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid = prefix+'###'+vod['column_name']+'###'+lastVideo+'###'+vod['column_logo']
-			# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
-			title = vod['column_name']
-			img = vod['column_logo']
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-                return videos
+//详情
 	def detailContent(self,array):
 		aid = array[0].split('###')
 		tid = aid[0]
@@ -157,6 +137,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
+		//视频
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(id)
@@ -196,4 +177,3 @@ class Spider(Spider):  # 元类 默认的元类 type
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
-        
