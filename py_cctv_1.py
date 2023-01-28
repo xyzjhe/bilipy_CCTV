@@ -9,7 +9,7 @@ import base64
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
-		return "央视大全"
+		return "央视片库"
 	def init(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
@@ -17,14 +17,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pass
 	def manualVideoCheck(self):
 		pass
-		#取分类名
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧": "1",
-			"动画片": "2",
-			"纪录片": "3",
-			"特别节目": "4"
+			"电视剧": "CCTV"
 		}
 		classes = []
 		for k in cateManual:
@@ -41,7 +37,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
-		#取节目目录
 	def categoryContent(self,tid,pg,filter,extend):		
 		result = {}
 		month = ""
@@ -89,7 +84,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
-        #详情
 	def detailContent(self,array):
 		aid = array[0].split('###')
 		tid = aid[0]
@@ -140,7 +134,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
-		#视频
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(id)
