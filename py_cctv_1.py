@@ -51,15 +51,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if year == '':
 			month = ''
 		prefix = year + month
-		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"
+		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=json"
 		if tid=="1":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=json"
 		elif tid=="3":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=json"
 		elif tid=="4":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"	
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=json"	
 		else:	
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"	
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=json"	
 		suffix = ""
 		jo = self.fetch(url,headers=self.header).json()
 		vodList=jo["data"]["list"]
