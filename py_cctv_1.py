@@ -61,7 +61,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:	
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"#动画片	
 		suffix = ""
-		jo = self.fetch(url,headers=self.header).json()
+		str = self.fetch(url,headers=self.header)
+		import json
+		jo=json.loads(str)
 		vodList=jo["data"]["list"]
 		videos = []
 		for vod in vodList:
