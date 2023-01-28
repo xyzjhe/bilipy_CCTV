@@ -61,6 +61,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:	
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"	
 		suffix = ""
+		print("吕军涛")
 		rsp = self.fetch(url)
 		content = rsp.text
 		if content.find("Callback(")>-1:
