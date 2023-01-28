@@ -65,7 +65,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		content = rsp.text
 		if content.find("Callback(")>-1:
 			i=content.find("(")
-			content=content[i,len(content)-1]
+			content=content[i+1,len(content)-1]
 		jo = json.loads(content)
 		vodList=jo["data"]["list"]
 		videos = []
