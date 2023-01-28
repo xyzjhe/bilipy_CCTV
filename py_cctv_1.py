@@ -23,7 +23,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"电视剧": "1",
 			"动画片": "2",
 			"纪录片": "3",
-			"特别节目": "4"
+			"直播": "4"
 		}
 		classes = []
 		for k in cateManual:
