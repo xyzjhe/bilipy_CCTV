@@ -20,7 +20,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧5": "1",
+			"电视剧": "1",
 			"动画片": "2",
 			"纪录片": "3",
 			"直播": "4"
@@ -61,13 +61,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:	
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p=1&n=24&serviceId=tvcctv&topv=1&t=jsonp&cb=Callback"	
 		suffix = ""
-		print("吕军涛")
-		rsp = self.fetch(url)
-		content = rsp.text
-		if content.find("Callback(")>-1:
-			i=content.find("(")
-			content=content[i+1,len(content)-1]
-		jo = json.loads(content)
+		jo = self.fetch(url,headers=self.header).json()
 		vodList=jo["data"]["list"]
 		videos = []
 		for vod in vodList:
