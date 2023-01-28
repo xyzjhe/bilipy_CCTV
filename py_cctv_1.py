@@ -9,7 +9,7 @@ import base64
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
-		return "央视片库"
+		return "央视大全"
 	def init(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
@@ -17,13 +17,14 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pass
 	def manualVideoCheck(self):
 		pass
+		#取分类名
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
 			"电视剧": "1",
 			"动画片": "2",
 			"纪录片": "3",
-			"特色节目": "4"
+			"特别节目": "4"
 		}
 		classes = []
 		for k in cateManual:
@@ -40,8 +41,55 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
+		#取节目目录
 	def categoryContent(self,tid,pg,filter,extend):		
-		pass
+		result = {}
+		month = ""
+		year = ""
+		if 'month' in extend.keys():
+			month = extend['month']
+		if 'year' in extend.keys():
+			year = extend['year']
+		if year == '':
+			month = ''
+		prefix = year + month
+		extend['p'] = pg
+		filterMap = {
+			"fl":"",
+			"fc":"",
+			"cid":"",
+			"p":"1"
+		}
+		suffix = ""
+		for key in filterMap.keys():
+			if key in extend.keys():
+				filterMap[key] = extend[key]
+			suffix = suffix + '&' + key + '=' + filterMap[key]
+		url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)
+		jo = self.fetch(url,headers=self.header).json()
+		vodList = jo['response']['docs']
+		videos = []
+		for vod in vodList:
+			lastVideo = vod['lastVIDE']['videoSharedCode']
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			guid = prefix+'###'+vod['column_name']+'###'+lastVideo+'###'+vod['column_logo']
+			# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
+			title = vod['column_name']
+			img = vod['column_logo']
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
+		result['list'] = videos
+		result['page'] = pg
+		result['pagecount'] = 9999
+		result['limit'] = 90
+		result['total'] = 999999
+		return result
+        #详情
 	def detailContent(self,array):
 		aid = array[0].split('###')
 		tid = aid[0]
@@ -92,6 +140,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
+		#视频
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(id)
