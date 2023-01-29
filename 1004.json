@@ -26,8 +26,8 @@
             "searchable": 0
       },
     {
-      "key": "py_cctv",
-      "name": "CCTV",
+      "key": "py_cctv_1",
+      "name": "'''央视-片库",
       "type": 3,
       "api": "py_cctv",
       "searchable": 0,

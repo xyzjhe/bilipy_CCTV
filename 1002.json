@@ -175,7 +175,7 @@
     },
     {
       "key": "py_cctv",
-      "name": "❤️CCTV",
+      "name": "CCTV-节目大全",
       "type": 3,
       "api": "py_cctv",
       "searchable": 0,
@@ -184,8 +184,8 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv.py"
     },
     {
-      "key": "py_cctv1",
-      "name": "CCTV_片库",
+      "key": "py_cctv_1",
+      "name": "央视-片库",
       "type": 3,
       "api": "py_cctv",
       "searchable": 0,
