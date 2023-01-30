@@ -97,15 +97,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		rsp = self.fetch(aid[2],headers=self.header)
 		htmlTxt=rsp.text
-		matchObj = re.search(r'column_id\s*=\s*"(\w+?)"', str, re.M|re.I)
 		column_id = ""
-		column_id =  matchObj.group()
-		if htmlTxt.find("[{")>-1:
-			i=htmlTxt.find("=[{")
-			end=htmlTxt.find("</script>",i)
-			htmlTxt=htmlTxt[i+1:end].rstrip().rstrip(";")
-		if re.search(r"'title':\s*'(.+?)',",htmlTxt) is None:
-			return {}
 		videoList = []
 		pattern = re.compile(r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'")
 		ListRe=pattern.findall(htmlTxt)
