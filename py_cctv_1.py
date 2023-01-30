@@ -6,6 +6,7 @@ from base.spider import Spider
 import json
 import time
 import base64
+import re
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -85,6 +86,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def detailContent(self,array):
 		aid = array[0].split('###')
+		if aid[2].find("http")<0:
+			return {}
 		tid = aid[0]
 		logo = aid[3]
 		lastVideo = aid[2]
@@ -92,33 +95,36 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-
-		lastUrl = 'https://api.cntv.cn/video/videoinfoByGuid?guid={0}&serviceId=tvcctv'.format(lastVideo)
-		lastJo = self.fetch(lastUrl,headers=self.header).json()
-		topicId = lastJo['ctid']
-		url = "https://api.cntv.cn/NewVideo/getVideoListByColumn?id={0}&d={1}&p=1&n=100&sort=desc&mode=0&serviceId=tvcctv&t=json".format(topicId,date)
-		jo = self.fetch(url,headers=self.header).json()
-		vodList = jo['data']['list']
+		rsp = self.fetch(aid[2],headers=self.header)
+		htmlTxt=rsp.text
+		matchObj = re.search(r'column_id\s*=\s*"(\w+?)"', str, re.M|re.I)
+		column_id = ""
+		column_id =  matchObj.group()
+		if htmlTxt.find("[{")>-1:
+			i=htmlTxt.find("=[{")
+			end=htmlTxt.find("</script>",i)
+			htmlTxt=htmlTxt[i+1:end].rstrip().rstrip(";")
+		if re.search(r"'title':\s*'(.+?)',",htmlTxt) is None:
+			return {}
 		videoList = []
-		for video in vodList:
-			videoList.append(video['title']+"$"+video['guid'])
+		pattern = re.compile(r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'")
+		ListRe=pattern.findall(htmlTxt)
+		for value in ListRe:
+			videoList.append(value[0]+"$"+value[3])
 		if len(videoList) == 0:
 			return {}
-		if len(date) == 0:
-			date = time.strftime("%Y", time.localtime(time.time()))
 		vod = {
 			"vod_id":array[0],
-			"vod_name":date +" "+title,
+			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":lastJo['channel'],
+			"type_name":"CCTV",
 			"vod_year":date,
 			"vod_area":"",
 			"vod_remarks":date,
 			"vod_actor":"",
-			"vod_director":topicId,
-			"vod_content":"当前页面默认只展示最新100期的内容，可在分类页面选择年份和月份进行往期节目查看。年份和月份仅影响当前页面内容，不参与分类过滤。视频默认播放可以获取到的最高帧率。"
+			"vod_director":column_id,
+			"vod_content":""
 		}
-
 		vod['vod_play_from'] = 'CCTV'
 		vod['vod_play_url'] = "#".join(videoList)
 		result = {
