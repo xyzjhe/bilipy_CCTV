@@ -102,7 +102,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern = re.compile(r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'")
 		ListRe=pattern.findall(htmlTxt)
 		for value in ListRe:
-			videoList.append(lastVideo+"$"+value[3])
+			videoList.append(value[0]+"$"+value[3])
 		if len(videoList) == 0:
 			return {}
 		vod = {
