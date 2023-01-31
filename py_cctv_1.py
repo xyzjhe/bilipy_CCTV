@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"电视剧": "1",
 			"动画片": "2",
 			"纪录片": "3",
-			"特别节目6": "4"
+			"特别节目5": "4"
 		}
 		classes = []
 		for k in cateManual:
@@ -95,7 +95,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		rsp = self.fetch(lastVideo,headers=self.header)
+		rsp = self.fetch(r"https://tv.cctv.com/2022/12/26/VIDAEkxGJQI7jAzrwJNuw94u221226.shtml",headers=self.header)
 		htmlTxt=rsp.text
 		column_id = ""
 		videoList = []
@@ -107,7 +107,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		vod = {
 			"vod_id":array[0],
-			"vod_name":title,
+			"vod_name":str(len(lastVideo))+"_"+title,
 			"vod_pic":logo,
 			"type_name":"CCTV",
 			"vod_year":date,
