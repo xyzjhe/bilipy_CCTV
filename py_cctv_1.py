@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		#htmlTxt=rsp.text
 		column_id = ""
 		videoList = []
-		videoList.append(len(rsp)+r"$https://tv.cctv.com/2022/12/28/VIDELuSu8IRT2VTe8UCLMoER221228.shtml")
+		videoList.append(len(rsp)+"$https://tv.cctv.com/2022/12/28/VIDELuSu8IRT2VTe8UCLMoER221228.shtml")
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
