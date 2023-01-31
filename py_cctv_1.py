@@ -99,10 +99,21 @@ class Spider(Spider):  # 元类 默认的元类 type
 		htmlTxt=rsp.text
 		column_id = ""
 		videoList = []
-		pattern = re.compile(r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'")
+		patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
+		titleIndex=0
+		UrlIndex=3
+		if tid=="1" or tid=="3":
+			patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
+			titleIndex=0
+			UrlIndex=3
+		elif tid=="4":
+			patternTxt=r'class="tp1"><a\s*href="(https://.+?)"\s*target="_blank"\s*title="(.+?)"></a></div>'
+			titleIndex=1
+			UrlIndex=0
+		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
 		for value in ListRe:
-			videoList.append(value[0]+"$"+value[3])
+			videoList.append(value[titleIndex]+"$"+value[UrlIndex])
 		if len(videoList) == 0:
 			return {}
 		vod = {
