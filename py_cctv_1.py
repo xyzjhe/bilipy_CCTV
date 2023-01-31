@@ -95,11 +95,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		rsp = self.fetch(aid[2],headers=self.header)
+		rsp = self.fetch(aid[2])
 		htmlTxt=rsp.text
 		column_id = ""
 		videoList = []
-		videoList.append(len(htmlTxt)+"$https://tv.cctv.com/2022/12/28/VIDELuSu8IRT2VTe8UCLMoER221228.shtml")
+		videoList.append(str(len(htmlTxt))+"$https://tv.cctv.com/2022/12/28/VIDELuSu8IRT2VTe8UCLMoER221228.shtml")
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
