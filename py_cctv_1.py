@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"电视剧": "1",
 			"动画片": "2",
 			"纪录片": "3",
-			"特别节目2": "4"
+			"特别节目3": "4"
 		}
 		classes = []
 		for k in cateManual:
@@ -66,7 +66,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		vodList=jo["data"]["list"]
 		videos = []
 		for vod in vodList:
-			lastVideo =vod['video']['url']
+			lastVideo =vod['url']
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			guid = prefix+'###'+vod['video']["title"]+'###'+lastVideo+'###'+vod['image']
