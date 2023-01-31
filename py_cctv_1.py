@@ -95,16 +95,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		rsp = self.fetch(aid[2],headers=self.header)
-		htmlTxt=rsp.text
+		#rsp = self.fetch(aid[2],headers=self.header)
+		#htmlTxt=rsp.text
 		column_id = ""
 		videoList = []
-		pattern = re.compile(r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'")
-		ListRe=pattern.findall(htmlTxt)
-		for value in ListRe:
-			videoList.append(value[0]+"$"+value[3])
-		if len(videoList) == 0:
-			return {}
+		videoList.append(r"第一集$https://tv.cctv.com/2022/12/28/VIDELuSu8IRT2VTe8UCLMoER221228.shtml")
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
