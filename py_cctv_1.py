@@ -74,7 +74,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			img = vod['image']
 			videos.append({
 				"vod_id":guid,
-				"vod_name":len(lastVideo)+title,
+				"vod_name":str(len(lastVideo))+title,
 				"vod_pic":img,
 				"vod_remarks":''
 			})
