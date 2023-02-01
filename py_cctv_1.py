@@ -23,8 +23,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		cateManual = {
 			"电视剧": "1",
 			"动画片": "2",
-			"纪录片": "3",
-			"特别节目": "4"
+			"纪录片": "3"
+			#"特别节目": "4"
 		}
 		classes = []
 		for k in cateManual:
@@ -103,6 +103,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
 		titleIndex=0
 		UrlIndex=3
+		typeStr="动画片"
+		if tid=="1":
+			typeStr="电视剧"
+		elif tid=="3":
+			typeStr="纪录片"
+		elif tid=="4":
+			typeStr="特别节目"
 		if tid=="1" or tid=="3":
 			patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
 			titleIndex=0
@@ -111,6 +118,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			patternTxt=r'class="tp1"><a\s*href="(https://.+?)"\s*target="_blank"\s*title="(.+?)"></a></div>'
 			titleIndex=1
 			UrlIndex=0
+			#https://api.cntv.cn/NewVideo/getVideoListByAlbumIdNew?id=VIDA3YcIusJ9mh4c9mw5XHyx230113&serviceId=tvcctv//由于方式不同暂时不做
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
 		for value in ListRe:
@@ -121,13 +129,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":"CCTV",
+			"type_name":typeStr,
 			"vod_year":date,
 			"vod_area":"",
 			"vod_remarks":date,
 			"vod_actor":"",
 			"vod_director":column_id,
-			"vod_content":""
+			"vod_content":"是否是简介"
 		}
 		vod['vod_play_from'] = 'CCTV'
 		vod['vod_play_url'] = "#".join(videoList)
