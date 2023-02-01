@@ -60,7 +60,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			patternTxt=r'<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 			if pg>1:
 				url=url+"index_{0}.html".format(pg)
-		rsp = self.fetch(url)
+		rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
 		htmlTxt=rsp.text
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
