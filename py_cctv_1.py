@@ -60,17 +60,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
 		elif tid=="4":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
-		else:	
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
 		suffix = ""
 		jo = self.fetch(url.format(pg),headers=self.header).json()
 		vodList=jo["data"]["list"]
 		videos = []
 		for vod in vodList:
 			lastVideo =vod['url']
+			brief=vod['brief']
+			if len(brief) == 0:
+				brief = ' '
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = tid+'###'+vod['video']["title"]+'###'+lastVideo+'###'+vod['image']
+			guid = tid+'###'+vod["title"]+'###'+lastVideo+'###'+vod['image']+'###'+brief
 			title = vod['video']["title"]
 			img = vod['image']
 			videos.append({
@@ -128,7 +129,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":date,
 			"vod_actor":"",
 			"vod_director":column_id,
-			"vod_content":""
+			"vod_content":aid[4]
 		}
 		vod['vod_play_from'] = 'CCTV'
 		vod['vod_play_url'] = "#".join(videoList)
