@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"电视剧": "1",
 			"动画片": "2",
 			"纪录片": "3",
-			"特别节目5": "4"
+			"特别节目": "4"
 		}
 		classes = []
 		for k in cateManual:
@@ -52,6 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if year == '':
 			month = ''
 		prefix = year + month
+
 		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
 		if tid=="1":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
@@ -69,7 +70,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			lastVideo =vod['url']
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = prefix+'###'+vod['video']["title"]+'###'+lastVideo+'###'+vod['image']
+			guid = tid+'###'+vod['video']["title"]+'###'+lastVideo+'###'+vod['image']
 			title = vod['video']["title"]
 			img = vod['image']
 			videos.append({
@@ -113,7 +114,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
 		for value in ListRe:
-			videoList.append(tid+"$"+value[UrlIndex])
+			videoList.append(value[titleIndex]+"$"+value[UrlIndex])
 		if len(videoList) == 0:
 			return {}
 		vod = {
