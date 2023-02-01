@@ -50,37 +50,28 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):		
 		result = {}
-		month = ""
-		year = ""
-		if 'month' in extend.keys():
-			month = extend['month']
-		if 'year' in extend.keys():
-			year = extend['year']
-		if year == '':
-			month = ''
-		prefix = year + month
-
-		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		if tid=="电视剧":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		elif tid=="纪录片":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		elif tid=="4":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
-		suffix = ""
-		jo = self.fetch(url.format(pg),headers=self.header).json()
-		vodList=jo["data"]["list"]
+		url=""
+		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		head="https://www.66s.cc"
+		if tid=="qian50m":
+			url="https://www.66s.cc/qian50m.html"
+		else:
+			url="https://www.66s.cc/{0}/".format(tid)
+			patternTxt=r'<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+			if pg>1:
+				url=url+"index_{0}.html".format(pg)
+		rsp = self.fetch(url)
+		htmlTxt=rsp.text
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(htmlTxt)
 		videos = []
-		for vod in vodList:
-			lastVideo =vod['url']
-			brief=vod['brief']
-			if len(brief) == 0:
-				brief = ' '
+		for vod in ListRe:
+			lastVideo = vod[0]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = tid+'###'+vod["title"]+'###'+lastVideo+'###'+vod['image']+'###'+brief
-			title = vod["title"]
-			img = vod['image']
+			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
+			title = vod[0]
+			img = vod[2]
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
