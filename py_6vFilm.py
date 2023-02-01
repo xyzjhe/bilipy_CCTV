@@ -70,7 +70,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
-			title = vod[0]
+			title = vod[1]
 			img = vod[2]
 			videos.append({
 				"vod_id":guid,
