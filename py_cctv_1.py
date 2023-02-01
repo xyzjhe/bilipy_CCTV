@@ -135,7 +135,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":date,
 			"vod_actor":"",
 			"vod_director":column_id,
-			"vod_content":"是否是简介"
+			"vod_content":"简介"
 		}
 		vod['vod_play_from'] = 'CCTV'
 		vod['vod_play_url'] = "#".join(videoList)
@@ -153,7 +153,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(id)
+		rsp = self.fetch(id)
+		htmlTxt=rsp.text
+		pattern = re.compile(r'var\sguid\s*=\s*"(.+?)";')
+		ListRe=pattern.findall(htmlTxt)
+		if ListRe==[]:
+			return result
+		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(ListRe[0])
 		jo = self.fetch(url,headers=self.header).json()
 		link = jo['hls_url'].strip()
 		rsp = self.fetch(link,headers=self.header)
