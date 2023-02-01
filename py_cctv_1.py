@@ -21,9 +21,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧": "1",
+			"电视剧": "电视剧",
 			"动画片": "2",
-			"纪录片": "3"
+			"纪录片1": "3"
 			#"特别节目": "4"
 		}
 		classes = []
@@ -54,7 +54,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		prefix = year + month
 
 		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		if tid=="1":
+		if tid=="电视剧":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
 		elif tid=="3":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
@@ -104,13 +104,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		titleIndex=0
 		UrlIndex=3
 		typeStr="动画片"
-		if tid=="1":
+		if tid=="电视剧":
 			typeStr="电视剧"
 		elif tid=="3":
 			typeStr="纪录片"
 		elif tid=="4":
 			typeStr="特别节目"
-		if tid=="1" or tid=="3":
+		if tid=="电视剧" or tid=="3":
 			patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
 			titleIndex=0
 			UrlIndex=3
