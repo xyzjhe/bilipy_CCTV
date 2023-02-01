@@ -8,9 +8,9 @@ import time
 import base64
 import re
 
-class Spider(Spider):  # ÔªÀà Ä¬ÈÏµÄÔªÀà type
+class Spider(Spider):  # å…ƒç±» é»˜è®¤çš„å…ƒç±» type
 	def getName(self):
-		return "6vµçÓ°"
+		return "å¤®è§†ç‰‡åº“"
 	def init(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
@@ -21,17 +21,17 @@ class Spider(Spider):  # ÔªÀà Ä¬ÈÏµÄÔªÀà type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"¶¯»­Æ¬": "donghuapian",
-			"¿Æ»ÃÆ¬": "kehuanpian",
-			"°®ÇéÆ¬": "aiqingpian",
-			"¶¯×÷Æ¬": "dongzuopian",
-			"Ï²¾çÆ¬": "xijupian",
-			"¿Ö²ÀÆ¬": "kongbupian",
-			"¾çÇéÆ¬": "juqingpian",
-			"Õ½ÕùÆ¬": "zhanzhengpian",
-			"¼ÍÂ¼Æ¬": "jilupian",
-			"µçÊÓ¾ç": "dianshiju",
-			"×ÛÒÕ": "ZongYi"
+			"åŠ¨ç”»ç‰‡": "donghuapian",
+			"ç§‘å¹»ç‰‡": "kehuanpian",
+			"çˆ±æƒ…ç‰‡": "aiqingpian",
+			"åŠ¨ä½œç‰‡": "dongzuopian",
+			"å–œå‰§ç‰‡": "xijupian",
+			"ææ€–ç‰‡": "kongbupian",
+			"å‰§æƒ…ç‰‡": "juqingpian",
+			"æˆ˜äº‰ç‰‡": "zhanzhengpian",
+			"çºªå½•ç‰‡": "jilupian",
+			"ç”µè§†å‰§": "dianshiju",
+			"ç»¼è‰º": "ZongYi"
 		}
 		classes = []
 		for k in cateManual:
@@ -50,35 +50,43 @@ class Spider(Spider):  # ÔªÀà Ä¬ÈÏµÄÔªÀà type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):		
 		result = {}
-		url=""
-		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
-		head="https://www.66s.cc"
-		if tid=="qian50m":
-			url="https://www.66s.cc/qian50m.html"
-		else:
-			url="https://www.66s.cc/{0}/".format(tid)
-			patternTxt=r'<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
-			if pg>1:
-				url=url+"index_{0}.html".format(pg)
+		month = ""
+		year = ""
+		if 'month' in extend.keys():
+			month = extend['month']
+		if 'year' in extend.keys():
+			year = extend['year']
+		if year == '':
+			month = ''
+		prefix = year + month
+
+		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
+		if tid=="ç”µè§†å‰§":
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
+		elif tid=="çºªå½•ç‰‡":
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
+		elif tid=="4":
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
 		suffix = ""
-		rsp = self.fetch(url)
-		htmlTxt=rsp.text
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
+		jo = self.fetch(url.format(pg),headers=self.header).json()
+		vodList=jo["data"]["list"]
 		videos = []
-		for vod in ListRe:
-		lastVideo = vod[0]
-		if len(lastVideo) == 0:
-			lastVideo = '_'
-		guid = vod[1]+'###'+lastVideo+'###'+vod[2]
-		title = vod[0]
-		img = vod[2]
-		videos.append({
-			"vod_id":guid,
-			"vod_name":title,
-			"vod_pic":img,
-			"vod_remarks":''
-		})
+		for vod in vodList:
+			lastVideo =vod['url']
+			brief=vod['brief']
+			if len(brief) == 0:
+				brief = ' '
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			guid = tid+'###'+vod["title"]+'###'+lastVideo+'###'+vod['image']+'###'+brief
+			title = vod["title"]
+			img = vod['image']
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
@@ -103,15 +111,15 @@ class Spider(Spider):  # ÔªÀà Ä¬ÈÏµÄÔªÀà type
 		patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
 		titleIndex=0
 		UrlIndex=3
-		if tid=="µçÊÓ¾ç" or tid=="¼ÍÂ¼Æ¬":
+		if tid=="ç”µè§†å‰§" or tid=="çºªå½•ç‰‡":
 			patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
 			titleIndex=0
 			UrlIndex=3
-		elif tid=="ÌØ±ğ½ÚÄ¿":
+		elif tid=="ç‰¹åˆ«èŠ‚ç›®":
 			patternTxt=r'class="tp1"><a\s*href="(https://.+?)"\s*target="_blank"\s*title="(.+?)"></a></div>'
 			titleIndex=1
 			UrlIndex=0
-			#https://api.cntv.cn/NewVideo/getVideoListByAlbumIdNew?id=VIDA3YcIusJ9mh4c9mw5XHyx230113&serviceId=tvcctv//ÓÉÓÚ·½Ê½²»Í¬ÔİÊ±²»×ö
+			#https://api.cntv.cn/NewVideo/getVideoListByAlbumIdNew?id=VIDA3YcIusJ9mh4c9mw5XHyx230113&serviceId=tvcctv//ç”±äºæ–¹å¼ä¸åŒæš‚æ—¶ä¸åš
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
 		for value in ListRe:
@@ -179,7 +187,7 @@ class Spider(Spider):  # ÔªÀà Ä¬ÈÏµÄÔªÀà type
 
 	config = {
 		"player": {},
-		"filter": {"CCTV":[{"key":"cid","name":"ÆµµÀ","value":[{"n":"È«²¿","v":""},{"n":"CCTV-1×ÛºÏ","v":"EPGC1386744804340101"},{"n":"CCTV-2²Æ¾­","v":"EPGC1386744804340102"},{"n":"CCTV-3×ÛÒÕ","v":"EPGC1386744804340103"},{"n":"CCTV-4ÖĞÎÄ¹ú¼Ê","v":"EPGC1386744804340104"},{"n":"CCTV-5ÌåÓı","v":"EPGC1386744804340107"},{"n":"CCTV-6µçÓ°","v":"EPGC1386744804340108"},{"n":"CCTV-7¹ú·À¾üÊÂ","v":"EPGC1386744804340109"},{"n":"CCTV-8µçÊÓ¾ç","v":"EPGC1386744804340110"},{"n":"CCTV-9¼ÍÂ¼","v":"EPGC1386744804340112"},{"n":"CCTV-10¿Æ½Ì","v":"EPGC1386744804340113"},{"n":"CCTV-11Ï·Çú","v":"EPGC1386744804340114"},{"n":"CCTV-12Éç»áÓë·¨","v":"EPGC1386744804340115"},{"n":"CCTV-13ĞÂÎÅ","v":"EPGC1386744804340116"},{"n":"CCTV-14ÉÙ¶ù","v":"EPGC1386744804340117"},{"n":"CCTV-15ÒôÀÖ","v":"EPGC1386744804340118"},{"n":"CCTV-16°ÂÁÖÆ¥¿Ë","v":"EPGC1634630207058998"},{"n":"CCTV-17Å©ÒµÅ©´å","v":"EPGC1563932742616872"},{"n":"CCTV-5+ÌåÓıÈüÊÂ","v":"EPGC1468294755566101"}]},{"key":"fc","name":"·ÖÀà","value":[{"n":"È«²¿","v":""},{"n":"ĞÂÎÅ","v":"ĞÂÎÅ"},{"n":"ÌåÓı","v":"ÌåÓı"},{"n":"×ÛÒÕ","v":"×ÛÒÕ"},{"n":"½¡¿µ","v":"½¡¿µ"},{"n":"Éú»î","v":"Éú»î"},{"n":"¿Æ½Ì","v":"¿Æ½Ì"},{"n":"¾­¼Ã","v":"¾­¼Ã"},{"n":"Å©Òµ","v":"Å©Òµ"},{"n":"·¨ÖÎ","v":"·¨ÖÎ"},{"n":"¾üÊÂ","v":"¾üÊÂ"},{"n":"ÉÙ¶ù","v":"ÉÙ¶ù"},{"n":"¶¯»­","v":"¶¯»­"},{"n":"¼ÍÊµ","v":"¼ÍÊµ"},{"n":"Ï·Çú","v":"Ï·Çú"},{"n":"ÒôÀÖ","v":"ÒôÀÖ"},{"n":"Ó°ÊÓ","v":"Ó°ÊÓ"}]},{"key":"fl","name":"×ÖÄ¸","value":[{"n":"È«²¿","v":""},{"n":"A","v":"A"},{"n":"B","v":"B"},{"n":"C","v":"C"},{"n":"D","v":"D"},{"n":"E","v":"E"},{"n":"F","v":"F"},{"n":"G","v":"G"},{"n":"H","v":"H"},{"n":"I","v":"I"},{"n":"J","v":"J"},{"n":"K","v":"K"},{"n":"L","v":"L"},{"n":"M","v":"M"},{"n":"N","v":"N"},{"n":"O","v":"O"},{"n":"P","v":"P"},{"n":"Q","v":"Q"},{"n":"R","v":"R"},{"n":"S","v":"S"},{"n":"T","v":"T"},{"n":"U","v":"U"},{"n":"V","v":"V"},{"n":"W","v":"W"},{"n":"X","v":"X"},{"n":"Y","v":"Y"},{"n":"Z","v":"Z"}]},{"key":"year","name":"Äê·İ","value":[{"n":"È«²¿","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"2006","v":"2006"},{"n":"2005","v":"2005"},{"n":"2004","v":"2004"},{"n":"2003","v":"2003"},{"n":"2002","v":"2002"},{"n":"2001","v":"2001"},{"n":"2000","v":"2000"}]},{"key":"month","name":"ÔÂ·İ","value":[{"n":"È«²¿","v":""},{"n":"12","v":"12"},{"n":"11","v":"11"},{"n":"10","v":"10"},{"n":"09","v":"09"},{"n":"08","v":"08"},{"n":"07","v":"07"},{"n":"06","v":"06"},{"n":"05","v":"05"},{"n":"04","v":"04"},{"n":"03","v":"03"},{"n":"02","v":"02"},{"n":"01","v":"01"}]}]}
+		"filter": {"CCTV":[{"key":"cid","name":"é¢‘é“","value":[{"n":"å…¨éƒ¨","v":""},{"n":"CCTV-1ç»¼åˆ","v":"EPGC1386744804340101"},{"n":"CCTV-2è´¢ç»","v":"EPGC1386744804340102"},{"n":"CCTV-3ç»¼è‰º","v":"EPGC1386744804340103"},{"n":"CCTV-4ä¸­æ–‡å›½é™…","v":"EPGC1386744804340104"},{"n":"CCTV-5ä½“è‚²","v":"EPGC1386744804340107"},{"n":"CCTV-6ç”µå½±","v":"EPGC1386744804340108"},{"n":"CCTV-7å›½é˜²å†›äº‹","v":"EPGC1386744804340109"},{"n":"CCTV-8ç”µè§†å‰§","v":"EPGC1386744804340110"},{"n":"CCTV-9çºªå½•","v":"EPGC1386744804340112"},{"n":"CCTV-10ç§‘æ•™","v":"EPGC1386744804340113"},{"n":"CCTV-11æˆæ›²","v":"EPGC1386744804340114"},{"n":"CCTV-12ç¤¾ä¼šä¸æ³•","v":"EPGC1386744804340115"},{"n":"CCTV-13æ–°é—»","v":"EPGC1386744804340116"},{"n":"CCTV-14å°‘å„¿","v":"EPGC1386744804340117"},{"n":"CCTV-15éŸ³ä¹","v":"EPGC1386744804340118"},{"n":"CCTV-16å¥¥æ—åŒ¹å…‹","v":"EPGC1634630207058998"},{"n":"CCTV-17å†œä¸šå†œæ‘","v":"EPGC1563932742616872"},{"n":"CCTV-5+ä½“è‚²èµ›äº‹","v":"EPGC1468294755566101"}]},{"key":"fc","name":"åˆ†ç±»","value":[{"n":"å…¨éƒ¨","v":""},{"n":"æ–°é—»","v":"æ–°é—»"},{"n":"ä½“è‚²","v":"ä½“è‚²"},{"n":"ç»¼è‰º","v":"ç»¼è‰º"},{"n":"å¥åº·","v":"å¥åº·"},{"n":"ç”Ÿæ´»","v":"ç”Ÿæ´»"},{"n":"ç§‘æ•™","v":"ç§‘æ•™"},{"n":"ç»æµ","v":"ç»æµ"},{"n":"å†œä¸š","v":"å†œä¸š"},{"n":"æ³•æ²»","v":"æ³•æ²»"},{"n":"å†›äº‹","v":"å†›äº‹"},{"n":"å°‘å„¿","v":"å°‘å„¿"},{"n":"åŠ¨ç”»","v":"åŠ¨ç”»"},{"n":"çºªå®","v":"çºªå®"},{"n":"æˆæ›²","v":"æˆæ›²"},{"n":"éŸ³ä¹","v":"éŸ³ä¹"},{"n":"å½±è§†","v":"å½±è§†"}]},{"key":"fl","name":"å­—æ¯","value":[{"n":"å…¨éƒ¨","v":""},{"n":"A","v":"A"},{"n":"B","v":"B"},{"n":"C","v":"C"},{"n":"D","v":"D"},{"n":"E","v":"E"},{"n":"F","v":"F"},{"n":"G","v":"G"},{"n":"H","v":"H"},{"n":"I","v":"I"},{"n":"J","v":"J"},{"n":"K","v":"K"},{"n":"L","v":"L"},{"n":"M","v":"M"},{"n":"N","v":"N"},{"n":"O","v":"O"},{"n":"P","v":"P"},{"n":"Q","v":"Q"},{"n":"R","v":"R"},{"n":"S","v":"S"},{"n":"T","v":"T"},{"n":"U","v":"U"},{"n":"V","v":"V"},{"n":"W","v":"W"},{"n":"X","v":"X"},{"n":"Y","v":"Y"},{"n":"Z","v":"Z"}]},{"key":"year","name":"å¹´ä»½","value":[{"n":"å…¨éƒ¨","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"2006","v":"2006"},{"n":"2005","v":"2005"},{"n":"2004","v":"2004"},{"n":"2003","v":"2003"},{"n":"2002","v":"2002"},{"n":"2001","v":"2001"},{"n":"2000","v":"2000"}]},{"key":"month","name":"æœˆä»½","value":[{"n":"å…¨éƒ¨","v":""},{"n":"12","v":"12"},{"n":"11","v":"11"},{"n":"10","v":"10"},{"n":"09","v":"09"},{"n":"08","v":"08"},{"n":"07","v":"07"},{"n":"06","v":"06"},{"n":"05","v":"05"},{"n":"04","v":"04"},{"n":"03","v":"03"},{"n":"02","v":"02"},{"n":"01","v":"01"}]}]}
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
@@ -189,4 +197,3 @@ class Spider(Spider):  # ÔªÀà Ä¬ÈÏµÄÔªÀà type
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
-  
