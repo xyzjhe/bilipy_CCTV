@@ -113,7 +113,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
 		for value in ListRe:
-			videoList.append(value[titleIndex]+"$"+value[UrlIndex])
+			videoList.append(tid+"$"+value[UrlIndex])
 		if len(videoList) == 0:
 			return {}
 		vod = {
