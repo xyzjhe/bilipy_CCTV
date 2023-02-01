@@ -23,7 +23,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		cateManual = {
 			"电视剧": "电视剧",
 			"动画片": "动画片",
-			"纪录片1": "纪录片"
+			"纪录片": "纪录片"
 			#"特别节目": "特别节目"
 		}
 		classes = []
@@ -52,13 +52,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if year == '':
 			month = ''
 		prefix = year + month
+
 		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
 		if tid=="电视剧":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
 		elif tid=="纪录片":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		elif tid=="特别节目":
+		elif tid=="4":
 			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
+		else:	
+			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
 		suffix = ""
 		jo = self.fetch(url.format(pg),headers=self.header).json()
 		vodList=jo["data"]["list"]
@@ -115,11 +118,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			videoList.append(value[titleIndex]+"$"+value[UrlIndex])
 		if len(videoList) == 0:
 			return {}
-		content=""
-		pattern = re.compile(r)"var\s*brief=\s*'(.+?)';")
-		ListRe=pattern.findall(htmlTxt)
-		if ListRe==[]:
-			content=ListRe[0]
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -130,7 +128,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":date,
 			"vod_actor":"",
 			"vod_director":column_id,
-			"vod_content":content
+			"vod_content":""
 		}
 		vod['vod_play_from'] = 'CCTV'
 		vod['vod_play_url'] = "#".join(videoList)
