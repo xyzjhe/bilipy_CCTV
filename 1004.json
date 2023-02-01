@@ -34,6 +34,26 @@
       "quickSearch": 0,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
+    },
+    {
+      "key": "py_6vFilm1",
+      "name": "6v电影1",
+      "type": 3,
+      "api": "py_6vFilm1",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm_1.py"
+    },
+    {
+      "key": "py_6vFilm2",
+      "name": "6v电影2",
+      "type": 3,
+      "api": "py_6vFilm2",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm_2.py"
     }
     //自己添加的
     ],

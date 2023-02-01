@@ -21,7 +21,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			#"最新50部": "qian50m",
 			"动画片": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
@@ -32,7 +31,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"战争片": "zhanzhengpian",
 			"纪录片": "jilupian",
 			"电视剧": "dianshiju",
-			"综  艺": "ZongYi"
+			"综艺": "ZongYi"
 		}
 		classes = []
 		for k in cateManual:
@@ -52,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):		
 		result = {}
 		url=""
-		patternTxt=""
+		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		head="https://www.66s.cc"
 		if tid=="qian50m":
 			url="https://www.66s.cc/qian50m.html"
