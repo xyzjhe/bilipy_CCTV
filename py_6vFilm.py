@@ -70,7 +70,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				lastVideo = '_'
 			if lastVideo.find(head)<0 and lastVideo!="_":
 				lastVideo=head+lastVideo
-			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
+			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
 			title =vod[1]
 			img = vod[2]
 			videos.append({
@@ -98,36 +98,35 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		rsp = self.fetch(lastVideo)
 		htmlTxt=rsp.text
-		column_id = ""
+		circuit=[]
+		if htmlTxt.find('<h3>播放地址')>8:
+			origin=htmlTxt.find('<h3>播放地址')
+			while origin>8:
+				end=htmlTxt.find('</div>',origin)
+				circuit.append(htmlTxt[origin:end])
+				origin=htmlTxt.find('<h3>播放地址',end)
+		if len(circuit)<1:
+			circuit.append(htmlTxt)
+		#print(circuit)
 		videoList = []
-		patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
-		titleIndex=0
-		UrlIndex=3
-		if tid=="电视剧" or tid=="纪录片":
-			patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
-			titleIndex=0
-			UrlIndex=3
-		elif tid=="特别节目":
-			patternTxt=r'class="tp1"><a\s*href="(https://.+?)"\s*target="_blank"\s*title="(.+?)"></a></div>'
-			titleIndex=1
-			UrlIndex=0
-			#https://api.cntv.cn/NewVideo/getVideoListByAlbumIdNew?id=VIDA3YcIusJ9mh4c9mw5XHyx230113&serviceId=tvcctv//由于方式不同暂时不做
+		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
 		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
-		for value in ListRe:
-			videoList.append(value[titleIndex]+"$"+value[UrlIndex])
+		for v in circuit:
+			ListRe=pattern.findall(v)
+			for value in ListRe:
+				videoList.append(value[0]+"$"+value[1])
 		if len(videoList) == 0:
 			return {}
 		vod = {
-			"vod_id":array[0],
+			"vod_id":tid,#array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":tid,
-			"vod_year":date,
+			"type_name":"6v电影",
+			"vod_year":"",
 			"vod_area":"",
-			"vod_remarks":date,
+			"vod_remarks":"",
 			"vod_actor":"",
-			"vod_director":column_id,
+			"vod_director":"",
 			"vod_content":""
 		}
 		vod['vod_play_from'] = '线路'
