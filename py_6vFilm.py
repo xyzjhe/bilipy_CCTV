@@ -54,10 +54,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		head="https://www.66s.cc"
 		if tid=="qian50m":
-			url="https://www.66s.cc/qian50m.html"
+			url=r"https://www.66s.cc/qian50m.html"
 		else:
 			url=r"https://www.66s.cc/{0}/".format(tid)
-			if pg!="1":#pg值是字符串
+			if pg!="1":
 			url=url+"index_{0}.html".format(pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
