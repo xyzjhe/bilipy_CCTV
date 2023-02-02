@@ -60,18 +60,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 			patternTxt=r'<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 			if pg>1:
 				url=url+"index_{0}.html".format(pg)
-		rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
-		htmlTxt=rsp.text
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
+		#rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
+		#htmlTxt=rsp.text
+		#pattern = re.compile(patternTxt)
+		#ListRe=('/jilupian/19365.html" class="zoom" rel="bookmark', '深潜2020', 'https://www.haibao123.xyz/01/0231.jpg')#pattern.findall(htmlTxt)
 		videos = []
-		for vod in ListRe:
-			lastVideo = vod[0]
+		
+			lastVideo = "jilupian/19288.html"
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
-			title = vod[1]
-			img = vod[2]
+			guid = "西德尼###/jilupian/19288.html###https://www.haibao123.xyz/01/0158.jpg"#vod[1]+'###'+lastVideo+'###'+vod[2]
+			title = "西德尼"
+			img = "https://www.haibao123.xyz/01/0158.jpg"
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
@@ -127,9 +127,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":date,
 			"vod_actor":"",
 			"vod_director":column_id,
-			"vod_content":aid[4]
+			"vod_content":""
 		}
-		vod['vod_play_from'] = 'CCTV'
+		vod['vod_play_from'] = '线路'
 		vod['vod_play_url'] = "#".join(videoList)
 		result = {
 			'list':[
