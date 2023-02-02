@@ -54,6 +54,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		head="https://www.66s.cc"
 		url=r"https://www.66s.cc/{0}/".format(tid)
+		if pg>"1":
+			url=url+"index_{0}.html".format(pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
 		pattern = re.compile(patternTxt)
@@ -64,7 +66,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
-			title =pg+"_"+ vod[1]
+			title =vod[1]
 			img = vod[2]
 			videos.append({
 				"vod_id":guid,
