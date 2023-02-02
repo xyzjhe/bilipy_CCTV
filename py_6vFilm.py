@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url=""
-		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		patternTxt='\s*class="zoom"'
 		head="https://www.66s.cc"
 		url="https://www.66s.cc/{0}/".format(tid)
 		rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
@@ -64,8 +64,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
-			title = vod[0]
-			img = vod[1]
+			title = vod[1]
+			img = vod[2]
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
