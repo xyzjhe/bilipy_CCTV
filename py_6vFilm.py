@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片2": "donghuapian",
+			"动画片3": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -54,8 +54,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		head="https://www.66s.cc"
 		url="https://www.66s.cc/{0}/".format(tid)
-		if pg>1:
-			url=url+"index_{0}.html".format(pg)
 		#rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
 		#htmlTxt=rsp.text
 		#pattern = re.compile(patternTxt)
