@@ -48,7 +48,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
-	def categoryContent(self,tid,pg,filter,extend):		
+	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url=""
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
@@ -66,18 +66,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 		#ListRe=('/jilupian/19365.html" class="zoom" rel="bookmark', '深潜2020', 'https://www.haibao123.xyz/01/0231.jpg')#pattern.findall(htmlTxt)
 		videos = []
 		
-			lastVideo = "jilupian/19288.html"
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid = "西德尼###/jilupian/19288.html###https://www.haibao123.xyz/01/0158.jpg"#vod[1]+'###'+lastVideo+'###'+vod[2]
-			title = "西德尼"
-			img = "https://www.haibao123.xyz/01/0158.jpg"
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
+		lastVideo = "jilupian/19288.html"
+		if len(lastVideo) == 0:
+			lastVideo = '_'
+		guid = "西德尼###/jilupian/19288.html###https://www.haibao123.xyz/01/0158.jpg"#vod[1]+'###'+lastVideo+'###'+vod[2]
+		title = "西德尼"
+		img = "https://www.haibao123.xyz/01/0158.jpg"
+		videos.append({
+			"vod_id":guid,
+			"vod_name":title,
+			"vod_pic":img,
+			"vod_remarks":''
+		})
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
