@@ -54,24 +54,24 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		head="https://www.66s.cc"
 		url="https://www.66s.cc/{0}/".format(tid)
-		#rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
-		#htmlTxt=rsp.text
-		#pattern = re.compile(patternTxt)
-		#ListRe=('/jilupian/19365.html" class="zoom" rel="bookmark', '深潜2020', 'https://www.haibao123.xyz/01/0231.jpg')#pattern.findall(htmlTxt)
+		rsp = self.fetch(r"https://www.66s.cc/kehuanpian/")
+		htmlTxt=rsp.text
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(htmlTxt)
 		videos = []
-		
-		lastVideo = "jilupian/19288.html"
-		if len(lastVideo) == 0:
-			lastVideo = '_'
-		guid = "西德尼###/jilupian/19288.html###https://www.haibao123.xyz/01/0158.jpg"#vod[1]+'###'+lastVideo+'###'+vod[2]
-		title = "西德尼"
-		img = "https://www.haibao123.xyz/01/0158.jpg"
-		videos.append({
-			"vod_id":guid,
-			"vod_name":title,
-			"vod_pic":img,
-			"vod_remarks":''
-		})
+		for vod in ListRe:
+			lastVideo = vod[0]
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
+			title = vod[0]
+			img = vod[1]
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
