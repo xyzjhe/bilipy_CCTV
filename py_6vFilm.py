@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片4": "donghuapian",
+			"动画片5": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -64,7 +64,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			guid = vod[1]+'###'+lastVideo+'###'+vod[2]
-			title = vod[1]
+			title =pg+"_"+ vod[1]
 			img = vod[2]
 			videos.append({
 				"vod_id":guid,
