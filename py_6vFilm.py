@@ -57,8 +57,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url=r"https://www.66s.cc/qian50m.html"
 		else:
 			url=r"https://www.66s.cc/{0}/".format(tid)
-			if pg!="1":
-			url=url+"index_{0}.html".format(pg)
+			if pg!="1":#pg值是字符串
+				url=url+"index_{0}.html".format(pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
 		pattern = re.compile(patternTxt)
