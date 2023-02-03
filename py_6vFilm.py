@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片7": "donghuapian",
+			"动画片8": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -114,7 +114,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for v in circuit:
 			ListRe=pattern.findall(v)
 			for value in ListRe:
-				videoList.append(value[0]+"$"+value[1])
+				url=value[0]
+				if value[0].find(header["Origin"])<0:
+				url=header["Origin"]+url
+				videoList.append(url+"$"+value[1])
 		if len(videoList) == 0:
 			return {}
 		vod = {
@@ -182,8 +185,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		"Origin": "https://tv.cctv.com",
-		"Referer": "https://tv.cctv.com/"
+		"Origin": "https://www.66s.cc",
+		"Referer": "https://www.66s.cc/"
 	}
 
 	def localProxy(self,param):
