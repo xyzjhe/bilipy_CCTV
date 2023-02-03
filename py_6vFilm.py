@@ -159,7 +159,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		htmlTxt=rsp.text
 		if re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')==[]:
 			return result
-		url=re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')[0]
+		#url=re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')[0]
 		result["parse"] = 0
 		result["playUrl"] = r''
 		result["url"] = r"https://audio.qtfm.cn/audiostream/redirect/288247/11871891?device_id=MOBILESITE&t=1675394744107&sign=4ccb19e8a6aed972f4b24757c9ce7567"
