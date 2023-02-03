@@ -158,7 +158,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		rsp = self.fetch(ListRe[0])
 		htmlTxt=rsp.text
 		pattern1=re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')
-		#ListRe1=pattern1.findall(htmlTxt)
+		ListRe1=pattern1.findall(htmlTxt)
 		#if ListRe1==[]:
 			#return result
 		#url=ListRe1[0]
