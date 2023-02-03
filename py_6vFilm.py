@@ -115,10 +115,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for v in circuit:
 			ListRe=pattern.findall(v)
 			for value in ListRe:
-				url=value[0]
-				if value[0].find(head)<0:
+				url=value[1]
+				if url.find(head)<0:
 					url=head+url
-				videoList.append(value[1]+"$"+url)
+				videoList.append(value[0]+"$"+url)
 		if len(videoList) == 0:
 			return {}
 		vod = {
