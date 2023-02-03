@@ -163,7 +163,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url=head+url
 		result["parse"] = 0
 		result["playUrl"] =""
-		result["url"] = url+"?skipl=1"
+		result["url"] = url
 		result["header"] = ''
 		return result
 
