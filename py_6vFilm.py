@@ -158,7 +158,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		rsp = self.fetch("https://v8.dious.cc/share/AMwr3JnG88P8WLJ6")
 		htmlTxt=rsp.text
 		pattern1=re.compile(r'(https://.+?cc/)')
-		ListRe1=pattern1.findall(htmlTxt)
+		ListRe1=pattern1.findall(ListRe[0])
 		if ListRe1==[]:
 			return result
 		head=ListRe1[0]
