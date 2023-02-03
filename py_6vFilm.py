@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片16": "donghuapian",
+			"动画片17": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -151,7 +151,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		result["parse"] = 0
 		result["playUrl"] = r'https://v8.dious.cc/share/AMwr3JnG88P8WLJ6'
-		result["url"] = r"https://v8.dious.cc//20230128/ejlI3z2q/index.m3u8"
+		result["url"] = r""
 		result["header"] = ''
 		return result
 
