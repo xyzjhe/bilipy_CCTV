@@ -116,8 +116,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			ListRe=pattern.findall(v)
 			for value in ListRe:
 				url=value[1]
-				if url.find(header["Origin"])<0:
-					url=header["Origin"]+url
+				if url.find(head)<0:
+					url=head+url
 				videoList.append(value[0]+"$"+url)
 		if len(videoList) == 0:
 			return {}
