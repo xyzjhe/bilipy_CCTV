@@ -163,7 +163,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return result
 		url=ListRe1[0]
 		result["parse"] = 0
-		result["playUrl"] =url
+		result["playUrl"] =""
 		result["url"] = r"https://audio.qtfm.cn/audiostream/redirect/288247/11871891?device_id=MOBILESITE&t=1675394744107&sign=4ccb19e8a6aed972f4b24757c9ce7567"
 		result["header"] = ''
 		return result
