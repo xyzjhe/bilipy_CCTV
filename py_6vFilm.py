@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片17": "donghuapian",
+			"动画片18": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -150,8 +150,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		result["parse"] = 0
-		result["playUrl"] = r'https://v8.dious.cc/share/AMwr3JnG88P8WLJ6'
-		result["url"] = r""
+		result["playUrl"] = r''
+		result["url"] = r"https://audio.qtfm.cn/audiostream/redirect/288247/11871891?device_id=MOBILESITE&t=1675394744107&sign=4ccb19e8a6aed972f4b24757c9ce7567"
 		result["header"] = ''
 		return result
 
