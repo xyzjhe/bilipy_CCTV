@@ -117,7 +117,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			for value in ListRe:
 				url=value[0]
 				if value[0].find(head)<0:
-				url=head+url
+					url=head+url
 				videoList.append(url+"$"+value[1])
 		if len(videoList) == 0:
 			return {}
