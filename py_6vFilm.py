@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片21": "donghuapian",
+			"动画片22": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -155,6 +155,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		ListRe=pattern.findall(htmlTxt)
 		if ListRe==[]:
 			return result
+		rsp = self.fetch(ListRe[0])
+		htmlTxt=rsp.text
 		result["parse"] = 0
 		result["playUrl"] = r''
 		result["url"] = r"https://audio.qtfm.cn/audiostream/redirect/288247/11871891?device_id=MOBILESITE&t=1675394744107&sign=4ccb19e8a6aed972f4b24757c9ce7567"
