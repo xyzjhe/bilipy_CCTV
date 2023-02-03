@@ -111,12 +111,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		videoList = []
 		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
 		pattern = re.compile(patternTxt)
+		head="https://www.66s.cc"
 		for v in circuit:
 			ListRe=pattern.findall(v)
 			for value in ListRe:
 				url=value[0]
-				if value[0].find(header["Origin"])<0:
-				url=header["Origin"]+url
+				if value[0].find(head)<0:
+				url=head+url
 				videoList.append(url+"$"+value[1])
 		if len(videoList) == 0:
 			return {}
