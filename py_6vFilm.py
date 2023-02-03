@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片9": "donghuapian",
+			"动画片10": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -116,8 +116,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			ListRe=pattern.findall(v)
 			for value in ListRe:
 				url=value[1]
-				if url.find(head)<0:
-					url=head+url
+				if url.find(header["Origin"])<0:
+					url=header["Origin"]+url
 				videoList.append(value[0]+"$"+url)
 		if len(videoList) == 0:
 			return {}
