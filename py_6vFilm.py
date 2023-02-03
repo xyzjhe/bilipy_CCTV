@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片25": "donghuapian",
+			"动画片26": "donghuapian",
 			"科幻片": "kehuanpian",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
@@ -157,7 +157,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return result
 		rsp = self.fetch(ListRe[0])
 		htmlTxt=rsp.text
-		if re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')==[]:
+		ListRe1=re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')
+		if ListRe1==[]:
 			return result
 		#url=re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')[0]
 		result["parse"] = 0
