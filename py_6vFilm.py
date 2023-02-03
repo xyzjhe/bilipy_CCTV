@@ -151,29 +151,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		rsp = self.fetch(id)
 		htmlTxt=rsp.text
-		pattern = re.compile(r'var\sguid\s*=\s*"(.+?)";')
+		pattern = re.compile(r'allowfullscreen=".+"\s*.*src="(.+?)">')
 		ListRe=pattern.findall(htmlTxt)
 		if ListRe==[]:
 			return result
-		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(ListRe[0])
-		jo = self.fetch(url,headers=self.header).json()
-		link = jo['hls_url'].strip()
-		rsp = self.fetch(link,headers=self.header)
-		content = rsp.text.strip()
-		arr = content.split('\n')
-		urlPrefix = self.regStr(link,'(http[s]?://[a-zA-z0-9.]+)/')
-
-		subUrl = arr[-1].split('/')
-		subUrl[3] = '1200'
-		subUrl[-1] = '1200.m3u8'
-		hdUrl = urlPrefix + '/'.join(subUrl)
-
-		url = urlPrefix + arr[-1]
-
-		hdRsp = self.fetch(hdUrl,headers=self.header)
-		if hdRsp.status_code == 200:
-			url = hdUrl
-
+		url = ListRe[0]
 		result["parse"] = 0
 		result["playUrl"] = ''
 		result["url"] = url
