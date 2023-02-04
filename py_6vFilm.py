@@ -109,18 +109,26 @@ class Spider(Spider):  # 元类 默认的元类 type
 			circuit.append(htmlTxt)
 		#print(circuit)
 		videoList = []
+		playFrom = []
 		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
 		pattern = re.compile(patternTxt)
 		head="https://www.66s.cc"
 		for v in circuit:
 			ListRe=pattern.findall(v)
+			temporary=re.search( r'<h3>(播放地址.*?)</h3>', v, re.M|re.I).group(1)
+			playFrom.append(temporary)
+			vodItems = []
 			for value in ListRe:
 				url=value[1]
 				if url.find(head)<0:
 					url=head+url
-				videoList.append(value[0]+"$"+url)
+				vodItems.append(value[0]+"$"+url)
+			oinStr = "#".join(vodItems)
+			videoList.append(joinStr)
 		if len(videoList) == 0:
 			return {}
+		vod_play_from = '$$$'.join(playFrom)
+		vod_play_url = "$$$".join(videoList)
 		vod = {
 			"vod_id":tid,#array[0],
 			"vod_name":title,
@@ -133,8 +141,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_director":"",
 			"vod_content":""
 		}
-		vod['vod_play_from'] = '线路'
-		vod['vod_play_url'] = "#".join(videoList)
+		vod['vod_play_from'] = vod_play_from
+		vod['vod_play_url'] = vod_play_url
 		result = {
 			'list':[
 				vod

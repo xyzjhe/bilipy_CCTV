@@ -96,7 +96,20 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		rsp = self.fetch(lastVideo)
+		header = {
+		"User-Agent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
+		"Host": "www.66s.cc",
+		"Connection": "keep-alive",
+		"Cache-Control": "max-age=0",
+		"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+		"Upgrade-Insecure-Requests": "1",
+		"Accept-Encoding": "gzip, deflate, sdch",
+		"Accept-Language": "zh-CN,zh;q=0.8",
+		"Cookie": "mtm2188=1; 7600_2627_112.38.167.81=1; 7600_2662_112.38.167.81=1; 7600_2747_112.38.167.81=1; 7600_2556_112.38.167.81=1; 7600_2696_112.38.167.81=1; 7600_2557_112.38.167.81=1; 7600_2463_112.38.167.81=1; 7600_2470_112.38.167.81=1; 7600_2548_112.38.167.81=1; tinmklastsearchtime=1675496271; 7600_2752_112.38.167.81=1; beitouviews_7600=h2ULlIglrTq3mScm7wekKbXGuzEcVPrVSVc4jQMF%252BTdmxNzzePEZtLr0jOs015MdoP%252BcUrnCqnp7aqSXuF3mTEo8ceuopPYd1WrTVQMyXx5cObVy3aMRnCydMybXzz%252BaBBHJi0wb%252FY%252FQsBUydNbSNllp0L9AC4i6CHxTrmXyv5rx0eNbfjm2FD7zYQxrREyuescfbX5p%252F4BljCgLdXBo9d%252FfGy0DVyPp%252FMq0Ov9AK5vaYQQAKEUGp%252FGKgRV8LwHsOyEIKFockEVOwAtA3UhlGJBFl6pOiMmZwAbGzvL0G2lJb875pREuCZuZNiZ82JwfhgI5V5CA7d57GD7Z8fMJETQfSvxBW9wci%252B56p7UFOD3ZAdKDmRfPpX7A3WHdPO9L9zkqViYCc%252Fr56otec%252BFatT8z7NkfLrH79z1A04tGKnLjDBeQOKD7WkcYpHHKKcywfOafM5qww9RiCErZ4kRvsRYW4rtA7xg2f6K0cs%252FAuAad3wu%252F%252BYnL7Vfbe9ogF19PI7RhFiwRrPtohkvI%252BJf17OIuE%252BJDeiZLCt0luA%252FQ1dGZX7UqqjBJvxJywy2iwuSBrLDmiPt%252FVRlERsZ188RV3m2qvu38dRGEL6bZ6ERW9CDkMf4j3gon3w1xaL5KgNwu6f7N9aVVJcMBjprxJDcLd7%252FxnmOHPlse%252FO%252BdXP72VtM%253D",
+		"If-None-Match": '"73f07b496138d91:0"',
+		"If-Modified-Since": "Sat, 04 Feb 2023 06:24:07 GMT"
+		}
+		rsp = self.fetch(lastVideo,headers=header)
 		htmlTxt=rsp.text
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
