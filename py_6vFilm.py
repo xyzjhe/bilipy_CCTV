@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片2": "kehuanpian",
+			"科幻片31": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -158,17 +158,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["header"] = ''
 		return result
 	def get_playUrlMethodOne(html):
-		pattern =re.search( r'allowfullscreen=".+"\s*.*src="(.+?)">', html, re.M|re.I).group(1)
-		if len(pattern)<4:
-			return ""
-		rsp = self.fetch(pattern)
-		htmlTxt=rsp.text
-		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
-		if len(head)<4:
-			return ""
-		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
-		url=head+url
-		return url
+		return "https://v8.dious.cc/20230128/ejlI3z2q/1500kb/hls/index.m3u8"
 
 	config = {
 		"player": {},
