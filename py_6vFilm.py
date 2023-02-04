@@ -151,8 +151,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		rsp = self.fetch(id)
 		htmlTxt=rsp.text
-		url=re.search( r"var\s*video\s*=\s*\[\s*'(.+?\.m3u8.*?)->video/mp4',", htmlTxt, re.M|re.I).group(1)
-		if url is None:	
+		pattern=re.compile( r"var\s*video\s*=\s*\[\s*'(.+?\.m3u8.*?)->video/mp4',", htmlTxt, re.M|re.I).group(1)
+		ListRe=pattern.findall(htmlTxt)
+		if len(ListRe)>0:	
 			url=self.get_playUrlMethodOne(html=htmlTxt)
 		result["parse"] = 0
 		result["playUrl"] =""
