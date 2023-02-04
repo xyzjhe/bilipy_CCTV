@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片299999": "kehuanpian",
+			"科幻片": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -151,13 +151,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		rsp = self.fetch(id)
 		htmlTxt=rsp.text
-		url=self.get_playUrlMethodOne(html=htmlTxt)
+		url=re.search( r"var\s*video\s*=\s*\[\s*'(.+?\.m3u8.*?)->video/mp4',", htmlTxt, re.M|re.I).group(1)
+		if url is None:	
+			url=self.get_playUrlMethodOne(html=htmlTxt)
 		result["parse"] = 0
 		result["playUrl"] =""
 		result["url"] = url
 		result["header"] = ''
 		return result
 	def get_playUrlMethodOne(self,html):
+		#自定义函数时self参数是必要的,调用时self参数留空
 		pattern =re.search( r'allowfullscreen=".+"\s*.*src="(.+?)">', html, re.M|re.I).group(1)
 		if len(pattern)<4:
 			return ""

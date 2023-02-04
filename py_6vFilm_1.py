@@ -10,7 +10,7 @@ import re
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
-		return "央视片库"
+		return "6V电影"
 	def init(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
@@ -21,11 +21,17 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"动画片": "donghuapian",
 			"科幻片": "kehuanpian",
+			"动画片": "donghuapian",
+			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
 			"动作片": "dongzuopian",
-			"喜剧片": "xijupian"
+			"喜剧片": "xijupian",
+			"恐怖片": "kongbupian",
+			"剧情片": "juqingpian",
+			"战争片": "zhanzhengpian",
+			"纪录片": "jilupian",
+			"综艺": "ZongYi"
 		}
 		classes = []
 		for k in cateManual:
@@ -42,39 +48,31 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'list':[]
 		}
 		return result
-	def categoryContent(self,tid,pg,filter,extend):		
+	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		month = ""
-		year = ""
-		if 'month' in extend.keys():
-			month = extend['month']
-		if 'year' in extend.keys():
-			year = extend['year']
-		if year == '':
-			month = ''
-		prefix = year + month
-
-		url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area=&sc=&fc=%E5%8A%A8%E7%94%BB%E7%89%87&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		if tid=="电视剧":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area=&sc=&fc=%E7%94%B5%E8%A7%86%E5%89%A7&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		elif tid=="纪录片":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc=%E7%BA%AA%E5%BD%95%E7%89%87&channel=&sc=&year=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"
-		elif tid=="4":
-			url="https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel=&sc=&fc=%E7%89%B9%E5%88%AB%E8%8A%82%E7%9B%AE&bigday=&letter=&p={0}&n=24&serviceId=tvcctv&topv=1&t=json"	
-		suffix = ""
-		jo = self.fetch(url.format(pg),headers=self.header).json()
-		vodList=jo["data"]["list"]
+		url=""
+		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		head="https://www.66s.cc"
+		if tid=="qian50m":
+			url=r"https://www.66s.cc/qian50m.html"
+		else:
+			url=r"https://www.66s.cc/{0}/".format(tid)
+			if pg!="1":#pg值是字符串
+				url=url+"index_{0}.html".format(pg)
+		rsp = self.fetch(url)
+		htmlTxt=rsp.text
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(htmlTxt)
 		videos = []
-		for vod in vodList:
-			lastVideo =vod['url']
-			brief=vod['brief']
-			if len(brief) == 0:
-				brief = ' '
+		for vod in ListRe:
+			lastVideo = vod[0]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = tid+'###'+vod["title"]+'###'+lastVideo+'###'+vod['image']+'###'+brief
-			title = vod["title"]
-			img = vod['image']
+			if lastVideo.find(head)<0 and lastVideo!="_":
+				lastVideo=head+lastVideo
+			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
+			title =vod[1]
+			img = vod[2]
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
@@ -100,39 +98,46 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		rsp = self.fetch(lastVideo)
 		htmlTxt=rsp.text
-		column_id = ""
+		circuit=[]
+		if htmlTxt.find('<h3>播放地址')>8:
+			origin=htmlTxt.find('<h3>播放地址')
+			while origin>8:
+				end=htmlTxt.find('</div>',origin)
+				circuit.append(htmlTxt[origin:end])
+				origin=htmlTxt.find('<h3>播放地址',end)
+		if len(circuit)<1:
+			circuit.append(htmlTxt)
+		#print(circuit)
+		playFrom = []
 		videoList = []
-		patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
-		titleIndex=0
-		UrlIndex=3
-		if tid=="电视剧" or tid=="纪录片":
-			patternTxt=r"'title':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(.+?)'"
-			titleIndex=0
-			UrlIndex=3
-		elif tid=="特别节目":
-			patternTxt=r'class="tp1"><a\s*href="(https://.+?)"\s*target="_blank"\s*title="(.+?)"></a></div>'
-			titleIndex=1
-			UrlIndex=0
-			#https://api.cntv.cn/NewVideo/getVideoListByAlbumIdNew?id=VIDA3YcIusJ9mh4c9mw5XHyx230113&serviceId=tvcctv//由于方式不同暂时不做
+		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
 		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
-		for value in ListRe:
-			videoList.append(value[titleIndex]+"$"+value[UrlIndex])
+		head="https://www.66s.cc"
+		for v in circuit:
+			ListRe=pattern.findall(v)
+			temporary=re.search( r'<h3>(播放地址.*?)</h3>', v, re.M|re.I).group(1)
+			playFrom.append(temporary)
+			for value in ListRe:
+				url=value[1]
+				if url.find(head)<0:
+					url=head+url
+				videoList.append(value[0]+"$"+url)
 		if len(videoList) == 0:
 			return {}
+		vod_play_from = '$$$'.join(playFrom)
 		vod = {
-			"vod_id":array[0],
+			"vod_id":tid,#array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":tid,
-			"vod_year":date,
+			"type_name":"6v电影",
+			"vod_year":"",
 			"vod_area":"",
-			"vod_remarks":date,
+			"vod_remarks":"",
 			"vod_actor":"",
-			"vod_director":column_id,
-			"vod_content":aid[4]
+			"vod_director":"",
+			"vod_content":""
 		}
-		vod['vod_play_from'] = 'CCTV'
+		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = "#".join(videoList)
 		result = {
 			'list':[
@@ -150,34 +155,27 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		rsp = self.fetch(id)
 		htmlTxt=rsp.text
-		pattern = re.compile(r'var\sguid\s*=\s*"(.+?)";')
-		ListRe=pattern.findall(htmlTxt)
-		if ListRe==[]:
-			return result
-		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(ListRe[0])
-		jo = self.fetch(url,headers=self.header).json()
-		link = jo['hls_url'].strip()
-		rsp = self.fetch(link,headers=self.header)
-		content = rsp.text.strip()
-		arr = content.split('\n')
-		urlPrefix = self.regStr(link,'(http[s]?://[a-zA-z0-9.]+)/')
-
-		subUrl = arr[-1].split('/')
-		subUrl[3] = '1200'
-		subUrl[-1] = '1200.m3u8'
-		hdUrl = urlPrefix + '/'.join(subUrl)
-
-		url = urlPrefix + arr[-1]
-
-		hdRsp = self.fetch(hdUrl,headers=self.header)
-		if hdRsp.status_code == 200:
-			url = hdUrl
-
+		url=re.search( r"var\s*video\s*=\s*\[\s*'(.+?\.m3u8.*?)->video/mp4',", htmlTxt, re.M|re.I).group(1)
+		if url is None:	
+			url=self.get_playUrlMethodOne(html=htmlTxt)
 		result["parse"] = 0
-		result["playUrl"] = ''
+		result["playUrl"] =""
 		result["url"] = url
 		result["header"] = ''
 		return result
+	def get_playUrlMethodOne(self,html):
+		#自定义函数时self参数是必要的,调用时self参数留空
+		pattern =re.search( r'allowfullscreen=".+"\s*.*src="(.+?)">', html, re.M|re.I).group(1)
+		if len(pattern)<4:
+			return ""
+		rsp = self.fetch(pattern)
+		htmlTxt=rsp.text
+		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
+		if len(head)<4:
+			return ""
+		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
+		url=head+url
+		return url
 
 	config = {
 		"player": {},
@@ -185,8 +183,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		"Origin": "https://tv.cctv.com",
-		"Referer": "https://tv.cctv.com/"
+		"Origin": "https://www.66s.cc",
+		"Referer": "https://www.66s.cc/"
 	}
 
 	def localProxy(self,param):
