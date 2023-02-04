@@ -7,6 +7,7 @@ import json
 import time
 import base64
 import re
+import requests
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -21,7 +22,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片2": "kehuanpian",
+			"科幻片requests": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -97,6 +98,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if lastVideo == '_':
 			return {}
 		header = {
+		"referer": "https://www.66s.cc/",
 		"User-Agent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
 		"Host": "www.66s.cc",
 		"Connection": "keep-alive",
@@ -109,7 +111,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		"If-None-Match": '"73f07b496138d91:0"',
 		"If-Modified-Since": "Sat, 04 Feb 2023 06:24:07 GMT"
 		}
-		rsp = self.fetch(lastVideo,headers=header)
+		rsp=requests.get(lastVideo,headers=header)
 		htmlTxt=rsp.text
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
