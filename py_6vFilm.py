@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片": "kehuanpian",
+			"科幻片1": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -108,8 +108,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if len(circuit)<1:
 			circuit.append(htmlTxt)
 		#print(circuit)
-		videoList = []
 		playFrom = []
+		videoList = []
 		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
 		pattern = re.compile(patternTxt)
 		head="https://www.66s.cc"
@@ -123,12 +123,26 @@ class Spider(Spider):  # 元类 默认的元类 type
 				if url.find(head)<0:
 					url=head+url
 				vodItems.append(value[0]+"$"+url)
-			oinStr = "#".join(vodItems)
+			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 		if len(videoList) == 0:
 			return {}
 		vod_play_from = '$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
+		vod = {
+			"vod_id":tid,#array[0],
+			"vod_name":title,
+			"vod_pic":logo,
+			"type_name":"6v电影",
+			"vod_year":"",
+			"vod_area":"",
+			"vod_remarks":"",
+			"vod_actor":"",
+			"vod_director":"",
+			"vod_content":""
+		}
+		vod['vod_play_from'] = vod_play_from
+		vod['vod_play_url'] = vod_play_url
 		vod = {
 			"vod_id":tid,#array[0],
 			"vod_name":title,
