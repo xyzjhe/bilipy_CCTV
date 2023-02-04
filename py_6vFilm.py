@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片1": "kehuanpian",
+			"科幻片2": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -151,7 +151,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		rsp = self.fetch(id)
 		htmlTxt=rsp.text
-		url=get_playUrlMethodOne(htmlTxt)
+		url=self.get_playUrlMethodOne(htmlTxt)
 		result["parse"] = 0
 		result["playUrl"] =""
 		result["url"] = url
