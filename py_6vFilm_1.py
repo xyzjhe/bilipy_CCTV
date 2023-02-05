@@ -8,6 +8,7 @@ import time
 import base64
 import re
 import urllib.request
+from urllib import request, parse
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -22,7 +23,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片2": "kehuanpian",
+			"科幻片5": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -97,19 +98,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		header = {
-		"referer": "https://www.66s.cc/",
-		"User-Agent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
-		"Host": "www.66s.cc",
-		"Connection": "keep-alive",
-		"Cache-Control": "max-age=0",
-		"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-		"Upgrade-Insecure-Requests": "1",
-		"Accept-Encoding": "gzip, deflate, sdch",
-		"Accept-Language": "zh-CN,zh;q=0.8"
+		headers = {
+		    'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+		    'Host': 'www.66s.cc'
 		}
-		rsp=urllib.request.urlopen(lastVideo)
-		htmlTxt=rsp.read().decode('utf-8')
+		req = request.Request(url="https://www.66s.cc/donghuapian/13238.html", headers=headers, method='GET')
+		response = request.urlopen(req)
+		htmlTxt=response.read().decode('utf-8')
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
 			origin=htmlTxt.find('<h3>播放地址')
