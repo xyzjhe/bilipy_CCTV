@@ -175,7 +175,7 @@
     },
     {
       "key": "py_cctv",
-      "name": "CCTV-节目大全",
+      "name": "CCTV-节目大全(PY)",
       "type": 3,
       "api": "py_cctv",
       "searchable": 0,
@@ -185,7 +185,7 @@
     },
     {
       "key": "py_cctv_1",
-      "name": "央视-片库",
+      "name": "央视-片库(PY)",
       "type": 3,
       "api": "py_cctv",
       "searchable": 0,
@@ -194,14 +194,24 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv_1.py"
     },
     {
-      "key": "Xp_9eguoyu",
-      "name": "央视-片库",
+      "key": "py_6vFilm",
+      "name": "6v电影",
       "type": 3,
-      "api": "csp_XPath",
+      "api": "py_6vFilm",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/9eguoyu.json"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
+    },
+    {
+      "key": "py_cokemv",
+      "name": "Cokemv",
+      "type": 3,
+      "api": "py_cokemv",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cokemv.py"
     },
     {
 	"key":"mtv_xp_皮皮视频",
