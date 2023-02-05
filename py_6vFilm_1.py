@@ -22,7 +22,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片4": "kehuanpian",
+			"科幻片requests": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -111,8 +111,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		"If-None-Match": '"73f07b496138d91:0"',
 		"If-Modified-Since": "Sat, 04 Feb 2023 06:24:07 GMT"
 		}
-		response = urllib.request.urlopen(lastVideo)
-		htmlTxt=response.read().decode('utf-8')
+		urlt=re.search( r'(https://www.66s.cc/\w+?/)[0-9]+?\.html', lastVideo, re.M|re.I).group(1)
+		self.fetch(lastVideo,headers=header)
+		rsp=self.fetch(urlt,headers=header)
+		htmlTxt=rsp.text
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
 			origin=htmlTxt.find('<h3>播放地址')
