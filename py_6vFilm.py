@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片1": "kehuanpian",
+			"科幻片2": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -171,7 +171,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		rsp = self.fetch(id)
+		rsp = self.fetch("https://www.66s.cc/e/DownSys/play/?classid=4&id=20344&pathid2=0&bf=1")
 		htmlTxt=rsp.text
 		pattern=re.compile( r"var\s*video\s*=\s*\[\s*'(.+?\.m3u8.*?)->video/mp4',", htmlTxt, re.M|re.I).group(1)
 		ListRe=pattern.findall(htmlTxt)
