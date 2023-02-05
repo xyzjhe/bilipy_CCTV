@@ -22,7 +22,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片3": "kehuanpian",
+			"科幻片55": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -111,7 +111,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		"If-None-Match": '"73f07b496138d91:0"',
 		"If-Modified-Since": "Sat, 04 Feb 2023 06:24:07 GMT"
 		}
-		urlt=re.search( r'(https://www.66s.cc/\w+?/)[0-9]+?\.html', lastVideo, re.M|re.I).group(1)
+		urlt=re.search( r'https://www.66s.cc/(\w+?)/[0-9]+?\.html', self.categoryContent(tid=urlt,pg="1")
 		self.fetch(lastVideo,headers=header)
 		rsp=self.fetch(urlt,headers=header)
 		htmlTxt=rsp.text
