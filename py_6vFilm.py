@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片8": "kehuanpian",
+			"科幻片9": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -154,7 +154,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern=re.compile( r"(https{0,1}://.+?\.m3u8.*?)", htmlTxt)
 		ListRe=pattern.findall(htmlTxt)
 		url=""
-		if len(ListRe)<1:	
+		if ListRe==[]:	
 			url=self.get_playUrlMethodOne(html=htmlTxt)
 		else:
 			url=ListRe[0]
