@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片5": "kehuanpian",
+			"科幻片6": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -187,7 +187,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def get_playUrlMethodOne(self,html):
 		#自定义函数时self参数是必要的,调用时self参数留空
-		pattern =re.search( r'allowfullscreen=".+"\s*.*src="(.+?)">', html, re.M|re.I).group(1)
+		pattern =re.search( r'<div class="video"><iframe.+?src="(.+?)"></iframe></div>', html, re.M|re.I).group(1)
 		if len(pattern)<4:
 			return ""
 		rsp = self.fetch(pattern)
