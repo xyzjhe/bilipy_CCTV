@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片13": "kehuanpian",
+			"科幻片14": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -154,7 +154,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		#pattern=re.search( r'(https{0,1}://.+?\.m3u8.*?)', htmlTxt, re.M|re.I).group(1)
 		url=""
 		#if len(pattern)<6:	
-		url="https://new.qqaku.com/20230115/BLu9zLvf/1100kb/hls/index.m3u8"#self.get_playUrlMethodOne(html=htmlTxt)
+		url=self.get_playUrlMethodOne(html=htmlTxt)
 		#else:
 			#url=pattern
 		result["parse"] = 0
