@@ -153,10 +153,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		htmlTxt=rsp.text
 		pattern=re.search( r'(https{0,1}://.+?\.m3u8.*?)', htmlTxt, re.M|re.I).group(1)
 		url=""
-		if len(pattern)<6:	
+		#if len(pattern)<6:	
 			url="https://new.qqaku.com/20230115/BLu9zLvf/1100kb/hls/index.m3u8"#self.get_playUrlMethodOne(html=htmlTxt)
-		else:
-			url=pattern
+		#else:
+			#url=pattern
 		result["parse"] = 0
 		result["playUrl"] =""
 		result["url"] = url
