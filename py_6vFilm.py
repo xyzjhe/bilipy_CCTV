@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片10": "kehuanpian",
+			"科幻片12": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -172,7 +172,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
 		if len(head)<4:
 			return ""
-		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
+		url=re.search( r':"(.+?m3u8)"', htmlTxt, re.M|re.I).group(1)
 		url=head+url
 		return url
 
