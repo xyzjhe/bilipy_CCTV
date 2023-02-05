@@ -7,6 +7,8 @@ import json
 import time
 import base64
 import re
+from urllib import request, parse
+import urllib
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -165,8 +167,39 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 
 	def searchContent(self,key,quick):
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'www.66s.cc'
+		}
+		data="show=title&tempid=1&tbname=article&mid=1&dopost=search&submit=&keyboard="+urllib.parse.quote(key)
+		data = bytes(data, encoding='utf8')
+		req = request.Request(url="https://www.66s.cc/e/search/index.php", data=data,headers=headers, method='POST')
+		response = request.urlopen(req)
+		urlTxt=response.geturl()
+		response = urllib.request.urlopen(urlTxt)
+		htmlTxt=response.read().decode('utf-8')
+		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(htmlTxt)
+		for vod in ListRe:
+			lastVideo = vod[0]
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			if lastVideo.find(head)<0 and lastVideo!="_":
+				lastVideo=head+lastVideo
+			soup = re.compile(r'<[^>]+>',re.S)
+			title =soup.sub('', vod[1])
+			guid = "6v电影"+'###'+title+'###'+lastVideo+'###'+vod[2]
+			img = vod[2]
+			print(guid)
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
 		result = {
-			'list':[]
+			'list':videos
 		}
 		return result
 	def playerContent(self,flag,id,vipFlags):
