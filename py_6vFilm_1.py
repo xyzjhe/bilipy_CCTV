@@ -44,12 +44,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch("https://www.66s.cc/")
+		rsp = self.fetch("https://www.66s.cc")
 		htmlTxt=rsp.text
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
 		videos = []
+		head="https://www.66s.cc"
 		for vod in ListRe:
 			lastVideo = vod[0]
 			if len(lastVideo) == 0:

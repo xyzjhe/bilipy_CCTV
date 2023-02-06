@@ -172,21 +172,17 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'Host': 'www.66s.cc'
 		}
 
-		 data = {
-		    "show": "title",
-		    "tempid": "1",
-		    "tbname": "article",
-		    "mid": "1",
-		    "dopost": "search",
-		    "keyboard": +urllib.parse.quote(key)
-		}
+		data="show=title&tempid=1&tbname=article&mid=1&dopost=search&submit=&keyboard="+urllib.parse.quote(key)
 		payUrl="https://www.66s.cc/e/search/index.php"
-		req=self.post(payUrl,data,headers=headers)
-		urlTxt=req.geturl()
-		htmlTxt =self.fetch(urlTxt,headers=headers)
+		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=headers, method='POST')
+		response = request.urlopen(req)
+		urlTxt=response.geturl()
+		response = urllib.request.urlopen(urlTxt)
+		htmlTxt=response.read().decode('utf-8')
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(htmlTxt)
+		head="https://www.66s.cc"
 		for vod in ListRe:
 			lastVideo = vod[0]
 			if len(lastVideo) == 0:
