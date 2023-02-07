@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片29": "kehuanpian",
+			"科幻片28": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -209,6 +209,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		if urlStr.find("http")<0:
 			return ""
+		urllib.request.Request(url="https://www.66s.cc/", headers=headers)
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		print(len(html))
