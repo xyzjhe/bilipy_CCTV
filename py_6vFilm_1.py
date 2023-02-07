@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片22": "kehuanpian",
+			"科幻片29": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -85,7 +85,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		htmlTxt=self.webReadFile(urlStr=lastVideo)
+		htmlTxt=self.webReadFile(urlStr="https://www.66s.cc/juqingpian/20387.html")
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
 			origin=htmlTxt.find('<h3>播放地址')
