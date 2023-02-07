@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片20": "kehuanpian",
+			"科幻片21": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -85,10 +85,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-
-		rsp = self.fetch(lastVideo)
-		htmlTxt=rsp.text
-
+		htmlTxt=self.webReadFile(urlStr=lastVideo)
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
 			origin=htmlTxt.find('<h3>播放地址')
@@ -204,6 +201,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_remarks":''
 			})
 		return videos
+	def webReadFile(self,urlStr):
+		headers = {
+			'Referer':'https://www.66s.cc/',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'www.66s.cc'
+		}
+		req = urllib.request.Request(url=urlStr, headers=headers)
+		html = urllib.request.urlopen(req).read().decode('utf-8')
+		print(len(html))
+		return html
 	config = {
 		"player": {},
 		"filter": {}
