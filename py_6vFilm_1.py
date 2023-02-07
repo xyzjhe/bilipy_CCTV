@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片27": "kehuanpian",
+			"科幻片25": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -87,12 +87,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		htmlTxt=self.webReadFile(urlStr=lastVideo)
 		circuit=[]
-		if htmlTxt.find('<h3>播放地址')>8:
-			origin=htmlTxt.find('<h3>播放地址')
-			while origin>8:
-				end=htmlTxt.find('</div>',origin)
-				circuit.append(htmlTxt[origin:end])
-				origin=htmlTxt.find('<h3>播放地址',end)
+		
 		if len(circuit)<1:
 			circuit.append(htmlTxt)
 		#print(circuit)
@@ -189,8 +184,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			#title =soup.sub('', vod[1])
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			#if lastVideo.find(head)<0 and lastVideo!="_":
-			lastVideo=head+lastVideo
+			if lastVideo.find(head)<0 and lastVideo!="_":
+				lastVideo=head+lastVideo
 			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
 			title =vod[1]
 			img = vod[2]
