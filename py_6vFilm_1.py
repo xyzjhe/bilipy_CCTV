@@ -7,6 +7,9 @@ import json
 import time
 import base64
 import re
+from urllib import request, parse
+import urllib
+import urllib.request
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -21,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片19": "kehuanpian",
+			"科幻片20": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -131,8 +134,21 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 
 	def searchContent(self,key,quick):
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'www.66s.cc'
+		}
+		data="show=title&tempid=1&tbname=article&mid=1&dopost=search&submit=&keyboard="+urllib.parse.quote(key)
+		data = bytes(data, encoding='utf8')
+		#return 
+		req = request.Request(url="https://www.66s.cc/e/search/index.php", data=data,headers=headers, method='POST')
+		response = request.urlopen(req)
+		urlTxt=response.geturl()
+		response = urllib.request.urlopen(urlTxt)
+		htmlTxt=response.read().decode('utf-8')
+		videos = self.get_list(html=htmlTxt,tid="6v电影")
 		result = {
-			'list':[]
+			'list':videos
 		}
 		return result
 	def playerContent(self,flag,id,vipFlags):
