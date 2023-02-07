@@ -85,7 +85,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		htmlTxt=self.webReadFile(urlStr="https://www.66s.cc/juqingpian/20387.html")
+		htmlTxt=self.webReadFile(urlStr=lastVideo)
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
 			origin=htmlTxt.find('<h3>播放地址')
