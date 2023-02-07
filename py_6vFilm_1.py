@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片28": "kehuanpian",
+			"科幻片27": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -189,8 +189,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			#title =soup.sub('', vod[1])
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			if lastVideo.find(head)<0 and lastVideo!="_":
-				lastVideo=head+lastVideo
+			#if lastVideo.find(head)<0 and lastVideo!="_":
+			lastVideo=head+lastVideo
 			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
 			title =vod[1]
 			img = vod[2]
