@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片18": "kehuanpian",
+			"科幻片19": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -48,7 +48,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		htmlTxt=rsp.text
 		rsp = self.fetch("https://www.66s.cc/index_2.html")
 		htmlTxt=htmlTxt+rsp.text
-		videos = get_list(html=htmlTxt,tid="6v电影")
+		videos = self.get_list(html=htmlTxt,tid="6v电影")
 		result = {
 			'list':videos
 		}
@@ -64,7 +64,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				url=url+"index_{0}.html".format(pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
-		videos = get_list(html=htmlTxt,tid="6v电影")
+		videos = self.get_list(html=htmlTxt,tid="6v电影")
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
