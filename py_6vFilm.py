@@ -9,6 +9,7 @@ import base64
 import re
 from urllib import request, parse
 import urllib
+import urllib.request
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -46,8 +47,32 @@ class Spider(Spider):  # 元类 默认的元类 type
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
+		rsp = self.fetch("https://www.66s.cc")
+		htmlTxt=rsp.text
+		rsp = self.fetch("https://www.66s.cc/index_2.html")
+		htmlTxt=htmlTxt+rsp.text
+		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(htmlTxt)
+		videos = []
+		head="https://www.66s.cc"
+		for vod in ListRe:
+			lastVideo = vod[0]
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			if lastVideo.find(head)<0 and lastVideo!="_":
+				lastVideo=head+lastVideo
+			guid = "6v电影"+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
+			title =vod[1]
+			img = vod[2]
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
 		result = {
-			'list':[]
+			'list':videos
 		}
 		return result
 	def categoryContent(self,tid,pg,filter,extend):

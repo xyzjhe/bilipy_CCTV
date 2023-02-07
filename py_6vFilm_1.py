@@ -21,7 +21,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片17": "kehuanpian",
+			"科幻片18": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -46,26 +46,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeVideoContent(self):
 		rsp = self.fetch("https://www.66s.cc")
 		htmlTxt=rsp.text
-		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
-		videos = []
-		head="https://www.66s.cc"
-		for vod in ListRe:
-			lastVideo = vod[0]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			if lastVideo.find(head)<0 and lastVideo!="_":
-				lastVideo=head+lastVideo
-			guid = "6v电影"+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
-			title =vod[1]
-			img = vod[2]
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
+		rsp = self.fetch("https://www.66s.cc/index_2.html")
+		htmlTxt=htmlTxt+rsp.text
+		videos = get_list(html=htmlTxt,tid="6v电影")
 		result = {
 			'list':videos
 		}
@@ -73,8 +56,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url=""
-		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
-		head="https://www.66s.cc"
 		if tid=="qian50m":
 			url=r"https://www.66s.cc/qian50m.html"
 		else:
@@ -83,24 +64,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				url=url+"index_{0}.html".format(pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
-		videos = []
-		for vod in ListRe:
-			lastVideo = vod[0]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			if lastVideo.find(head)<0 and lastVideo!="_":
-				lastVideo=head+lastVideo
-			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
-			title =vod[1]
-			img = vod[2]
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
+		videos = get_list(html=htmlTxt,tid="6v电影")
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
@@ -118,8 +82,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
+
 		rsp = self.fetch(lastVideo)
 		htmlTxt=rsp.text
+
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
 			origin=htmlTxt.find('<h3>播放地址')
@@ -198,7 +164,30 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url=re.search( r':"(.+?m3u8)"', htmlTxt, re.M|re.I).group(1)
 		url=head+url
 		return url
-
+	def get_list(self,html,tid):
+		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(html)
+		videos = []
+		head="https://www.66s.cc"
+		for vod in ListRe:
+			lastVideo = vod[0]
+			#soup = re.compile(r'<[^>]+>',re.S)
+			#title =soup.sub('', vod[1])
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			if lastVideo.find(head)<0 and lastVideo!="_":
+				lastVideo=head+lastVideo
+			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+vod[2]
+			title =vod[1]
+			img = vod[2]
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
+		return videos
 	config = {
 		"player": {},
 		"filter": {}

@@ -202,7 +202,16 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
-    },
+    },{
+	"key": "csp_xBPQ_酷客影视",
+	"name": "xBPQ | 酷客影视",
+	"type": 3,
+	"api": "csp_xBPQ",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 0,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kukeys.json"
+	},
     {
       "key": "py_cokemv",
       "name": "Cokemv",
