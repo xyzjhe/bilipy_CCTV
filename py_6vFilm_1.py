@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片25": "kehuanpian",
+			"科幻片2t": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -80,14 +80,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		tid = aid[0]
 		logo = aid[3]
-		lastVideo = aid[2]
+		lastVideo = self.get_UrlParameter(parameter=array[0])
 		title = aid[1]
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
 		htmlTxt=self.webReadFile(urlStr=lastVideo)
 		circuit=[]
-		
+		if htmlTxt.find('<h3>播放地址')>8:
+			origin=htmlTxt.find('<h3>播放地址')
+			while origin>8:
+				end=htmlTxt.find('</div>',origin)
+				circuit.append(htmlTxt[origin:end])
+				origin=htmlTxt.find('<h3>播放地址',end)
 		if len(circuit)<1:
 			circuit.append(htmlTxt)
 		#print(circuit)
@@ -204,11 +209,17 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		if urlStr.find("http")<0:
 			return ""
-		urllib.request.Request(url="https://www.66s.cc/", headers=headers)
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		print(len(html))
 		return html
+	def get_UrlParameter(self,parameter):
+		aid =parameter.split('###')
+		for t in aid:
+			if t.find("http")>-1:
+				return t
+			
+		return "https://www.66s.cc/kehuanpian/18941.html"	
 	config = {
 		"player": {},
 		"filter": {}
