@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片2t": "kehuanpian",
+			"科幻片55": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -47,10 +47,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch("https://www.66s.cc")
-		htmlTxt=rsp.text
-		rsp = self.fetch("https://www.66s.cc/index_2.html")
-		htmlTxt=htmlTxt+rsp.text
+		htmlTxt=htmlTxt=self.webReadFile(urlStr="https://www.66s.cc")
+		htmlTxt=htmlTxt+self.webReadFile(urlStr="https://www.66s.cc/index_2.html")
 		videos = self.get_list(html=htmlTxt,tid="6v电影")
 		result = {
 			'list':videos
@@ -65,8 +63,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url=r"https://www.66s.cc/{0}/".format(tid)
 			if pg!="1":#pg值是字符串
 				url=url+"index_{0}.html".format(pg)
-		rsp = self.fetch(url)
-		htmlTxt=rsp.text
+		htmlTxt=self.webReadFile(urlStr=url)
 		videos = self.get_list(html=htmlTxt,tid="6v电影")
 		result['list'] = videos
 		result['page'] = pg
@@ -75,16 +72,17 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['total'] = 999999
 		return result
 	def detailContent(self,array):
+		result = {}
 		aid = array[0].split('###')
 		if aid[2].find("http")<0:
-			return {}
+			return result
 		tid = aid[0]
 		logo = aid[3]
 		lastVideo = self.get_UrlParameter(parameter=array[0])
 		title = aid[1]
 		date = aid[0]
 		if lastVideo == '_':
-			return {}
+			return result
 		htmlTxt=self.webReadFile(urlStr=lastVideo)
 		circuit=[]
 		if htmlTxt.find('<h3>播放地址')>8:
@@ -96,19 +94,27 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if len(circuit)<1:
 			circuit.append(htmlTxt)
 		#print(circuit)
+		playFrom = []
 		videoList = []
 		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
 		pattern = re.compile(patternTxt)
 		head="https://www.66s.cc"
 		for v in circuit:
 			ListRe=pattern.findall(v)
+			temporary=re.search( r'<h3>(播放地址.*?)</h3>', v, re.M|re.I).group(1)
+			playFrom.append(temporary)
+			vodItems = []
 			for value in ListRe:
 				url=value[1]
 				if url.find(head)<0:
 					url=head+url
-				videoList.append(value[0]+"$"+url)
+				vodItems.append(value[0]+"$"+url)
+			joinStr = "#".join(vodItems)
+			videoList.append(joinStr)
 		if len(videoList) == 0:
 			return {}
+		vod_play_from = '$$$'.join(playFrom)
+		vod_play_url = "$$$".join(videoList)
 		vod = {
 			"vod_id":tid,#array[0],
 			"vod_name":title,
@@ -121,8 +127,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_director":"",
 			"vod_content":""
 		}
-		vod['vod_play_from'] = '线路'
-		vod['vod_play_url'] = "#".join(videoList)
+		vod['vod_play_from'] = vod_play_from
+		vod['vod_play_url'] = vod_play_url
 		result = {
 			'list':[
 				vod
@@ -135,10 +141,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
 			'Host': 'www.66s.cc'
 		}
+
 		data="show=title&tempid=1&tbname=article&mid=1&dopost=search&submit=&keyboard="+urllib.parse.quote(key)
-		data = bytes(data, encoding='utf8')
-		#return 
-		req = request.Request(url="https://www.66s.cc/e/search/index.php", data=data,headers=headers, method='POST')
+		payUrl="https://www.66s.cc/e/search/index.php"
+		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=headers, method='POST')
 		response = request.urlopen(req)
 		urlTxt=response.geturl()
 		response = urllib.request.urlopen(urlTxt)
@@ -150,8 +156,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		rsp = self.fetch(id)
-		htmlTxt=rsp.text
+		htmlTxt=self.webReadFile(urlStr=id)
 		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
 		ListRe=pattern.findall(htmlTxt)
 		url=""
@@ -166,7 +171,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def get_playUrlMethodOne(self,html):
 		#自定义函数时self参数是必要的,调用时self参数留空
-		pattern =re.search( r'allowfullscreen=".+"\s*.*src="(.+?)">', html, re.M|re.I).group(1)
+		pattern =re.search( r'<div class="video"><iframe.+?src="(.+?)"></iframe></div>', html, re.M|re.I).group(1)
 		if len(pattern)<4:
 			return ""
 		rsp = self.fetch(pattern)
@@ -174,7 +179,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
 		if len(head)<4:
 			return ""
-		url=re.search( r':"(.+?m3u8)"', htmlTxt, re.M|re.I).group(1)
+		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
 		url=head+url
 		return url
 	def get_list(self,html,tid):
@@ -202,6 +207,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			})
 		return videos
 	def webReadFile(self,urlStr):
+		Referer=self.get_RegexGetText(Text=urlStr,RegexText=r"(https://www.66s.cc/.+?)/",Index)
 		headers = {
 			'Referer':'https://www.66s.cc/',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
@@ -211,19 +217,28 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return ""
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
-		print(len(html))
 		return html
 	def get_UrlParameter(self,parameter):
 		aid =parameter.split('###')
 		for t in aid:
-			if t.find("http")>-1:
-				return t
-			
+			if t.find("http")>-1 and t.find("html")>-1:
+				return t	
 		return "https://www.66s.cc/kehuanpian/18941.html"	
+	def get_RegexGetText(self,Text,RegexText,Index):
+	returnTxt="null"
+	try:
+		Regex=re.search(RegexText, Text, re.M|re.I)
+		if Regex is None:
+			returnTxt="null"
+		else:
+			returnTxt=Regex.group(Index)
+	except IOError:
+		returnTxt="异常"
+	return returnTxt	
 	config = {
 		"player": {},
 		"filter": {}
-	}
+		}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
 		"Origin": "https://www.66s.cc",
