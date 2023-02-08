@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片59": "kehuanpian",
+			"科幻片55": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -210,11 +210,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		Referer=self.get_RegexGetText(Text=urlStr,RegexText=r"(https://www.66s.cc/.+?)/",Index=1)
 		if len(Referer)<5:
 			Referer='https://www.66s.cc/'
-		urllib.request.Request(url=Referer)
 		headers = {
 			'Referer':Referer,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
 			'Host': 'www.66s.cc'
+			'Cookie': 'jmtm2188=1; 7600_2548_112.38.166.46=1; 7600_2557_112.38.166.46=1; beitouviews_7600=s5kErmWYocZghiOOTkZk%252FVe3tshOKEqO61uKMcyiK7hnO64Xwy0qkouMdD9XytxIq7pvLxRzb2lXEbsvENLxLDfgX5%252F%252FEY02mG1cQciwuDcNnp0cC0W%252Fng1BSUgzhiHyn8%252FiUEwGCxH0wX7DSV2aHZE5ujxqTqABrL8xjuDnJ%252FH87IHWaPH7PO7nUuyLgibIbUh2Sux0VnLEd%252Fj82%252F%252FG3uX8ee%252FOJwKevBvCTQaEhN9Cj2bRNauzfdg0qyIXJ3UpnCki3kxRiVYbEWNd2CxuuKy%252Fz%252BFb47k8yMyEzgzEgu4YVcsvVdN%252FtXEoK1XkggVpkUVr%252BwAKyj%252BRRfZ86kIGpA%253D%253D; 7600_2747_112.38.166.46=1'
 		}
 		if urlStr.find("http")<0:
 			return ""
