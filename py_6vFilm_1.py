@@ -226,14 +226,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return "https://www.66s.cc/kehuanpian/18941.html"	
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt="null"
-		try:
 			Regex=re.search(RegexText, Text, re.M|re.I)
 			if Regex is None:
 				returnTxt="null"
 			else:
 				returnTxt=Regex.group(Index)
-		except IOError:
-			returnTxt="异常"
 		return returnTxt	
 	config = {
 		"player": {},
