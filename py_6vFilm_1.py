@@ -207,7 +207,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			})
 		return videos
 	def webReadFile(self,urlStr):
-		Referer=self.get_RegexGetText(Text=urlStr,RegexText=r"(https://www.66s.cc/.+?)/",1)
+		#Referer=self.get_RegexGetText(Text=urlStr,RegexText=r"(https://www.66s.cc/.+?)/",1)
 		headers = {
 			'Referer':'https://www.66s.cc/',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
