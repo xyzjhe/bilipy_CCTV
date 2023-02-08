@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片88": "kehuanpian",
+			"科幻片8": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -78,7 +78,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return result
 		tid = aid[0]
 		logo = aid[3]
-		lastVideo = aid[2]
+		lastVideo = self.get_UrlParameter(parameter=array[0])
 		title = aid[1]
 		date = aid[0]
 		if lastVideo == '_':
@@ -217,6 +217,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
+	def get_UrlParameter(self,parameter):
+		aid =parameter.split('###')
+		for t in aid:
+			if t.find("http")>-1:
+				return t	
+		return "https://www.66s.cc/kehuanpian/18941.html"	
 	config = {
 		"player": {},
 		"filter": {}
