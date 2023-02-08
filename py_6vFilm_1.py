@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片50": "kehuanpian",
+			"科幻片59": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -208,8 +208,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return videos
 	def webReadFile(self,urlStr):
 		Referer=self.get_RegexGetText(Text=urlStr,RegexText=r"(https://www.66s.cc/.+?)/",Index=1)
+		if len(Referer)<5:
+			Referer='https://www.66s.cc/'
+		urllib.request.Request(url=Referer)
 		headers = {
-			'Referer':'https://www.66s.cc/',
+			'Referer':Referer,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
 			'Host': 'www.66s.cc'
 		}
