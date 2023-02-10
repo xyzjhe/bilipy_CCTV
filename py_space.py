@@ -66,7 +66,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		rsp = self.fetch(lastVideo,headers=self.header)
+		rsp = self.fetch(lastVideo)
 		htmlTxt = rsp.text
 		vodItems =[]
 		if tid=="西瓜":
