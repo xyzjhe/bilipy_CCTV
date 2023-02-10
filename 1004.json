@@ -36,20 +36,20 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
     },
     {
-      "key": "py_kj",
+      "key": "py_kong",
       "name": "空间",
       "type": 3,
-      "api": "py_kj",
+      "api": "py_kong",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/ppy_space.py"
     },
     {
-      "key": "py_wo",
+      "key": "py_tq",
       "name": "天气预报",
       "type": 3,
-      "api": "py_wo",
+      "api": "py_tq",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
