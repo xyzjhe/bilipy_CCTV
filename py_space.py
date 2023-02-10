@@ -134,9 +134,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 	#访问网页
 	def webReadFile(self,urlStr):
 		headers = {
-			'Referer':'https://www.baidu.com/',
+			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.baidu.com'
+			'Host': 'www.ixigua.com'
 		}
 		if urlStr.find("http")<0:
 			return ""

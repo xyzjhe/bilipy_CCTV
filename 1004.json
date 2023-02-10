@@ -36,14 +36,14 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
     },
     {
-      "key": "py_6vFilm1",
-      "name": "6v电影1",
+      "key": "py_kj",
+      "name": "空间",
       "type": 3,
-      "api": "py_6vFilm1",
+      "api": "py_kj",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm_1.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/ppy_space.py"
     },
     {
       "key": "py_wo",
