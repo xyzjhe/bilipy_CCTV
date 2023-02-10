@@ -6,6 +6,9 @@ from base.spider import Spider
 import json
 import time
 import base64
+from urllib import request, parse
+import urllib
+import urllib.request
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -22,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		cateManual = {
 			"关注的Pu主": "pu",
-			"个人收藏1": "Collection"
+			"个人收藏2": "Collection"
 		}
 		classes = []
 		for k in cateManual:
@@ -63,7 +66,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		htmlTxt = self.webReadFile(urlStr=lastVideo)
+		rsp = self.fetch(lastVideo,headers=self.header)
+		htmlTxt = rsp.text
 		vodItems =[]
 		if tid=="西瓜":
 			vodItems = self.get_collection_xg(html=htmlTxt)
