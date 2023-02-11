@@ -51,19 +51,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern = re.compile(r'"id":\s*(\w+?),\s*"url":\s*(.+?)",\s*"pubDate":\s*(.+?)",\s*"title":\s*(.+?)",')
 		ListRe=pattern.findall(html)
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
-		for vod in ListRe:
-			lastVideo = vod[1]
-			title = vod[3]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid = title+'###'+lastVideo+'###'+img
-			# guid = prefix+'###'+vod['column_website']+'###'+vod['column_logo']
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
+		guid = len(html)+'###https://vod.weathertv.cn/video/2023/2/9/202302091675955289814.mp4###'+img
+		videos.append({
+			"vod_id":guid,
+			"vod_name":title,
+			"vod_pic":img,
+			"vod_remarks":''
+		})
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
