@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"天气预报": "tianqi"
+			"天气预报7": "tianqi"
 		}
 		classes = []
 		for k in cateManual:
@@ -46,10 +46,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url="http://www.weather.com.cn/pubm/video_lianbo_2021.htm"
-		rsp=self.fetch(url,headers=self.header)
-		html=rsp.text
-		pattern = re.compile(r'"id":\s*(\w+?),\s*"url":\s*(.+?)",\s*"pubDate":\s*(.+?)",\s*"title":\s*(.+?)",')
-		ListRe=pattern.findall(html)
+		html=webReadFile(urlStr=url)
+		#pattern = re.compile(r'"id":\s*(\w+?),\s*"url":\s*(.+?)",\s*"pubDate":\s*(.+?)",\s*"title":\s*(.+?)",')
+		#ListRe=pattern.findall(html)
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
 		guid = len(html)+'###https://vod.weathertv.cn/video/2023/2/9/202302091675955289814.mp4###'+img
 		videos.append({
