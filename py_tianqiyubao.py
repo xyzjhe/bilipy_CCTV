@@ -46,7 +46,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url="http://www.weather.com.cn/pubm/video_lianbo_2021.htm"
-		html=self.webReadFile(urlStr=Url)
+		rsp=self.fetch(url,headers=self.header)
+		html=rsp.text
 		pattern = re.compile(r'"id":\s*(\w+?),\s*"url":\s*(.+?)",\s*"pubDate":\s*(.+?)",\s*"title":\s*(.+?)",')
 		ListRe=pattern.findall(html)
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
@@ -122,7 +123,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
-		print(len(html))
 		return html
 	config = {
 		"player": {},

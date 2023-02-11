@@ -207,8 +207,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 			})
 		return videos
 	def webReadFile(self,urlStr):
-		self.fetch(lastVideo,headers=self.header)
-		html = rsp.text
+		headers = {
+			'Referer':'https://www.66s.cc/',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'www.66s.cc'
+		}
+		if urlStr.find("http")<0:
+			return ""
+		req = urllib.request.Request(url=urlStr, headers=headers)
+		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_UrlParameter(self,parameter):
 		aid =parameter.split('###')
