@@ -8,6 +8,10 @@ import math
 import json
 import requests
 import urllib
+from urllib import request, parse
+import urllib
+import urllib.request
+import re
 
 class Spider(Spider):
 	def getName(self):
