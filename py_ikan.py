@@ -94,19 +94,19 @@ class Spider(Spider):
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append(value[0]+"$"+value[1])
+				vodItems.append(value[1]+"$"+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=html,RegexText=r'class="title">(.+?)</',Index=1)
-		pic=self.get_RegexGetText(Text=html,RegexText=r'<img class="lazyload" src="(.+?)"',Index=1)
+		pic=self.get_RegexGetText(Text=html,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?-----------/">(.+?)</a>',Index=1)
 		year=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?[0-9]{4}/">([0-9]{4}.*?)</a>',Index=1)
 		area=self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
-		act=self.get_RegexGetText(Text=html,RegexText=r'主演：</span><a href=".+?/" target="_blank">(.*?)</a>',Index=1)
-		dir=self.get_RegexGetText(Text=html,RegexText=r'导演：</span><a href=".+?/" target="_blank">(.*?)</a>',Index=1)
+		act=self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">主演：(.*?)</p>',Index=1)
+		dir=self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">导演：(.*?)</p>',Index=1)
 		cont=self.get_RegexGetText(Text=html,RegexText=r'简介：</span>(.*?)"',Index=1)
 		print(cont)
 		vod = {
@@ -117,8 +117,8 @@ class Spider(Spider):
 			"vod_year": year,
 			"vod_area": area,
 			"vod_remarks": '',
-			"vod_actor": act,
-			"vod_director": dir,
+			"vod_actor": self.removeHtml(txt=act),
+			"vod_director": self.removeHtml(txt=dir),
 			"vod_content": cont
 		}
 		vod['vod_play_from'] = vod_play_from
@@ -226,6 +226,10 @@ class Spider(Spider):
 			end=Text.find(endStr,origin)
 			circuit=Text[origin:end]
 		return circuit
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
 	config = {
 		"player": {},
 		"filter": {}
