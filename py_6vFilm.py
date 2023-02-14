@@ -115,17 +115,23 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		vod_play_from = '$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
+		typeName=get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎类　　别　(.+?)<br/>',Index=1)
+		year=get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎年　　代　([0-9]{4})<br/>',Index=1)
+		area=get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎产　　地　(.+?)<br/>',Index=1)
+		act=get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎演　　员　(.+?)◎',Index=1)
+		dir=get_RegexGetText(Text=html,RegexText=r'<br/>◎导　　演　(.+?)◎',Index=1)
+		cont=get_RegexGetText(Text=htmlTxt,RegexText=r'◎简　　介(.+?)<img',Index=1)
 		vod = {
 			"vod_id":tid,#array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":"6v电影",
-			"vod_year":"",
-			"vod_area":"",
+			"type_name":removeHtml(typeName),
+			"vod_year":removeHtml(year),
+			"vod_area":removeHtml(area),
 			"vod_remarks":"",
 			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_director":removeHtml(dir),
+			"vod_content":removeHtml(cont)
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = vod_play_url
@@ -222,6 +228,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if t.find("http")>-1 and t.find("html")>-1:
 				return t	
 		return "https://www.66s.cc/kehuanpian/18941.html"	
+	def get_RegexGetText(self,Text,RegexText,Index):
+		returnTxt="null"
+		Regex=re.search(RegexText, Text, re.M|re.I)
+		if Regex is None:
+			returnTxt="null"
+		else:
+			returnTxt=Regex.group(Index)
+		return returnTxt
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
 	config = {
 		"player": {},
 		"filter": {}

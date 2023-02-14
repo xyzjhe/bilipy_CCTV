@@ -9,7 +9,6 @@ import json
 import requests
 import urllib
 from urllib import request, parse
-import urllib
 import urllib.request
 import re
 
@@ -181,7 +180,7 @@ class Spider(Spider):
 			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
 			"Referer": "https://ikan6.vip/"
 		}
-		url = 'https://ikan6.vip/vodplay/{0}/'.format(id)
+		url = 'https://ikan6.vip/{0}'.format(id)
 		rsp = self.fetch(url)
 		cookie = rsp.cookies
 		info = json.loads(self.regStr(reg=r'var player_data=(.*?)</script>', src=rsp.text))
