@@ -25,6 +25,15 @@
             "quickSearch": 0,
             "searchable": 0
       },
+      {
+            "key": "360_spider",
+            "name": "🌈360影视",
+            "api": "csp_SP360",
+            "type": 3,
+            "filterable": 1,
+            "quickSearch": 1,
+            "searchable": 1
+      },
          {
       "key": "百度",
       "name": "🍁百度",

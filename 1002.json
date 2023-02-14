@@ -34,15 +34,6 @@
             "quickSearch": 1,
             "searchable": 1
       },
-      {
-	    "key":"T4_douban",
-	    "name":"🍀豆瓣高分",
-	    "type":4,
-	    "api":"http://top.fuqizhishi.com/vod",
-	    "searchable":1,
-	    "quickSearch":1,
-	    "filterable":1
-      },
        {
             "key": "SPQQ",
             "name": "🐧腾讯(官)",
@@ -124,7 +115,16 @@
 		"quickSearch": 0,
 		"filterable": 1,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd.py"
-	},
+	},{
+		"key": "py_ikan",
+		"name": "🔥爱看",
+		"type": 3,
+		"api": "py_ikan",
+		"searchable": 0,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
+    },
     {
       "key": "百度",
       "name": "百度",
