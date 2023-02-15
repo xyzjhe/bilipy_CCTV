@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片6": "kehuanpian",
+			"科幻片7": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -130,8 +130,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_area":area,
 			"vod_remarks":"",
 			"vod_actor":"",
-			"vod_director":dir,
-			"vod_content":cont
+			"vod_director":get_removeHtml(txt=dir),
+			"vod_content":get_removeHtml(txt=cont)
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = vod_play_url
@@ -236,7 +236,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			returnTxt=Regex.group(Index)
 		return returnTxt
-	def removeHtml(self,txt):
+	def get_removeHtml(self,txt):
 		soup = re.compile(r'<[^>]+>',re.S)
 		txt =soup.sub('', txt)
 		return txt.replace("&nbsp;"," ")
