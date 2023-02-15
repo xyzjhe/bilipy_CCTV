@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片2": "kehuanpian",
+			"科幻片3": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -116,7 +116,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		vod_play_from = '$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎类　　别　(.+?)<br/>',Index=1)
-		year=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎年　　代　([0-9]{4})<br/>',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎年　　代　([0-9]{4})<br/>',Index=1)
 		area=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎产　　地　(.+?)<br/>',Index=1)
 		act=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎演　　员　(.+?)◎',Index=1)
 		dir=""#self.get_RegexGetText(Text=html,RegexText=r'<br/>◎导　　演　(.+?)◎',Index=1)
