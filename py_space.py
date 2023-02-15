@@ -126,7 +126,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return videos
 	def get_collection_xg(html):
 		videoList = []
-		pattern = re.compile(r'title color-link-content-primary"\stitle="(.+?)"\stabindex=".+?"\saria-hidden=".+?"\s*href="(.+?&amp;)"\starget=""')
+		pattern = re.compile(r'title="(.+?)"\s*href="(.+?&amp;)".+? src="(.+?)"')
 		ListRe=pattern.findall(html)
 		for video in ListRe:
 			videoList.append(video[0]+"$https://www.ixigua.com"+video[1].replace('&amp;' , '&'))
