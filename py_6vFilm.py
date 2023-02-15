@@ -130,8 +130,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_area":area,
 			"vod_remarks":"",
 			"vod_actor":"",
-			"vod_director":get_removeHtml(txt=dir),
-			"vod_content":get_removeHtml(txt=cont)
+			"vod_director":self.get_removeHtml(txt=dir),
+			"vod_content":self.get_removeHtml(txt=cont)
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = vod_play_url
