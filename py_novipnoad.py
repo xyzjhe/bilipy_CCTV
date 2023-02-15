@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影4": "movie",
+			"电影5": "movie",
 			"剧集": "tv",
 			"综艺": "shows",
 			"动画": "anime",
@@ -53,8 +53,10 @@ class Spider(Spider):
 		htmlTxt =self.get_webReadFile(urlStr=url)
 		videos=self.get_list(html=htmlTxt)
 		pgc=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a\s*class="{0,1}last"{0,1}\s*href="{0,1}.+?"{0,1}\s*>(.+?)</a>',Index=1)
-		if pgc=="null":
+		if pgc=="null" and len(videos)<15:
 			pgc=1
+		elif pgc=="null" and len(videos)>15:
+			pgc=pg+1
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = pgc
