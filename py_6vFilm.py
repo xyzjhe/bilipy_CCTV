@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片7": "kehuanpian",
+			"科幻片8": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -122,7 +122,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎导　　演　(.+?)◎',Index=1)
 		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎简　　介(.+?)<img',Index=1)
 		vod = {
-			"vod_id":tid,#array[0],
+			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":typeName,
