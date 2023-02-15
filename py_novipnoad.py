@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影5": "movie",
+			"电影6": "movie",
 			"剧集": "tv",
 			"综艺": "shows",
 			"动画": "anime",
@@ -56,7 +56,7 @@ class Spider(Spider):
 		if pgc=="null" and len(videos)<15:
 			pgc=1
 		elif pgc=="null" and len(videos)>15:
-			pgc=pg+1
+			pgc=int(pg)+1
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = pgc
