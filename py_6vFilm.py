@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"科幻片": "kehuanpian",
+			"科幻片1": "kehuanpian",
 			"动画片": "donghuapian",
 			"电视剧": "dianshiju",
 			"爱情片": "aiqingpian",
@@ -115,23 +115,23 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return {}
 		vod_play_from = '$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎类　　别　(.+?)<br/>',Index=1)
-		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎年　　代　([0-9]{4})<br/>',Index=1)
-		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎产　　地　(.+?)<br/>',Index=1)
-		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎演　　员　(.+?)◎',Index=1)
-		dir=self.get_RegexGetText(Text=html,RegexText=r'<br/>◎导　　演　(.+?)◎',Index=1)
-		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎简　　介(.+?)<img',Index=1)
+		typeName=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎类　　别　(.+?)<br/>',Index=1)
+		year=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎年　　代　([0-9]{4})<br/>',Index=1)
+		area=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎产　　地　(.+?)<br/>',Index=1)
+		act=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<br/>◎演　　员　(.+?)◎',Index=1)
+		dir=""#self.get_RegexGetText(Text=html,RegexText=r'<br/>◎导　　演　(.+?)◎',Index=1)
+		cont=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎简　　介(.+?)<img',Index=1)
 		vod = {
 			"vod_id":tid,#array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":self.removeHtml(txt=typeName),
-			"vod_year":self.removeHtml(txt=year),
-			"vod_area":self.removeHtml(txt=area),
+			"type_name":typeName,
+			"vod_year":year,
+			"vod_area":area,
 			"vod_remarks":"",
 			"vod_actor":"",
-			"vod_director":self.removeHtml(txt=dir),
-			"vod_content":self.removeHtml(txt=cont)
+			"vod_director":dir,
+			"vod_content":cont
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = vod_play_url
