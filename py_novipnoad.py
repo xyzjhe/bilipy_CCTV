@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "movie",
+			"电影1": "movie",
 			"剧集": "tv",
 			"综艺": "shows",
 			"动画": "anime",
@@ -51,9 +51,9 @@ class Spider(Spider):
 		result = {}
 		url = 'https://www.novipnoad.com/{0}/page/{1}/'.format(tid,pg)
 		rsp = self.fetch(url)
-		html = rsp.text
-		videos=self.get_list(html=html)
-		pgc=self.get_RegexGetText(Text=html,RegexText=r'<a\s*class="{0,1}last"{0,1}\s*href="{0,1}.+?"{0,1}\s*>(.+?)</a>',Index=1)
+		htmlTxt = rsp.text
+		videos=self.get_list(html=htmlTxt)
+		pgc=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a\s*class="{0,1}last"{0,1}\s*href="{0,1}.+?"{0,1}\s*>(.+?)</a>',Index=1)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = pgc
