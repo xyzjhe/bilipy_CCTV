@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影1": "movie",
+			"电影2": "movie",
 			"剧集": "tv",
 			"综艺": "shows",
 			"动画": "anime",
@@ -50,8 +50,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'https://www.novipnoad.com/{0}/page/{1}/'.format(tid,pg)
-		rsp = self.fetch(url)
-		htmlTxt = rsp.text
+		htmlTxt =self.get_webReadFile(urlStr=url)
 		videos=self.get_list(html=htmlTxt)
 		pgc=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a\s*class="{0,1}last"{0,1}\s*href="{0,1}.+?"{0,1}\s*>(.+?)</a>',Index=1)
 		result['list'] = videos
@@ -212,6 +211,15 @@ class Spider(Spider):
 				"vod_remarks":''
 			})
 		return videos
+	def get_webReadFile(self,urlStr):
+		headers = {
+			'Referer':urlStr,
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'www.novipnoad.com'
+		}
+		req = urllib.request.Request(url=urlStr, headers=headers)
+		html = urllib.request.urlopen(req).read().decode('utf-8')
+		return html
 	config = {
 		"player": {},
 		"filter": {}
