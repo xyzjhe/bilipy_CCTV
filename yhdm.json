@@ -52,7 +52,7 @@
     
     //搜索链接，搜索关键字用{wd}表示，post请求的最后面加;post
     //POST链接示例 http://www.lezhutv.com/index.php?m=vod-search;post
-    "search_url": "http://www.dm88.me/search.asp?searchword={wd}&submit=",
+    "search_url": "http://www.dmd85.com/index.php?m=vod-search-wd-{wd}",
     //POST搜索body，填写搜索关键字的键值，一般常见的是searchword和wd，不是POST搜索的可留空或删除。
     "sea_PtBody":"",
     //搜索模式,0为json搜索，只支持列表在list数组里的，其它为网页截取。
@@ -69,16 +69,16 @@
     //搜索是否二次截取  
     "sea_YN_twice": "1",
     //搜索二次截取前
-    "sea_twice_pre": "class=\"myui-vodlist__media clearfix",
+    "sea_twice_pre": "class=\"list3_cn_box",
     //搜索二次截取后
-    "sea_twice_suf": "</ul>",
+    "sea_twice_suf": "class=\"footer",
     
     //搜索数组前缀
-    "sea_arr_pre": "<li",
+    "sea_arr_pre": "class=\"bor_img3_right",
     //搜索数组后缀
-    "sea_arr_suf": "</li>",
+    "sea_arr_suf": "</div>",
     //搜索片单图片，截取前缀&&截取后缀
-    "sea_pic": "src=\"&&\"",
+    "sea_pic": "data-original=\"&&\"",
     //搜索片单标题，截取前缀&&截取后缀
     "sea_title": "title=\"&&\"",
     //搜索片单链接，截取前缀&&截取后缀
@@ -88,7 +88,7 @@
     //搜索片单链接补后缀，这个一般json搜索的需要
     "search_suffix": "",
     //搜索副标题，截取前缀&&截取后缀
-    "sea_subtitle": ">&&分<",
+    "sea_subtitle": "alt=\"&&\"",
     
     //片单链接是否直接播放，1是直接播放，0否。
     "force_play": "0",
@@ -108,7 +108,7 @@
     //线路是否二次截取
     "tab_YN_twice": "1",
     //线路二次截取前
-    "tab_twice_pre": "class=\"nav nav-tabs",
+    "tab_twice_pre": "<ul class=\"nav nav-tabs active\">",
     //线路二次截取后
     "tab_twice_suf": "</ul>",
     
