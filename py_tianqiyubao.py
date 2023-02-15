@@ -58,10 +58,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def detailContent(self,array):
 		lastVideo = array[0]
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
-		if lastVideo == '_':
-			return {}
 		videoList = []
-		videoList.append(title+"$"+lastVideo)
+		videoList.append("天气预报"+"$"+lastVideo)
 		vod = {
 			"vod_id":lastVideo,#array[0],
 			"vod_name":"天气预报",
