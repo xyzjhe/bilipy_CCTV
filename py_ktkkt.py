@@ -62,12 +62,7 @@ class Spider(Spider):
 	def detailContent(self,array):
 		aid = array[0]
 		Url='http://ktkkt.top{0}'.format(aid)
-		header = {
-			'Referer':Url,
-			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'ktkkt.top'
-		}
-		rsp = self.fetch(url,headers=header)
+		rsp = self.fetch(url)
 		html = rsp.text
 		line=self.get_RegexGetTextLine(Text=html,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
 		circuit=[]
@@ -86,15 +81,14 @@ class Spider(Spider):
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=html,RegexText=r'class="title">(.+?)</',Index=1)
-		pic=self.get_RegexGetText(Text=html,RegexText=r'data-original="(.+?)"',Index=1)
+		title="777"#self.get_RegexGetText(Text=html,RegexText=r'class="title">(.+?)</',Index=1)
+		pic="777"#self.get_RegexGetText(Text=html,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?-----------/">(.+?)</a>',Index=1)
-		year=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?[0-9]{4}/">([0-9]{4}.*?)</a>',Index=1)
-		area=self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
-		act=self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">主演：(.*?)</p>',Index=1)
-		dir=self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">导演：(.*?)</p>',Index=1)
-		cont=self.get_RegexGetText(Text=html,RegexText=r'简介：</span>(.*?)"',Index=1)
-		print(cont)
+		year="777"#self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?[0-9]{4}/">([0-9]{4}.*?)</a>',Index=1)
+		area="777"#self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
+		act="777"#self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">主演：(.*?)</p>',Index=1)
+		dir="777"#self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">导演：(.*?)</p>',Index=1)
+		cont="777"#self.get_RegexGetText(Text=html,RegexText=r'简介：</span>(.*?)"',Index=1)
 		vod = {
 			"vod_id": aid,
 			"vod_name": title,
@@ -230,7 +224,7 @@ class Spider(Spider):
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'www.ktkkt2.com',
+		'Host': 'ktkkt.top',
 		"Referer": "http://ktkkt.top/"}
 
 	def localProxy(self,param):
