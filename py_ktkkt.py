@@ -61,8 +61,13 @@ class Spider(Spider):
 
 	def detailContent(self,array):
 		aid = array[0]
-		url = 'http://ktkkt.top/movie/{0}.html'.format(aid)
-		rsp = self.fetch(url)
+		Url='http://ktkkt.top{0}'.format(aid)
+		header = {
+			'Referer':Url,
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'ktkkt.top'
+		}
+		rsp = self.fetch(url,headers=header)
 		html = rsp.text
 		line=self.get_RegexGetTextLine(Text=html,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
 		circuit=[]
