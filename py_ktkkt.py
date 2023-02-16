@@ -11,7 +11,7 @@ import urllib
 from urllib import request, parse
 import urllib.request
 import re
-import ssl
+
 class Spider(Spider):
 	def getName(self):
 		return "卡通站"
@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画": "30",
+			"国产动画1": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -197,10 +197,8 @@ class Spider(Spider):
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
 			'Host': 'www.ktkkt2.com'
 		}
-		ssl._create_default_https_context = ssl._create_unverified_context#全局取消证书验证
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
-		#print(len(html))
 		return html
 	def get_list(self,html):
 		patternTxt=r'<a class="myui-vodlist.*?"\s*href="(.+?)" title="(.+?)"\s*data-original="(.+?)">'
