@@ -124,7 +124,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_remarks":''
 			})
 		return videos
-	def get_collection_xg(html):
+	def get_collection_xg(self,html):
 		videoList = []
 		pattern = re.compile(r'title="(.+?)"\s*href="(.+?&amp;)".+? src="(.+?)"')
 		ListRe=pattern.findall(html)

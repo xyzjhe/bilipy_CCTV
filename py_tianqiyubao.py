@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"天气预报9": "tianqi"
+			"天气预报": "tianqi"
 		}
 		classes = []
 		for k in cateManual:
@@ -64,7 +64,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		videoList = []
 		videoList.append(title+"$"+lastVideo)
 		vod = {
-			"vod_id":lastVideo,#array[0],
+			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":img,
 			"type_name":"",
@@ -73,7 +73,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":"",
 			"vod_actor":"",
 			"vod_director":"",
-			"vod_content":date+""+title
+			"vod_content":title
 		}
 		vod['vod_play_from'] = "线路"
 		vod['vod_play_url'] = "#".join(videoList)
