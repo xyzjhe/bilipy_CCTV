@@ -26,14 +26,14 @@
             "searchable": 0
       },
     {
-      "key": "py_6vFilm",
-      "name": "6v电影",
+      "key": "py_ktkkt",
+      "name": "卡通站",
       "type": 3,
-      "api": "py_6vFilm",
+      "api": "py_ktkkt",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
     },
     {
       "key": "py_kong",
