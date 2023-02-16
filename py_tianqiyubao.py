@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"天气预报8": "tianqi"
+			"天气预报9": "tianqi"
 		}
 		classes = []
 		for k in cateManual:
@@ -56,13 +56,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 		#详情
 	def detailContent(self,array):
-		lastVideo = array[0]
+		aid = array[0].split('###')
+		title=aid[0]
+		lastVideo =aid[2]
+		date=aid[1]
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
 		videoList = []
-		videoList.append("天气预报"+"$"+lastVideo)
+		videoList.append(title+"$"+lastVideo)
 		vod = {
 			"vod_id":lastVideo,#array[0],
-			"vod_name":"天气预报",
+			"vod_name":title,
 			"vod_pic":img,
 			"type_name":"",
 			"vod_year":"",
@@ -70,7 +73,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":"",
 			"vod_actor":"",
 			"vod_director":"",
-			"vod_content":""
+			"vod_content":date+""+title
 		}
 		vod['vod_play_from'] = "线路"
 		vod['vod_play_url'] = "#".join(videoList)
@@ -94,6 +97,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["playUrl"] =""
 		result["url"] = id
 		result["header"] = ''
+		return result
 	#访问网页
 	def webReadFile(self,urlStr):
 		headers = {
@@ -105,21 +109,22 @@ class Spider(Spider):  # 元类 默认的元类 type
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt='"url":"(.+?\.mp4)","pubDate":".+?","title":"(.+?\.mp4)",'
+		patternTxt='"url":"(.+?\.mp4)","pubDate":"(.+?)","title":"(.+?\.mp4)",'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
 		for vod in ListRe:
 			lastVideo = vod[0]
-			title =vod[1]
+			title =vod[2]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
+			guid=title+"###"+vod[1]+"###"+lastVideo
 			videos.append({
-				"vod_id":lastVideo,
+				"vod_id":guid,
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":''
+				"vod_remarks":vod[1]
 			})
 			#print(img)
 		return videos
