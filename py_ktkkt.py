@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画2": "30",
+			"国产动画4": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -70,7 +70,7 @@ class Spider(Spider):
 			circuit.append(self.get_playlist(Text=html,headStr='id="'+i[0],endStr="</div>"))
 		playFrom = []
 		videoList=[]
-		pattern = re.compile(r'<li class="col.+"><a class=".+" href="(.+?)">(.+?)</a></li>')
+		pattern = re.compile(r"<li><a\stitle='(.+?)'\shref='(.+?)'"+'\starget="_self">(.+?)</a></li>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
 			vodItems = []
