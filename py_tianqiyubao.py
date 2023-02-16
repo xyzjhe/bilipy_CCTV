@@ -109,7 +109,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt='"url":"(.+?\.mp4)","pubDate":"(.+?)","title":"(.+?\.mp4)",'
+		patternTxt='"url":"(.+?\.mp4)","pubDate":"(.+?)","title":"(.+?)",'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
