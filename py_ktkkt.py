@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画1": "30",
+			"国产动画2": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -49,7 +49,8 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'http://ktkkt.top/frim/index{0}-{1}.html'.format(tid,pg)
-		htmlTxt = self.get_webReadFile(urlStr=url)
+		rsp = self.fetch(url)
+		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result['list'] = videos
 		result['page'] = pg
@@ -222,7 +223,10 @@ class Spider(Spider):
 		"player": {},
 		"filter": {}
 	}
-	header = {}
+	header = {
+		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+		'Host': 'www.ktkkt2.com',
+		"Referer": "http://ktkkt.top/"}
 
 	def localProxy(self,param):
 		action = {
