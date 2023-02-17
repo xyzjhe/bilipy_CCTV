@@ -45,9 +45,7 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		result = {}
 		videos=[]
-
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
