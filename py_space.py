@@ -9,7 +9,7 @@ import base64
 from urllib import request, parse
 import urllib
 import urllib.request
-
+import re
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
 		return "空间"
