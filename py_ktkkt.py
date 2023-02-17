@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画8": "30",
+			"国产动画9": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -88,7 +88,7 @@ class Spider(Spider):
 		area="777"#self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
 		act="777"#self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">主演：(.*?)</p>',Index=1)
 		dir="777"#self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">导演：(.*?)</p>',Index=1)
-		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<span class="data".*?>(.*?)</span>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<span class="sketch">(.*?)</span>',Index=1)
 		vod = {
 			"vod_id": aid,
 			"vod_name": title,
@@ -99,7 +99,7 @@ class Spider(Spider):
 			"vod_remarks": '',
 			"vod_actor": act,
 			"vod_director": dir,
-			"vod_content": cont
+			"vod_content": self.removeHtml(txt=cont)
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = vod_play_url
