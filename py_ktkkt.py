@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画5": "30",
+			"国产动画6": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -63,11 +63,11 @@ class Spider(Spider):
 		aid = array[0]
 		url='http://ktkkt.top{0}'.format(aid)
 		rsp = self.fetch(url)
-		html = rsp.text
-		line=self.get_RegexGetTextLine(Text=html,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
+		htmlTxt = rsp.text
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
 		circuit=[]
 		for i in line:
-			circuit.append(self.get_playlist(Text=html,headStr='id="'+i[0],endStr="</div>"))
+			circuit.append(self.get_playlist(Text=htmlTxt,headStr='id="'+i[0],endStr="</div>"))
 		playFrom = []
 		videoList=[]
 		pattern = re.compile(r"<li><a\stitle='(.+?)'\shref='(.+?)'"+'\starget="_self">(.+?)</a></li>')
@@ -75,7 +75,7 @@ class Spider(Spider):
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
+				vodItems.append(value[0]+"$"+value[1])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 		playFrom=[t[1] for t in line]
@@ -138,29 +138,9 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		header = {
-			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
-			"Referer": "https://ikan6.vip/"
-		}
-		url = 'https://ikan6.vip/{0}'.format(id)
-		rsp = self.fetch(url)
-		cookie = rsp.cookies
-		info = json.loads(self.regStr(reg=r'var player_data=(.*?)</script>', src=rsp.text))
-		string = info['url'][8:len(info['url'])]
-		substr = base64.b64decode(string).decode('UTF-8')
-		str = substr[8:len(substr) - 8]
-		if 'Ali' in info['from']:
-			url = 'https://cms.ikan6.vip/ali/nidasicaibudaowozaina/nicaibudaowozaina.php?url={0}'.format(str)
-		else:
-			url = 'https://cms.ikan6.vip/nidasicaibudaowozaina/nicaibudaowozaina.php?url={0}'.format(str)
-		rsp = self.fetch(url, headers=header, cookies=cookie)
-		randomurl = self.regStr(reg=r"getrandom\(\'(.*?)\'", src=rsp.text)
-		pstring = randomurl[8:len(randomurl)]
-		psubstr = base64.b64decode(pstring).decode('UTF-8')
-		purl = urllib.parse.unquote(psubstr[8:len(psubstr) - 8])
-		result["parse"] = 0
+		result["parse"] = 1
 		result["playUrl"] = ''
-		result["url"] = purl
+		result["url"] = "http://ktkkt.top/play/15346-0-0.html"
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):

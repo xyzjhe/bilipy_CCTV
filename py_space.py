@@ -1,26 +1,27 @@
 #coding=utf-8
 #!/usr/bin/python
 import sys
-sys.path.append('..') 
+sys.path.append('..')
 from base.spider import Spider
-import json
-import time
 import base64
+import math
+import json
+import requests
+import urllib
 from urllib import request, parse
 import urllib
 import urllib.request
 import re
-class Spider(Spider):  # 元类 默认的元类 type
+
+class Spider(Spider):
 	def getName(self):
-		return "空间"
+		return "爱看影视"
 	def init(self,extend=""):
-		print("============{0}============".format(extend))
 		pass
 	def isVideoFormat(self,url):
 		pass
 	def manualVideoCheck(self):
 		pass
-		#取分类名
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
@@ -30,20 +31,20 @@ class Spider(Spider):  # 元类 默认的元类 type
 		classes = []
 		for k in cateManual:
 			classes.append({
-				'type_name':k,
-				'type_id':cateManual[k]
+				'type_name': k,
+				'type_id': cateManual[k]
 			})
+
 		result['class'] = classes
-		if(filter):
+		if (filter):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		result = {
-			'list':[]
-		}
+		result = {}
 		return result
-		#取节目目录
-	def categoryContent(self,tid,pg,filter,extend):		
+
+	def categoryContent(self,tid,pg,filter,extend):
+		result = {}
 		result = {}
 		videos=[]
 		if tid=="pu":
@@ -56,56 +57,155 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['limit'] = 1
 		result['total'] = 1
 		return result
-		#详情
+
 	def detailContent(self,array):
-		aid = array[0].split('###')
-		tid = aid[0]
-		logo = aid[3]
-		lastVideo = aid[2]
-		title = aid[1]
-		date = aid[0]
-		if lastVideo == '_':
-			return {}
-		rsp = self.fetch(lastVideo)
-		htmlTxt = rsp.text
-		vodItems =[]
-		if tid=="西瓜":
-			vodItems = self.get_collection_xg(html=htmlTxt)
+		aid = array[0]
+		url = 'https://ikan6.vip/voddetail/{0}/'.format(aid)
+		rsp = self.fetch(url)
+		html = rsp.text
+		line=self.get_RegexGetTextLine(Text=html,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
+		circuit=[]
+		for i in line:
+			circuit.append(self.get_playlist(Text=html,headStr='id="'+i[0],endStr="</div>"))
+		playFrom = []
+		videoList=[]
+		pattern = re.compile(r'<li class="col.+"><a class=".+" href="(.+?)">(.+?)</a></li>')
+		for v in circuit:
+			ListRe=pattern.findall(v)
+			vodItems = []
+			for value in ListRe:
+				vodItems.append(value[0]+"$"+value[1])
+			joinStr = "#".join(vodItems)
+			videoList.append(joinStr)
+		playFrom=[t[1] for t in line]
+		vod_play_from='$$$'.join(playFrom)
+		vod_play_url = "$$$".join(videoList)
+		title=self.get_RegexGetText(Text=html,RegexText=r'class="title">(.+?)</',Index=1)
+		pic=self.get_RegexGetText(Text=html,RegexText=r'<img class="lazyload" src="(.+?)"',Index=1)
+		typeName=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?-----------/">(.+?)</a>',Index=1)
+		year=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?[0-9]{4}/">([0-9]{4}.*?)</a>',Index=1)
+		area=self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
+		act=self.get_RegexGetText(Text=html,RegexText=r'主演：</span><a href=".+?/" target="_blank">(.*?)</a>',Index=1)
+		dir=self.get_RegexGetText(Text=html,RegexText=r'导演：</span><a href=".+?/" target="_blank">(.*?)</a>',Index=1)
+		cont=self.get_RegexGetText(Text=html,RegexText=r'简介：</span>(.*?)"',Index=1)
+		print(cont)
 		vod = {
-			"vod_id":tid,#array[0],
-			"vod_name":title,
-			"vod_pic":logo,
-			"type_name":tid,
-			"vod_year":"",
-			"vod_area":"",
-			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_id": aid,
+			"vod_name": title,
+			"vod_pic": pic,
+			"type_name": typeName,
+			"vod_year": year,
+			"vod_area": area,
+			"vod_remarks": '',
+			"vod_actor": act,
+			"vod_director": dir,
+			"vod_content": cont
 		}
-		vod['vod_play_from'] = "线路"
-		vod['vod_play_url'] = "#".join(vodItems)
+		vod['vod_play_from'] = vod_play_from
+		vod['vod_play_url'] = vod_play_url
+
 		result = {
-			'list':[
+			'list': [
 				vod
 			]
 		}
 		return result
 
+	def verifyCode(self):
+		retry = 10
+		header = {
+			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
+		while retry:
+			try:
+				session = requests.session()
+				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
+				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
+				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
+								   headers=header).json()
+				if res["msg"] == "ok":
+					return session
+			except Exception as e:
+				print(e)
+			finally:
+				retry = retry - 1
+
 	def searchContent(self,key,quick):
+		result = {}
+		url = 'https://ikan6.vip/vodsearch/-------------/?wd={0}&submit='.format(key)
+		session = self.verifyCode()
+		rsp = session.get(url)
+		root = self.html(rsp.text)
+		vodList = root.xpath("//ul[@class='myui-vodlist__media clearfix']/li")
+		videos = []
+		for vod in vodList:
+			name = vod.xpath("./div/h4/a/text()")[0]
+			pic = vod.xpath("./div[@class='thumb']/a/@data-original")[0]
+			mark = vod.xpath("./div[@class='thumb']/a/span[@class='pic-text text-right']/text()")[0]
+			sid = vod.xpath("./div[@class='thumb']/a/@href")[0]
+			sid = self.regStr(sid,"/voddetail/(\\S+)/")
+			videos.append({
+				"vod_id":sid,
+				"vod_name":name,
+				"vod_pic":pic,
+				"vod_remarks":mark
+			})
 		result = {
-			'list':[]
-		}
+				'list': videos
+			}
+
 		return result
-		#视频
+
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		
-		result["parse"] = 1
-		result["playUrl"] =""
-		result["url"] = id
+		header = {
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
+			"Referer": "https://ikan6.vip/"
+		}
+		url = 'https://ikan6.vip/vodplay/{0}/'.format(id)
+		rsp = self.fetch(url)
+		cookie = rsp.cookies
+		info = json.loads(self.regStr(reg=r'var player_data=(.*?)</script>', src=rsp.text))
+		string = info['url'][8:len(info['url'])]
+		substr = base64.b64decode(string).decode('UTF-8')
+		str = substr[8:len(substr) - 8]
+		if 'Ali' in info['from']:
+			url = 'https://cms.ikan6.vip/ali/nidasicaibudaowozaina/nicaibudaowozaina.php?url={0}'.format(str)
+		else:
+			url = 'https://cms.ikan6.vip/nidasicaibudaowozaina/nicaibudaowozaina.php?url={0}'.format(str)
+		rsp = self.fetch(url, headers=header, cookies=cookie)
+		randomurl = self.regStr(reg=r"getrandom\(\'(.*?)\'", src=rsp.text)
+		pstring = randomurl[8:len(randomurl)]
+		psubstr = base64.b64decode(pstring).decode('UTF-8')
+		purl = urllib.parse.unquote(psubstr[8:len(psubstr) - 8])
+		result["parse"] = 0
+		result["playUrl"] = ''
+		result["url"] = purl
 		result["header"] = ''
 		return result
+	def get_RegexGetText(self,Text,RegexText,Index):
+		returnTxt="null"
+		Regex=re.search(RegexText, Text, re.M|re.I)
+		if Regex is None:
+			returnTxt="null"
+		else:
+			returnTxt=Regex.group(Index)
+		return returnTxt	
+	def get_RegexGetTextLine(self,Text,RegexText,Index):
+		returnTxt=[]
+		pattern = re.compile(RegexText)
+		ListRe=pattern.findall(Text)
+		if len(ListRe)<1:
+			return returnTxt
+		for value in ListRe:
+			returnTxt.append(value)	
+		return returnTxt
+	def get_playlist(self,Text,headStr,endStr):
+		circuit=""
+		origin=Text.find(headStr)
+		if origin>8:
+			end=Text.find(endStr,origin)
+			circuit=Text[origin:end]
+		return circuit
 	def get_list_pu(self):
 		ListRe=[("科技猿人","https://www.ixigua.com/home/62435616925/","西瓜"),("妈咪说MommyTalk","https://www.ixigua.com/home/62786280361/","西瓜")]
 		videos = []
@@ -124,34 +224,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_remarks":''
 			})
 		return videos
-	def get_collection_xg(self,html):
-		videoList = []
-		pattern = re.compile(r'title="(.+?)"\s*href="(.+?&amp;)".+? src="(.+?)"')
-		ListRe=pattern.findall(html)
-		for video in ListRe:
-			videoList.append(video[0]+"$https://www.ixigua.com"+video[1].replace('&amp;' , '&'))
-		return videoList
-	#访问网页
-	def webReadFile(self,urlStr):
-		headers = {
-			'Referer':urlStr,
-			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.ixigua.com'
-		}
-		if urlStr.find("http")<0:
-			return ""
-		req = urllib.request.Request(url=urlStr, headers=headers)
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		return html
 	config = {
 		"player": {},
-		"filter": {"CCTV":[{"key":"cid","name":"频道","value":[{"n":"全部","v":""},{"n":"CCTV-1综合","v":"EPGC1386744804340101"},{"n":"CCTV-2财经","v":"EPGC1386744804340102"},{"n":"CCTV-3综艺","v":"EPGC1386744804340103"},{"n":"CCTV-4中文国际","v":"EPGC1386744804340104"},{"n":"CCTV-5体育","v":"EPGC1386744804340107"},{"n":"CCTV-6电影","v":"EPGC1386744804340108"},{"n":"CCTV-7国防军事","v":"EPGC1386744804340109"},{"n":"CCTV-8电视剧","v":"EPGC1386744804340110"},{"n":"CCTV-9纪录","v":"EPGC1386744804340112"},{"n":"CCTV-10科教","v":"EPGC1386744804340113"},{"n":"CCTV-11戏曲","v":"EPGC1386744804340114"},{"n":"CCTV-12社会与法","v":"EPGC1386744804340115"},{"n":"CCTV-13新闻","v":"EPGC1386744804340116"},{"n":"CCTV-14少儿","v":"EPGC1386744804340117"},{"n":"CCTV-15音乐","v":"EPGC1386744804340118"},{"n":"CCTV-16奥林匹克","v":"EPGC1634630207058998"},{"n":"CCTV-17农业农村","v":"EPGC1563932742616872"},{"n":"CCTV-5+体育赛事","v":"EPGC1468294755566101"}]},{"key":"fc","name":"分类","value":[{"n":"全部","v":""},{"n":"新闻","v":"新闻"},{"n":"体育","v":"体育"},{"n":"综艺","v":"综艺"},{"n":"健康","v":"健康"},{"n":"生活","v":"生活"},{"n":"科教","v":"科教"},{"n":"经济","v":"经济"},{"n":"农业","v":"农业"},{"n":"法治","v":"法治"},{"n":"军事","v":"军事"},{"n":"少儿","v":"少儿"},{"n":"动画","v":"动画"},{"n":"纪实","v":"纪实"},{"n":"戏曲","v":"戏曲"},{"n":"音乐","v":"音乐"},{"n":"影视","v":"影视"}]},{"key":"fl","name":"字母","value":[{"n":"全部","v":""},{"n":"A","v":"A"},{"n":"B","v":"B"},{"n":"C","v":"C"},{"n":"D","v":"D"},{"n":"E","v":"E"},{"n":"F","v":"F"},{"n":"G","v":"G"},{"n":"H","v":"H"},{"n":"I","v":"I"},{"n":"J","v":"J"},{"n":"K","v":"K"},{"n":"L","v":"L"},{"n":"M","v":"M"},{"n":"N","v":"N"},{"n":"O","v":"O"},{"n":"P","v":"P"},{"n":"Q","v":"Q"},{"n":"R","v":"R"},{"n":"S","v":"S"},{"n":"T","v":"T"},{"n":"U","v":"U"},{"n":"V","v":"V"},{"n":"W","v":"W"},{"n":"X","v":"X"},{"n":"Y","v":"Y"},{"n":"Z","v":"Z"}]},{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"2006","v":"2006"},{"n":"2005","v":"2005"},{"n":"2004","v":"2004"},{"n":"2003","v":"2003"},{"n":"2002","v":"2002"},{"n":"2001","v":"2001"},{"n":"2000","v":"2000"}]},{"key":"month","name":"月份","value":[{"n":"全部","v":""},{"n":"12","v":"12"},{"n":"11","v":"11"},{"n":"10","v":"10"},{"n":"09","v":"09"},{"n":"08","v":"08"},{"n":"07","v":"07"},{"n":"06","v":"06"},{"n":"05","v":"05"},{"n":"04","v":"04"},{"n":"03","v":"03"},{"n":"02","v":"02"},{"n":"01","v":"01"}]}]}
+		"filter": {}
 	}
-	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		"Origin": "https://tv.cctv.com",
-		"Referer": "https://tv.cctv.com/"
-	}
+	header = {}
 
 	def localProxy(self,param):
+		action = {
+			'url':'',
+			'header':'',
+			'param':'',
+			'type':'string',
+			'after':''
+		}
 		return [200, "video/MP2T", action, ""]
