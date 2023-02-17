@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画4": "30",
+			"国产动画5": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -61,7 +61,7 @@ class Spider(Spider):
 
 	def detailContent(self,array):
 		aid = array[0]
-		Url='http://ktkkt.top{0}'.format(aid)
+		url='http://ktkkt.top{0}'.format(aid)
 		rsp = self.fetch(url)
 		html = rsp.text
 		line=self.get_RegexGetTextLine(Text=html,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
@@ -83,7 +83,7 @@ class Spider(Spider):
 		vod_play_url = "$$$".join(videoList)
 		title="777"#self.get_RegexGetText(Text=html,RegexText=r'class="title">(.+?)</',Index=1)
 		pic="777"#self.get_RegexGetText(Text=html,RegexText=r'data-original="(.+?)"',Index=1)
-		typeName=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?-----------/">(.+?)</a>',Index=1)
+		typeName="777"#self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?-----------/">(.+?)</a>',Index=1)
 		year="777"#self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?[0-9]{4}/">([0-9]{4}.*?)</a>',Index=1)
 		area="777"#self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
 		act="777"#self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">主演：(.*?)</p>',Index=1)
@@ -97,8 +97,8 @@ class Spider(Spider):
 			"vod_year": year,
 			"vod_area": area,
 			"vod_remarks": '',
-			"vod_actor": self.removeHtml(txt=act),
-			"vod_director": self.removeHtml(txt=dir),
+			"vod_actor": act,
+			"vod_director": dir,
 			"vod_content": cont
 		}
 		vod['vod_play_from'] = vod_play_from
