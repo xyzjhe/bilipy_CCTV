@@ -9,7 +9,6 @@ import json
 import requests
 import urllib
 from urllib import request, parse
-import urllib
 import urllib.request
 import re
 
@@ -45,12 +44,33 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		videos=[]
+		url = 'https://www.ktkkt2.com/frim/index{0}-{1}.html'.format(tid,pg)
+		rsp = self.fetch(url)
+		html = self.html(rsp.text)
+		aList = html.xpath("//ul[contains(@class, 'myui-vodlist')]/li")
+		videos = []
+		numvL = len(aList)
+		pgc = math.ceil(numvL/15)
+		for a in aList:
+			aid = a.xpath("./div[contains(@class, 'myui-vodlist__box')]/a/@href")[0]
+			aid = self.regStr(reg=r'/voddetail/(.*?)/', src=aid)
+			img = a.xpath(".//div[contains(@class, 'myui-vodlist__box')]/a/@data-original")[0]
+			name = a.xpath(".//div[contains(@class, 'myui-vodlist__box')]/a/@title")[0]
+			remark = a.xpath(".//span[contains(@class, 'pic-text text-right')]/text()")
+			if remark == []:
+				remark = a.xpath(".//span[contains(@class, 'pic-tag pic-tag-top')]/span/text()")
+			remark = remark[0]
+			videos.append({
+				"vod_id": aid,
+				"vod_name": name,
+				"vod_pic": img,
+				"vod_remarks": remark
+			})
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 1
-		result['limit'] = 1
-		result['total'] = 1
+		result['pagecount'] = pgc
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
 
 	def detailContent(self,array):
@@ -69,19 +89,19 @@ class Spider(Spider):
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append(value[0]+"$"+value[1])
+				vodItems.append(value[1]+"$"+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=html,RegexText=r'class="title">(.+?)</',Index=1)
-		pic=self.get_RegexGetText(Text=html,RegexText=r'<img class="lazyload" src="(.+?)"',Index=1)
+		pic=self.get_RegexGetText(Text=html,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?-----------/">(.+?)</a>',Index=1)
 		year=self.get_RegexGetText(Text=html,RegexText=r'<a href=".+?[0-9]{4}/">([0-9]{4}.*?)</a>',Index=1)
 		area=self.get_RegexGetText(Text=html,RegexText=r'地区：</span><a href=".+?/">(.*?)</a>',Index=1)
-		act=self.get_RegexGetText(Text=html,RegexText=r'主演：</span><a href=".+?/" target="_blank">(.*?)</a>',Index=1)
-		dir=self.get_RegexGetText(Text=html,RegexText=r'导演：</span><a href=".+?/" target="_blank">(.*?)</a>',Index=1)
+		act=self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">主演：(.*?)</p>',Index=1)
+		dir=self.get_RegexGetText(Text=html,RegexText=r'<span class="text-muted">导演：(.*?)</p>',Index=1)
 		cont=self.get_RegexGetText(Text=html,RegexText=r'简介：</span>(.*?)"',Index=1)
 		print(cont)
 		vod = {
@@ -92,8 +112,8 @@ class Spider(Spider):
 			"vod_year": year,
 			"vod_area": area,
 			"vod_remarks": '',
-			"vod_actor": act,
-			"vod_director": dir,
+			"vod_actor": self.removeHtml(txt=act),
+			"vod_director": self.removeHtml(txt=dir),
 			"vod_content": cont
 		}
 		vod['vod_play_from'] = vod_play_from
@@ -125,27 +145,8 @@ class Spider(Spider):
 				retry = retry - 1
 
 	def searchContent(self,key,quick):
-		result = {}
-		url = 'https://ikan6.vip/vodsearch/-------------/?wd={0}&submit='.format(key)
-		session = self.verifyCode()
-		rsp = session.get(url)
-		root = self.html(rsp.text)
-		vodList = root.xpath("//ul[@class='myui-vodlist__media clearfix']/li")
-		videos = []
-		for vod in vodList:
-			name = vod.xpath("./div/h4/a/text()")[0]
-			pic = vod.xpath("./div[@class='thumb']/a/@data-original")[0]
-			mark = vod.xpath("./div[@class='thumb']/a/span[@class='pic-text text-right']/text()")[0]
-			sid = vod.xpath("./div[@class='thumb']/a/@href")[0]
-			sid = self.regStr(sid,"/voddetail/(\\S+)/")
-			videos.append({
-				"vod_id":sid,
-				"vod_name":name,
-				"vod_pic":pic,
-				"vod_remarks":mark
-			})
 		result = {
-				'list': videos
+				'list': []
 			}
 
 		return result
@@ -156,7 +157,7 @@ class Spider(Spider):
 			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
 			"Referer": "https://ikan6.vip/"
 		}
-		url = 'https://ikan6.vip/vodplay/{0}/'.format(id)
+		url = 'https://ikan6.vip/{0}'.format(id)
 		rsp = self.fetch(url)
 		cookie = rsp.cookies
 		info = json.loads(self.regStr(reg=r'var player_data=(.*?)</script>', src=rsp.text))
@@ -201,7 +202,10 @@ class Spider(Spider):
 			end=Text.find(endStr,origin)
 			circuit=Text[origin:end]
 		return circuit
-	
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
 	config = {
 		"player": {},
 		"filter": {}
