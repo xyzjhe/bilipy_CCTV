@@ -139,9 +139,13 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		Url='http://ktkkt.top{0}'.format(id)
+		playerUrl=Url
+		pn=self.get_RegexGetText(Text=htmlTxt,RegexText=r'var pn="(.+?)"',Index=1)
+		if len(pn)>2:
+			playerUrl='http://ktkkt.top/js/player/{0}.html'.format(pn)
 		result["parse"] = 1
 		result["playUrl"] = ''
-		result["url"] = Url
+		result["url"] = playerUrl
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):

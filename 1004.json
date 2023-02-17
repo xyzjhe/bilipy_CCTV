@@ -47,13 +47,23 @@
     },
     {
       "key": "py_tq",
-      "name": "天气预报",
+      "name": "卡通站1",
       "type": 3,
       "api": "py_tq",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_tianqiyubao.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt_1.py"
+    },
+    {
+      "key": "py_tq2",
+      "name": "卡通站2",
+      "type": 3,
+      "api": "py_tq2",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt_2.py"
     }
     //自己添加的
     ],
