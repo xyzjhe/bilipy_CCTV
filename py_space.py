@@ -15,7 +15,7 @@ import re
 
 class Spider(Spider):
 	def getName(self):
-		return "爱看影视"
+		return "个人空间"
 	def init(self,extend=""):
 		pass
 	def isVideoFormat(self,url):
@@ -47,10 +47,7 @@ class Spider(Spider):
 		result = {}
 		result = {}
 		videos=[]
-		if tid=="pu":
-			videos=self.get_list_pu()
-		else:
-			videos = self.get_list_pu()
+
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
@@ -206,24 +203,7 @@ class Spider(Spider):
 			end=Text.find(endStr,origin)
 			circuit=Text[origin:end]
 		return circuit
-	def get_list_pu(self):
-		ListRe=[("科技猿人","https://www.ixigua.com/home/62435616925/","西瓜"),("妈咪说MommyTalk","https://www.ixigua.com/home/62786280361/","西瓜")]
-		videos = []
-		for vod in ListRe:
-			lastVideo = vod[1]
-			title =vod[0]
-			tid=vod[2]
-			img = "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/%E5%8D%93%E9%9B%85%281%29.jpg"
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+img
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-		return videos
+	
 	config = {
 		"player": {},
 		"filter": {}
