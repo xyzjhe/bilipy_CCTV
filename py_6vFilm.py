@@ -65,9 +65,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				url=url+"index_{0}.html".format(pg)
 		htmlTxt=self.webReadFile(urlStr=url)
 		videos = self.get_list(html=htmlTxt,tid="6v电影")
-		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'index_([0-9]+?).html"\sclass="next">尾页</a>,Index=1)
-		if pag=="":
-			pag=1
+		pag=99#self.get_RegexGetText(Text=htmlTxt,RegexText=r'index_([0-9]+?).html"\sclass="next">尾页</a>,Index=1)
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
