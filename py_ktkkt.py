@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画10": "30",
+			"国产动画": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -43,7 +43,12 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		result = {}
+		rsp = self.fetch('http://ktkkt.top/')
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
+		result = {
+			'list': videos
+		}
 		return result
 
 	def categoryContent(self,tid,pg,filter,extend):
@@ -52,11 +57,15 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/frim/index1-([0-9]+?).html">尾页</a></li>',Index=1)
+		if pag=="":
+			pag=1
+		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 10
-		result['limit'] = 99
-		result['total'] = 99
+		result['pagecount'] = pag
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
 
 	def detailContent(self,array):
@@ -130,10 +139,13 @@ class Spider(Spider):
 				retry = retry - 1
 
 	def searchContent(self,key,quick):
+		Url='http://ktkkt.top/search.php?searchword={0}'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
 		result = {
-				'list': []
+				'list': videos
 			}
-
 		return result
 
 	def playerContent(self,flag,id,vipFlags):

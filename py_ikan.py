@@ -50,11 +50,14 @@ class Spider(Spider):
 		result = {}
 		url = 'https://ikan6.vip/vodtype/{0}-{1}/'.format(tid,pg)
 		rsp = self.fetch(url)
-		html = self.html(rsp.text)
+		htmlTxt=rsp.text
+		html = self.html(htmlTxt)
 		aList = html.xpath("//ul[contains(@class, 'myui-vodlist')]/li")
 		videos = []
 		numvL = len(aList)
-		pgc = math.ceil(numvL/15)
+		pgc = self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/vodtype/\d{1,3}-([0-9]+?)/">尾页</a>',Index=1)
+		if pgc=="":
+			pgc=1
 		for a in aList:
 			aid = a.xpath("./div[contains(@class, 'myui-vodlist__box')]/a/@href")[0]
 			aid = self.regStr(reg=r'/voddetail/(.*?)/', src=aid)
@@ -149,27 +152,8 @@ class Spider(Spider):
 				retry = retry - 1
 
 	def searchContent(self,key,quick):
-		result = {}
-		url = 'https://ikan6.vip/vodsearch/-------------/?wd={0}&submit='.format(key)
-		session = self.verifyCode()
-		rsp = session.get(url)
-		root = self.html(rsp.text)
-		vodList = root.xpath("//ul[@class='myui-vodlist__media clearfix']/li")
-		videos = []
-		for vod in vodList:
-			name = vod.xpath("./div/h4/a/text()")[0]
-			pic = vod.xpath("./div[@class='thumb']/a/@data-original")[0]
-			mark = vod.xpath("./div[@class='thumb']/a/span[@class='pic-text text-right']/text()")[0]
-			sid = vod.xpath("./div[@class='thumb']/a/@href")[0]
-			sid = self.regStr(sid,"/voddetail/(\\S+)/")
-			videos.append({
-				"vod_id":sid,
-				"vod_name":name,
-				"vod_pic":pic,
-				"vod_remarks":mark
-			})
 		result = {
-				'list': videos
+				'list': []
 			}
 
 		return result

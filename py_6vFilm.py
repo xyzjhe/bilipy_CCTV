@@ -65,11 +65,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 				url=url+"index_{0}.html".format(pg)
 		htmlTxt=self.webReadFile(urlStr=url)
 		videos = self.get_list(html=htmlTxt,tid="6v电影")
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'index_([0-9]+?).html"\sclass="next">尾页</a>,Index=1)
+		if pag=="":
+			pag=1
+		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 9999
-		result['limit'] = 90
-		result['total'] = 999999
+		result['pagecount'] = pag
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
 	def detailContent(self,array):
 		result = {}
@@ -229,10 +233,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 				return t	
 		return "https://www.66s.cc/kehuanpian/18941.html"	
 	def get_RegexGetText(self,Text,RegexText,Index):
-		returnTxt="null"
+		returnTxt=""
 		Regex=re.search(RegexText, Text, re.M|re.I)
 		if Regex is None:
-			returnTxt="null"
+			returnTxt=""
 		else:
 			returnTxt=Regex.group(Index)
 		return returnTxt
