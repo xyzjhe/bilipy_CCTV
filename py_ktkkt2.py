@@ -192,7 +192,7 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a title="(.+?)" href="(.+?)">\n<div class="list-poster">\n<img src="(.+?)"\sclass="thumb"/>'
+		patternTxt=r'<a title="(.+?)" href="(.+?)">\r<div class="list-poster">\r<img src="(.+?)"\sclass="thumb"/>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
