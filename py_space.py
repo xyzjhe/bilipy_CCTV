@@ -61,7 +61,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		aid = array[0].split('###')
 		tid = aid[0]
 		logo = aid[3]
-		lastVideo = aid[2]
+		lastVideo = 'https://www.ixigua.com/home/62435616925'
 		title = aid[1]
 		date = aid[0]
 		if lastVideo == '_':
