@@ -151,7 +151,7 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		Url='http://ktkkt.top{0}'.format(id)
-		result["parse"] = 2
+		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
