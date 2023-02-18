@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		cateManual = {
 			"关注的Pu主": "pu",
-			"个人收藏2": "Collection"
+			"个人收藏7": "Collection"
 		}
 		classes = []
 		for k in cateManual:
@@ -127,7 +127,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern = re.compile(r'title="(.+?)"\s*href="(.+?&amp;)".+? src="(.+?)"')
 		ListRe=pattern.findall(html)
 		for video in ListRe:
-			videoList.append(video[0]+"$https://www.ixigua.com"+video[1].replace('&amp;' , '&'))
+			videoList.append("0吕"+video[0]+"$https://www.ixigua.com"+video[1].replace('&amp;' , '&'))
 		return videoList
 	#访问网页
 	def webReadFile(self,urlStr):
