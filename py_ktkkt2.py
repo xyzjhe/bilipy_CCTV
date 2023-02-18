@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫3": "1",
+			"日本动漫4": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -192,14 +192,14 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a title="(.+?)" href="(.+?)">\r\n<div class="list-poster">\r\n<img src="(.+?)"\sclass="thumb"/>">'
+		patternTxt=r'<a title="(.+?)" href="(.+?)">'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
 		for vod in ListRe:
 			lastVideo = vod[1]
 			title =vod[0]
-			img =vod[2]
+			img ="https://pic.wujinpp.com/upload/vod/20210814-1/41494cef1c467182c7335d42a7f5d02a.jpg"#vod[2]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			videos.append({
