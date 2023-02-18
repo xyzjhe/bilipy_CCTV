@@ -68,16 +68,16 @@ class Spider(Spider):
 
 	def detailContent(self,array):
 		aid = array[0]
-		url='http://ktkkt.top{0}'.format(aid)
+		url='https://www.ktkkt2.com{0}'.format(aid)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(<h3 class="title"><strong>(.+?))</strong><span class="text-muted pull-mid">',Index=1)
 		circuit=[]
 		for i in line:
-			circuit.append(self.get_playlist(Text=htmlTxt,headStr='id="'+i[0],endStr="</div>"))
+			circuit.append(self.get_playlist(Text=htmlTxt,headStr=i[0],endStr="</div>"))
 		playFrom = []
 		videoList=[]
-		pattern = re.compile(r"<li><a\stitle='(.+?)'\shref='(.+?)'"+'\starget="_self">(.+?)</a></li>')
+		pattern = re.compile(r"<li><a title=\'.+?\'\shref=\'(.+?)\'"+'\starget="_self">(.+?)</a></li>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
 			vodItems = []

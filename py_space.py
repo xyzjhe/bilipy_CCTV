@@ -66,11 +66,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		date = aid[0]
 		if lastVideo == '_':
 			return {}
-		rsp = self.fetch(lastVideo)
-		htmlTxt = rsp.text
+		htmlTxt = self.webReadFile(urlStr=lastVideo)
 		vodItems =[]
-		if tid=="西瓜":
-			vodItems = self.get_collection_xg(html=htmlTxt)
+		vodItems = self.get_collection_xg(html=htmlTxt)
 		vod = {
 			"vod_id":tid,#array[0],
 			"vod_name":title,
