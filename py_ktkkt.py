@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画2": "30",
+			"国产动画": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -151,7 +151,7 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		Url='http://ktkkt.top{0}'.format(id)
-		result["parse"] = 2
+		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
