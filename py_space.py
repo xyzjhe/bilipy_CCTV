@@ -114,7 +114,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			img = "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/%E5%8D%93%E9%9B%85%281%29.jpg"
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+img
+			guid = tid+'###'+vod[0]+'###'+lastVideo+'###'+img
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
