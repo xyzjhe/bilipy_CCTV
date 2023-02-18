@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫6": "1",
+			"日本动漫8": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -55,7 +55,7 @@ class Spider(Spider):
 		url = 'https://www.ktkkt2.com/frim/index{0}-{1}.html'.format(tid,pg)
 		htmlTxt=self.get_webReadFile(urlStr=url)
 		videos = self.get_list(html=htmlTxt)
-		pag=99#self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/frim/index1-([0-9]+?).html">尾页</a></li>',Index=1)
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r"<li><a href='.+?-(\d+?).html'>尾页</a></li>",Index=1)
 		if pag=="":
 			pag=1
 		numvL = len(videos)
