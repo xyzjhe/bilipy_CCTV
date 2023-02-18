@@ -82,13 +82,13 @@ class Spider(Spider):
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append(value[0]+"$"+value[1])
+				vodItems.append(value[1]+"$"+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title text-fff">(.+?)</h1>',Index=1)
+		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="info-main-title"><span><a title="(.+?)"',Index=1)
 		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'分类：</span><a href=".*?">(.*?)</a>',Index=1)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'年份：</span><a\s.+?>([0-9]{4})',Index=1)
