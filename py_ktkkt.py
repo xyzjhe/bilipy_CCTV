@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"国产动画1": "30",
+			"国产动画2": "30",
 			"日韩动画": "3",
 			"国语动画": "1",
 			"粤语动画": "2",
@@ -219,3 +219,6 @@ class Spider(Spider):
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
 		'Host': 'ktkkt.top',
 		"Referer": "http://ktkkt.top/"}
+
+	def localProxy(self,param):
+		return [200, "video/MP2T", action, ""]
