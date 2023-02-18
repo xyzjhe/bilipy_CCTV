@@ -117,7 +117,7 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd.py"
 	},{
 		"key": "py_ikan",
-		"name": "🔥爱看",
+		"name": "🔥爱看(PY)",
 		"type": 3,
 		"api": "py_ikan",
 		"searchable": 0,
@@ -126,7 +126,7 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
     },{
 		"key": "py_tqyb",
-		"name": "🔥天气预报",
+		"name": "🔥天气预报(PY)",
 		"type": 3,
 		"api": "py_tqyb",
 		"searchable": 0,
@@ -204,7 +204,7 @@
     },
     {
       "key": "py_6vFilm",
-      "name": "6v电影",
+      "name": "6v电影(PY)",
       "type": 3,
       "api": "py_6vFilm",
       "searchable": 1,
@@ -213,14 +213,14 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
     },
     {
-      "key": "py_cokemv",
-      "name": "Cokemv",
+      "key": "py_ktkkt",
+      "name": "卡通站(PY)",
       "type": 3,
-      "api": "py_cokemv",
+      "api": "py_ktkkt",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cokemv.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
     },
     {
 	"key":"mtv_xp_皮皮视频",
