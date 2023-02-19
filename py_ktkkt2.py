@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫11": "1",
+			"日本动漫12": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -150,7 +150,14 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		Url='https://www.ktkkt2.com{0}'.format(id)
-		result["parse"] = 1
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(https{0,1}://.+?\.m3u8)',Index=1)
+		parse=1
+		if len(m3u8Line)>0:
+			Url=m3u8Line[0]
+			parse=0
+		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
