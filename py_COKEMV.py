@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影11": "1",
+			"电影12": "1",
 			"剧集": "2",
 			"动漫": "3",
 			"综艺": "29",
@@ -162,9 +162,9 @@ class Spider(Spider):
 		if self.get_RegexGetText(Text=id,RegexText=r'-([0-9]{1,2})-[0-9]+?',Index=1)=='1':
 			playUrl='https://cokemv.me{0}'.format(id)
 			parse=1
-		result["parse"] = parse
+		result["parse"] = 1
 		result["playUrl"] = ''
-		result["url"] = playUrl
+		result["url"] = 'https://cokemv.me{0}'.format(id)
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
