@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫21": "1",
+			"日本动漫": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
