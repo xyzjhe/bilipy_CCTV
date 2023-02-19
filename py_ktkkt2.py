@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫8": "1",
+			"日本动漫9": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -42,7 +42,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('http://ktkkt.top/')
+		rsp = self.fetch('https://www.ktkkt2.com/')
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -137,7 +137,7 @@ class Spider(Spider):
 				retry = retry - 1
 
 	def searchContent(self,key,quick):
-		Url='http://ktkkt.top/search.php?searchword={0}'.format(urllib.parse.quote(key))
+		Url='https://www.ktkkt2.com/search.php?searchword={0}'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
