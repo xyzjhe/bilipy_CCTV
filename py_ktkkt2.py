@@ -92,11 +92,10 @@ class Spider(Spider):
 		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="pic"><img src="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>类型：\s{0,4}(.*?)</p>',Index=1)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>首播：\s{0,4}(.*?)</p>',Index=1)
-		area=typeName
 		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>主演：\s{0,4}(.*?)</p>',Index=1)
 		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>导演：\s{0,4}(.*?)</p>',Index=1)
 		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="abstract-content".*?>(.*?)</div>',Index=1)
-		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>语言：\s{0,4}(.*?)</p>',Index=1)
+		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>语言：\s{0,4}(.*?)</p>',Index=1)
 		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="abstract-content".*?>(.*?)</div>',Index=1)
 		vod = {
 			"vod_id": aid,
@@ -105,7 +104,7 @@ class Spider(Spider):
 			"type_name": typeName,
 			"vod_year": year,
 			"vod_area": area,
-			"vod_remarks": rem,
+			"vod_remarks": "",
 			"vod_actor":  self.removeHtml(txt=act),
 			"vod_director": self.removeHtml(txt=dir),
 			"vod_content": self.removeHtml(txt=cont)
