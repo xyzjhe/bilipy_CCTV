@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫17": "1",
+			"日本动漫18": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -77,11 +77,12 @@ class Spider(Spider):
 		vodItems = []
 		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)!='':
 			line=['迅雷下载']
+			GvodUrls1=self.get_RegexGetText(Text=html,RegexText=r'var GvodUrls1\s*=\s*"(.+?)"',Index=1)
 			playFrom=[t for t in line]
-			pattern = re.compile(r'(=\s"|#{2})(.+?)\$(.+?\.\w{2,5})("|#)')
-			ListRe=pattern.findall(htmlTxt)
+			pattern = re.compile(r'(.+?)\$(.+?)#{3}')
+			ListRe=pattern.findall(GvodUrls1)
 			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[2])
+				vodItems.append(value[0]+"$"+value[1])
 				joinStr = "#".join(vodItems)
 				videoList.append(joinStr)
 		else:
