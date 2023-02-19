@@ -162,9 +162,9 @@ class Spider(Spider):
 		if self.get_RegexGetText(Text=id,RegexText=r'-([0-9]{1,2})-[0-9]+?',Index=1)=='1':
 			playUrl='https://cokemv.me{0}'.format(id)
 			parse=1
-		result["parse"] = 1
+		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = 'https://cokemv.me{0}'.format(id)
+		result["url"] = playUrl
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
