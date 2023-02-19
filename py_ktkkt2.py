@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫10": "1",
+			"日本动漫11": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -89,13 +89,15 @@ class Spider(Spider):
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="title11".*?>\r\n<h2>(.+?)</h2>',Index=1)
-		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
-		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'分类：</span><a href=".*?">(.*?)</a>',Index=1)
-		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'年份：</span><a\s.+?>([0-9]{4})',Index=1)
-		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span><a href=".*?=(.+?)">\1</a>',Index=1)
-		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span><a\s*href=("'+"|')"+'.+?("|'+"')>(.+?)</a>",Index=3)
-		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span><a\s*href=("'+"|')"+'.+?("|'+"')>(.+?)</a>",Index=3)
-		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<span class="sketch">(.*?)</span>',Index=1)
+		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="pic"><img src="(.+?)"',Index=1)
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>类型：\s{0,4}(.*?)</p>',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>首播：\s{0,4}(.*?)</p>',Index=1)
+		area=typeName
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>主演：\s{0,4}(.*?)</p>',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>导演：\s{0,4}(.*?)</p>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="abstract-content".*?>(.*?)</div>',Index=1)
+		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>语言：\s{0,4}(.*?)</p>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="abstract-content".*?>(.*?)</div>',Index=1)
 		vod = {
 			"vod_id": aid,
 			"vod_name": title,
@@ -103,7 +105,7 @@ class Spider(Spider):
 			"type_name": typeName,
 			"vod_year": year,
 			"vod_area": area,
-			"vod_remarks": '',
+			"vod_remarks": rem,
 			"vod_actor":  self.removeHtml(txt=act),
 			"vod_director": self.removeHtml(txt=dir),
 			"vod_content": self.removeHtml(txt=cont)
