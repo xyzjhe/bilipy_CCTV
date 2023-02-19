@@ -43,7 +43,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('http://ktkkt.top/')
+		rsp = self.fetch('https://cokemv.me/')
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -137,12 +137,8 @@ class Spider(Spider):
 				retry = retry - 1
 
 	def searchContent(self,key,quick):
-		Url='http://ktkkt.top/search.php?searchword={0}'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
 		result = {
-				'list': videos
+				'list': []
 			}
 		return result
 
