@@ -183,6 +183,16 @@
       ]
     },
     {
+      "key": "py_COKEMV",
+      "name": "COKEMV",
+      "type": 3,
+      "api": "py_COKEMV",
+      "searchable": 0,
+      "quickSearch": 0,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_COKEMV.py"
+    },
+    {
       "key": "py_cctv",
       "name": "CCTV-节目大全(PY)",
       "type": 3,
@@ -220,7 +230,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt2.py"
     },
     {
 	"key":"mtv_xp_皮皮视频",
