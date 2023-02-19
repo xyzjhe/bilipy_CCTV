@@ -78,7 +78,7 @@ class Spider(Spider):
 		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)=='迅雷下载':
 			line=['迅雷下载']
 			pattern = re.compile(r'(\s"|#{2})(.+?)\$(https{0,1}.+?\.\w{2,5})("|#)')
-			ListRe=pattern.findall(html)
+			ListRe=pattern.findall(htmlTxt)
 			for value in ListRe:
 				vodItems.append(value[1]+"$"+value[2])
 				joinStr = "#".join(vodItems)
