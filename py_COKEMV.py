@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影1": "1",
+			"电影2": "1",
 			"剧集": "2",
 			"动漫": "3",
 			"综艺": "29",
@@ -71,7 +71,7 @@ class Spider(Spider):
 	def detailContent(self,array):
 		aid = array[0]
 		Url='https://cokemv.me{0}'.format(aid)
-		rsp = self.fetch(url)
+		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'data-dropdown-value="(.+?)"><span>.+?</span>',Index=1)
 		circuit=self.get_lineList(Txt=htmlTxt)
