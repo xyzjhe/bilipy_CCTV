@@ -81,7 +81,7 @@ class Spider(Spider):
 			pattern = re.compile(r'(=\s"|#{2})(.+?)\$(https{0,1}.+?\.\w{2,5})("|#)')
 			ListRe=pattern.findall(htmlTxt)
 			for value in ListRe:
-				vodItems.append(len(ListRe)+"$"+value[2])
+				vodItems.append(value[1]+"$"+value[2])
 				joinStr = "#".join(vodItems)
 				videoList.append(joinStr)
 		else:
