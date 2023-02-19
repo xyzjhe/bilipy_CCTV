@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫12": "1",
+			"日本动漫13": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -72,19 +72,30 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(<h3 class="title"><strong>(.+?))</strong><span class="text-muted pull-mid">',Index=1)
-		circuit=[]
-		for i in line:
-			circuit.append(self.get_playlist(Text=htmlTxt,headStr=i[0],endStr="</div>"))
 		playFrom = []
 		videoList=[]
-		pattern = re.compile(r"<li><a title=\'.+?\'\shref=\'(.+?)\'"+'\starget="_self">(.+?)</a></li>')
-		for v in circuit:
-			ListRe=pattern.findall(v)
-			vodItems = []
+		vodItems = []
+		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)=='迅雷下载':
+			line=['迅雷下载']
+			pattern = re.compile(r'(\s"|#{2})(.+?)\$(https{0,1}.+?\.\w{2,5})("|#)')
+			ListRe=pattern.findall(html)
 			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
-			joinStr = "#".join(vodItems)
-			videoList.append(joinStr)
+				vodItems.append(value[1]+"$"+value[2])
+				joinStr = "#".join(vodItems)
+				videoList.append(joinStr)
+		else:
+			circuit=[]
+			for i in line:
+				circuit.append(self.get_playlist(Text=htmlTxt,headStr=i[0],endStr="</div>"))
+			pattern = re.compile(r"<li><a title=\'.+?\'\shref=\'(.+?)\'"+'\starget="_self">(.+?)</a></li>')
+			for v in circuit:
+				ListRe=pattern.findall(v)
+				vodItems = []
+				for value in ListRe:
+					vodItems.append(value[1]+"$"+value[0])
+				joinStr = "#".join(vodItems)
+				videoList.append(joinStr)
+
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
