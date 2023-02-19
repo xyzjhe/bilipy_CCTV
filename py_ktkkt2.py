@@ -42,7 +42,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('https://www.ktkkt2.com/')
+		rsp = self.fetch('http://ktkkt.top/')
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
