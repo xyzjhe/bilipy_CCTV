@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影2": "1",
+			"电影": "1",
 			"剧集": "2",
 			"动漫": "3",
 			"综艺": "29",
@@ -151,14 +151,17 @@ class Spider(Spider):
 		Url='https://cokemv.me{0}'.format(id)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
+		playUrl=Url
 		parse=1
 		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(.+?\.m3u8)"',Index=1)
 		if len(m3u8Line)>0:
-			Url="https://cokemv.me"+m3u8Line[0].replace("\\","")
+			playUrl="https://cokemv.me"+m3u8Line[0].replace("\\","")
 			parse=0
-		result["parse"] = 1
+		if playUrl.count('https:')>1 and len(m3u8Line)>0:
+			playUrl=m3u8Line[0].replace("\\","")
+		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = Url
+		result["url"] = playUrl
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
