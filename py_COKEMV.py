@@ -74,7 +74,7 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'data-dropdown-value="(.+?)"><span>.+?</span>',Index=1)
-		circuit=self.get_lineList(Txt=html)
+		circuit=self.get_lineList(Txt=htmlTxt)
 		playFrom = []
 		videoList=[]
 		pattern = re.compile(r'<a class="module-play-list-link" href="(.+?)" title="(.+?)"><span>.+?</span></a>')
