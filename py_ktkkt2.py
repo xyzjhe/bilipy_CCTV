@@ -162,13 +162,18 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		Url='https://www.ktkkt2.com{0}'.format(id)
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(https{0,1}://.+?\.m3u8)',Index=1)
 		parse=1
-		if len(m3u8Line)>0:
-			Url=m3u8Line[0]
+		Url=''
+		if id.find(0,"http://xunlei1")<1:
+			Url='https://www.ktkkt2.com{0}'.format(id)
+			rsp = self.fetch(Url)
+			htmlTxt = rsp.text
+			m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(https{0,1}://.+?\.m3u8)',Index=1)
+			if len(m3u8Line)>0:
+				Url=m3u8Line[0]
+				parse=0
+		else:
+			Url=id
 			parse=0
 		result["parse"] = parse
 		result["playUrl"] = ''
