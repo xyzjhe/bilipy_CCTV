@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "1",
+			"电影11": "1",
 			"剧集": "2",
 			"动漫": "3",
 			"综艺": "29",
@@ -159,6 +159,9 @@ class Spider(Spider):
 			parse=0
 		if playUrl.count('https:')>1 and len(m3u8Line)>0:
 			playUrl=m3u8Line[0].replace("\\","")
+		if self.get_RegexGetText(Text=id,RegexText=r'-([0-9]{1,2})-[0-9]+?',Index=1)=='1':
+			playUrl='https://cokemv.me{0}'.format(id)
+			parse=1
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = playUrl
