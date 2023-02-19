@@ -77,7 +77,8 @@ class Spider(Spider):
 		vodItems = []
 		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)!='':
 			line=['迅雷下载']
-			pattern = re.compile(r'(\s"|#{2})(.+?)\$(https{0,1}.+?\.\w{2,5})("|#)')
+			playFrom=[t for t in line]
+			pattern = re.compile(r'(\s*"|#{2})(.+?)\$(https{0,1}.+?\.\w{2,5})("|#)')
 			ListRe=pattern.findall(htmlTxt)
 			for value in ListRe:
 				vodItems.append(value[1]+"$"+value[2])
@@ -87,6 +88,7 @@ class Spider(Spider):
 			circuit=[]
 			for i in line:
 				circuit.append(self.get_playlist(Text=htmlTxt,headStr=i[0],endStr="</div>"))
+			playFrom=[t[1] for t in line]
 			pattern = re.compile(r"<li><a title=\'.+?\'\shref=\'(.+?)\'"+'\starget="_self">(.+?)</a></li>')
 			for v in circuit:
 				ListRe=pattern.findall(v)
@@ -96,7 +98,6 @@ class Spider(Spider):
 				joinStr = "#".join(vodItems)
 				videoList.append(joinStr)
 
-		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="title11".*?>\r\n<h2>(.+?)</h2>',Index=1)
