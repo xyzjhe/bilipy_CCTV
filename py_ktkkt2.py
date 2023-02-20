@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫1": "1",
+			"日本动漫2": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -164,7 +164,13 @@ class Spider(Spider):
 		result = {}
 		parse=1
 		Url=''
-		if id.find(0,"http://xunlei1")<1:
+		if flag=='迅雷下载':
+			Url='http://aod.cos.tx.xmcdn.com/storages/0929-audiofreehighqps/60/83/CKwRIRwEca7LACrvxACqYzO6.m4a'
+			parse=0
+		elif self.get_RegexGetText(Text=id,RegexText=r"(https{0,1}:)",Index=1)!='':
+			Url=id
+			parse=1
+		else:
 			Url='https://www.ktkkt2.com{0}'.format(id)
 			rsp = self.fetch(Url)
 			htmlTxt = rsp.text
@@ -172,9 +178,6 @@ class Spider(Spider):
 			if len(m3u8Line)>0:
 				Url=m3u8Line[0]
 				parse=0
-		else:
-			Url=id
-			parse=0
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
