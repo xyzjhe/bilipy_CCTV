@@ -123,6 +123,16 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
     },
     {
+      "key": "py_kuke",
+      "name": "酷客影院(PY)",
+      "type": 3,
+      "api": "py_kuke",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuke.py"
+    },
+    {
       "key": "csp_xpath_yhdm",
       "name": "樱花动漫",
       "type": 3,
