@@ -233,6 +233,16 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt2.py"
     },
     {
+      "key": "py_kuke,
+      "name": "酷客影院(PY)",
+      "type": 3,
+      "api": "py_kuke",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuke.py"
+    },
+    {
 	"key":"mtv_xp_皮皮视频",
 	"name":"皮皮视频(官)",
 	"type":0,

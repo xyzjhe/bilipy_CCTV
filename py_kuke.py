@@ -1,20 +1,21 @@
 #coding=utf-8
 #!/usr/bin/python
 import sys
-sys.path.append('..') 
+sys.path.append('..')
 from base.spider import Spider
-import json
-import time
 import base64
-import re
-from urllib import request, parse
+import math
+import json
+import requests
 import urllib
+from urllib import request, parse
+import urllib.request
+import re
 
-class Spider(Spider):  # 元类 默认的元类 type
+class Spider(Spider):
 	def getName(self):
 		return "酷客影院"
 	def init(self,extend=""):
-		print("============{0}============".format(extend))
 		pass
 	def isVideoFormat(self,url):
 		pass
@@ -23,228 +24,218 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "1",
-			"动漫": "4",
-			"连续剧": "2",
-			"综艺": "3",
-			"今日更新": "new"
-			
+			"电影": "dianying",
+			"电视剧": "lianxuju",
+			"综艺": "zongyi",
+			"动漫": "dongman"
 		}
 		classes = []
 		for k in cateManual:
 			classes.append({
-				'type_name':k,
-				'type_id':cateManual[k]
+				'type_name': k,
+				'type_id': cateManual[k]
 			})
+
 		result['class'] = classes
-		if(filter):
+		if (filter):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
+		rsp = self.fetch('http://www.meheme.com/')
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
 		result = {
-			'list':[]
+			'list': videos
 		}
 		return result
+
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url=""
-		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
-		head="https://www.66s.cc"
-		if tid=="new":
-			url=r"https://www.kukemv.com/label/new.html"
-			if pg!="1":
-				return result		
-		else:
-			url=r"https://www.kukemv.com/vodshow/{0}--------{1}---.html".format(tid,pg)
-		rsp = self.fetch(url)
-		htmlTxt=rsp.text
-		ListReTitle=pattern.findall(htmlTxt)
-		pattern = re.compile('<img class=".+?" data-original="(.+?)"')
-		ListRePic=pattern.findall(htmlTxt)
-		print(len(ListReTitle)==len(ListRePic))
-		#return result
-		if len(ListReTitle)<1:
-			return result
-		videos = []
-		i=0
-		for vod in ListReTitle:
-			lastVideo = vod[0]
-			img = ListRePic[i]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			if lastVideo.find(head)<0 and lastVideo!="_":
-				lastVideo=head+lastVideo
-			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+img
-			title =vod[1]
-			
-			i=i+1
-			print(img)
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
+		url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
+		htmlTxt=self.get_webReadFile(urlStr=url)
+		videos = self.get_list(html=htmlTxt)
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
+		if pag=="":
+			pag=1
+		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 9999
-		result['limit'] = 90
-		result['total'] = 999999
+		result['pagecount'] = pag
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
+
 	def detailContent(self,array):
-		aid = array[0].split('###')
-		if aid[2].find("http")<0:
-			return {}
-		tid = aid[0]
-		logo = aid[3]
-		lastVideo = aid[2]
-		title = aid[1]
-		date = aid[0]
-		if lastVideo == '_':
-			return {}
-		rsp = self.fetch(lastVideo)
-		htmlTxt=rsp.text
-		circuit=[]
-		if htmlTxt.find('<h3>播放地址')>8:
-			origin=htmlTxt.find('<h3>播放地址')
-			while origin>8:
-				end=htmlTxt.find('</div>',origin)
-				circuit.append(htmlTxt[origin:end])
-				origin=htmlTxt.find('<h3>播放地址',end)
-		if len(circuit)<1:
-			circuit.append(htmlTxt)
-		#print(circuit)
+		aid = array[0]
+		url='http://www.meheme.com{0}'.format(aid)
+		rsp = self.fetch(url)
+		htmlTxt = rsp.text
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(<h3 class="title"><strong>(.+?))</strong><span class="text-muted pull-mid">',Index=1)
 		playFrom = []
-		videoList = []
-		patternTxt=r'<a title=\'(.+?)\'\s*href=\s*"(.+?)"\s*target=\s*"_blank"\s*class="lBtn" >(\1)</a>'
-		pattern = re.compile(patternTxt)
-		head="https://www.66s.cc"
+		videoList=[]
+		vodItems = []
+		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
+		playFrom=[t for t in line]
+		pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
-			temporary=re.search( r'<h3>(播放地址.*?)</h3>', v, re.M|re.I).group(1)
-			playFrom.append(temporary)
 			vodItems = []
 			for value in ListRe:
-				url=value[1]
-				if url.find(head)<0:
-					url=head+url
-				vodItems.append(value[0]+"$"+url)
+				vodItems.append(value[1]+"$"+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
-		if len(videoList) == 0:
-			return {}
-		vod_play_from = '$$$'.join(playFrom)
+
+		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
+		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
+		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
+		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span>(.+?)<span class="split_line">',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span>(.+?)<span class="split_line">',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="content_desc context clearfix"><span>(.+?)</span></div>',Index=1)
+		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
+
 		vod = {
-			"vod_id":tid,#array[0],
-			"vod_name":title,
-			"vod_pic":logo,
-			"type_name":"6v电影",
-			"vod_year":"",
-			"vod_area":"",
-			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_id": aid,
+			"vod_name": title,
+			"vod_pic": pic,
+			"type_name":self.removeHtml(txt=typeName),
+			"vod_year": self.removeHtml(txt=year),
+			"vod_area": area,
+			"vod_remarks": rem,
+			"vod_actor":  self.removeHtml(txt=act),
+			"vod_director": self.removeHtml(txt=dir),
+			"vod_content": self.removeHtml(txt=cont)
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] = vod_play_url
-		vod = {
-			"vod_id":tid,#array[0],
-			"vod_name":title,
-			"vod_pic":logo,
-			"type_name":"6v电影",
-			"vod_year":"",
-			"vod_area":"",
-			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
-		}
-		vod['vod_play_from'] = vod_play_from
-		vod['vod_play_url'] = vod_play_url
+
 		result = {
-			'list':[
+			'list': [
 				vod
 			]
 		}
 		return result
 
+	def verifyCode(self):
+		retry = 10
+		header = {
+			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
+		while retry:
+			try:
+				session = requests.session()
+				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
+				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
+				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
+								   headers=header).json()
+				if res["msg"] == "ok":
+					return session
+			except Exception as e:
+				print(e)
+			finally:
+				retry = retry - 1
+
 	def searchContent(self,key,quick):
+		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
+		result = {
+				'list': videos
+			}
+		return result
+
+	def playerContent(self,flag,id,vipFlags):
+		result = {}
+		parse=1
+		Url='http://www.meheme.com/{0}'.format(id)
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(url|url_next)":"(h.+?\.m3u8)",',Index=1)
+		if len(m3u8Line)>0:
+			Url=m3u8Line[0][1].replace("/","")
+			parse=0
+		result["parse"] = parse
+		result["playUrl"] = ''
+		result["url"] = Url
+		result["header"] = ''
+		return result
+	def get_RegexGetText(self,Text,RegexText,Index):
+		returnTxt=""
+		Regex=re.search(RegexText, Text, re.M|re.I)
+		if Regex is None:
+			returnTxt=""
+		else:
+			returnTxt=Regex.group(Index)
+		return returnTxt	
+	def get_RegexGetTextLine(self,Text,RegexText,Index):
+		returnTxt=[]
+		pattern = re.compile(RegexText)
+		ListRe=pattern.findall(Text)
+		if len(ListRe)<1:
+			return returnTxt
+		for value in ListRe:
+			returnTxt.append(value)	
+		return returnTxt
+	def get_playlist(self,Text,headStr,endStr):
+		circuit=""
+		origin=Text.find(headStr)
+		if origin>8:
+			end=Text.find(endStr,origin)
+			circuit=Text[origin:end]
+		return circuit
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
+	def get_webReadFile(self,urlStr):
+		Host=self.get_RegexGetText(Text=urlStr,RegexText=r"https*://(.*?)(/|$)",Index=1)
 		headers = {
+			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.66s.cc'
+			'Host': Host
 		}
-		data="show=title&tempid=1&tbname=article&mid=1&dopost=search&submit=&keyboard="+urllib.parse.quote(key)
-		data = bytes(data, encoding='utf8')
-		req = request.Request(url="https://www.66s.cc/e/search/index.php", data=data,headers=headers, method='POST')
-		response = request.urlopen(req)
-		urlTxt=response.geturl()
-		response = urllib.request.urlopen(urlTxt)
-		htmlTxt=response.read().decode('utf-8')
-		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
+		req = urllib.request.Request(url=urlStr, headers=headers)
+		html = urllib.request.urlopen(req).read().decode('utf-8')
+		return html
+	def get_list(self,html):
+		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
 		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(htmlTxt)
+		ListRe=pattern.findall(html)
+		videos = []
+		if len(imgListRe)!=len(ListRe):
+			return videos
 		for vod in ListRe:
 			lastVideo = vod[0]
+			title =vod[1]
+			img =vod[2]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			if lastVideo.find(head)<0 and lastVideo!="_":
-				lastVideo=head+lastVideo
-			soup = re.compile(r'<[^>]+>',re.S)
-			title =soup.sub('', vod[1])
-			guid = "6v电影"+'###'+title+'###'+lastVideo+'###'+vod[2]
-			img = vod[2]
-			print(guid)
 			videos.append({
-				"vod_id":guid,
+				"vod_id":lastVideo,
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
 			})
-		result = {
-			'list':videos
-		}
-		return result
-	def playerContent(self,flag,id,vipFlags):
-		result = {}
-		rsp = self.fetch(id)
-		htmlTxt=rsp.text
-		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
-		ListRe=pattern.findall(htmlTxt)
-		url=""
-		if ListRe==[]:	
-			url=self.get_playUrlMethodOne(html=htmlTxt)
-		else:
-			url=ListRe[0]
-		result["parse"] = 0
-		result["playUrl"] =""
-		result["url"] = url
-		result["header"] = ''
-		return result
-	def get_playUrlMethodOne(self,html):
-		#自定义函数时self参数是必要的,调用时self参数留空
-		pattern =re.search( r'<div class="video"><iframe.+?src="(.+?)"></iframe></div>', html, re.M|re.I).group(1)
-		if len(pattern)<4:
-			return ""
-		rsp = self.fetch(pattern)
-		htmlTxt=rsp.text
-		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
-		if len(head)<4:
-			return ""
-		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
-		url=head+url
-		return url
-
+		return videos
+	def get_lineList(self,Txt,mark,after):
+		circuit=[]
+		origin=Txt.find(mark)
+		while origin>8:
+			end=Txt.find(after,origin)
+			circuit.append(Txt[origin:end])
+			origin=Txt.find(mark,end)
+		return circuit
 	config = {
 		"player": {},
-		"filter": {"CCTV":[{"key":"cid","name":"频道","value":[{"n":"全部","v":""},{"n":"CCTV-1综合","v":"EPGC1386744804340101"},{"n":"CCTV-2财经","v":"EPGC1386744804340102"},{"n":"CCTV-3综艺","v":"EPGC1386744804340103"},{"n":"CCTV-4中文国际","v":"EPGC1386744804340104"},{"n":"CCTV-5体育","v":"EPGC1386744804340107"},{"n":"CCTV-6电影","v":"EPGC1386744804340108"},{"n":"CCTV-7国防军事","v":"EPGC1386744804340109"},{"n":"CCTV-8电视剧","v":"EPGC1386744804340110"},{"n":"CCTV-9纪录","v":"EPGC1386744804340112"},{"n":"CCTV-10科教","v":"EPGC1386744804340113"},{"n":"CCTV-11戏曲","v":"EPGC1386744804340114"},{"n":"CCTV-12社会与法","v":"EPGC1386744804340115"},{"n":"CCTV-13新闻","v":"EPGC1386744804340116"},{"n":"CCTV-14少儿","v":"EPGC1386744804340117"},{"n":"CCTV-15音乐","v":"EPGC1386744804340118"},{"n":"CCTV-16奥林匹克","v":"EPGC1634630207058998"},{"n":"CCTV-17农业农村","v":"EPGC1563932742616872"},{"n":"CCTV-5+体育赛事","v":"EPGC1468294755566101"}]},{"key":"fc","name":"分类","value":[{"n":"全部","v":""},{"n":"新闻","v":"新闻"},{"n":"体育","v":"体育"},{"n":"综艺","v":"综艺"},{"n":"健康","v":"健康"},{"n":"生活","v":"生活"},{"n":"科教","v":"科教"},{"n":"经济","v":"经济"},{"n":"农业","v":"农业"},{"n":"法治","v":"法治"},{"n":"军事","v":"军事"},{"n":"少儿","v":"少儿"},{"n":"动画","v":"动画"},{"n":"纪实","v":"纪实"},{"n":"戏曲","v":"戏曲"},{"n":"音乐","v":"音乐"},{"n":"影视","v":"影视"}]},{"key":"fl","name":"字母","value":[{"n":"全部","v":""},{"n":"A","v":"A"},{"n":"B","v":"B"},{"n":"C","v":"C"},{"n":"D","v":"D"},{"n":"E","v":"E"},{"n":"F","v":"F"},{"n":"G","v":"G"},{"n":"H","v":"H"},{"n":"I","v":"I"},{"n":"J","v":"J"},{"n":"K","v":"K"},{"n":"L","v":"L"},{"n":"M","v":"M"},{"n":"N","v":"N"},{"n":"O","v":"O"},{"n":"P","v":"P"},{"n":"Q","v":"Q"},{"n":"R","v":"R"},{"n":"S","v":"S"},{"n":"T","v":"T"},{"n":"U","v":"U"},{"n":"V","v":"V"},{"n":"W","v":"W"},{"n":"X","v":"X"},{"n":"Y","v":"Y"},{"n":"Z","v":"Z"}]},{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"2006","v":"2006"},{"n":"2005","v":"2005"},{"n":"2004","v":"2004"},{"n":"2003","v":"2003"},{"n":"2002","v":"2002"},{"n":"2001","v":"2001"},{"n":"2000","v":"2000"}]},{"key":"month","name":"月份","value":[{"n":"全部","v":""},{"n":"12","v":"12"},{"n":"11","v":"11"},{"n":"10","v":"10"},{"n":"09","v":"09"},{"n":"08","v":"08"},{"n":"07","v":"07"},{"n":"06","v":"06"},{"n":"05","v":"05"},{"n":"04","v":"04"},{"n":"03","v":"03"},{"n":"02","v":"02"},{"n":"01","v":"01"}]}]}
+		"filter": {}
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		"Origin": "https://www.66s.cc",
-		"Referer": "https://www.66s.cc/"
-	}
+		'Host': 'www.kukemv.com',
+		"Referer": "https://www.kukemv.com/"}
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
