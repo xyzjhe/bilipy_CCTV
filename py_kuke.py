@@ -191,11 +191,10 @@ class Spider(Spider):
 		txt =soup.sub('', txt)
 		return txt.replace("&nbsp;"," ")
 	def get_webReadFile(self,urlStr):
-		Host=self.get_RegexGetText(Text=urlStr,RegexText=r"https*://(.*?)(/|$)",Index=1)
 		headers = {
 			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': Host
+			'Host': 'www.meheme.com'
 		}
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
