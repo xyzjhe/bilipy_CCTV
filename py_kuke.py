@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影2": "dianying",
+			"电影3": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman"
