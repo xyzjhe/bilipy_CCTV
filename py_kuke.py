@@ -151,16 +151,16 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=1
-		Url='http://www.meheme.com/{0}'.format(id)
+		Url='http://www.meheme.com{0}'.format(id)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(url|url_next)":"(h.+?\.m3u8)",',Index=1)
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?\.m3u8)",',Index=1)
 		if len(m3u8Line)>0:
-			Url=m3u8Line[0][1].replace("/","")
+			Url=m3u8Line[0].replace("/","")
 			parse=0
-		result["parse"] = 0
+		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = 'https:\\vod2.bdzybf7.com\20230115\h3BZIBB4\index.m3u8'
+		result["url"] = Url
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
