@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影7": "dianying",
+			"电影": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman"
@@ -154,10 +154,10 @@ class Spider(Spider):
 		Url='http://www.meheme.com{0}'.format(id)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?\.m3u8)",',Index=1)
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
 		if len(m3u8Line)>0:
 			Url=m3u8Line[0].replace("/","")
-			parse=0
+			parse=0 if Url.find('.m3u8')>1 else 1
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
