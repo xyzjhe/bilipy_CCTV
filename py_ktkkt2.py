@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"日本动漫2": "1",
+			"日本动漫": "1",
 			"国语动画": "2",
 			"粤语动画": "32",
 			"粤语动画": "33",
@@ -76,7 +76,7 @@ class Spider(Spider):
 		videoList=[]
 		vodItems = []
 		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)!='':
-			line=['迅雷下载']
+			line=['迅雷下载(不可播放)']
 			GvodUrls1=self.get_RegexGetText(Text=htmlTxt,RegexText=r'var GvodUrls1\s*=\s*"(.+?)"',Index=1)
 			playFrom=[t for t in line]
 			ListRe=GvodUrls1.split('###')
@@ -164,8 +164,8 @@ class Spider(Spider):
 		result = {}
 		parse=1
 		Url=''
-		if flag=='迅雷下载':
-			Url='http://aod.cos.tx.xmcdn.com/storages/0929-audiofreehighqps/60/83/CKwRIRwEca7LACrvxACqYzO6.m4a'
+		if flag=='迅雷下载(不可播放)':
+			Url=''
 			parse=0
 		elif self.get_RegexGetText(Text=id,RegexText=r"(https{0,1}:)",Index=1)!='':
 			Url=id
