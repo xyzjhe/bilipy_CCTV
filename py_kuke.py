@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影6": "dianying",
+			"电影7": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman"
@@ -158,9 +158,9 @@ class Spider(Spider):
 		if len(m3u8Line)>0:
 			Url=m3u8Line[0][1].replace("/","")
 			parse=0
-		result["parse"] = parse
+		result["parse"] = 0
 		result["playUrl"] = ''
-		result["url"] = Url
+		result["url"] = 'https:\\vod2.bdzybf7.com\20230115\h3BZIBB4\index.m3u8'
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
