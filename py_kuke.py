@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影3": "dianying",
+			"电影4": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman"
@@ -205,8 +205,6 @@ class Spider(Spider):
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
-		if len(imgListRe)!=len(ListRe):
-			return videos
 		for vod in ListRe:
 			lastVideo = vod[0]
 			title =vod[1]
