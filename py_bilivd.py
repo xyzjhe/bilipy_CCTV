@@ -53,7 +53,6 @@ class Spider(Spider):  # 元类 默认的元类 type
             cateManual = {
                 "频道": "频道",
                 "动态": "动态",
-		"pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
                 "排行榜": "排行榜",
@@ -150,34 +149,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result['limit'] = 90
         result['total'] = 999999
         return result
-    def get_pu(self,pg):
-	result = {}
-	if int(pg) > 1:
-		return result
-	videos = []
-	vmid='321534564'#get_userid
-	url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention&jsonp=jsonp'.format(pg,vmid)
-	rsp = self.fetch(url,cookies=self.getCookie())
-	htmlTxt=rsp.text
-	jo = json.loads(htmlTxt)
-	vodList = jo['data']['list']
-	for vod in vodList:
-		aid=vod['mid']
-		title=vod['uname']
-		img=vod['face']
-		videos.append({
-		"vod_id": aid,
-		"vod_name": title,
-		"vod_pic": img,
-		"vod_remarks": ''
-		})
-	numvL = len(videos)
-	result['list'] = videos
-	result['page'] = pg
-	result['pagecount'] = int(pg)+1 if numvL>19 else pg
-	result['limit'] = numvL
-	result['total'] = numvL
-	return result
+
     def second_to_time(self, a):
         # 将秒数转化为 时分秒的格式
         if a < 3600:
@@ -354,8 +326,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
 
     def get_fav(self, pg, order, extend):
-        # 获取自己的up_mid+
-	(也就是用户uid)
+        # 获取自己的up_mid(也就是用户uid)
         mlid = ''
         fav_config = self.config["filter"].get('收藏夹')
         # 默认显示第一个收藏夹内容
@@ -398,9 +369,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             return self.get_rank()
         if tid == '动态':
             return self.get_dynamic(pg=pg)
-	if tid == 'pu主':
-            return self.get_pu(pg=pg)
-	if tid == '历史记录':
+        if tid == '历史记录':
             return self.get_history(pg=pg)
         if tid == '推荐':
             return self.get_rcmd(pg=pg)
