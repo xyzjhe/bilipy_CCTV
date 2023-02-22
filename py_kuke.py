@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "dianying",
+			"电影1": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman"
@@ -194,7 +194,7 @@ class Spider(Spider):
 		headers = {
 			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.meheme.com'
+			'Host': 'www.kukemv.com'
 		}
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
@@ -233,8 +233,8 @@ class Spider(Spider):
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'www.kukemv.com',
-		"Referer": "https://www.kukemv.com/"}
+		'Host': 'www.kukemv.com'
+	}
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
