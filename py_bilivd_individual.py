@@ -154,29 +154,26 @@ class Spider(Spider):  # 元类 默认的元类 type
         result = {}
         if int(pg) > 1:
             return result
-        offset = ''
         videos = []
-        for i in range(0,10):
-            url= 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?timezone_offset=-480&type=all&page={0}&offset={1}'.format(pg,offset)
+        vmid='321534564'#get_userid
+        for i in range(0,1):
+            url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention'.format(pg,vmid)
             rsp = self.fetch(url,cookies=self.getCookie())
             content = rsp.text
             jo = json.loads(content)
             if jo['code'] == 0:
-                offset = jo['data']['offset']
-                vodList = jo['data']['items']
+                vodList = jo['data']['list']
                 for vod in vodList:
-                    if vod['type'] == 'DYNAMIC_TYPE_AV':
-                        ivod = vod['modules']['module_dynamic']['major']['archive']
-                        aid = str(ivod['aid']).strip()
-                        title = ivod['title'].strip().replace("<em class=\"keyword\">","").replace("</em>","")
-                        img =  ivod['cover'].strip()
-                        remark = str(ivod['duration_text']).strip()
-                        videos.append({
-                            "vod_id":aid,
-                            "vod_name":title,
-                            "vod_pic":img,
-                            "vod_remarks":remark
-                        })
+                    aid = str(vod['mid']).strip()
+                    title = vod['uname'].strip()
+                    img = vod['face'].strip()
+                    remark = str(vod['sign']).strip()
+                    videos.append({
+                        "vod_id":aid,
+                        "vod_name":title,
+                        "vod_pic":img,
+                        "vod_remarks":remark
+                    })
         result['list'] = videos
         result['page'] = pg
         result['pagecount'] = 9999
