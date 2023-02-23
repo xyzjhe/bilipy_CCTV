@@ -449,7 +449,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
     def detailContent(self, array):
         aid = array[0]
-        playUrl=get_list(aid=aid)
+        playUrl=self.get_list(aid=aid)
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
 
