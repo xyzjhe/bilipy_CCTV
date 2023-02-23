@@ -1,263 +1,572 @@
-#coding=utf-8
-#!/usr/bin/python
+# coding=utf-8
+# !/usr/bin/python
 import sys
 sys.path.append('..')
 from base.spider import Spider
-import base64
-import math
 import json
-import requests
-import urllib
-from urllib import request, parse
-import urllib.request
-import re
+from requests import session, utils
+import time
 
-class Spider(Spider):
-	def getName(self):
-		return "B站个人中心"
-	def init(self,extend=""):
-		pass
-	def isVideoFormat(self,url):
-		pass
-	def manualVideoCheck(self):
-		pass
-	def homeContent(self,filter):
-		result = {}
-		cateManual = {
-			"频道3": "频道",
-			"动态": "动态",
-			"pu主": "pu主",
-			"热门": "热门",
-			"推荐": "推荐",
-			"收藏夹": "收藏夹",
-			"历史记录": "历史记录"
-		}
-		classes = []
-		for k in cateManual:
-			classes.append({
-				'type_name': k,
-				'type_id': cateManual[k]
-			})
 
-		result['class'] = classes
-		if (filter):
-			result['filters'] = self.config['filter']
-		return result
-	def homeVideoContent(self):
-		result = {
-			'list': videos
-		}
-		return result
+class Spider(Spider):  # 元类 默认的元类 type
+    def getName(self):
+        return "哔哩"
 
-	def categoryContent(self,tid,pg,filter,extend):
-		result = {}
-		if tid=='动态':
-			result=self.get_dynamic(pg=pg)
-		return result
-		#动态
-	def get_dynamic(self,pg):
-		result = {}
-		if len(pg)>1:
-			return result
-		videos = []
-		offset = ''
-		for i in range(0,2):
-			url= 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?timezone_offset=-480&type=all&page={0}&offset={1}'.format(pg,offset)
-			htmlTxt=self.webReadFile(urlStr=url)
-			jo = json.loads(htmlTxt)
-			if jo['code'] == 0:
-				offset=jo['data']['offset']
-				vodList=jo['data']['items']
-				for vod in vodList:
-					if vod['type'] == 'DYNAMIC_TYPE_AV':
-						ivod = vod['modules']['module_dynamic']['major']['archive']
-						aid = str(ivod['aid']).strip()
-						title = ivod['title'].strip().replace("<em class=\"keyword\">","").replace("</em>","")
-						img =  ivod['cover'].strip()
-						remark = str(ivod['duration_text']).strip()
-						videos.append({
-							"vod_id":aid,
-							"vod_name":title,
-							"vod_pic":img,
-							"vod_remarks":remark
-						})
-		numvL = len(videos)
-		result['list'] = videos
-		result['page'] = pg
-		result['pagecount'] = int(pg)+1 if numvL>19 else pg
-		result['limit'] = numvL
-		result['total'] = numvL
-		return result
-	def detailContent(self,array):
-		aid = array[0]
-		url='http://www.meheme.com{0}'.format(aid)
-		rsp = self.fetch(url)
-		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'alt="(.+?)"\srel="nofollow"><i class=".+?">',Index=1)
-		playFrom = []
-		videoList=[]
-		vodItems = []
-		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
-		playFrom=[t for t in line]
-		pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
-		for v in circuit:
-			ListRe=pattern.findall(v)
-			vodItems = []
-			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
-			joinStr = "#".join(vodItems)
-			videoList.append(joinStr)
+    def init(self, extend=""):
+        # 初始化,获取收藏夹分区,获取userid
+        self.userid = self.get_userid()
+        url = 'http://api.bilibili.com/x/v3/fav/folder/created/list-all?up_mid=%s&jsonp=jsonp' % (self.userid)
+        rsp = self.fetch(url, cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        fav_list = []
+        if jo['code'] == 0:
+            for fav in jo['data'].get('list'):
+                fav_dict = {'n': fav['title'], 'v': fav['id']}
+                fav_list.append(fav_dict)
+        if self.config["filter"].get('收藏夹'):
+            for i in self.config["filter"].get('收藏夹'):
+                if i['key'] == 'mlid':
+                    i['value'] = fav_list
+    #用户userid
+    userid=''
+    def get_userid(self):
+        #获取自己的userid(cookies拥有者)
+        url = 'http://api.bilibili.com/x/space/myinfo'
+        rsp = self.fetch(url, cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] == 0:
+            return jo['data']['mid']
 
-		vod_play_from='$$$'.join(playFrom)
-		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
-		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
-		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
-		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
-		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
-		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span>(.+?)<span class="split_line">',Index=1)
-		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span>(.+?)<span class="split_line">',Index=1)
-		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="content_desc context clearfix"><span>(.+?)</span></div>',Index=1)
-		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
+    def isVideoFormat(self, url):
+        pass
 
-		vod = {
-			"vod_id": aid,
-			"vod_name": title,
-			"vod_pic": pic,
-			"type_name":self.removeHtml(txt=typeName),
-			"vod_year": self.removeHtml(txt=year),
-			"vod_area": area,
-			"vod_remarks": rem,
-			"vod_actor":  self.removeHtml(txt=act),
-			"vod_director": self.removeHtml(txt=dir),
-			"vod_content": self.removeHtml(txt=cont)
-		}
-		vod['vod_play_from'] = vod_play_from
-		vod['vod_play_url'] = vod_play_url
+    def manualVideoCheck(self):
+        pass
 
-		result = {
-			'list': [
-				vod
-			]
-		}
-		return result
+    def homeContent(self, filter):
+        result = {}
+        if len(self.cookies) <= 0:
+            self.getCookie()
+        if self.login is True:
+            cateManual = {
+                "频道": "频道",
+                "动态": "动态",
+                "pu主": "pu主",
+                "热门": "热门",
+                "推荐": "推荐",
+                "排行榜": "排行榜",
+                "收藏夹": "收藏夹",
+                "历史记录": "历史记录",
+                "健身": "刘畊宏 9月21日",
+                "演唱会": "演唱会",
+                "动物世界": "动物世界",
+                "相声小品": "相声小品",
+                "假窗-白噪音": "窗+白噪音"
+            }
+        else:
+            cateManual = {
+                "纪录片": "纪录片",
+                "演唱会": "演唱会",
+                "动物世界": "动物世界",
+                "相声小品": "相声小品",
+                "假窗-白噪音": "窗+白噪音"
+            }
+        classes = []
+        for k in cateManual:
+            classes.append({
+                'type_name': k,
+                'type_id': cateManual[k]
+            })
+        result['class'] = classes
+        if (filter):
+            result['filters'] = self.config['filter']
+        return result
 
-	def searchContent(self,key,quick):
-		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
-		result = {
-				'list': videos
-			}
-		return result
+    def homeVideoContent(self):
+        result = {
+            'list': []
+        }
+        return result
 
-	def playerContent(self,flag,id,vipFlags):
-		result = {}
-		parse=1
-		Url='http://www.meheme.com{0}'.format(id)
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
-		if len(m3u8Line)>0:
-			Url=m3u8Line[0].replace("/","")
-			parse=0 if Url.find('.m3u8')>1 else 1
-		result["parse"] = parse
-		result["playUrl"] = ''
-		result["url"] = Url
-		result["header"] = ''
-		return result
-	def get_RegexGetText(self,Text,RegexText,Index):
-		returnTxt=""
-		Regex=re.search(RegexText, Text, re.M|re.I)
-		if Regex is None:
-			returnTxt=""
-		else:
-			returnTxt=Regex.group(Index)
-		return returnTxt	
-	def get_RegexGetTextLine(self,Text,RegexText,Index):
-		returnTxt=[]
-		pattern = re.compile(RegexText)
-		ListRe=pattern.findall(Text)
-		if len(ListRe)<1:
-			return returnTxt
-		for value in ListRe:
-			returnTxt.append(value)	
-		return returnTxt
-	def get_playlist(self,Text,headStr,endStr):
-		circuit=""
-		origin=Text.find(headStr)
-		if origin>8:
-			end=Text.find(endStr,origin)
-			circuit=Text[origin:end]
-		return circuit
-	def removeHtml(self,txt):
-		soup = re.compile(r'<[^>]+>',re.S)
-		txt =soup.sub('', txt)
-		return txt.replace("&nbsp;"," ")
-	def get_webReadFile(self,urlStr):
-		Host=rsp.get_RegexGetText(Text=urlStr,RegexText=r"https*://(.*?)(/|$)",Index=1)
-		headers = {
-			'Referer':urlStr,
-			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': Host,
-			'cookie':"b_nut=1646273779; buvid3=EE1C9CA5-6539-4322-8C80-7C40F56842EB35975infoc; LIVE_BUVID=AUTO2616462757465937; _uuid=1097DB1DE-8CAE-1017A-76FB-2A728D59161510353infoc; fingerprint=77c85d9ff313891ec90a199813ae4113; CURRENT_QUALITY=64; CURRENT_BLACKGAP=1; blackside_state=0; DedeUserID=321534564; DedeUserID__ckMd5=4cf4212075f2f1eb; SESSDATA=14a178ef%2C1677390337%2C710a5*81; bili_jct=c8370910bd149e877203572c0c473e91; fingerprint3=b9d652f66e003973ba5e01bdfd8721f7; hit-dyn-v2=1; b_ut=5; nostalgia_conf=-1; rpdid=|(u))ul)ukR~0J'uYYmkl~kRu; buvid_fp_plain=undefined; buvid4=2E8D615F-F1D9-B7AD-63C2-1C9A145C98D117909-022030512-5ZCNRwNsIx1ENAcLMkU%2FQg%3D%3D; buvid_fp=77c85d9ff313891ec90a199813ae4113; CURRENT_FNVAL=4048; b_lsid=CAAE3104F_18677EDAC98; innersign=0; i-wanna-go-back=-1; hit-new-style-dyn=0; bp_video_offset_321534564=765410120665399300"
-		}
-		req = urllib.request.Request(url=urlStr, headers=headers)
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		return html
-	def get_list(self,html):
-		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
-		videos = []
-		for vod in ListRe:
-			lastVideo = vod[0]
-			title =vod[1]
-			img =vod[2]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			videos.append({
-				"vod_id":lastVideo,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-		return videos
-	def get_lineList(self,Txt,mark,after):
-		circuit=[]
-		origin=Txt.find(mark)
-		while origin>8:
-			end=Txt.find(after,origin)
-			circuit.append(Txt[origin:end])
-			origin=Txt.find(mark,end)
-		return circuit
-	config = {
-		"player": {},
-		"filter": {}
-	}
-	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'www.kukemv.com',
-		'cookie':"b_nut=1646273779; buvid3=EE1C9CA5-6539-4322-8C80-7C40F56842EB35975infoc; LIVE_BUVID=AUTO2616462757465937; _uuid=1097DB1DE-8CAE-1017A-76FB-2A728D59161510353infoc; fingerprint=77c85d9ff313891ec90a199813ae4113; CURRENT_QUALITY=64; CURRENT_BLACKGAP=1; blackside_state=0; DedeUserID=321534564; DedeUserID__ckMd5=4cf4212075f2f1eb; SESSDATA=14a178ef%2C1677390337%2C710a5*81; bili_jct=c8370910bd149e877203572c0c473e91; fingerprint3=b9d652f66e003973ba5e01bdfd8721f7; hit-dyn-v2=1; b_ut=5; nostalgia_conf=-1; rpdid=|(u))ul)ukR~0J'uYYmkl~kRu; buvid_fp_plain=undefined; buvid4=2E8D615F-F1D9-B7AD-63C2-1C9A145C98D117909-022030512-5ZCNRwNsIx1ENAcLMkU%2FQg%3D%3D; buvid_fp=77c85d9ff313891ec90a199813ae4113; CURRENT_FNVAL=4048; b_lsid=CAAE3104F_18677EDAC98; innersign=0; i-wanna-go-back=-1; hit-new-style-dyn=0; bp_video_offset_321534564=765410120665399300"#自己的cookie
-	}
+    def get_rcmd(self,pg):
+        result = {}
+        url= 'https://api.bilibili.com/x/web-interface/index/top/feed/rcmd?y_num={0}&fresh_type=3&feed_version=SEO_VIDEO&fresh_idx_1h=1&fetch_row=1&fresh_idx=1&brush=0&homepage_ver=1&ps=20'.format(pg)
+        rsp = self.fetch(url,cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] == 0:
+            videos = []
+            vodList = jo['data']['item']
+            for vod in vodList:
+                aid = str(vod['id']).strip()
+                title = vod['title'].strip().replace("<em class=\"keyword\">","").replace("</em>","")
+                img =  vod['pic'].strip()
+                remark = str(vod['duration']).strip()
+                videos.append({
+                    "vod_id":aid,
+                    "vod_name":title,
+                    "vod_pic":img,
+                    "vod_remarks":remark
+                })
+            result['list'] = videos
+            result['page'] = pg
+            result['pagecount'] = 9999
+            result['limit'] = 90
+            result['total'] = 999999
+        return result
 
-	def localProxy(self,param):
-		return [200, "video/MP2T", action, ""]
-	def verifyCode(self):
-		retry = 10
-		header = {
-			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
-		while retry:
-			try:
-				session = requests.session()
-				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
-				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
-				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
-								   headers=header).json()
-				if res["msg"] == "ok":
-					return session
-			except Exception as e:
-				print(e)
-			finally:
-				retry = retry - 1
+    def get_dynamic(self,pg):
+        result = {}
+        if int(pg) > 1:
+            return result
+        offset = ''
+        videos = []
+        for i in range(0,10):
+            url= 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?timezone_offset=-480&type=all&page={0}&offset={1}'.format(pg,offset)
+            rsp = self.fetch(url,cookies=self.getCookie())
+            content = rsp.text
+            jo = json.loads(content)
+            if jo['code'] == 0:
+                offset = jo['data']['offset']
+                vodList = jo['data']['items']
+                for vod in vodList:
+                    if vod['type'] == 'DYNAMIC_TYPE_AV':
+                        ivod = vod['modules']['module_dynamic']['major']['archive']
+                        aid = str(ivod['aid']).strip()
+                        title = ivod['title'].strip().replace("<em class=\"keyword\">","").replace("</em>","")
+                        img =  ivod['cover'].strip()
+                        remark = str(ivod['duration_text']).strip()
+                        videos.append({
+                            "vod_id":aid,
+                            "vod_name":title,
+                            "vod_pic":img,
+                            "vod_remarks":remark
+                        })
+        result['list'] = videos
+        result['page'] = pg
+        result['pagecount'] = 9999
+        result['limit'] = 90
+        result['total'] = 999999
+        return result
+    def get_pu(self,pg):
+        result = {}
+        if int(pg) > 1:
+            return result
+        offset = ''
+        videos = []
+        for i in range(0,10):
+            url= 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?timezone_offset=-480&type=all&page={0}&offset={1}'.format(pg,offset)
+            rsp = self.fetch(url,cookies=self.getCookie())
+            content = rsp.text
+            jo = json.loads(content)
+            if jo['code'] == 0:
+                offset = jo['data']['offset']
+                vodList = jo['data']['items']
+                for vod in vodList:
+                    if vod['type'] == 'DYNAMIC_TYPE_AV':
+                        ivod = vod['modules']['module_dynamic']['major']['archive']
+                        aid = str(ivod['aid']).strip()
+                        title = ivod['title'].strip().replace("<em class=\"keyword\">","").replace("</em>","")
+                        img =  ivod['cover'].strip()
+                        remark = str(ivod['duration_text']).strip()
+                        videos.append({
+                            "vod_id":aid,
+                            "vod_name":title,
+                            "vod_pic":img,
+                            "vod_remarks":remark
+                        })
+        result['list'] = videos
+        result['page'] = pg
+        result['pagecount'] = 9999
+        result['limit'] = 90
+        result['total'] = 999999
+        return result
+
+    def second_to_time(self, a):
+        # 将秒数转化为 时分秒的格式
+        if a < 3600:
+            return time.strftime("%M:%S", time.gmtime(a))
+        else:
+            return time.strftime("%H:%M:%S", time.gmtime(a))
+
+    def get_history(self, pg):
+        result = {}
+        url = 'http://api.bilibili.com/x/v2/history?pn=%s' % pg
+        rsp = self.fetch(url, cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)  # 解析api接口,转化成json数据对象
+        if jo['code'] == 0:
+            videos = []
+            vodList = jo['data']
+            for vod in vodList:
+                if vod['duration'] > 0:  # 筛选掉非视频的历史记录
+                    aid = str(vod["aid"]).strip()  # 获取 aid
+                    # 获取标题
+                    title = vod["title"].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;",'"')
+                    # 封面图片
+                    img = vod["pic"].strip()
+                    # 获取已观看时间
+                    if str(vod['progress']) == '-1':
+                        process = str(self.second_to_time(vod['duration'])).strip()
+                    else:
+                        process = str(self.second_to_time(vod['progress'])).strip()
+                    # 获取视频总时长
+                    total_time = str(self.second_to_time(vod['duration'])).strip()
+                    # 组合 已观看时间 / 总时长 ,赋值给 remark
+                    remark = process + ' / ' + total_time
+                    videos.append({
+                        "vod_id": aid,
+                        "vod_name": title,
+                        "vod_pic": img,
+                        "vod_remarks": remark
+                    })
+            result['list'] = videos
+            result['page'] = pg
+            result['pagecount'] = 9999
+            result['limit'] = 90
+            result['total'] = 999999
+        return result
+
+    def get_hot(self, pg):
+        result = {}
+        url = 'https://api.bilibili.com/x/web-interface/popular?ps=20&pn={0}'.format(pg)
+        rsp = self.fetch(url, cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] == 0:
+            videos = []
+            vodList = jo['data']['list']
+            for vod in vodList:
+                aid = str(vod['aid']).strip()
+                title = vod['title'].strip().replace("<em class=\"keyword\">", "").replace("</em>", "")
+                img = vod['pic'].strip()
+                remark = str(vod['duration']).strip()
+                videos.append({
+                    "vod_id": aid,
+                    "vod_name": title,
+                    "vod_pic": img,
+                    "vod_remarks": remark
+                })
+            result['list'] = videos
+            result['page'] = pg
+            result['pagecount'] = 9999
+            result['limit'] = 90
+            result['total'] = 999999
+        return result
+
+    def get_rank(self):
+        result = {}
+        url = 'https://api.bilibili.com/x/web-interface/ranking/v2?rid=0&type=all'
+        rsp = self.fetch(url, cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] == 0:
+            videos = []
+            vodList = jo['data']['list']
+            for vod in vodList:
+                aid = str(vod['aid']).strip()
+                title = vod['title'].strip().replace("<em class=\"keyword\">", "").replace("</em>", "")
+                img = vod['pic'].strip()
+                remark = str(vod['duration']).strip()
+                videos.append({
+                    "vod_id": aid,
+                    "vod_name": title,
+                    "vod_pic": img,
+                    "vod_remarks": remark
+                })
+            result['list'] = videos
+            result['page'] = 1
+            result['pagecount'] = 1
+            result['limit'] = 90
+            result['total'] = 999999
+        return result
+
+    def get_channel(self, pg, cid):
+        result = {}
+        if int(pg) > 1:
+            return result
+        offset = ''
+        videos = []
+        for i in range(0, 5):
+            url = 'https://api.bilibili.com/x/web-interface/web/channel/multiple/list?channel_id={0}&sort_type=hot&offset={1}&page_size=30'.format(cid, offset)
+            rsp = self.fetch(url, cookies=self.getCookie())
+            content = rsp.text
+            print(content)
+            jo = json.loads(content)
+            if jo['code'] == 0:
+                offset = jo['data']['offset']
+                vodList = jo['data']['list']
+                for vod in vodList:
+                    if vod['card_type'] == 'rank':
+                        rankVods = vod['items']
+                        for ivod in rankVods:
+                            aid = str(ivod['id']).strip()
+                            title = ivod['name'].strip().replace("<em class=\"keyword\">", "").replace("</em>", "")
+                            img = ivod['cover'].strip()
+                            remark = str(ivod['duration']).strip()
+                            videos.append({
+                                "vod_id": aid,
+                                "vod_name": title,
+                                "vod_pic": img,
+                                "vod_remarks": remark
+                            })
+                    elif vod['card_type'] == 'archive':
+                        aid = str(vod['id']).strip()
+                        title = vod['name'].strip().replace("<em class=\"keyword\">", "").replace("</em>", "")
+                        img = vod['cover'].strip()
+                        remark = str(vod['duration']).strip()
+                        videos.append({
+                            "vod_id": aid,
+                            "vod_name": title,
+                            "vod_pic": img,
+                            "vod_remarks": remark
+                        })
+        result['list'] = videos
+        result['page'] = pg
+        result['pagecount'] = 9999
+        result['limit'] = 90
+        result['total'] = 999999
+        return result
+
+    def get_fav_detail(self, pg, mlid, order):
+        result = {}
+        url = 'http://api.bilibili.com/x/v3/fav/resource/list?media_id=%s&order=%s&pn=%s&ps=20&platform=web&type=0' % (
+        mlid, order, pg)
+        rsp = self.fetch(url, cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['medias']
+        for vod in vodList:
+            aid = str(vod['id']).strip()
+            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = vod['cover'].strip()
+            remark = str(self.second_to_time(vod['duration'])).strip()
+            videos.append({
+                "vod_id": aid,
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+
+            })
+        # videos=self.filter_duration(videos, duration_diff)
+        result['list'] = videos
+        result['page'] = pg
+        result['pagecount'] = 9999
+        result['limit'] = 90
+        result['total'] = 999999
+        return result
+
+    def get_fav(self, pg, order, extend):
+        # 获取自己的up_mid(也就是用户uid)
+        mlid = ''
+        fav_config = self.config["filter"].get('收藏夹')
+        # 默认显示第一个收藏夹内容
+        if fav_config:
+            for i in fav_config:
+                if i['key'] == 'mlid':
+                    if len(i['value']) > 0:
+                        mlid = i['value'][0]['v']
+        if 'mlid' in extend:
+            mlid = extend['mlid']
+        if mlid:
+            return self.get_fav_detail(pg=pg, mlid=mlid, order=order)
+        else:
+            return {}
+
+    cookies = ''
+    login = False
+    def getCookie(self):
+        cookies_str = self.fetch("https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/cookie.txt").text
+        cookies_dic = dict([co.strip().split('=') for co in cookies_str.split(';')])
+        rsp = session()
+        cookies_jar = utils.cookiejar_from_dict(cookies_dic)
+        rsp.cookies = cookies_jar
+        content = self.fetch("http://api.bilibili.com/x/web-interface/nav", cookies=rsp.cookies)
+        res = json.loads(content.text)
+        if res["code"] == 0:
+            self.login = True
+            self.cookies = rsp.cookies
+        else:
+            rsp = self.fetch("https://www.bilibili.com/")
+            self.cookies = rsp.cookies
+            self.login = False
+        return rsp.cookies
+
+    def categoryContent(self, tid, pg, filter, extend):
+        result = {}
+        if tid == "热门":
+            return self.get_hot(pg=pg)
+        if tid == "排行榜":
+            return self.get_rank()
+        if tid == '动态':
+            return self.get_dynamic(pg=pg)
+        if tid == '历史记录':
+            return self.get_history(pg=pg)
+        if tid == 'pu主':
+            return self.get_pu(pg=pg)
+        if tid == '推荐':
+            return self.get_rcmd(pg=pg)
+        if tid == "收藏夹":
+            self.box_video_type = '收藏夹'
+            order = 'mtime'
+            if 'order' in extend:
+                order = extend['order']
+            return self.get_fav(pg=pg, order=order, extend=extend)
+        if tid == '频道':
+            cid = '9222'
+            if 'cid' in extend:
+                cid = extend['cid']
+            return self.get_channel(pg=pg, cid=cid)
+        url = 'https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword={0}&page={1}'.format(tid, pg)
+        if len(self.cookies) <= 0:
+            self.getCookie()
+        rsp = self.fetch(url, cookies=self.cookies)
+        content = rsp.text
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['result']
+        for vod in vodList:
+            aid = str(vod['aid']).strip()
+            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = 'https:' + vod['pic'].strip()
+            remark = str(vod['duration']).strip()
+            videos.append({
+                "vod_id": aid,
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+            })
+        result['list'] = videos
+        result['page'] = pg
+        result['pagecount'] = 9999
+        result['limit'] = 90
+        result['total'] = 999999
+        return result
+
+    def cleanSpace(self, str):
+        return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
+
+    def detailContent(self, array):
+        aid = array[0]
+        url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
+        rsp = self.fetch(url, headers=self.header)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']
+        title = jo['title'].replace("<em class=\"keyword\">", "").replace("</em>", "")
+        pic = jo['pic']
+        desc = jo['desc']
+        timeStamp = jo['pubdate']
+        timeArray = time.localtime(timeStamp)
+        year = str(time.strftime("%Y", timeArray))
+        dire = jo['owner']['name']
+        typeName = jo['tname']
+        remark = str(jo['duration']).strip()
+        vod = {
+            "vod_id": aid,
+            "vod_name": title,
+            "vod_pic": pic,
+            "type_name": typeName,
+            "vod_year": year,
+            "vod_area": "",
+            "vod_remarks": remark,
+            "vod_actor": "",
+            "vod_director": dire,
+            "vod_content": desc
+        }
+        ja = jo['pages']
+        playUrl = ''
+        for tmpJo in ja:
+            cid = tmpJo['cid']
+            part = tmpJo['part'].replace("#", "-")
+            playUrl = playUrl + '{0}${1}_{2}#'.format(part, aid, cid)
+
+        vod['vod_play_from'] = 'B站视频'
+        vod['vod_play_url'] = playUrl
+
+        result = {
+            'list': [
+                vod
+            ]
+        }
+        return result
+
+    def searchContent(self, key, quick):
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        url = 'https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword={0}'.format(key)
+        if len(self.cookies) <= 0:
+            self.getCookie()
+        rsp = self.fetch(url, cookies=self.cookies,headers=header)
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] != 0:
+            rspRetry = self.fetch(url, cookies=self.getCookie())
+            content = rspRetry.text
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['result']
+        for vod in vodList:
+            aid = str(vod['aid']).strip()
+            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = 'https:' + vod['pic'].strip()
+            remark = str(vod['duration']).strip()
+            videos.append({
+                "vod_id": aid,
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+            })
+        result = {
+            'list': videos
+        }
+        return result
+
+    def playerContent(self, flag, id, vipFlags):
+        result = {}
+
+        ids = id.split("_")
+        url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=120&fnval=0&128=128&fourk=1'.format(ids[0], ids[1])
+        if len(self.cookies) <= 0:
+            self.getCookie()
+        rsp = self.fetch(url, cookies=self.cookies)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']
+        ja = jo['durl']
+
+        maxSize = -1
+        position = -1
+        for i in range(len(ja)):
+            tmpJo = ja[i]
+            if maxSize < int(tmpJo['size']):
+                maxSize = int(tmpJo['size'])
+                position = i
+
+        url = ''
+        if len(ja) > 0:
+            if position == -1:
+                position = 0
+            url = ja[position]['url']
+
+        result["parse"] = 0
+        result["playUrl"] = ''
+        result["url"] = url
+        result["header"] = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        result["contentType"] = 'video/x-flv'
+        return result
+
+    config = {
+        "player": {},
+        "filter": {"收藏夹": [{"key": "order","name": "排序","value": [{"n": "收藏时间","v": "mtime"},{"n": "播放量","v": "view"},{"n": "投稿时间","v": "pubtime"}]},{"key": "mlid","name": "收藏夹分区","value": []}],"频道":[{"key":"cid","name":"分类","value":[{'n': '搞笑', 'v': 1833}, {'n': '美食', 'v': 20215}, {'n': '鬼畜', 'v': 68}, {'n': '天官赐福', 'v': 2544632}, {'n': '英雄联盟', 'v': 9222}, {'n': '美妆', 'v': 832569}, {'n': '必剪创作', 'v': 15775524}, {'n': '单机游戏', 'v': 17683}, {'n': '搞笑', 'v': 1833}, {'n': '科普', 'v': 5417}, {'n': '影视剪辑', 'v': 318570}, {'n': 'vlog', 'v': 2511282}, {'n': '声优', 'v': 1645}, {'n': '动漫杂谈', 'v': 530918}, {'n': 'COSPLAY', 'v': 88}, {'n': '漫展', 'v': 22551}, {'n': 'MAD', 'v': 281}, {'n': '手书', 'v': 608}, {'n': '英雄联盟', 'v': 9222}, {'n': '王者荣耀', 'v': 1404375}, {'n': '单机游戏', 'v': 17683}, {'n': '我的世界', 'v': 47988}, {'n': '守望先锋', 'v': 926988}, {'n': '恐怖游戏', 'v': 17941}, {'n': '英雄联盟', 'v': 9222}, {'n': '王者荣耀', 'v': 1404375}, {'n': '守望先锋', 'v': 926988}, {'n': '炉石传说', 'v': 318756}, {'n': 'DOTA2', 'v': 47034}, {'n': 'CS:GO', 'v': 99842}, {'n': '鬼畜', 'v': 68}, {'n': '鬼畜调教', 'v': 497221}, {'n': '诸葛亮', 'v': 51330}, {'n': '二次元鬼畜', 'v': 29415}, {'n': '王司徒', 'v': 987568}, {'n': '万恶之源', 'v': 21}, {'n': '美妆', 'v': 832569}, {'n': '服饰', 'v': 313718}, {'n': '减肥', 'v': 20805}, {'n': '穿搭', 'v': 1139735}, {'n': '发型', 'v': 13896}, {'n': '化妆教程', 'v': 261355}, {'n': '电音', 'v': 14426}, {'n': '欧美音乐', 'v': 17034}, {'n': '中文翻唱', 'v': 8043}, {'n': '洛天依', 'v': 8564}, {'n': '翻唱', 'v': 386}, {'n': '日文翻唱', 'v': 85689}, {'n': '科普', 'v': 5417}, {'n': '技术宅', 'v': 368}, {'n': '历史', 'v': 221}, {'n': '科学', 'v': 1364}, {'n': '人文', 'v': 40737}, {'n': '科幻', 'v': 5251}, {'n': '手机', 'v': 7007}, {'n': '手机评测', 'v': 143751}, {'n': '电脑', 'v': 1339}, {'n': '摄影', 'v': 25450}, {'n': '笔记本', 'v': 1338}, {'n': '装机', 'v': 413678}, {'n': '课堂教育', 'v': 3233375}, {'n': '公开课', 'v': 31864}, {'n': '演讲', 'v': 2739}, {'n': 'PS教程', 'v': 335752}, {'n': '编程', 'v': 28784}, {'n': '英语学习', 'v': 360005}, {'n': '喵星人', 'v': 1562}, {'n': '萌宠', 'v': 6943}, {'n': '汪星人', 'v': 9955}, {'n': '大熊猫', 'v': 22919}, {'n': '柴犬', 'v': 30239}, {'n': '吱星人', 'v': 6947}, {'n': '美食', 'v': 20215}, {'n': '甜点', 'v': 35505}, {'n': '吃货', 'v': 6942}, {'n': '厨艺', 'v': 239855}, {'n': '烘焙', 'v': 218245}, {'n': '街头美食', 'v': 1139423}, {'n': 'A.I.Channel', 'v': 3232987}, {'n': '虚拟UP主', 'v': 4429874}, {'n': '神楽めあ', 'v': 7562902}, {'n': '白上吹雪', 'v': 7355391}, {'n': '彩虹社', 'v': 1099778}, {'n': 'hololive', 'v': 8751822}, {'n': 'EXO', 'v': 191032}, {'n': '防弹少年团', 'v': 536395}, {'n': '肖战', 'v': 1450880}, {'n': '王一博', 'v': 902215}, {'n': '易烊千玺', 'v': 15186}, {'n': 'BLACKPINK', 'v': 1749296}, {'n': '宅舞', 'v': 9500}, {'n': '街舞', 'v': 5574}, {'n': '舞蹈教学', 'v': 157087}, {'n': '明星舞蹈', 'v': 6012204}, {'n': '韩舞', 'v': 159571}, {'n': '古典舞', 'v': 161247}, {'n': '旅游', 'v': 6572}, {'n': '绘画', 'v': 2800}, {'n': '手工', 'v': 11265}, {'n': 'vlog', 'v': 2511282}, {'n': 'DIY', 'v': 3620}, {'n': '手绘', 'v': 1210}, {'n': '综艺', 'v': 11687}, {'n': '国家宝藏', 'v': 105286}, {'n': '脱口秀', 'v': 4346}, {'n': '日本综艺', 'v': 81265}, {'n': '国内综艺', 'v': 641033}, {'n': '人类观察', 'v': 282453}, {'n': '影评', 'v': 111377}, {'n': '电影解说', 'v': 1161117}, {'n': '影视混剪', 'v': 882598}, {'n': '影视剪辑', 'v': 318570}, {'n': '漫威', 'v': 138600}, {'n': '超级英雄', 'v': 13881}, {'n': '影视混剪', 'v': 882598}, {'n': '影视剪辑', 'v': 318570}, {'n': '诸葛亮', 'v': 51330}, {'n': '韩剧', 'v': 53056}, {'n': '王司徒', 'v': 987568}, {'n': '泰剧', 'v': 179103}, {'n': '郭德纲', 'v': 8892}, {'n': '相声', 'v': 5783}, {'n': '张云雷', 'v': 1093613}, {'n': '秦霄贤', 'v': 3327368}, {'n': '孟鹤堂', 'v': 1482612}, {'n': '岳云鹏', 'v': 24467}, {'n': '假面骑士', 'v': 2069}, {'n': '特摄', 'v': 2947}, {'n': '奥特曼', 'v': 963}, {'n': '迪迦奥特曼', 'v': 13784}, {'n': '超级战队', 'v': 32881}, {'n': '铠甲勇士', 'v': 11564}, {'n': '健身', 'v': 4344}, {'n': '篮球', 'v': 1265}, {'n': '体育', 'v': 41103}, {'n': '帕梅拉', 'v': 257412}, {'n': '极限运动', 'v': 8876}, {'n': '足球', 'v': 584}, {'n': '星海', 'v': 178862}, {'n': '张召忠', 'v': 116480}, {'n': '航母', 'v': 57834}, {'n': '航天', 'v': 81618}, {'n': '导弹', 'v': 14958}, {'n': '战斗机', 'v': 24304}]}]}
+    }
+    header = {}
+
+    def localProxy(self, param):
+        return [200, "video/MP2T", action, ""]
