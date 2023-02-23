@@ -450,9 +450,9 @@ class Spider(Spider):  # 元类 默认的元类 type
     def detailContent(self, array):
         result={}
 	if array[0].find('###')>0:
-	        result=self.get_list(aid=array[0])
+            result=self.get_list(aid=array[0])
 	else:
-		result=self.get_list_pu(aid=array[0])
+            result=self.get_list_pu(aid=array[0])
         return result
     def get_list(self, aid):
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
