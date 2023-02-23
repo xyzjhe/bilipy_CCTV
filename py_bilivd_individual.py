@@ -456,8 +456,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         return result
     def get_list(self, array):
-
-        playUrl=''
+        aid=array[0]
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
         rsp = self.fetch(url, headers=self.header)
         jRoot = json.loads(rsp.text)
