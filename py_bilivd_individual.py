@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态": "动态",
+                "动态1": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -174,11 +174,12 @@ class Spider(Spider):  # 元类 默认的元类 type
                         "vod_pic":img,
                         "vod_remarks":remark
                     })
+        numvL = len(videos)
         result['list'] = videos
         result['page'] = pg
-        result['pagecount'] = 9999
-        result['limit'] = 90
-        result['total'] = 999999
+        result['pagecount'] = int(pg)+1 if numvL>19 else pg
+        result['limit'] = numvL
+        result['total'] = numvL
         return result
 
     def second_to_time(self, a):
