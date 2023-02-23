@@ -169,7 +169,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                     img = vod['face'].strip()
                     remark = str(vod['sign']).strip()
                     videos.append({
-                        "vod_id":aid,
+                        "vod_id":title+"###"+aid+"###"+img,
                         "vod_name":title,
                         "vod_pic":img,
                         "vod_remarks":remark
@@ -448,7 +448,11 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        result=self.get_list(aid=array[0])
+        result={}
+	if array[0].find('###')>0:
+	        result=self.get_list(aid=array[0])
+	else:
+		result=self.get_list_pu(aid=array[0])
         return result
     def get_list(self, aid):
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
@@ -492,7 +496,43 @@ class Spider(Spider):  # 元类 默认的元类 type
             ]
         }
         return result
+    def get_list_pu(self, aid):
+        aidList=aid.split('###')
+        mid=aidList[1]
+        url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,'1')
+        rsp = self.fetch(url, headers=self.header)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']['list']['vlist']
+        title = aidList[0]
+        pic = aidList[2]
+        typeName = 'pu主'
+        vod = {
+            "vod_id": aid,
+            "vod_name": title,
+            "vod_pic": pic,
+            "type_name": typeName,
+            "vod_year": '',
+            "vod_area": "",
+            "vod_remarks": '',
+            "vod_actor": "",
+            "vod_director": '',
+            "vod_content": ''
+        }
+        playUrl = ''
+        for tmpJo in jo:
+            vodTitle = tmpJo['title']
+            bvid = tmpJo['bvid']
+            playUrl = playUrl + '{0}${1}#'.format(vodTitle, bvid)
 
+        vod['vod_play_from'] = 'pu主'
+        vod['vod_play_url'] = playUrl
+
+        result = {
+            'list': [
+                vod
+            ]
+        }
+        return result
     def searchContent(self, key, quick):
         header = {
             "Referer": "https://www.bilibili.com",
