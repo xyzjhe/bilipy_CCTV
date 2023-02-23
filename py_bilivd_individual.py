@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态4": "动态",
+                "动态5": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -448,17 +448,15 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        aaid1 = array[0]
-        playUrl=self.get_list(aid=aid1)
-        vod['vod_play_from'] = 'B站视频'
-        vod['vod_play_url'] = playUrl
+        vod=self.get_list(array=array)
         result = {
             'list': [
                 vod
             ]
         }
         return result
-    def get_list(self, aid):
+    def get_list(self, array):
+
         playUrl=''
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
         rsp = self.fetch(url, headers=self.header)
@@ -491,7 +489,9 @@ class Spider(Spider):  # 元类 默认的元类 type
             cid = tmpJo['cid']
             part = tmpJo['part'].replace("#", "-")
             playUrl = playUrl + '{0}${1}_{2}#'.format(part, aid, cid)
-        return playUrl
+        vod['vod_play_from'] = 'B站视频'
+        vod['vod_play_url'] = playUrl
+	return vod
 
     def searchContent(self, key, quick):
         header = {
