@@ -244,4 +244,20 @@ class Spider(Spider):
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
-print(get_dynamic(pg=1))
+	def verifyCode(self):
+		retry = 10
+		header = {
+			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
+		while retry:
+			try:
+				session = requests.session()
+				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
+				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
+				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
+								   headers=header).json()
+				if res["msg"] == "ok":
+					return session
+			except Exception as e:
+				print(e)
+			finally:
+				retry = retry - 1
