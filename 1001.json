@@ -1018,16 +1018,6 @@
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/tvb%E4%BA%91%E6%92%AD.json"
     },
     {
-      "key": "COKEMV",
-      "name": "🥮COKEMV",
-      "type": 3,
-      "api": "csp_XBiubiu",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/COKEMV.json"
-    },
-    {
       "key": "Auete影视",
       "name": "🍬Auete影视",
       "type": 3,
