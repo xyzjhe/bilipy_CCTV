@@ -61,9 +61,10 @@ class Spider(Spider):
 			return result
 		videos = []
 		offset = ''
-		for i in range(0,10):
+		for i in range(0,2):
 			url= 'https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?timezone_offset=-480&type=all&page={0}&offset={1}'.format(pg,offset)
-			htmlTxt=self.webReadFile(urlStr=url)
+			rsp = self.fetch(url,cookies=self.header['cookie'])
+			htmlTxt=rsp.text
 			jo = json.loads(htmlTxt)
 			if jo['code'] == 0:
 				offset=jo['data']['offset']
