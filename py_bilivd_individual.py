@@ -448,12 +448,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        vod=self.get_list(aid=array[0])
-        result = {
-            'list': [
-                vod
-            ]
-        }
+        result=self.get_list(aid=array[0])
         return result
     def get_list(self, aid):
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
@@ -487,9 +482,16 @@ class Spider(Spider):  # 元类 默认的元类 type
             cid = tmpJo['cid']
             part = tmpJo['part'].replace("#", "-")
             playUrl = playUrl + '{0}${1}_{2}#'.format(part, aid, cid)
+
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
-	return vod
+
+        result = {
+            'list': [
+                vod
+            ]
+        }
+        return result
 
     def searchContent(self, key, quick):
         header = {
