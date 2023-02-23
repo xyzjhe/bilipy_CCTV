@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"频道1": "频道",
+			"频道2": "频道",
 			"动态": "动态",
 			"pu主": "pu主",
 			"热门": "热门",
@@ -52,7 +52,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		if tid=='动态':
-			result=get_dynamic(pg=pg)
+			result=self.get_dynamic(pg=pg)
 		return result
 		#动态
 	def get_dynamic(self,pg):
