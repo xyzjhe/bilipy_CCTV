@@ -448,10 +448,10 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        result =self.get_list(aidT=array[0])
+        result =self.get_list(array=array)
         return result
-    def get_list(self, aidT):
-        aid = aidT
+    def get_list(self, array):
+        aid = array[0]
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
         rsp = self.fetch(url, headers=self.header)
         jRoot = json.loads(rsp.text)
