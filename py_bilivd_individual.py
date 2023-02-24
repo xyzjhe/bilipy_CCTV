@@ -448,7 +448,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        result={}
 	result=self.get_list(aid=array[0])
         return result
     def get_list(self, aid):
