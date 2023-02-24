@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态19": "动态",
+                "动态20": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -508,7 +508,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         typeName = ''
         remark = ''
         vod = {
-            "vod_id": aid,
+            "vod_id": '0000',
             "vod_name": title,
             "vod_pic": pic,
             "type_name": '',
@@ -519,7 +519,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": ''
         }
-        playUrl = playUrl + '测试$888#'
+        playUrl = '测试$888#'
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
