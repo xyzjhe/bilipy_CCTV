@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态20": "动态",
+                "动态[测试是否能进入]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -497,9 +497,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         return result
     def get_list_pu(self, aid):
-        url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format('888','1')	
-        rsp = self.fetch("https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt")
-        htmlTxt = rsp.text
         title = '测试'
         pic = ''
         desc = ''
