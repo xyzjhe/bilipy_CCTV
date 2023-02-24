@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态4": "动态",
+                "动态5": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -489,7 +489,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 vod
             ]
         }
-        return def get_list(aid=array[0])
+        return self.get_list(aid=array[0])
     def get_list(self, aid):
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
         rsp = self.fetch(url, headers=self.header)
