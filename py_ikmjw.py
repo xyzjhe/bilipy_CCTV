@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "edu1",
+			"电影1": "edu1",
 			"电视剧": "edu2",
 			"综艺": "edu3",
 			"动漫": "edu4"
@@ -69,8 +69,7 @@ class Spider(Spider):
 	def detailContent(self,array):
 		aid = array[0]
 		url='http://www.ikmjw.com{0}'.format(aid)
-		rsp = self.fetch(url)
-		htmlTxt = rsp.text
+		htmlTxt =self.get_webReadFile(urlStr=url)
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
 		playFrom = []
 		videoList=[]
