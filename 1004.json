@@ -9,7 +9,7 @@
         {
           "name": "live",
           "urls": [
-            "proxy://do=live&type=txt&ext=aHR0cHM6Ly9hZ2l0LmFpL2xhbmhhaWRpeGluZ3Jlbi9UdmJveC9yYXcvYnJhbmNoL21hc3Rlci8zLmpzb24="
+            "proxy://do=live&type=txt&ext=aHR0cHM6Ly9hZ2l0LmFpL2xhbmhhaWRpeGluZ3Jlbi9UdmJveC9yYXcvYnJhbmNoL21hc3Rlci8zLmpzb24=="
           ]
         }
       ]
@@ -36,14 +36,14 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
     },
     {
-      "key": "py_ktkkt1",
-      "name": "卡通站1",
+      "key": "py_ikmjw",
+      "name": "新视觉",
       "type": 3,
-      "api": "py_ktkkt1",
+      "api": "py_ikmjw",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt2.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
     }
     //自己添加的
     ],
