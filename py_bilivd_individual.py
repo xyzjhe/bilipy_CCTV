@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             self.getCookie()
         if self.login is True:
             cateManual = {
-                "频道1": "频道",
+                "频道": "频道",
                 "动态2": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
@@ -490,49 +490,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             ]
         }
         return result
-    def get_list(self, aid):
-        aid = array[0]
-        url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
-        rsp = self.fetch(url, headers=self.header)
-        jRoot = json.loads(rsp.text)
-        jo = jRoot['data']
-        title = jo['title'].replace("<em class=\"keyword\">", "").replace("</em>", "")
-        pic = jo['pic']
-        desc = jo['desc']
-        timeStamp = jo['pubdate']
-        timeArray = time.localtime(timeStamp)
-        year = str(time.strftime("%Y", timeArray))
-        dire = jo['owner']['name']
-        typeName = jo['tname']
-        remark = str(jo['duration']).strip()
-        vod = {
-            "vod_id": aid,
-            "vod_name": title,
-            "vod_pic": pic,
-            "type_name": typeName,
-            "vod_year": year,
-            "vod_area": "",
-            "vod_remarks": remark,
-            "vod_actor": "",
-            "vod_director": dire,
-            "vod_content": desc
-        }
-        ja = jo['pages']
-        playUrl = ''
-        for tmpJo in ja:
-            cid = tmpJo['cid']
-            part = tmpJo['part'].replace("#", "-")
-            playUrl = playUrl + '{0}${1}_{2}#'.format(part, aid, cid)
 
-        vod['vod_play_from'] = 'B站视频'
-        vod['vod_play_url'] = playUrl
-
-        result = {
-            'list': [
-                vod
-            ]
-        }
-        return result    
     def searchContent(self, key, quick):
         header = {
             "Referer": "https://www.bilibili.com",
