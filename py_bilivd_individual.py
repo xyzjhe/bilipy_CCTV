@@ -492,7 +492,8 @@ class Spider(Spider):  # 元类 默认的元类 type
                 vod
             ]
         }
-        return result    def searchContent(self, key, quick):
+        return result   
+    def searchContent(self, key, quick):
         header = {
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
