@@ -6,7 +6,7 @@ from base.spider import Spider
 import json
 from requests import session, utils
 import time
-
+import re
 
 class Spider(Spider):  # 元类 默认的元类 type
     def getName(self):
@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态20": "动态",
+                "动态16": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -497,34 +497,37 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         return result
     def get_list_pu(self, aid):
-        url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format('9999','1')	
+        aidList=aid.split('###')
+        mid=aidList[1]
+        url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,'1')	
         rsp = self.fetch("https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt")
-        jRoot = json.loads(rsp.text)
-        jo = jRoot['data']['list']['vlist']
-        title = '测试'
-        pic = ''
+        htmlTxt = rsp.text
+        title = aidList[0]
+        pic = aidList[2]
         desc = ''
         timeStamp = ''
         dire =''
         typeName = ''
         remark = ''
         vod = {
-            "vod_id": '999',
-            "vod_name": '新石器',
-            "vod_pic": '',
-            "type_name": '',
-            "vod_year": '',
+            "vod_id": aid,
+            "vod_name": title,
+            "vod_pic": pic,
+            "type_name": typeName,
+            "vod_year": year,
             "vod_area": "",
-            "vod_remarks": '',
+            "vod_remarks": remark,
             "vod_actor": "",
-            "vod_director": '',
-            "vod_content": ''
+            "vod_director": dire,
+            "vod_content": desc
         }
+        pattern = re.compile(r'"title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
+        ListRe=pattern.findall(htmlTxt)
         playUrl = ''
-        for tmpJo in jo:
-            cid = tmpJo['title']
-            part = tmpJo['bvid']
-            playUrl = playUrl + '{0}${1}#'.format(part, aid)
+        for tmpJo in ListRe:
+            cid = tmpJo[0]
+            part = tmpJo[2]
+            playUrl = playUrl + '{0}${1}#'.format(part, part)
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
