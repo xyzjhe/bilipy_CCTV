@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试进入判断]": "动态",
+                "动态[测试进入判断1]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -449,7 +449,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
     def detailContent(self, array):
         result = {}
-        if array[0].find('###')>0:
+        if array[0].find('###')<1:
             result = self.get_list(aid=array[0])
         else:
             result = self.get_list_pu(aid=array[0])		
