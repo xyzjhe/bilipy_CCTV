@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态13": "动态",
+                "动态14": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -497,19 +497,24 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         return result
     def get_list_pu(self, aid):
-        url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
-        rsp = self.fetch(url, headers=self.header)
+        aidList=aid.split('###')
+        mid=aidList[1]
+        url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,'1')
+        header = {
+            'Referer':"https://space.bilibili.com/"+mid+"/video",
+            'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+            'Host': 'api.bilibili.com'
+        }	
+        rsp = self.fetch(url, headers=header)
         jRoot = json.loads(rsp.text)
-        jo = jRoot['data']
-        title = jo['title'].replace("<em class=\"keyword\">", "").replace("</em>", "")
-        pic = jo['pic']
+        jo = jRoot['data']['list']['vlist']
+        title = aidList[0]
+        pic = aidList[2]
         desc = jo['desc']
-        timeStamp = jo['pubdate']
-        timeArray = time.localtime(timeStamp)
-        year = str(time.strftime("%Y", timeArray))
-        dire = jo['owner']['name']
-        typeName = jo['tname']
-        remark = str(jo['duration']).strip()
+        timeStamp = ''
+        dire =''
+        typeName = ''
+        remark = ''
         vod = {
             "vod_id": aid,
             "vod_name": title,
@@ -522,12 +527,11 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": dire,
             "vod_content": desc
         }
-        ja = jo['pages']
         playUrl = ''
-        for tmpJo in ja:
-            cid = tmpJo['cid']
-            part = tmpJo['part'].replace("#", "-")
-            playUrl = playUrl + '{0}${1}_{2}#'.format(part, aid, cid)
+        for tmpJo in jo:
+            cid = tmpJo['title']
+            part = tmpJo['bvid'].replace("#", "-")
+            playUrl = playUrl + '{0}${1}#'.format(part, aid)
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
