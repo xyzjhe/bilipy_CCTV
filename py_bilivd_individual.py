@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态10": "动态",
+                "动态12": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -449,8 +449,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 
     def detailContent(self, array):
         result = {}
-        
-        result = self.get_list_pu(aid=array[0])	
+        if array[0].find('###')<1:
+            result = self.get_list(aid=array[0])	
         return result
     def get_list(self, aid):
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
