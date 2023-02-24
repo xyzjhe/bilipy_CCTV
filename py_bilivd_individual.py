@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态16": "动态",
+                "动态17": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -501,8 +501,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         rsp = self.fetch("https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt")
         jRoot = json.loads(rsp.text)
         jo = jRoot['data']['list']['vlist']
-        title = aidList[0]
-        pic = aidList[2]
+        title = '测试'
+        pic = ''
         desc = ''
         timeStamp = ''
         dire =''
