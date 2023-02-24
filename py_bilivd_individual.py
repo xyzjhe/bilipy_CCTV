@@ -513,21 +513,17 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_id": aid,
             "vod_name": title,
             "vod_pic": pic,
-            "type_name": typeName,
-            "vod_year": year,
+            "type_name": '',
+            "vod_year": '',
             "vod_area": "",
-            "vod_remarks": remark,
+            "vod_remarks": '',
             "vod_actor": "",
-            "vod_director": dire,
-            "vod_content": desc
+            "vod_director": '',
+            "vod_content": ''
         }
         pattern = re.compile(r'"title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
         ListRe=pattern.findall(htmlTxt)
-        playUrl = ''
-        for tmpJo in ListRe:
-            cid = tmpJo[0]
-            part = tmpJo[2]
-            playUrl = playUrl + '{0}${1}#'.format(part, part)
+        playUrl = playUrl + '测试$888#'
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
