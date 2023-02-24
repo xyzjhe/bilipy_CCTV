@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             self.getCookie()
         if self.login is True:
             cateManual = {
-                "频道1": "频道",
+                "频道2": "频道",
                 "动态2": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
@@ -448,7 +448,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        result =get_list(aidT=array[0])
+        result =self.get_list(aidT=array[0])
         return result
     def get_list(self, aidT):
         aid = aidT
