@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态6": "动态",
+                "动态7": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -169,7 +169,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                     img = vod['face'].strip()
                     remark = str(vod['sign']).strip()
                     videos.append({
-                        "vod_id":aid,
+                        "vod_id":title+"###"+aid+"###"+img,
                         "vod_name":title,
                         "vod_pic":img,
                         "vod_remarks":remark
