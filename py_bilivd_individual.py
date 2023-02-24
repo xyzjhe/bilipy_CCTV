@@ -448,9 +448,10 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        result = get_list(aid=array[0])
+        result =get_list(aidT=array[0])
         return result
-    def get_list(self, aid):
+    def get_list(self, aidT):
+        aid = aidT
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
         rsp = self.fetch(url, headers=self.header)
         jRoot = json.loads(rsp.text)
@@ -491,8 +492,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 vod
             ]
         }
-        return result
-    def searchContent(self, key, quick):
+        return result    def searchContent(self, key, quick):
         header = {
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
