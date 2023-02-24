@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             self.getCookie()
         if self.login is True:
             cateManual = {
-                "频道": "频道1",
+                "频道1": "频道",
                 "动态2": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
@@ -484,10 +484,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
 
-        result = {
-            'list': [
-                vod
-            ]
+        result = get_list(aid=array[0])
         }
         return result
     def get_list(self, aid):
