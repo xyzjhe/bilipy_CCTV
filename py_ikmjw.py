@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影2": "edu1",
+			"电影3": "edu1",
 			"电视剧": "edu2",
 			"综艺": "edu3",
 			"动漫": "edu4"
@@ -68,27 +68,24 @@ class Spider(Spider):
 
 	def detailContent(self,array):
 		aid = array[0]
-		url='http://www.ikmjw.com{0}'.format(aid)
-		rsp = self.fetch(url)
-		htmlTxt=rsp.text
+		Url='http://www.ikmjw.com{0}'.format(aid)
+		htmlTxt=self.webReadFile(urlStr=Url)	
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
 		playFrom = []
 		videoList=[]
 		vodItems = []
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="playlist',after='</div>')
-		playFrom=[t for t in line]
 		pattern = re.compile(r'<a class="btn btn-default" href="(.+?)" rel="nofollow">(.+?)</a>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
-			vodItems = []
 			for value in ListRe:
 				vodItems.append(value[1]+"$"+value[0])
-			joinStr = "#".join(vodItems)
+				joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
+		title=self.get_RegexGetText(Text=,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
 		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
