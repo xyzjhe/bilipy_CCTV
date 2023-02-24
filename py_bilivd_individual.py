@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态8": "动态",
+                "动态9": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -448,7 +448,12 @@ class Spider(Spider):  # 元类 默认的元类 type
         return str.replace('\n', '').replace('\t', '').replace('\r', '').replace(' ', '')
 
     def detailContent(self, array):
-        return self.get_list(aid=array[0])
+        result = {}
+        if array[0].find('###')>0:
+            result = self.get_list_pu(aid=array[0])
+        else:
+            result = self.get_list(aid=array[0])	
+        return result
     def get_list(self, aid):
         url = "https://api.bilibili.com/x/web-interface/view?aid={0}".format(aid)
         rsp = self.fetch(url, headers=self.header)
