@@ -69,7 +69,7 @@ class Spider(Spider):
 	def detailContent(self,array):
 		aid = array[0]
 		Url='http://www.ikmjw.com{0}'.format(aid)
-		rsp = self.fetch('http://www.ikmjw.com/gov556.html',headers=self.header)
+		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt=rsp.text	
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
 		playFrom = []
@@ -89,13 +89,13 @@ class Spider(Spider):
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
-		pic=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
-		typeName=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
-		year=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
-		area=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
-		act=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span>(.+?)<span class="split_line">',Index=1)
-		dir=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span>(.+?)<span class="split_line">',Index=1)
-		cont=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="content_desc context clearfix"><span>(.+?)</span></div>',Index=1)
+		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="lazyload" src=".+?" data-original="(.+?)">',Index=1)
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span><a href=".+?" target="_blank">(.+?)</a>',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'年份：</span><a href=".+?" target="_blank">(.+?)</a>',Index=1)
+		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span><a href=".+?" target="_blank">(.+?)</a>',Index=1)
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span><a href=".+?" target="_blank">(.+?)</p>',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span><a href=".+?" target="_blank">(.+?)</p>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="detail col-pd">(.+?)</div>',Index=1)
 		rem=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
 		vod = {
 			"vod_id": aid,
