@@ -68,18 +68,24 @@ class Spider(Spider):
 
 	def detailContent(self,array):
 		aid = array[0]
-		url='http://www.ikmjw.com{0}'.format(aid)
-		rsp = self.fetch(url)
-		htmlTxt = rsp.text
+		Url='http://www.ikmjw.com{0}'.format(aid)
+		htmlTxt=self.webReadFile(urlStr=Url)	
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
 		playFrom = []
 		videoList=[]
 		vodItems = []
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="playlist',after='</div>')
+		pattern = re.compile(r'<a class="btn btn-default" href="(.+?)" rel="nofollow">(.+?)</a>')
+		for v in circuit:
+			ListRe=pattern.findall(v)
+			print(len(ListRe))
+			for value in ListRe:
+				vodItems.append(value[1]+"$"+value[0])
+				joinStr = "#".join(vodItems)
+			videoList.append(joinStr)
+				
+		
 		playFrom=[t[1] for t in line]
-		joinStr = "#".join("测试$999"))
-		videoList.append(joinStr)
-
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
