@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影2": "edu1",
+			"电影": "edu1",
 			"电视剧": "edu2",
 			"综艺": "edu3",
 			"动漫": "edu4"
@@ -76,8 +76,9 @@ class Spider(Spider):
 		videoList=[]
 		vodItems = []
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="playlist',after='</div>')
-		playFrom=[t for t in line]
-		
+		playFrom=[t[1] for t in line]
+		joinStr = "#".join("测试$999"))
+		videoList.append(joinStr)
 
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)

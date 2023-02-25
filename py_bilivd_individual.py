@@ -516,7 +516,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": ''
         }
-        playUrl = str(aid.count('###'))+'$888#'
+        playUrl = str(len(aid.split('###')))+'$888#'
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
