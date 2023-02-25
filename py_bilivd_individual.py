@@ -501,8 +501,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         title = aidList[0]
         mid=aidList[1]
         pic = aidList[2]
-	#rsp = self.fetch("https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt")
-	#htmlTxt=rsp.text
 	desc = ''
         timeStamp = ''
         dire =''
