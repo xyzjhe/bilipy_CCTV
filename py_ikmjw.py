@@ -69,7 +69,8 @@ class Spider(Spider):
 	def detailContent(self,array):
 		aid = array[0]
 		Url='http://www.ikmjw.com{0}'.format(aid)
-		htmlTxt=self.webReadFile(urlStr=Url)	
+		rsp = self.fetch('http://www.ikmjw.com/gov556.html',headers=self.header)
+		htmlTxt=rsp.text	
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
 		playFrom = []
 		videoList=[]
@@ -78,7 +79,6 @@ class Spider(Spider):
 		pattern = re.compile(r'<a class="btn btn-default" href="(.+?)" rel="nofollow">(.+?)</a>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
-			print(len(ListRe))
 			for value in ListRe:
 				vodItems.append(value[1]+"$"+value[0])
 				joinStr = "#".join(vodItems)
