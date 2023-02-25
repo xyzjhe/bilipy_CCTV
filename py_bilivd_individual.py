@@ -503,7 +503,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         pic = aidList[2]
         rsp = self.fetch('https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt')
         htmlTxt=rsp.text
-        pattern = re.compile(r'"title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
+        pattern = re.compile(r'copyright":\s*"\d+?","title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
         ListRe=pattern.findall(htmlTxt)
         desc = ''
         timeStamp = ''
