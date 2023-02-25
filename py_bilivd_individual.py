@@ -497,8 +497,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         return result
     def get_list_pu(self, aid):
-	aidList=aid.split('###')
-	title = '测试'
+        aidList=aid.split('###')
+        title = '测试'
         pic = ''
         desc = ''
         timeStamp = ''
@@ -517,7 +517,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": ''
         }
-        playUrl = aidList[0]+'$888#'
+        playUrl = len(aidList)+'$888#'
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
