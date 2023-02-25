@@ -75,16 +75,18 @@ class Spider(Spider):
 		playFrom = []
 		videoList=[]
 		vodItems = []
-		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="playlist',after='</div>')
-		pattern = re.compile(r'<a class="btn btn-default" href="(.+?)" rel="nofollow">(.+?)</a>')
-		for v in circuit:
-			ListRe=pattern.findall(v)
-			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
-				joinStr = "#".join(vodItems)
-			videoList.append(joinStr)
-				
-		
+		if len(line)>0:
+			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="playlist',after='</div>')
+			pattern = re.compile(r'<a class="btn btn-default" href="(.+?)" rel="nofollow">(.+?)</a>')
+			for v in circuit:
+				ListRe=pattern.findall(v)
+				videoList=[]
+				for value in ListRe:
+					vodItems.append(value[1]+"$"+value[0])
+					joinStr = "#".join(vodItems)
+				videoList.append(joinStr)
+					
+			
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
