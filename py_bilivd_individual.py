@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割10]": "动态",
+                "动态[测试参数分割11]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -503,6 +503,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         pic = aidList[2]
         rsp = self.fetch('https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt')
         htmlTxt=rsp.text
+        pattern = re.compile(r'"title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
+        ListRe=pattern.findall(htmlTxt)
         desc = ''
         timeStamp = ''
         dire =''
@@ -520,7 +522,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": ''
         }
-        playUrl = title+'$888#'
+        playUrl = str(len(ListRe))+'$888#'
 
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
