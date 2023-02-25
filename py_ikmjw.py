@@ -80,7 +80,7 @@ class Spider(Spider):
 			pattern = re.compile(r'<a class="btn btn-default" href="(.+?)" rel="nofollow">(.+?)</a>')
 			for v in circuit:
 				ListRe=pattern.findall(v)
-				videoList=[]
+				vodItems=[]
 				for value in ListRe:
 					vodItems.append(value[1]+"$"+value[0])
 					joinStr = "#".join(vodItems)
