@@ -28,7 +28,7 @@ class Spider(Spider):
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman",
-			"美女":"wuyejuchang"
+			"美女写真":"wuyejuchang"
 		}
 		classes = []
 		for k in cateManual:
@@ -77,18 +77,19 @@ class Spider(Spider):
 		playFrom = []
 		videoList=[]
 		vodItems = []
-		if len(videoList)>1:
-			return result
-		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
-		playFrom=[t for t in line]
-		pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
-		for v in circuit:
-			ListRe=pattern.findall(v)
-			vodItems = []
-			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
-			joinStr = "#".join(vodItems)
-			videoList.append(joinStr)
+		playFrom='无资源'
+		if len(line)>0:
+			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
+			playFrom=[t for t in line]
+			pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
+			for v in circuit:
+				ListRe=pattern.findall(v)
+				vodItems = []
+				for value in ListRe:
+					vodItems.append(value[1]+"$"+value[0])
+				joinStr = "#".join(vodItems)
+				videoList.append(joinStr)
+		
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
