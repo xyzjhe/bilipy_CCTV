@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割2]": "动态",
+                "动态[测试参数分割3]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -497,7 +497,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         return result
     def get_list_pu(self, aid):
-        title = '测试'
+        aidList=aid.split('###')
+        title = aidList[0]
         pic = ''
         desc = ''
         timeStamp = ''
