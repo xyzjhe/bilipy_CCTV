@@ -525,7 +525,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_remarks": '',
             "vod_actor": "",
             "vod_director": '',
-            "vod_content": ''
+            "vod_content": remark
         }
         playUrl =''
         for tmpJo in ListRe:
