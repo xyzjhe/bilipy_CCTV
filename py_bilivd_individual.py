@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割12]": "动态",
+                "动态[测试参数分割13]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -501,6 +501,11 @@ class Spider(Spider):  # 元类 默认的元类 type
         title = aidList[0]
         mid=aidList[1]
         pic = aidList[2]
+                header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        
         rsp = self.fetch('https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname2.txt')
         htmlTxt=rsp.text
         pattern = re.compile(r'copyright":\s*"\d+?","title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
