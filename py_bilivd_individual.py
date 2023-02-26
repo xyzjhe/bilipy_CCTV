@@ -6,7 +6,6 @@ from base.spider import Spider
 import json
 from requests import session, utils
 import time
-import re
 
 class Spider(Spider):  # 元类 默认的元类 type
     def getName(self):
@@ -52,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割24]": "动态",
+                "动态[测试参数分割25]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -527,11 +526,12 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": remark
         }
-        playUrl =''
+        videoList=[]
         for tmpJo in videos:
             vodTitle = tmpJo['title']
             bvid = tmpJo['bvid']
-            playUrl = playUrl + '{0}${1}#'.format(vodTitle, bvid)
+            videoList.append(vodTitle+"$"+bvid)
+        playUrl="$$$".join(videoList)
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
 
