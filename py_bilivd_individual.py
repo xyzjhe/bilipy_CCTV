@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割25]": "动态",
+                "动态[测试参数分割26]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -505,13 +505,19 @@ class Spider(Spider):  # 元类 默认的元类 type
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
         }
-        url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,'1')
-        rsp = self.fetch(url,headers=header)
-        htmlTxt=rsp.text
-        jRoot = json.loads(htmlTxt)
-        jo = jRoot['data']
-        ja = jo['list']
-        videos=ja['vlist']
+        videoList=[]
+        for i in range(1, 1):
+            url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
+            rsp = self.fetch(url,headers=header)
+            htmlTxt=rsp.text
+            jRoot = json.loads(htmlTxt)
+            jo = jRoot['data']
+            ja = jo['list']
+            videos=ja['vlist']
+            for tmpJo in videos:
+                vodTitle = tmpJo['title']
+                bvid = tmpJo['bvid']
+                videoList.append(vodTitle+"$"+bvid)
         typeName = aidList[3]
         remark = aidList[4]
         vod = {
@@ -526,11 +532,6 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": remark
         }
-        videoList=[]
-        for tmpJo in videos:
-            vodTitle = tmpJo['title']
-            bvid = tmpJo['bvid']
-            videoList.append(vodTitle+"$"+bvid)
         playUrl="#".join(videoList)
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
