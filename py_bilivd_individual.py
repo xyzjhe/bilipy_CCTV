@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割19]": "动态",
+                "动态[测试参数分割20]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -509,6 +509,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,'1')
         rsp = self.fetch(url,headers=header)
         htmlTxt=rsp.text
+        jRoot = json.loads(htmlTxt)
+        jo = jRoot['data']
         pattern = re.compile(r'copyright":\s*"\d+?","title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
         ListRe=pattern.findall(htmlTxt)
         desc = ''
