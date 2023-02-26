@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割17]": "动态",
+                "动态[测试参数分割18]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -512,15 +512,14 @@ class Spider(Spider):  # 元类 默认的元类 type
         pattern = re.compile(r'copyright":\s*"\d+?","title":\s*"(.+?)","review":\s*\d,"author":\s*".+?","mid":\s*(.+?),"created":\s*.+?,"length":\s*.+?,"video_review":\s*.+?,"aid":\s*.+?,"bvid":\s*"(.+?)",')
         ListRe=pattern.findall(htmlTxt)
         desc = ''
-        timeStamp = ''
         dire =''
-        typeName = ''
+        typeName = aidList[3]
         remark = ''
         vod = {
             "vod_id": aid,
             "vod_name": title,
             "vod_pic": pic,
-            "type_name": '',
+            "type_name": typeName,
             "vod_year": '',
             "vod_area": "",
             "vod_remarks": '',
