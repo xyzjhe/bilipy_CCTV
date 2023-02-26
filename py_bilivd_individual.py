@@ -531,7 +531,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             vodTitle = tmpJo['title']
             bvid = tmpJo['bvid']
             videoList.append(vodTitle+"$"+bvid)
-        playUrl="$$$".join(videoList)
+        playUrl="#".join(videoList)
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
 
