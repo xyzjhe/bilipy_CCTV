@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试参数分割26]": "动态",
+                "动态[测试取播放地址27]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -514,10 +514,12 @@ class Spider(Spider):  # 元类 默认的元类 type
             jo = jRoot['data']
             ja = jo['list']
             videos=ja['vlist']
+            if len(videos)<1:
+                break
             for tmpJo in videos:
                 vodTitle = tmpJo['title']
                 bvid = tmpJo['bvid']
-                videoList.append(vodTitle+"$"+bvid)
+                videoList.append(vodTitle+"$"+'bvid:'+bvid)
         typeName = aidList[3]
         remark = aidList[4]
         vod = {
@@ -532,7 +534,9 @@ class Spider(Spider):  # 元类 默认的元类 type
             "vod_director": '',
             "vod_content": remark
         }
-        playUrl="#".join(videoList)
+        playUrl="#"
+        if len(videoList)>0:
+            playUrl="#".join(videoList)
         vod['vod_play_from'] = 'B站视频'
         vod['vod_play_url'] = playUrl
 
@@ -544,6 +548,13 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
 
     def searchContent(self, key, quick):
+        result = {}
+        if key.find('bvid:')<0:
+            result = self.get_videos(key=key)
+        else:
+            result = self.get_videos(key=key)		        
+        return result
+    def get_videos(self, key):
         header = {
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
@@ -575,7 +586,38 @@ class Spider(Spider):  # 元类 默认的元类 type
             'list': videos
         }
         return result
-
+    def get_videos_pu(self, key):
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        url = 'https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword={0}'.format(key)
+        if len(self.cookies) <= 0:
+            self.getCookie()
+        rsp = self.fetch(url, cookies=self.cookies,headers=header)
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] != 0:
+            rspRetry = self.fetch(url, cookies=self.getCookie())
+            content = rspRetry.text
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['result']
+        for vod in vodList:
+            aid = str(vod['aid']).strip()
+            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = 'https:' + vod['pic'].strip()
+            remark = str(vod['duration']).strip()
+            videos.append({
+                "vod_id": aid,
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+            })
+        result = {
+            'list': videos
+        }
+        return result
     def playerContent(self, flag, id, vipFlags):
         result = {}
 
