@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址30]": "动态",
+                "动态[测试取播放地址31]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -628,8 +628,23 @@ class Spider(Spider):  # 元类 默认的元类 type
         aid=jo['aid']
         cid=jo['cid']
         idText='{0}_{1}'.format(aid,cid)
-        url = self.get_Url(idTxt=idText)
-
+        url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=120&fnval=0&128=128&fourk=1'.format(aid,cid)
+        rsp = self.fetch(url, headers=header)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']
+        ja = jo['durl']
+        maxSize = -1
+        position = -1
+        for i in range(len(ja)):
+            tmpJo = ja[i]
+            if maxSize < int(tmpJo['size']):
+                maxSize = int(tmpJo['size'])
+                position = i
+        url = ''
+        if len(ja) > 0:
+            if position == -1:
+                position = 0
+            url = ja[position]['url']
         result["parse"] = 0
         result["playUrl"] = ''
         result["url"] = url
