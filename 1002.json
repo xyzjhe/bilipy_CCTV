@@ -274,16 +274,16 @@
 	 "武侠片"
 	 ]
  },
-     {
+  {
             "key": "py_ikmjw",
-            "name": "🍁新视觉",
-            "type": 3,
-            "api": "py_ikmjw",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-	    "ext":"https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
-        },
+      "name": "新视觉",
+      "type": 3,
+      "api": "py_ikmjw",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
+    },
     {
     "key": "csp_xpath_动漫岛",
     "name": "动漫岛",

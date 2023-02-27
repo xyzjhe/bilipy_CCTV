@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址27]": "动态",
+                "动态[测试取播放地址28]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -548,13 +548,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
 
     def searchContent(self, key, quick):
-        result = {}
-        if key.find('bvid:')<0:
-            result = self.get_videos(key=key)
-        else:
-            result = self.get_videos(key=key)		        
-        return result
-    def get_videos(self, key):
         header = {
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
@@ -586,42 +579,8 @@ class Spider(Spider):  # 元类 默认的元类 type
             'list': videos
         }
         return result
-    def get_videos_pu(self, key):
-        header = {
-            "Referer": "https://www.bilibili.com",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
-        }
-        url = 'https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword={0}'.format(key)
-        if len(self.cookies) <= 0:
-            self.getCookie()
-        rsp = self.fetch(url, cookies=self.cookies,headers=header)
-        content = rsp.text
-        jo = json.loads(content)
-        if jo['code'] != 0:
-            rspRetry = self.fetch(url, cookies=self.getCookie())
-            content = rspRetry.text
-        jo = json.loads(content)
-        videos = []
-        vodList = jo['data']['result']
-        for vod in vodList:
-            aid = str(vod['aid']).strip()
-            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
-            img = 'https:' + vod['pic'].strip()
-            remark = str(vod['duration']).strip()
-            videos.append({
-                "vod_id": aid,
-                "vod_name": title,
-                "vod_pic": img,
-                "vod_remarks": remark
-            })
-        result = {
-            'list': videos
-        }
-        return result
-    def playerContent(self, flag, id, vipFlags):
-        result = {}
-
-        ids = id.split("_")
+    def get_Url(self, idTxt):
+        ids = idTxt.split("_")
         url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=120&fnval=0&128=128&fourk=1'.format(ids[0], ids[1])
         if len(self.cookies) <= 0:
             self.getCookie()
@@ -652,6 +611,34 @@ class Spider(Spider):  # 元类 默认的元类 type
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
         }
         result["contentType"] = 'video/x-flv'
+        return result
+
+    def get_Url_pu(self, idTxt):
+        ids = idTxt.split(":")
+        url = 'https://api.bilibili.com/x/web-interface/view?bvid={0}'.format(ids[1])
+        rsp = self.fetch(url, cookies=self.cookies)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']
+        aid=jo['aid']
+        cid=jo['cid']
+        idText='{0}_{1}'.format(aid,cid)
+        url = self.get_Url(idTxt=idText)
+
+        result["parse"] = 0
+        result["playUrl"] = ''
+        result["url"] = url
+        result["header"] = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        result["contentType"] = 'video/x-flv'
+        return result
+    def playerContent(self, flag, id, vipFlags):
+        result = {}
+        if id.find('bvid:')>0:
+            result=self.get_Url_pu(idTxt=id)
+        else:
+            result=self.get_Url(idTxt=id)
         return result
 
     config = {
