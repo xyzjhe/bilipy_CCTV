@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影7": "edu1",
+			"电影": "edu1",
 			"电视剧": "edu2",
 			"综艺": "edu3",
 			"动漫": "edu4"
@@ -140,7 +140,7 @@ class Spider(Spider):
 				retry = retry - 1
 
 	def searchContent(self,key,quick):
-		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
+		Url='http://www.ikmjw.com/ppyssearch.html?wd={0}&submit='.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -202,7 +202,7 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a class="stui-vodlist__thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)".*?>'
+		patternTxt=r'<a class=".+?-vodlist__thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)".*?>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
