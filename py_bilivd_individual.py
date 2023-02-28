@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址36]": "动态",
+                "动态[测试取播放地址38]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -665,7 +665,11 @@ class Spider(Spider):  # 元类 默认的元类 type
             mark=idTxt.id("_")[0]
             result = self.get_Url_pu(idTxt=id)
         if result=={}:
-            pass
+            url='https://m.bilibili.com/video/{0}'.format(mark)
+            header= {
+                "Referer": "https://www.bilibili.com",
+                "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+            }
         return result
 
     config = {
