@@ -657,15 +657,23 @@ class Spider(Spider):  # 元类 默认的元类 type
     def playerContent(self, flag, id, vipFlags):
         result={}
         mark=''
-        try:
-            if id.find('bvid:')<0:
-                mark=idTxt.id(":")[1]
-                result = self.get_Url(idTxt=id)
-            else:
-                mark=idTxt.id("_")[0]
-                result = self.get_Url_pu(idTxt=id)
-        except Exception as e:
-                print(e)
+        if id.find('bvid:')<0:
+            mark=idTxt.id(":")[1]
+        else:
+            mark=idTxt.id("_")[0]
+        if result=={}:
+            url='https://m.bilibili.com/video/{0}'.format(mark)
+            header= {
+                "Referer": "https://www.bilibili.com",
+                "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+            }
+            rsp = self.fetch(url, headers=header)
+            html=rsp.text
+            url='https:'+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
+            result["parse"] = 0
+            result["playUrl"] = ''
+            result["url"] = url
+            result["header"] = header
         return result
 
     config = {
