@@ -665,7 +665,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         else:
             mark=idTxt.id("_")[0]
             result = self.get_Url_pu(idTxt=id)
-        if len(result)<2:
+        if len(result["url"])<2:
             url='https://m.bilibili.com/video/{0}'.format(mark)
             header= {
                 "Referer": "https://www.bilibili.com",
