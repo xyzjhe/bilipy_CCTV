@@ -6,7 +6,7 @@ from base.spider import Spider
 import json
 from requests import session, utils
 import time
-
+import re
 class Spider(Spider):  # 元类 默认的元类 type
     def getName(self):
         return "哔哩"
@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址31]": "动态",
+                "动态[测试取播放地址32]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -178,8 +178,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         result['list'] = videos
         result['page'] = pg
         result['pagecount'] = int(pg)+1 if numvL>19 else pg
-        result['limit'] = numvL
-        result['total'] = numvL
+        result['limit'] = 999
+        result['total'] = 999
         return result
 
     def second_to_time(self, a):
@@ -514,12 +514,12 @@ class Spider(Spider):  # 元类 默认的元类 type
             jo = jRoot['data']
             ja = jo['list']
             videos=ja['vlist']
-            if len(videos)<1:
-                break
             for tmpJo in videos:
                 vodTitle = tmpJo['title']
                 bvid = tmpJo['bvid']
                 videoList.append(vodTitle+"$"+'bvid:'+bvid)
+            if len(videos)<30:
+                break
         typeName = aidList[3]
         remark = aidList[4]
         vod = {
@@ -627,7 +627,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         jo = jRoot['data']
         aid=jo['aid']
         cid=jo['cid']
-        idText='{0}_{1}'.format(aid,cid)
         url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=120&fnval=0&128=128&fourk=1'.format(aid,cid)
         rsp = self.fetch(url, headers=header)
         jRoot = json.loads(rsp.text)
@@ -655,10 +654,27 @@ class Spider(Spider):  # 元类 默认的元类 type
         result["contentType"] = 'video/x-flv'
         return result
     def playerContent(self, flag, id, vipFlags):
+        result={}
+        mark=''
         if id.find('bvid:')<0:
+            mark=idTxt.id(":")[1]
             result = self.get_Url(idTxt=id)
         else:
+             mark='av'+idTxt.id("_")[0]
             result = self.get_Url_pu(idTxt=id)
+        if result=={}:
+            url='https://m.bilibili.com/video/{0}'.format(mark)
+            header= {
+                "Referer": "https://www.bilibili.com",
+                "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+            }
+            rsp = self.fetch(url, headers=header)
+            html=rsp.text
+            url='https:'+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
+            result["parse"] = 0
+            result["playUrl"] = ''
+            result["url"] = url
+            result["header"] = header
         return result
 
     config = {

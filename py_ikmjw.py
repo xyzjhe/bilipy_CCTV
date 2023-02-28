@@ -62,8 +62,8 @@ class Spider(Spider):
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = pag
-		result['limit'] = numvL
-		result['total'] = numvL
+		result['limit'] = 999
+		result['total'] = 999
 		return result
 
 	def detailContent(self,array):
