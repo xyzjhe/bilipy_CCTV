@@ -657,12 +657,9 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
     def playerContent(self, flag, id, vipFlags):
         result={}
-        mark=''
         if id.find('bvid:')<0:
-            mark=idTxt.id(":")[1]
             result = self.get_Url(idTxt=id)
         else:
-             mark='av'+idTxt.id("_")[0]
             result = self.get_Url_pu(idTxt=id)
         return result
 
