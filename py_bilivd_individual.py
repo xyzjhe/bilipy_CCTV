@@ -664,7 +664,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         else:
              mark='av'+idTxt.id("_")[0]
             result = self.get_Url_pu(idTxt=id)
-        if result=={}:
+        if result["playUrl"]=='':
             url='https://m.bilibili.com/video/{0}'.format(mark)
             header= {
                 "Referer": "https://www.bilibili.com",
