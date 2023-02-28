@@ -664,12 +664,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         else:
             mark=idTxt.id("_")[0]
             result = self.get_Url_pu(idTxt=id)
-        if result=={}:
-            url='https://m.bilibili.com/video/{0}'.format(mark)
-            header= {
-                "Referer": "https://www.bilibili.com",
-                "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
-            }
+        if id.find('bvid:')<0:
+            pass
         return result
 
     config = {
