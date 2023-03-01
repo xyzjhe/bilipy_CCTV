@@ -75,7 +75,7 @@ class Spider(Spider):
 			})
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pgc
+		result['pagecount'] = 999
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result

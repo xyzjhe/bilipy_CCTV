@@ -63,9 +63,9 @@ class Spider(Spider):
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pag
-		result['limit'] = numvL
-		result['total'] = numvL
+		result['pagecount'] = 999
+		result['limit'] = 99
+		result['total'] = 99
 		return result
 
 	def detailContent(self,array):
@@ -155,6 +155,9 @@ class Spider(Spider):
 			parse=0
 		if playUrl.count('https:')>1 and len(m3u8Line)>0:
 			playUrl=m3u8Line[0].replace("\\","")
+		if self.get_RegexGetText(Text=id,RegexText=r'-([0-9]{1,2})-[0-9]+?',Index=1)=='1':
+			playUrl='https://cokemv.me{0}'.format(id)
+			parse=1
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = playUrl
