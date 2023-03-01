@@ -36,14 +36,14 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
     },
     {
-      "key": "py_ikmjw",
-      "name": "新视觉",
+      "key": "py_kj",
+      "name": "空间",
       "type": 3,
-      "api": "py_ikmjw",
+      "api": "py_kj",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
     },
     {
       "key": "py_bilivd_individual1",
