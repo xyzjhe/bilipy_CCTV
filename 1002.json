@@ -275,34 +275,44 @@
 	 ]
  },
   {
-            "key": "py_ikmjw",
-      "name": "新视觉",
-      "type": 3,
-      "api": "py_ikmjw",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
+	"key": "py_ikmjw",
+	"name": "新视觉",
+	"type": 3,
+	"api": "py_ikmjw",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
     },
     {
-    "key": "csp_xpath_动漫岛",
-    "name": "动漫岛",
-    "type": 3,
-    "api": "csp_XYQBiu",
-    "searchable": 1,
-    "quickSearch": 0,
-    "filterable": 0,
-    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
+	"key": "py_yhd",
+	"name": "樱花动漫(PY)",
+	"type": 3,
+	"api": "py_yhd",
+	"searchable": 1,
+	"quickSearch": 0,
+	"filterable": 0,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_yhdm.py"
     },
     {
-      "key": "py_yhd",
-      "name": "樱花动漫(PY)",
-      "type": 3,
-      "api": "py_yhd",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_yhdm.py"
+	"key": "py_cyys",
+	"name": "🔥创艺影视(PY)",
+	"type": 3,
+	"api": "py_cyys",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_cyys.py"
+    },
+    {
+	"key": "csp_555",
+	"name": "👨‍🌾555电影网",
+	"type": 3,
+	"api": "csp_xBPQ",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/555电影.json"
     },
     {
           "key": "csp_Nmys",

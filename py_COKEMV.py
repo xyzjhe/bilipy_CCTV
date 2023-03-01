@@ -59,13 +59,13 @@ class Spider(Spider):
 		videos = self.get_list(html=htmlTxt)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href=".+?-([0-9]+?)---.html" class="page-link page-next" title="尾页">尾页</a>',Index=1)
 		if pag=="":
-			pag=1
+			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999
-		result['limit'] = 99
-		result['total'] = 99
+		result['pagecount'] = pag
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
 
 	def detailContent(self,array):

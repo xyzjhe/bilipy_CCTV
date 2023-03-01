@@ -6,181 +6,202 @@
     {
       "group": "redirect",
       "channels": [
-        {
-          "name": "live",
-          "urls": [
-            "proxy://do=live&type=txt&ext=aHR0cHM6Ly9hZ2l0LmFpL2xhbmhhaWRpeGluZ3Jlbi9UdmJveC9yYXcvYnJhbmNoL21hc3Rlci9saXZlLnR4dA=="
-          ]
-        }
+	{
+	  "name": "live",
+	  "urls": [
+	    "proxy://do=live&type=txt&ext=aHR0cHM6Ly9hZ2l0LmFpL2xhbmhhaWRpeGluZ3Jlbi9UdmJveC9yYXcvYnJhbmNoL21hc3Rlci9saXZlLnR4dA=="
+	  ]
+	}
       ]
     }
   ],
   "sites": [
-         {
-            "key": "ks",
-            "name": "🌈快速启动(按菜单键选择站点)",
-            "api": "csp_SP360",
-            "type": 0,
-            "filterable": 0,
-            "quickSearch": 0,
-            "searchable": 0
-      },
-      {
-            "key": "360_spider",
-            "name": "🌈360影视",
-            "api": "csp_SP360",
-            "type": 3,
-            "filterable": 1,
-            "quickSearch": 1,
-            "searchable": 1
-      },
-         {
-      "key": "百度",
-      "name": "🍁百度",
-      "type": 1,
-      "api": "https://api.apibdzy.com/api.php/provide/vod/",
-      "searchable": 1,
-      "filterable": 0,
-      "categories": [
-        "国产动漫",
-        "日韩动漫",
-        "大陆剧",
-        "欧美剧",
-        "韩剧",
-        "日剧",
-        "动作片",
-        "喜剧片",
-        "爱情片",
-        "科幻片",
-        "恐怖片",
-        "剧情片",
-        "战争片"
-      ]
-    },
-        {
-      "key": "快播",
-      "name": "🍁快播",
-      "type": 1,
-      "api": "https://www.kuaibozy.com/api.php/provide/vod/",
-      "searchable": 1,
-      "filterable": 0,
-      "categories": [
-        "动漫",
-        "国产剧",
-        "日韩剧",
-        "港台剧",
-        "欧美剧",
-        "泰剧",
-        "动作片",
-        "喜剧片",
-        "爱情片",
-        "科幻片",
-        "恐怖片",
-        "剧情片",
-        "战争片",
-        "纪录片",
-        "综艺"
-      ]
-    },
      {
-            "key": "csp_新视觉",
-            "name": "🍁新视觉",
-            "type": 3,
-            "api": "csp_Xinsj",
-            "searchable": 1,
-            "quickSearch": 1,
-            "filterable": 1,
-	    "jar":"http://101.34.67.237/files/新视觉.jar"
-        },
-         {
-      "key": "Bili",
-      "name": "B站",
-      "type": 3,
-      "api": "csp_Bili",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
-         },
-          {
-    "key": "csp_xpath_动漫岛",
-    "name": "动漫岛",
-    "type": 3,
-    "api": "csp_XYQBiu",
-    "searchable": 1,
-    "quickSearch": 0,
-    "filterable": 0,
-    "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dmd.json"
+	"key": "ks",
+	"name": "🌈快速启动(按菜单键选择站点)",
+	"api": "csp_SP360",
+	"type": 0,
+	"filterable": 0,
+	"quickSearch": 0,
+	"searchable": 0
+     },
+     {
+	"key": "360_spider",
+	"name": "🌈360影视",
+	"api": "csp_SP360",
+	"type": 3,
+	"filterable": 1,
+	"quickSearch": 1,
+	"searchable": 1
+     },
+     {
+	"key": "百度",
+	"name": "🍁百度",
+	"type": 1,
+	"api": "https://api.apibdzy.com/api.php/provide/vod/",
+	"searchable": 1,
+	"filterable": 0,
+	"categories": [
+	"国产动漫",
+	"日韩动漫",
+	"大陆剧",
+	"欧美剧",
+	"韩剧",
+	"日剧",
+	"动作片",
+	"喜剧片",
+	"爱情片",
+	"科幻片",
+	"恐怖片",
+	"剧情片",
+	"战争片"
+	]
+     },
+     {
+	"key": "快播",
+	"name": "🍁快播",
+	"type": 1,
+	"api": "https://www.kuaibozy.com/api.php/provide/vod/",
+	"searchable": 1,
+	"filterable": 0,
+	"categories": [
+	"动漫",
+	"国产剧",
+	"日韩剧",
+	"港台剧",
+	"欧美剧",
+	"泰剧",
+	"动作片",
+	"喜剧片",
+	"爱情片",
+	"科幻片",
+	"恐怖片",
+	"剧情片",
+	"战争片",
+	"纪录片",
+	"综艺"
+	]
+     },
+     {
+
+	"key": "py_ikmjw",
+	"name": "新视觉(PY)",
+	"type": 3,
+	"api": "py_ikmjw",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
     },
     {
-      "key": "py_6vFilm",
-      "name": "6v电影",
-      "type": 3,
-      "api": "py_6vFilm",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
+	"key": "Bili",
+	"name": "B站",
+	"type": 3,
+	"api": "csp_Bili",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
     },
     {
-      "key": "py_kuke",
-      "name": "酷客影院(PY)",
-      "type": 3,
-      "api": "py_kuke",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuke.py"
+	"key": "py_6vFilm",
+	"name": "6v电影(PY)",
+	"type": 3,
+	"api": "py_6vFilm",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
     },
     {
-      "key": "csp_xpath_yhdm",
-      "name": "樱花动漫",
-      "type": 3,
-      "api": "csp_XYQBiu",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/yhdm.json"
+	"key": "py_kuke",
+	"name": "酷客影院(PY)",
+	"type": 3,
+	"api": "py_kuke",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuke.py"
     },
     {
-      "key": "py_COKEMV",
-      "name": "COKEMV",
-      "type": 3,
-      "api": "py_COKEMV",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_COKEMV.py"
-    },
-          {
-          "key": "csp_Nmys",
-          "name": "👨‍🌾农民影视",
-          "type": 3,
-          "api": "csp_Nmys",
-          "searchable": 1,
-          "quickSearch": 1,
-          "filterable": 1,
-          "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/Nmys.json"
+	"key": "py_yhd",
+	"name": "樱花动漫(PY)",
+	"type": 3,
+	"api": "py_yhd",
+	"searchable": 1,
+	"quickSearch": 0,
+	"filterable": 0,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_yhdm.py"
     },
     {
-      "key": "py_cctv",
-      "name": "CCTV-节目大全",
-      "type": 3,
-      "api": "py_cctv",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv.py"
+	"key": "py_COKEMV",
+	"name": "COKEMV",
+	"type": 3,
+	"api": "py_COKEMV",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_COKEMV.py"
+    },   
+    {
+	"key": "py_cctv",
+	"name": "CCTV-节目大全",
+	"type": 3,
+	"api": "py_cctv",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv.py"
     },
     {
-      "key": "py_cctv_1",
-      "name": "央视-片库",
-      "type": 3,
-      "api": "py_cctv",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv_1.py"
+	"key": "py_cctv_1",
+	"name": "央视-片库(PY)",
+	"type": 3,
+	"api": "py_cctv",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv_1.py"
+    },  
+    {
+	"key": "py_ikan",
+	"name": "🔥爱看影视(PY)",
+	"type": 3,
+	"api": "py_ikan",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
+    },
+    {
+	"key": "py_cyys",
+	"name": "🔥创艺影视(PY)",
+	"type": 3,
+	"api": "py_cyys",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_cyys.py"
+    },
+    {
+	"key": "py_ktkkt",
+	"name": "卡通站(PY)",
+	"type": 3,
+	"api": "py_ktkkt",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt2.py"
+    },
+    {
+	"key": "csp_Nmys",
+	"name": "👨‍🌾农民影视",
+	"type": 3,
+	"api": "csp_Nmys",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/Nmys.json"
     },
     {
       "key": "csp_xpath_独播库",
@@ -200,16 +221,6 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
-    },
-    {
-		"key": "py_ikan",
-		"name": "🔥爱看",
-		"type": 3,
-		"api": "py_ikan",
-		"searchable": 0,
-		"quickSearch": 0,
-		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
     },
     {
       "key": "Kuaikan",
