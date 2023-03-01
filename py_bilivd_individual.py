@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址53]": "动态",
+                "动态[测试取播放地址54]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -658,7 +658,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result={}
         mark=''
         if id.find('bvid:')<0:#正常
-            mark=idTxt.id("_")[0]
+            mark=id.split("_")[0]
         result = self.get_Url(idTxt=id)
         return result
 
