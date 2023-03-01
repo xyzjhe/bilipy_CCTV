@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址46]": "动态",
+                "动态[测试取播放地址47]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -656,8 +656,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
     def playerContent(self, flag, id, vipFlags):
         result={}
-        mark=''
-        mark=idTxt.id(":")[1]
         result = self.get_Url(idTxt=id)
         return result
 
