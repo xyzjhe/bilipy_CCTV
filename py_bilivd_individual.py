@@ -671,7 +671,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             }
             rsp = self.fetch(url, headers=header)
             html=rsp.text
-            url="https:"self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)",',Index=1)
+            url="https:"+self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)",',Index=1)
             result["parse"] = 0
             result["playUrl"] = ''
             result["url"] = url
