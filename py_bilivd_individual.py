@@ -672,7 +672,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             rsp = self.fetch(url, headers=header)
             html=rsp.text
             #url='https:'+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
-            result["parse"] = 1
+            result["parse"] = 0
             result["playUrl"] = ''
             result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/5f27-audiofreehighqps/94/F8/CKwRIRwEVdUQAEb-swChULGe.m4a'
             result["header"] = header
