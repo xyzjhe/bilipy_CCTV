@@ -97,27 +97,18 @@
       "filterable": 1,
       "jar":"https://gitlab.com/duomv/duo/-/raw/main/jar/jun97.jar;md5;BE69D0C9E96E8637BA98436236C82BF6"
          },
-         {
-      "key": "Bili",
-      "name": "B站",
-      "type": 3,
-      "api": "csp_Bili",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
-         },{
+	 {
 		"key": "py_bilivd",
-		"name": "🔥B站视频",
+		"name": "🔥B站个人中心",
 		"type": 3,
 		"api": "py_bilivd",
-		"searchable": 0,
+		"searchable": 1,
 		"quickSearch": 0,
 		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd.py"
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
 	},{
 		"key": "py_ikan",
-		"name": "🔥爱看(PY)",
+		"name": "🔥爱看影视(PY)",
 		"type": 3,
 		"api": "py_ikan",
 		"searchable": 0,
@@ -306,13 +297,23 @@
     },
     {
 	"key": "csp_555",
-	"name": "👨‍🌾555电影网",
+	"name": "👨‍🌾555电影网(xBPQ)",
 	"type": 3,
 	"api": "csp_xBPQ",
 	"searchable": 1,
 	"quickSearch": 1,
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/555电影.json"
+    },
+    {
+	"key": "csp_555",
+	"name": "👨‍🌾Auete影视(xBPQ)",
+	"type": 3,
+	"api": "csp_xBPQ",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Auete影视.json"
     },
     {
           "key": "csp_Nmys",

@@ -184,6 +184,16 @@
 	"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_cyys.py"
     },
     {
+	"key": "csp_555",
+	"name": "👨‍🌾555电影网(xBPQ)",
+	"type": 3,
+	"api": "csp_xBPQ",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/555电影.json"
+    },
+    {
 	"key": "py_ktkkt",
 	"name": "卡通站(PY)",
 	"type": 3,
@@ -327,15 +337,6 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "1cc92323700909e7d46623bc85b958d6"
-    },
-    {
-      "key":"csp_Dy555",
-      "name":"🥇555影视",
-      "api":"csp_Dy555",
-      "type": 3,
-      "filterable": 1,
-      "quickSearch": 1,
-      "searchable": 1
     },
     {
       "key": "csp_剧荒",
