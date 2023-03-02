@@ -43,35 +43,29 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		videos=[]
-		rsp = self.fetch('http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=10006214&s=&d=Thu%20Mar%2002%202023%2011:08:18%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)',headers=self.header)
+		rsp = self.fetch('http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Thu%20Mar%2002%202023%2016:06:37%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)',headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 9999
+		result['pagecount'] = 1
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		if aid[2].find("http")<0:
+		if aid[1].find("http")<0:
 			return result
 		tid = aid[0]
-		logo = aid[3]
-		lastVideo = aid[2]
-		title = aid[1]
-		date = aid[0]
-		if lastVideo == '_':
+		logo = aid[2]
+		url = aid[1]
+		title = aid[0]
+		if url == '_':
 			return result
-		rsp = self.fetch(lastVideo,headers=self.header)
-		htmlTxt=rsp.text
-		vodItems =[]
-		if tid=="西瓜":
-			vodItems = get_collection_xg(html=htmlTxt)
+		vodItems = [title+"$"+url]
 		vod = {
-			"vod_id":tid,#array[0],
+			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":tid,
@@ -93,37 +87,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 
 	def searchContent(self,key,quick):
-		headers = {
-			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.66s.cc'
-		}
-
-		data="show=title&tempid=1&tbname=article&mid=1&dopost=search&submit=&keyboard="+urllib.parse.quote(key)
-		payUrl="https://www.66s.cc/e/search/index.php"
-		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=headers, method='POST')
-		response = request.urlopen(req)
-		urlTxt=response.geturl()
-		response = urllib.request.urlopen(urlTxt)
-		htmlTxt=response.read().decode('utf-8')
-		videos = self.get_list(html=htmlTxt,tid="6v电影")
 		result = {
-			'list':videos
+			'list':[]
 		}
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		htmlTxt=self.webReadFile(urlStr=id)
-		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
-		ListRe=pattern.findall(htmlTxt)
-		url=""
-		if ListRe==[]:	
-			url=self.get_playUrlMethodOne(html=htmlTxt)
-		else:
-			url=ListRe[0]
-		result["parse"] = 0
+		header= {
+			"User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+		}
+		result["parse"] = 1
 		result["playUrl"] =""
-		result["url"] = url
-		result["header"] = ''
+		result["url"] = id
+		result["header"] =header
 		return result
 	def get_playUrlMethodOne(self,html):
 		#自定义函数时self参数是必要的,调用时self参数留空
@@ -161,19 +137,25 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt=r'<a href=\\"(.+?)\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
+		icoPattern = re.compile(r'src=\\"(.+?\.ico)\\"')
+		icoListRe=icoPattern.findall(html)
+		if len(icoListRe)<len(ListRe):
+			return []
 		videos = []
+		i=0
 		for vod in ListRe:
 			lastVideo = vod[0]
 			title =vod[1]
-			img =''#vod[2]#imgListRe[i]
+			img =icoListRe[i]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			videos.append({
-				"vod_id":lastVideo,
+				"vod_id":"{0}###{1}###{2}".format(title,lastVideo,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
 			})
+			i=i+1
 		return videos
 	config = {
 		"player": {},
