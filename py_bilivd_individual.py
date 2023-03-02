@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址64]": "动态",
+                "动态[测试取播放地址65]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -669,12 +669,12 @@ class Spider(Spider):  # 元类 默认的元类 type
                 "Referer": "https://www.bilibili.com",
                 "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
             }
-            #rsp = self.fetch(url, headers=header)
-            #html=rsp.text
+            rsp = self.fetch(url, headers=header)
+            html=rsp.text
             #url='https:'+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
             result["parse"] = 1
             result["playUrl"] = ''
-            result["url"] = url
+            result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/5f27-audiofreehighqps/94/F8/CKwRIRwEVdUQAEb-swChULGe.m4a'
             result["header"] = header
         return result
 
