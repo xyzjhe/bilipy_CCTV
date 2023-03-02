@@ -152,7 +152,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
     def get_pu(self,pg):
         result = {}
-        if int(pg) > 1:
+        if int(pg) > 50:
             return result
         videos = []
         vmid='321534564'#get_userid
@@ -178,7 +178,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         numvL = len(videos)
         result['list'] = videos
         result['page'] = pg
-        result['pagecount'] = 99
+        result['pagecount'] = int(pg)+1 if numvL>19 else pg
         result['limit'] = numvL
         result['total'] = numvL
         return result
