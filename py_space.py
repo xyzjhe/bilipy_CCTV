@@ -24,7 +24,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"关注的Pu主1": "pu",
 			"个人收藏": "Collection"
 		}
 		classes = []
@@ -45,10 +44,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		videos=[]
-		if tid=="pu":
-			videos=self.get_list_pu()
-		else:
-			videos = self.get_list_pu()
+		rsp = self.fetch('http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=10006214&s=&d=Thu%20Mar%2002%202023%2011:08:18%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)',headers=self.header)
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 9999
@@ -159,19 +157,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if t.find("http")>-1 and t.find("html")>-1:
 				return t	
 		return "https://www.ixigua.com/"	
-	def get_list_pu(self):
-		ListRe=[("科技猿人","https://www.ixigua.com/home/62435616925/","西瓜"),("妈咪说MommyTalk","https://www.ixigua.com/home/62786280361/","西瓜")]
+	def get_list(self,html):
+		patternTxt=r'<a href=\\"(.+?)\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(html)
 		videos = []
 		for vod in ListRe:
-			lastVideo = vod[1]
-			title =vod[0]
-			tid=vod[2]
-			img = "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/%E5%8D%93%E9%9B%85%281%29.jpg"
+			lastVideo = vod[0]
+			title =vod[1]
+			img =''#vod[2]#imgListRe[i]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
-			guid = tid+'###'+vod[1]+'###'+lastVideo+'###'+img
 			videos.append({
-				"vod_id":guid,
+				"vod_id":lastVideo,
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
@@ -182,8 +180,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		"filter": {}
 		}
 	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'www.ixigua.com'
+		"Referer": 'http://my.ie.2345.com/onlinefav/web/',
+		'User-Agent':'my.ie.2345.com',
+		'Cookie':'uUiD=35752164629621148571735; name_ie=%2534013%2528023%2522320%2526143%2520154; I=i%3D90475631%26u%3D88890231%26n%3D%25C0%25B6%25BA%25A3%25B5%25D8%25D0%25C7%25C8%25CB%26m%3D0%26t%3D1675499574.1711300%26s%3D6a22a64feb086a03715e47d4cc3e8a29%26v%3D1.1; sData=6392F231FBE75023D053CEFE20A81E6EE43333BF6FF9CD4610BA32AB109E43FD1742EBAAA408F5EB45E7E1A10A40174BC8EE73651C7AD84AC5840AEA48B014F46FE421C992A7799DBF763B0E743AC8716814F0237BC8F8CC62FCF9F8A283040ADD791FBDD3470D699AA43B70F9886350F57021D6DB5E7B8E001ABEFE70C38424; site_str_flag=2; need_modify_name=0; skin=0; theme=0; ggbd=0'
 	}
 
 	def localProxy(self,param):
