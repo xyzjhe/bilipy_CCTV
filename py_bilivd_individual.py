@@ -671,7 +671,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             }
             rsp = self.fetch(url, headers=header)
             html=rsp.text
-            url="https:"+self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)",',Index=1)
+            url=self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)","readyDuration":',Index=1)
             result["parse"] = 0
             result["playUrl"] = ''
             result["url"] = url
@@ -684,7 +684,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if Regex is None:
             returnTxt="https://cn-lnsy-cm-01-05.bilivideo.com/upgcxcode/57/22/63822257/63822257-1-6.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1677727745&gen=playurlv2&os=bcache&oi=1881581469&trid=00003a788397581d44038017616722851910h&mid=321534564&platform=html5&upsig=ec8d8283c859e25cb67ee48373422ea0&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=3246&bvc=vod&nettype=0&bw=30495&logo=80000000"
         else:
-            returnTxt=Regex.group(Index)
+            returnTxt="https:"+Regex.group(Index)
         return returnTxt
     config = {
         "player": {},
