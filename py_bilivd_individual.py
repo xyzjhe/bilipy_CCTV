@@ -671,7 +671,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             }
             rsp = self.fetch(url, headers=header)
             html=rsp.text
-            url==rsp.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)",',Index)
+            url==rsp.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)",',Index=1)
             result["parse"] = 0
             result["playUrl"] = ''
             result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/5f27-audiofreehighqps/94/F8/CKwRIRwEVdUQAEb-swChULGe.m4a' if html.find('readyVideoUrl')>0  else url
