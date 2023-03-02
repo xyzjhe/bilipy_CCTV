@@ -52,8 +52,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址79]": "动态",
-                "pu主": "pu主",
+                "动态": "动态",
+                "关注的pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
                 "排行榜": "排行榜",
@@ -178,7 +178,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         numvL = len(videos)
         result['list'] = videos
         result['page'] = pg
-        result['pagecount'] = int(pg)+1 if numvL>19 else pg
+        result['pagecount'] = int(pg)+1 if numvL<19 else pg
         result['limit'] = numvL
         result['total'] = numvL
         return result
@@ -634,6 +634,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         rsp = self.fetch(url, headers=header)
         jRoot = json.loads(rsp.text)
         jo = jRoot['data']
+        if jRoot['code']==-404:
+            return result
         ja = jo['durl']
         maxSize = -1
         position = -1
