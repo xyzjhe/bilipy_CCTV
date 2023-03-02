@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址68]": "动态",
+                "动态[测试取播放地址69]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -660,9 +660,9 @@ class Spider(Spider):  # 元类 默认的元类 type
         result={}
         mark=''
         if id.find('bvid:')<0:
-            mark=id.split("_")[1]
+            mark="av"+id.split("_")[0]
         else:
-            mark=id.split(":")[0]
+            mark=id.split(":")[1]
         if 2>0:
             url='https://m.bilibili.com/video/{0}'.format(mark)
             header= {
