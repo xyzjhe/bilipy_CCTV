@@ -178,7 +178,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         numvL = len(videos)
         result['list'] = videos
         result['page'] = pg
-        result['pagecount'] = int(pg)+1 if numvL<19 else pg
+        result['pagecount'] = 99
         result['limit'] = numvL
         result['total'] = numvL
         return result
