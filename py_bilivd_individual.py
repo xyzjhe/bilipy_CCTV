@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址62]": "动态",
+                "动态[测试取播放地址63]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -660,7 +660,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result={}
         mark=''
         if id.find('bvid:')<0:
-            mark=id.split("_")[0]
+            mark=id.split("_")[1]
         else:
             mark=id.split(":")[0]
         if 2>0:
@@ -668,7 +668,9 @@ class Spider(Spider):  # 元类 默认的元类 type
             header= {
                 "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
             }
-            url='https://cn-lnsy-cm-01-05.bilivideo.com/upgcxcode/57/22/63822257/63822257-1-6.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1677726540&gen=playurlv2&os=bcache&oi=1881581469&trid=0000d7dc8a0c50b040b19fa0dae852b5e198h&mid=321534564&platform=html5&upsig=2d9ab27f63c863a98cc5198ac8458f24&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=3246&bvc=vod&nettype=0&bw=30495&logo=80000000'#+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
+            rsp = self.fetch(url, headers=header)
+            html=rsp.text
+            url='https:'+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
             result["parse"] = 0
             result["playUrl"] = ''
             result["url"] = url
