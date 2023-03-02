@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址60]": "动态",
+                "动态[测试取播放地址61]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -668,7 +668,10 @@ class Spider(Spider):  # 元类 默认的元类 type
             header= {
                 "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
             }
-            result["parse"] = 1
+            rsp = self.fetch(url, headers=header)
+            html=rsp.text
+            url='https:'+re.search(r'"readyVideoUrl":"(.+?)",', html, re.M|re.S).group(1)
+            result["parse"] = 0
             result["playUrl"] = ''
             result["url"] = url
             result["header"] = header
