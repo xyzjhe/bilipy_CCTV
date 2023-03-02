@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if self.login is True:
             cateManual = {
                 "频道": "频道",
-                "动态[测试取播放地址76]": "动态",
+                "动态[测试取播放地址77]": "动态",
                 "pu主": "pu主",
                 "热门": "热门",
                 "推荐": "推荐",
@@ -663,7 +663,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             mark="av"+id.split("_")[0]
         else:
             mark=id.split(":")[1]
-        if 2>0:
+        if result=={}:
             url='https://m.bilibili.com/video/{0}'.format(mark)
             header= {
                 "Referer": "https://www.bilibili.com",
@@ -682,7 +682,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         returnTxt=""
         Regex=re.search(RegexText, Text, re.M|re.S)
         if Regex is None:
-            returnTxt="https://cn-lnsy-cm-01-05.bilivideo.com/upgcxcode/57/22/63822257/63822257-1-6.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1677727745&gen=playurlv2&os=bcache&oi=1881581469&trid=00003a788397581d44038017616722851910h&mid=321534564&platform=html5&upsig=ec8d8283c859e25cb67ee48373422ea0&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=3246&bvc=vod&nettype=0&bw=30495&logo=80000000"
+            returnTxt=""
         else:
             returnTxt=Regex.group(Index)
         return returnTxt
