@@ -156,23 +156,23 @@ class Spider(Spider):
 		patternTxt=r'rel="bookmark">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
-		URLpattern = re.compile(r"url: '(.+?)'")
+		URLpattern = re.compile(r"url:\s*'(http.+?\.m3u8)',(\r|\n|\r\n)")
 		URLListRe=URLpattern.findall(html)
-		i=0
+		PicPattern = re.compile(r"pic:\s*'(.+?)'")
+		PicListRe=PicPattern.findall(html)
 		videos = []
-		for vod in URLListRe:
-			lastVideo = vod[0]
+		for i in range(0, len(ListRe)):
+			url = URLListRe[i][0]
 			title =ListRe[i]
-			img =""#+vod[1]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
+			img ="https://159i22.cc"+PicListRe[i]
+			if len(url) == 0:
+				url = '_'
 			videos.append({
-				"vod_id":title+"###"+lastVideo+"###"+img,
+				"vod_id":"{0}###{1}###{2}".format(title,url,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
 			})
-			i=i+1
 		return videos
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
