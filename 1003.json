@@ -115,7 +115,16 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
-         },
+         },{
+		"key": "py_bilivd",
+		"name": "🔥B站视频",
+		"type": 3,
+		"api": "py_bilivd",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1,
+		"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_bilivd.py"
+	},
     {
       "key": "百度",
       "name": "百度",
