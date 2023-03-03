@@ -158,7 +158,7 @@ class Spider(Spider):
 		patternTxt=r'rel="bookmark">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
-		URLpattern = re.compile(r"url: '(.+?)',\r\n.*pic:'(.+?)'")
+		URLpattern = re.compile(r"url: '(.+?)',.+?.*pic:'(.+?)'")
 		URLListRe=URLpattern.findall(html)
 		i=0
 		videos = []
