@@ -68,8 +68,6 @@ class Spider(Spider):
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		if aid[1].find("http")<0:
-			return result
 		logo = aid[2]
 		url = aid[1]
 		title = aid[0]
@@ -80,7 +78,7 @@ class Spider(Spider):
 			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":tid,
+			"type_name":'',
 			"vod_year":"",
 			"vod_area":"",
 			"vod_remarks":"",
