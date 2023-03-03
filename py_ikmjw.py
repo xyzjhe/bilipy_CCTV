@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "edu1",
+			"电影1": "edu1",
 			"电视剧": "edu2",
 			"综艺": "edu3",
 			"动漫": "edu4"
@@ -61,9 +61,9 @@ class Spider(Spider):
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pag
-		result['limit'] = 999
-		result['total'] = 999
+		result['pagecount'] = 999
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
 
 	def detailContent(self,array):
@@ -122,22 +122,7 @@ class Spider(Spider):
 		return result
 
 	def verifyCode(self):
-		retry = 10
-		header = {
-			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
-		while retry:
-			try:
-				session = requests.session()
-				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
-				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
-				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
-								   headers=header).json()
-				if res["msg"] == "ok":
-					return session
-			except Exception as e:
-				print(e)
-			finally:
-				retry = retry - 1
+		pass
 
 	def searchContent(self,key,quick):
 		Url='http://www.ikmjw.com/ppyssearch.html?wd={0}&submit='.format(urllib.parse.quote(key))
