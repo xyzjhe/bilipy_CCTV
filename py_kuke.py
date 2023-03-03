@@ -68,9 +68,12 @@ class Spider(Spider):
 		return result
 
 	def detailContent(self,array):
-		aid = array[0]
+		aid = array[0].split('###')
+		idUrl=aid[1]
+		title=aid[0]
+		pic=aid[2]
 		result={}
-		url='http://www.meheme.com{0}'.format(aid)
+		url='http://www.meheme.com{0}'.format(idUrl)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'alt="(.+?)"\srel="nofollow"><i class=".+?">',Index=1)
@@ -92,8 +95,6 @@ class Spider(Spider):
 		
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
-		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
 		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
@@ -103,7 +104,7 @@ class Spider(Spider):
 		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
 
 		vod = {
-			"vod_id": aid,
+			"vod_id": array[0],
 			"vod_name": title,
 			"vod_pic": pic,
 			"type_name":self.removeHtml(txt=typeName),
@@ -125,22 +126,7 @@ class Spider(Spider):
 		return result
 
 	def verifyCode(self):
-		retry = 10
-		header = {
-			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
-		while retry:
-			try:
-				session = requests.session()
-				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
-				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
-				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
-								   headers=header).json()
-				if res["msg"] == "ok":
-					return session
-			except Exception as e:
-				print(e)
-			finally:
-				retry = retry - 1
+		pass
 
 	def searchContent(self,key,quick):
 		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
@@ -210,13 +196,13 @@ class Spider(Spider):
 		ListRe=pattern.findall(html)
 		videos = []
 		for vod in ListRe:
-			lastVideo = vod[0]
+			url = vod[0]
 			title =vod[1]
 			img =vod[2]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
+			if len(url) == 0:
+				url = '_'
 			videos.append({
-				"vod_id":lastVideo,
+				"vod_id":"{0}###{1}###{2}".format(title,url,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''

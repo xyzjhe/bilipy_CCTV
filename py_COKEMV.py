@@ -69,8 +69,11 @@ class Spider(Spider):
 		return result
 
 	def detailContent(self,array):
-		aid = array[0]
-		Url='https://cokemv.me{0}'.format(aid)
+		aid = array[0].split('###')
+		idUrl=aid[1]
+		title=aid[0]
+		pic=aid[2]
+		Url='https://cokemv.me{0}'.format(idUrl)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'data-dropdown-value="(.+?)"><span>.+?</span>',Index=1)
@@ -88,8 +91,6 @@ class Spider(Spider):
 		playFrom=[t for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1>(.+?)</h1>',Index=1)
-		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodshow.+?-\.html">(.+?)</a><span class="slash">',Index=1)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/vodshow.+?[0-9]{4}\.html">([0-9]{4})</a></div>',Index=1)
 		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href=.+?-\.html">(.+?)</a></',Index=1)
@@ -97,7 +98,7 @@ class Spider(Spider):
 		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：(.+?)</div>',Index=1)
 		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<p>(.+?)</p>',Index=1)
 		vod = {
-			"vod_id": aid,
+			"vod_id": array[0],
 			"vod_name": title,
 			"vod_pic": pic,
 			"type_name": typeName,
@@ -119,22 +120,7 @@ class Spider(Spider):
 		return result
 
 	def verifyCode(self):
-		retry = 10
-		header = {
-			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"}
-		while retry:
-			try:
-				session = requests.session()
-				img = session.get('https://ikan6.vip/index.php/verify/index.html?', headers=header).content
-				code = session.post('https://api.nn.ci/ocr/b64/text', data=base64.b64encode(img).decode()).text
-				res = session.post(url=f"https://ikan6.vip/index.php/ajax/verify_check?type=search&verify={code}",
-								   headers=header).json()
-				if res["msg"] == "ok":
-					return session
-			except Exception as e:
-				print(e)
-			finally:
-				retry = retry - 1
+		pass
 
 	def searchContent(self,key,quick):
 		result = {
@@ -211,13 +197,13 @@ class Spider(Spider):
 		if len(imgListRe)!=len(ListRe):
 			return videos
 		for vod in ListRe:
-			lastVideo = vod[0]
+			url = vod[0]
 			title =vod[1]
 			img =imgListRe[i]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
+			if len(url) == 0:
+				url = '_'
 			videos.append({
-				"vod_id":lastVideo,
+				"vod_id":"{0}###{1}###{2}".format(title,url,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
