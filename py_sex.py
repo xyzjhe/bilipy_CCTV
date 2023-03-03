@@ -155,7 +155,7 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a href=".+?" rel="bookmark">(.+?)</a>'
+		patternTxt=r'rel="bookmark">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		URLpattern = re.compile(r"url: '(.+?)',\r\n.*pic:'(.+?)'")
@@ -165,7 +165,7 @@ class Spider(Spider):
 		for vod in URLListRe:
 			lastVideo = vod[0]
 			title =ListRe[i]
-			img =vod[1]
+			img ="https://159i22.cc"+vod[1]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			videos.append({
