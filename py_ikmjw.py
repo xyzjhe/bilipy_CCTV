@@ -198,8 +198,8 @@ class Spider(Spider):
 			url = vod[0]
 			title =vod[1]
 			img =vod[2]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
+			if len(url) == 0:
+				url = '_'
 			videos.append({
 				"vod_id":"{0}###{1}###{2}".format(title,url,img),
 				"vod_name":title,
