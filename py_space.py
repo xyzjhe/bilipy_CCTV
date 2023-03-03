@@ -134,10 +134,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 				return t	
 		return "https://www.ixigua.com/"	
 	def get_list(self,html):
-		patternTxt=r'<a href=\\"(.+?)\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
+		patternTxt=r'<a href=\\"(http.+?)\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
-		img ='https://picb7.photophoto.cn/32/428/32428627_1.jpg'
+		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
 		videos = []
 		i=0
 		for vod in ListRe:
@@ -152,6 +152,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_pic":img,
 				"vod_remarks":''
 			})
+		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
+		videos = res
 		return videos
 	config = {
 		"player": {},
