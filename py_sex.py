@@ -14,7 +14,7 @@ import re
 
 class Spider(Spider):
 	def getName(self):
-		return "新视觉影视"
+		return "色"
 	def init(self,extend=""):
 		pass
 	def isVideoFormat(self,url):
@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"亚洲": "uncd",
+			"亚洲1": "uncd",
 			"国产": "madou",
 			"欧美": "oua",
 			"动漫": "hmmcg"
@@ -55,9 +55,8 @@ class Spider(Spider):
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
-		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
-		if pag=="":
-			pag=999
+		
+		pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
@@ -156,7 +155,7 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a href="(.+?)" rel="bookmark">(.+?)</a>'
+		patternTxt=r'<a href=".+?" rel="bookmark">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		URLpattern = re.compile(r"url: '(.+?)',\r\n.*pic:'(.+?)'")
