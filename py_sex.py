@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"亚洲1": "uncd",
+			"亚洲2": "uncd",
 			"国产": "madou",
 			"欧美": "oua",
 			"动漫": "hmmcg"
@@ -158,14 +158,14 @@ class Spider(Spider):
 		patternTxt=r'rel="bookmark">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
-		URLpattern = re.compile(r"url: '(.+?)',.+?.*pic:'(.+?)'")
+		URLpattern = re.compile(r"url: '(.+?)'")
 		URLListRe=URLpattern.findall(html)
 		i=0
 		videos = []
 		for vod in URLListRe:
 			lastVideo = vod[0]
 			title =ListRe[i]
-			img ="https://159i22.cc"+vod[1]
+			img =""#+vod[1]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			videos.append({
