@@ -27,8 +27,8 @@ class Spider(Spider):
 			"电影": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
-			"动漫": "dongman",
-			"美女写真":"wuyejuchang"
+			"动漫": "dongman"
+			#,"美女写真":"wuyejuchang"
 		}
 		classes = []
 		for k in cateManual:
@@ -58,11 +58,11 @@ class Spider(Spider):
 		videos = self.get_list(html=htmlTxt)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
-			pag=1
+			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pag
+		result['pagecount'] = pgc
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
