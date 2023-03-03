@@ -57,7 +57,7 @@ class Spider(Spider):
 		numvL = len(aList)
 		pgc = self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/vodtype/\d{1,3}-([0-9]+?)/">尾页</a>',Index=1)
 		if pgc=="":
-			pgc=1
+			pgc=999
 		for a in aList:
 			aid = a.xpath("./div[contains(@class, 'myui-vodlist__box')]/a/@href")[0]
 			aid = self.regStr(reg=r'/voddetail/(.*?)/', src=aid)
@@ -75,7 +75,7 @@ class Spider(Spider):
 			})
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999
+		result['pagecount'] = pgc
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result

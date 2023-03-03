@@ -67,8 +67,11 @@ class Spider(Spider):
 		return result
 
 	def detailContent(self,array):
-		aid = array[0]
-		Url='http://www.ikmjw.com{0}'.format(aid)
+		aid = array[0].split('###')
+		idUrl=aid[1]
+		title=aid[0]
+		pic=aid[2]
+		Url='http://www.ikmjw.com{0}'.format(idUrl)
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt=rsp.text	
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
@@ -90,8 +93,8 @@ class Spider(Spider):
 		playFrom=[t[1] for t in line]
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
-		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="lazyload" src=".+?" data-original="(.+?)">',Index=1)
+		title=aid[0]
+		pic=aid[2]
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span><a href=".+?" target="_blank">(.+?)</a>',Index=1)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'年份：</span><a href=".+?" target="_blank">(.+?)</a>',Index=1)
 		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span><a href=".+?" target="_blank">(.+?)</a>',Index=1)
@@ -100,7 +103,7 @@ class Spider(Spider):
 		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="detail col-pd">(.+?)</div>',Index=1)
 		rem=""#self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
 		vod = {
-			"vod_id": aid,
+			"vod_id": array[0],
 			"vod_name": title,
 			"vod_pic": pic,
 			"type_name":self.removeHtml(txt=typeName),
@@ -192,13 +195,13 @@ class Spider(Spider):
 		ListRe=pattern.findall(html)
 		videos = []
 		for vod in ListRe:
-			lastVideo = vod[0]
+			url = vod[0]
 			title =vod[1]
 			img =vod[2]
 			if len(lastVideo) == 0:
 				lastVideo = '_'
 			videos.append({
-				"vod_id":lastVideo,
+				"vod_id":"{0}###{1}###{2}".format(title,url,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
