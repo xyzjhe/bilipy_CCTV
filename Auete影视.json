@@ -1,88 +1,160 @@
-{"author": "20220630",
-"name": "Aueteå½±è§†",
-"url": "https://auete.com",
-"shouye": "1",
-//è®¿é—®è¯·æ±‚å¤´ï¼Œå¦‚æœä¸éœ€è¦è‡ªå®šä¹‰è¯·æ±‚uaçš„è¯ï¼Œä¸å¡«å†™æˆ–è€…ç›´æ¥åˆ é™¤è¿™ä¸ªå­—æ®µå°±å¯ä»¥äº†ã€‚
-"ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.150 Safari/537.36",
-//æ’­æ”¾è¯·æ±‚å¤´
-"User": "ç©º",
-//ç›´æ¥æ’­æ”¾æˆªå–çš„æ’­æ”¾é¡µé“¾æ¥ç½‘å€ï¼Œ0è¡¨ç¤ºï¼šå¦ï¼Œ1è¡¨ç¤ºï¼šæ˜¯
-"ç›´æ¥æ’­æ”¾": "0",
-//åˆ†ç±»é¡µæ˜¯å¦ä½¿ç”¨åˆ—è¡¨æ–¹å¼æ˜¾ç¤ºï¼Œ0è¡¨ç¤ºï¼šå¦ï¼Œ1è¡¨ç¤ºï¼šæ˜¯
-"åˆ—è¡¨æ˜¾ç¤º": "0",
-//åˆ—è¡¨å›¾ç‰‡æ˜¯å¦æ¨ªå›¾æ˜¾ç¤ºï¼Œ0è¡¨ç¤ºï¼šå¦ï¼Œ1è¡¨ç¤ºï¼šæ˜¯
-"æ¨ªå›¾æ˜¾ç¤º": "0",
+//Ğ´·¨Ë¼Â·À´×ÔbiubiuÓ°Ôº£¬º£À«ÊÓ½ç£¬xpathÉ¸Ñ¡¡£
+//ÏîÄ¿Ä§¸ÄÖÁgithub¿ªÔ´²Ö¿âhttps://github.com/Tangsan99999/TvJarÖĞµÄXBiubiu.javaÎÄ¼ş£¬
 
-//å½±è§†åˆ†ç±»å’Œç¿»é¡µåç¼€éƒ¨åˆ†ï¼Œå¦‚æœåˆ†ç±»ç±»å‹å¡«ç©ºï¼Œä¾‹å¦‚ï¼šæµ‹è¯•$ç©ºï¼Œåˆ™ç›´æ¥å–urlå­—æ®µç½‘ç«™çš„æºç ã€‚
-"fenlei": "è±†ç“£TOP250$/Top250/movie#Netflixå½±è§†$/Netflix/movies#è°æˆ˜å‰§é›†æ¨è$/diezhan/index#ç”µå½±$/Movie/index#ç”µè§†å‰§$/Tv/index#ç»¼è‰º$/Zy/index#åŠ¨æ¼«$/Dm/index#å…¶ä»–$/qita/index#è®°å½•ç‰‡$/qita/Jlp/index#å›½äº§å‰§$/Tv/neidi/index#éŸ©å‰§$/Tv/hanju/index#ç¾å‰§$/Tv/oumei/index#æ—¥å‰§$/Tv/riju/index#æ³°å‰§$/Tv/yataiju/index#ç½‘å‰§$/Tv/wangju/index#å°å‰§$/Tv/taiju/index#æ¸¯å‰§$/Tv/tvbgj/index#è‹±å‰§$/Tv/yingju/index#ç»å…¸å‰§$/qita/Jdj/index#åŠ¨ç”»$/Dm/donghua/index#æ—¥æ¼«$/Dm/riman/index#å›½æ¼«$/Dm/guoman/index#ç¾æ¼«$/Dm/meiman/index#ç»å…¸ç‰‡$/qita/Jdp/index#ç½‘å¤§ç”µå½±$/qita/wlp/index#å›½äº§è€ç”µå½±$/qita/laodianying/index#å–œå‰§ç‰‡$/Movie/xjp/index#åŠ¨ä½œç‰‡$/Movie/dzp/index#çˆ±æƒ…ç‰‡$/Movie/aqp/index#ç§‘å¹»ç‰‡$/Movie/khp/index#ææ€–ç‰‡$/Movie/kbp/index#æƒŠæ‚šç‰‡$/Movie/jsp/index#æˆ˜äº‰ç‰‡$/Movie/zzp/index#å‰§æƒ…ç‰‡$/Movie/jqp/index",
-"houzhui": ".html",
-"qishiye": "2",//å¯ä»¥è‡ªå®šä¹‰åˆ—è¡¨ç¿»é¡µèµ·å§‹é¡µçš„é¡µæ•°ï¼Œå¦‚æœå¡«ä¸Šä¸€ä¸ªç©ºå­—ï¼Œåˆ™ä¸ä½¿ç”¨èµ·å§‹é¡µæ•°ï¼Œç›´æ¥è·å–é“¾æ¥çš„æ•°æ®ã€‚
-
-//å½±è§†åˆ—è¡¨å±•ç¤ºéƒ¨åˆ†
-"shifouercijiequ": "0",
-"jiequqian": "ç©º",
-"jiequhou": "ç©º",
-"jiequshuzuqian": "class=\"trans_3",
-"jiequshuzuhou": "<div",
-"tupianqian": "src=\"",//å¦‚æœtupianqianå­—æ®µå†™'ç½‘ç»œå›¾ç‰‡åœ°å€'çš„è¯ï¼Œåˆ—è¡¨é¡µå°±è‡ªåŠ¨ä½¿ç”¨è¿™ä¸ªç½‘ç»œå›¾ç‰‡ä½œä¸ºåˆ—è¡¨çš„å›¾ç‰‡ã€‚
-"tupianhou": "\"",
-"tupianqianzhui": "ç©º",//å¯ä»¥è‡ªå·±å®šä¹‰æˆªå–å›¾ç‰‡çš„å‰ç¼€
-"biaotiqian": "title=\"",
-"biaotihou": "\"",
-"lianjieqian": "href=\"",
-"lianjiehou": "\"",
-"ljqianzhui": "ç©º", //å¯ä»¥è‡ªå·±å®šä¹‰æˆªå–é“¾æ¥çš„å‰ç¼€
-
-//å‰¯æ ‡é¢˜ä¸éœ€è¦çš„è¯ï¼Œå°±ä¸å¡«å†™æˆ–è€…åˆ é™¤å‰¯æ ‡é¢˜2ä¸ªå­—æ®µä¹Ÿå¯ä»¥ã€‚
-"fubiaotiqian": "hdtag\">",
-"fubiaotihou": "</button",
-
-//æœç´¢éƒ¨åˆ†
-"jspic": "pic",
-"jsname": "name",
-"jsid": "id",
-"sousuoqian": "/search.php?searchword=",
-"sousuohou": "&limit=500",
-"sousuohouzhui": "/",
-"ssmoshi": "1",
-"sousuoshifouercijiequ": "0",
-"ssjiequqian": "ç©º",
-"ssjiequhou": "ç©º",
-"ssjiequshuzuqian": "break-all\">",
-"ssjiequshuzuhou": "</a>",
-"sstupianqian": "ç©º",
-"sstupianhou": "ç©º",
-"sstupianqianzhui": "ç©º",//å¯ä»¥è‡ªå·±å®šä¹‰æˆªå–å›¾ç‰‡çš„å‰ç¼€
-"ssbiaotiqian": "text-danger\">",
-"ssbiaotihou": "</span",
-"sslianjieqian": "href=\"",
-"sslianjiehou": "\"",
-"ssljqianzhui": "ç©º", //å¯ä»¥è‡ªå·±å®šä¹‰æˆªå–é“¾æ¥çš„å‰ç¼€
-
-//æ’­æ”¾é¡µéƒ¨åˆ†
-"bfshifouercijiequ": "0",
-"bfjiequqian": "ç©º",
-"bfjiequhou": "ç©º",
-"bfjiequshuzuqian": "id=\"player_list",
-"bfjiequshuzuhou": "</div>",
-
-"zhuangtaiqian": "çŠ¶æ€: </span><b>",
-"zhuangtaihou": "</b>",
-"daoyanqian": "å½±ç‰‡å¯¼æ¼”:",
-"daoyanhou": "</p>",
-"zhuyanqian": "å½±ç‰‡ä¸»æ¼”:",
-"zhuyanhou": "</p>",
-"juqingqian": "</a><p>",
-"juqinghou": "</p>",
-
-"bfyshifouercijiequ": "1",
-"bfyjiequqian": "<ul>",
-"bfyjiequhou": "</ul>",
-"bfyjiequshuzuqian": "<a",
-"bfyjiequshuzuhou": "/a>",
-"bfbiaotiqian": ">",
-"bfbiaotihou": "<",
-"bflianjieqian": "href=\"",
-"bflianjiehou": "\"",
-"bfqianzhui": "" //å¯ä»¥è‡ªå·±å®šä¹‰æˆªå–æ’­æ”¾é“¾æ¥çš„å‰ç¼€ï¼Œä¸éœ€è¦çš„è¯ä¸å¡«å†™ï¼Œæˆ–è€…åˆ é™¤è¿™ä¸ªå­—æ®µå³å¯ã€‚
+{
+    //¹æÔòÃû
+    "title": "Ó£»¨¶¯Âş",
+    //×÷Õß
+    "author": "À¶º£µØĞÇÈË",
+    //ÇëÇóÍ·UA,²»ÌîÔòÄ¬ÈÏokhttp/3.12.11£¬¿ÉÌîMOBILE_UA»òPC_UAÊ¹ÓÃÄÚÖÃµÄÊÖ»ú°æ»òµçÄÔ°æUA
+    //Ï°¹ß²é¿´ÊÖ»úÔ´ÂëĞ´½¨ÒéÓÃÊÖ»ú°æUA£¬Ï°¹ß²é¿´PC°æÔ´ÂëĞ´½¨ÒéÓÃµçÄÔ°æUA
+    "UserAgent":"PC_UA",
+    //ÇëÇóÍ·Referer²ÎÊı£¬Èç¹ûÖ»ÊÇ²¥·ÅÒ³ĞèÒª£¬ÌîWebView¼´¿ÉÒıÓÃ²¥·ÅÒ³µÄÁ´½Ó×÷ĞáÌ½Referer²ÎÊı¡£
+    //Ò»°ãºÜÉÙÓÃ£¬Áô¿Õ»òÉ¾³ı
+    "Referer":"WebView",
+    //Í¼Æ¬´úÀí
+    "PicNeedProxy":"1",
+    //ÊÇ·ñ¿ªÆô»ñÈ¡Ê×Ò³Êı¾İ£¬0¹Ø±Õ£¬1¿ªÆô
+    "homeContent":"0",
+    //·ÖÀàÁ´½ÓÆğÊ¼Ò³Âë,½ûÖ¹¸ºÊıºÍº¬Ğ¡Êıµã¡£
+    "firstpage": "2",
+    //·ÖÀàÁ´½Ó,{cateId}ÊÇ·ÖÀà£¬{catePg}ÊÇÒ³Âë,µÚÒ»Ò³Ã»ÓĞÒ³ÂëµÄ¿ÉÒÔÕâÑùĞ´ µÚ¶şÒ³Á´½Ó[firstPage=µÚÒ»Ò³µÄÁ´½Ó]
+    "class_url": "https://auete.com/{cateId}/index{catePg}.html",
+    //·ÖÀàÃû£¬·ÖÀà1&·ÖÀà2&·ÖÀà3
+    "class_name": "µçÓ°&µçÊÓ¾ç&¶¯Âş&×ÛÒÕ",
+    //·ÖÀàÃûÌæ»»´Ê£¬Ìæ»»´Ê1&Ìæ»»´Ê2&Ìæ»»´Ê3£¬Ìæ»»´Ê°üº¬Ó¢ÎÄ&µÄÓÃÁ½¸öÖĞÎÄ£¦£¦´úÌæ£¬Ê¾Àı£º£¦£¦id=0&£¦£¦id=1
+    "class_value": "Movie&Tv&Dm&Zy",
+    //É¸Ñ¡Êı¾İ£¬json¸ñÊ½£¬²Î¿¼xpathµÄÉ¸Ñ¡Ğ´·¨
+    "filterdata":{},
+    //·ÖÀàÊÇ·ñ¶ş´Î½ØÈ¡
+    "cat_YN_twice": "1",
+    //·ÖÀà¶ş´Î½ØÈ¡Ç°
+    "cat_twice_pre": "<ul class=\"threadlist\">",
+    //·ÖÀà¶ş´Î½ØÈ¡ºó
+    "cat_twice_suf": "</div></ul>",
+    
+    //·ÖÀàÊı×é½ØÈ¡Ç°
+    "cat_arr_pre": "<li class=\"trans_3",
+    //·ÖÀàÊı×é½ØÈ¡ºó
+    "cat_arr_suf": "</li>",
+    //·ÖÀà½ØÈ¡Æ¬µ¥Í¼Æ¬£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "cat_pic": "src=\"&&\"",
+    //·ÖÀà½ØÈ¡Æ¬µ¥±êÌâ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "cat_title": "title=\"&&\"",
+    //·ÖÀà½ØÈ¡Æ¬µ¥¸±±êÌâ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "cat_subtitle": "alt=\"&&\"",
+    //·ÖÀà½ØÈ¡Æ¬µ¥Á´½Ó£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "cat_url": "data-href=\"&&\"",  
+    //·ÖÀàÆ¬µ¥Á´½Ó²¹Ç°×º  
+    "cat_prefix": "https://auete.com",
+    //·ÖÀàÆ¬µ¥Á´½Ó²¹ºó×º
+    "cat_suffix": "",
+    
+    //ËÑË÷Á´½Ó£¬ËÑË÷¹Ø¼ü×ÖÓÃ{wd}±íÊ¾£¬postÇëÇóµÄ×îºóÃæ¼Ó;post
+    //POSTÁ´½ÓÊ¾Àı http://www.lezhutv.com/index.php?m=vod-search;post
+    "search_url": "http://www.dmd85.com/index.php?m=vod-search-wd-{wd}",
+    //POSTËÑË÷body£¬ÌîĞ´ËÑË÷¹Ø¼ü×ÖµÄ¼üÖµ£¬Ò»°ã³£¼ûµÄÊÇsearchwordºÍwd£¬²»ÊÇPOSTËÑË÷µÄ¿ÉÁô¿Õ»òÉ¾³ı¡£
+    "sea_PtBody":"",
+    //ËÑË÷Ä£Ê½,0ÎªjsonËÑË÷£¬Ö»Ö§³ÖÁĞ±íÔÚlistÊı×éÀïµÄ£¬ÆäËüÎªÍøÒ³½ØÈ¡¡£
+    "search_mode": "1",
+    //jsonÆ¬µ¥Í¼Æ¬
+    "jsonpic": "pic",
+    //jsonÆ¬µ¥±êÌâ
+    "jsonname": "name",
+    //jsonÆ¬µ¥Á´½Ó
+    "jsonid": "id",
+    //jsonÆ¬µ¥¸±±êÌâ£¬Õâ¸öºÜÉÙÓĞ£¬Ô¤Áô×Å
+    "jsonstitle":"",
+    
+    //ËÑË÷ÊÇ·ñ¶ş´Î½ØÈ¡  
+    "sea_YN_twice": "1",
+    //ËÑË÷¶ş´Î½ØÈ¡Ç°
+    "sea_twice_pre": "class=\"list3_cn_box",
+    //ËÑË÷¶ş´Î½ØÈ¡ºó
+    "sea_twice_suf": "class=\"footer",
+    
+    //ËÑË÷Êı×éÇ°×º
+    "sea_arr_pre": "class=\"bor_img3_right",
+    //ËÑË÷Êı×éºó×º
+    "sea_arr_suf": "</div>",
+    //ËÑË÷Æ¬µ¥Í¼Æ¬£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "sea_pic": "data-original=\"&&\"",
+    //ËÑË÷Æ¬µ¥±êÌâ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "sea_title": "title=\"&&\"",
+    //ËÑË÷Æ¬µ¥Á´½Ó£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "sea_url": "href=\"&&\"",
+    //ËÑË÷Æ¬µ¥Á´½Ó²¹Ç°×º
+    "search_prefix": "http://www.dm88.me",
+    //ËÑË÷Æ¬µ¥Á´½Ó²¹ºó×º£¬Õâ¸öÒ»°ãjsonËÑË÷µÄĞèÒª
+    "search_suffix": "",
+    //ËÑË÷¸±±êÌâ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "sea_subtitle": "alt=\"&&\"",
+    
+    //Æ¬µ¥Á´½ÓÊÇ·ñÖ±½Ó²¥·Å£¬1ÊÇÖ±½Ó²¥·Å£¬0·ñ¡£
+    "force_play": "0",
+    //Ö±½Ó²¥·ÅÁ´½Ó²¹Ç°×º
+    "play_prefix": "",
+    //Ö±½Ó²¥·ÅÁ´½Ó²¹ºó×º£¬ÉèÖÃÎª#isVideo=true#¿ÉÇ¿ÖÆÊ¶±ğÎªÊÓÆµÁ´½Ó
+    "play_suffix": "",
+    //Ö±½Ó²¥·ÅÁ´½ÓÉèÖÃÇëÇóÍ·£¬Ö»¶ÔÖ±Á´ÊÓÆµÓĞĞ§£¬Ã¿Ò»×éÓÃ#·Ö¿ª
+    "play_header": "",
+    
+    //ÑİÔ±Êı¾İ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "proj_actor": "class=\"text-muted\">Ö÷Ñİ&&<p class=\"data hidden-xs\">",
+    //¼ò½éÄÚÈİ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "proj_plot": "¼ò½é£º&&ÏêÇé",
+    
+    //ÏßÂ·½ØÈ¡ÇøÓò£¬Èç¹û²»ĞèÒªÇë°Ñtab_title»òtab_arr_preÖÃ¿Õ»òÕßÈ«²¿²»ÒªÌî¡£
+    //ÏßÂ·ÊÇ·ñ¶ş´Î½ØÈ¡
+    "tab_YN_twice": "1",
+    //ÏßÂ·¶ş´Î½ØÈ¡Ç°
+    "tab_twice_pre": "<ul class=\"nav nav-tabs active\">",
+    //ÏßÂ·¶ş´Î½ØÈ¡ºó
+    "tab_twice_suf": "</ul>",
+    
+    //ÏßÂ·½ØÈ¡Êı×éÇ°
+    "tab_arr_pre": "<li",
+    //ÏßÂ·½ØÈ¡Êı×éºó
+    "tab_arr_suf": "</li>",
+    //ÏßÂ·±êÌâ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "tab_title": "tab\">&&<",
+    
+    //ÁĞ±íÊÇ·ñ¶ş´Î½ØÈ¡ ,²¥·ÅµØÖ·¼¯ºÏÇø
+    "list_YN_twice": "1",
+    //ÁĞ±í¶ş´Î½ØÈ¡Ç°
+    "list_twice_pre": "id=\"playlist",
+    //ÁĞ±í¶ş´Î½ØÈ¡ºó
+    "list_twice_suf": "</div>",
+    //ÁĞ±íÊı×é½ØÈ¡Ç°£¬±ØĞë
+    "list_arr_pre": "<ul",
+    //ÁĞ±íÊı×é½ØÈ¡ºó£¬±ØĞë
+    "list_arr_suf": "</ul>",
+    
+    //¼¯ÊıÊÇ·ñ¶ş´Î½ØÈ¡
+    "epi_YN_twice": "0",
+    //¼¯Êı¶ş´Î½ØÈ¡Ç°
+    "epi_twice_pre": "",
+    //¼¯Êı¶ş´Î½ØÈ¡ºó
+    "epi_twice_suf": "",
+    //¼¯ÊıÊı×é½ØÈ¡Ç°£¬±ØĞë
+    "epi_arr_pre": "<li",
+    //¼¯ÊıÊı×é½ØÈ¡ºó£¬±ØĞë
+    "epi_arr_suf": "</li>",
+    //¼¯Êı±êÌâ£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "epi_title": "html\">&&</a>",
+    //¼¯ÊıÁ´½Ó£¬½ØÈ¡Ç°×º&&½ØÈ¡ºó×º
+    "epi_url": "href=\"&&\"",
+    //¼¯ÊıÁ´½Ó²¹Ç°×º
+    "epiurl_prefix": "http://www.dm88.me",
+    //¼¯ÊıÁ´½Ó²¹ºó×º
+    "epiurl_suffix": "",
+    
+    //ÏÂÃæ¼¸¸ö²ÎÊıÇëÎğÂÒÓÃ¡£·ñÔò¿ÉÄÜ»áÓĞ¸±×÷ÓÃ¡£
+    //·ÖÎöÍøÒ³Ô´ÂëÖĞÓĞ<script type="text/javascript">var player_aaaa={"flag":"play","encryptÕâÖÖÔ´ÂëµÄÁ´½Ó½âÎö
+    //Èç¹ûÍøÒ³Ô´ÂëÀïÃ»ÓĞÕâÖÖÇëÉèÖÃÎª0
+    "Anal_MacPlayer":"0",
+    //ÊÇ·ñ¿ªÆôÊÖ¶¯ĞáÌ½£¬Ö»¶ÔÍøÒ³ĞáÌ½ÓĞĞ§£¬0·ñ£¬1ÊÇ
+    "ManualSniffer":"0",
+    //ÊÖ¶¯ĞáÌ½ÊÓÆµÁ´½Ó¹Ø¼ü×Ö£¬Ã¿¸öÓÃ#¸ô¿ª
+    "VideoFormat":"playlist.m3u8#.mp4#.m3u8#.flv"
 }
