@@ -15,7 +15,7 @@
     //图片代理
     "PicNeedProxy":"1",
     //是否开启获取首页数据，0关闭，1开启
-    "homeContent":"0",
+    "homeContent":"1",
     //分类链接起始页码,禁止负数和含小数点。
     "firstpage": "2",
     //分类链接,{cateId}是分类，{catePg}是页码,第一页没有页码的可以这样写 第二页链接[firstPage=第一页的链接]
@@ -38,7 +38,7 @@
     //分类数组截取后
     "cat_arr_suf": "</li>",
     //分类截取片单图片，截取前缀&&截取后缀
-    "cat_pic": "src=\"&&\"",
+    "cat_pic": "<img src=\"&&\"",
     //分类截取片单标题，截取前缀&&截取后缀
     "cat_title": "title=\"&&\"",
     //分类截取片单副标题，截取前缀&&截取后缀
@@ -100,29 +100,29 @@
     "play_header": "",
     
     //演员数据，截取前缀&&截取后缀
-    "proj_actor": "class=\"text-muted\">主演&&<p class=\"data hidden-xs\">",
+    "proj_actor": "◎影片主演:&&</p>",
     //简介内容，截取前缀&&截取后缀
-    "proj_plot": "简介：&&详情",
+    "proj_plot": "◎影片简介:&&<div",
     
     //线路截取区域，如果不需要请把tab_title或tab_arr_pre置空或者全部不要填。
     //线路是否二次截取
     "tab_YN_twice": "1",
     //线路二次截取前
-    "tab_twice_pre": "<ul class=\"nav nav-tabs active\">",
+    "tab_twice_pre": "<h2 class=\"title border-top border-bottom mb-3 pt-2 pb-2\">",
     //线路二次截取后
-    "tab_twice_suf": "</ul>",
+    "tab_twice_suf": "</h2>",
     
     //线路截取数组前
-    "tab_arr_pre": "<li",
+    "tab_arr_pre": "<i class=\"icon-film\">",
     //线路截取数组后
-    "tab_arr_suf": "</li>",
+    "tab_arr_suf": "<span style=\"color:#ff0000; font-size:14px;\">",
     //线路标题，截取前缀&&截取后缀
-    "tab_title": "tab\">&&<",
+    "tab_title": "</i>&&<small>",
     
     //列表是否二次截取 ,播放地址集合区
     "list_YN_twice": "1",
     //列表二次截取前
-    "list_twice_pre": "id=\"playlist",
+    "list_twice_pre": "<div id=\"player_list\"",
     //列表二次截取后
     "list_twice_suf": "</div>",
     //列表数组截取前，必须
@@ -141,11 +141,11 @@
     //集数数组截取后，必须
     "epi_arr_suf": "</li>",
     //集数标题，截取前缀&&截取后缀
-    "epi_title": "html\">&&</a>",
+    "epi_title": "\">&&</a>",
     //集数链接，截取前缀&&截取后缀
     "epi_url": "href=\"&&\"",
     //集数链接补前缀
-    "epiurl_prefix": "http://www.dm88.me",
+    "epiurl_prefix": "https://auete.com",
     //集数链接补后缀
     "epiurl_suffix": "",
     
