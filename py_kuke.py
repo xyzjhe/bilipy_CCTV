@@ -52,7 +52,7 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
+		#url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
 		url='http://www.meheme.com/vodshow/dianying--------2---.html'
 		htmlTxt=self.get_webReadFile(urlStr=url)
 		videos = self.get_list(html=htmlTxt)
