@@ -11,7 +11,7 @@ import urllib
 from urllib import request, parse
 import urllib.request
 import re
-import ssl
+
 class Spider(Spider):
 	def getName(self):
 		return "Auete影视"
@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影7": "Movie",
+			"电影8": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -200,7 +200,6 @@ class Spider(Spider):
 			"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
 			'Host': 'auete.com'
 		}
-		ssl._create_default_https_context = ssl._create_unverified_context#全局取消证书验证
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		#print(Host)
