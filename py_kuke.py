@@ -57,8 +57,6 @@ class Spider(Spider):
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		pag=9999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
-		if pag=="":
-			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
