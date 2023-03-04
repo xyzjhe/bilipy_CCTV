@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影1": "Movie",
+			"电影2": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -56,14 +56,10 @@ class Spider(Spider):
 		url='https://auete.com/{0}/index{1}.html'.format(tid,pg)
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
-		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/.+?/index(\d+?).html" class="page-link">尾页</a>',Index=1)
-		if pag=="":
-			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pag
+		result['pagecount'] = 9999
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
@@ -214,6 +210,7 @@ class Spider(Spider):
 				"vod_remarks":''
 			})
 		return videos
+
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
 		origin=Txt.find(mark)
