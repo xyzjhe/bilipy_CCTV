@@ -42,7 +42,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('http://www.meheme.com/vodshow/dianying--------2---.html')
+		rsp = self.fetch('http://www.meheme.com/')
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -53,7 +53,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
-		rsp = self.fetch('http://www.meheme.com/vodshow/dianying--------2---.html',headers=self.header)
+		rsp = self.fetch('http://www.meheme.com/vodshow/dianying--------2---.html')
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
 		pag=999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
