@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影3": "Movie",
+			"电影4": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -43,7 +43,8 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		htmlTxt = self.get_webReadFile(urlStr='https://auete.com/')
+		rsp = self.fetch('https://www.ktkkt2.com/')
+		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
 			'list': videos
@@ -52,12 +53,16 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url='https://auete.com/{0}/index{1}.html'.format(tid,pg)
-		htmlTxt = self.get_webReadFile(urlStr=url)
+		url = 'https://www.ktkkt2.com/frim/index{0}-{1}.html'.format(tid,pg)
+		htmlTxt=self.get_webReadFile(urlStr=url)
+		videos = self.get_list(html=htmlTxt)
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r"<li><a href='.+?-(\d+?).html'>尾页</a></li>",Index=1)
+		if pag=="":
+			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 9999
+		result['pagecount'] = pag
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
@@ -67,45 +72,54 @@ class Spider(Spider):
 		idUrl=aid[1]
 		title=aid[0]
 		pic=aid[2]
-		result={}
-		url='https://auete.com{0}'.format(idUrl)
+		url='https://www.ktkkt2.com{0}'.format(idUrl)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<h2 class=".+?"><i class=".+?"></i>((.+?)<small><span style=".+?">(.+?))</span></small></h2>',Index=1)
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(<h3 class="title"><strong>(.+?))</strong><span class="text-muted pull-mid">',Index=1)
 		playFrom = []
 		videoList=[]
 		vodItems = []
-		playFrom='无资源'
-		if len(line)>0:
-			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="player_list"',after='</div>')
-			playFrom=[self.removeHtml(txt=t[1]) for t in line]
-			pattern = re.compile(r'<a class="btn btn-orange"\s*title="(.+?)" href="(.+?)"')
+		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)!='':
+			line=['迅雷下载(不可播放)']
+			GvodUrls1=self.get_RegexGetText(Text=htmlTxt,RegexText=r'var GvodUrls1\s*=\s*"(.+?)"',Index=1)
+			playFrom=[t for t in line]
+			ListRe=GvodUrls1.split('###')
+			for value in ListRe:
+				t=value.split('$')
+				vodItems.append(t[0]+"$"+t[1])
+				joinStr = "#".join(vodItems)
+				videoList.append(joinStr)
+		else:
+			circuit=[]
+			for i in line:
+				circuit.append(self.get_playlist(Text=htmlTxt,headStr=i[0],endStr="</div>"))
+			playFrom=[t[1] for t in line]
+			pattern = re.compile(r"<li><a title=\'.+?\'\shref=\'(.+?)\'"+'\starget="_self">(.+?)</a></li>')
 			for v in circuit:
 				ListRe=pattern.findall(v)
 				vodItems = []
 				for value in ListRe:
-					vodItems.append(value[0]+"$"+value[1])
+					vodItems.append(value[1]+"$"+value[0])
 				joinStr = "#".join(vodItems)
 				videoList.append(joinStr)
-		
+
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎影片分类:(.+?)</p>',Index=1)
-		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎上映年份:(.+?)</p>',Index=1)
-		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎影片地区:(.+?)</p>',Index=1)
-		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎影片主演:(.+?)</p>',Index=1)
-		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎影片导演:(.+?)</p>',Index=1)
-		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎影片简介:(.+?)<div',Index=1)
-		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'◎影片语言:(.+?)</p>',Index=1)
-
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>类型：\s{0,4}(.*?)</p>',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>首播：\s{0,4}(.*?)</p>',Index=1)
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>主演：\s{0,4}(.*?)</p>',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>导演：\s{0,4}(.*?)</p>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="abstract-content".*?>(.*?)</div>',Index=1)
+		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'>语言：\s{0,4}(.*?)</p>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="abstract-content".*?>(.*?)</div>',Index=1)
 		vod = {
 			"vod_id": array[0],
 			"vod_name": title,
 			"vod_pic": pic,
-			"type_name":self.removeHtml(txt=typeName),
-			"vod_year": self.removeHtml(txt=year),
+			"type_name": typeName,
+			"vod_year": year,
 			"vod_area": area,
-			"vod_remarks": rem,
+			"vod_remarks": "",
 			"vod_actor":  self.removeHtml(txt=act),
 			"vod_director": self.removeHtml(txt=dir),
 			"vod_content": self.removeHtml(txt=cont)
@@ -124,7 +138,7 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
+		Url='https://www.ktkkt2.com/search.php?searchword={0}'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -136,18 +150,21 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=1
-		Url='https://auete.com{0}'.format(id)
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'base64decode\("(.+?)"\)',Index=1)
-		if len(m3u8Line)>0:
-			strTxt=base64.b64decode(m3u8Line[0])
-			strTxt=self.get_RegexGetText(Text=str(strTxt),RegexText=r"'{0,1}(http.+?\.m3u8)'{0,1}'",Index=1)
-			Url=strTxt.replace("/","")
-			if Url.find('(.m3u8')>1 or Url.find('(.mp4')>1:
-				parse=0 
-			else:
-				Url='https://auete.com{0}'.format(id)
+		Url=''
+		if flag=='迅雷下载(不可播放)':
+			Url=''
+			parse=0
+		elif self.get_RegexGetText(Text=id,RegexText=r"(https{0,1}:)",Index=1)!='':
+			Url=id
+			parse=1
+		else:
+			Url='https://www.ktkkt2.com{0}'.format(id)
+			rsp = self.fetch(Url)
+			htmlTxt = rsp.text
+			m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(https{0,1}://.+?\.m3u8)',Index=1)
+			if len(m3u8Line)>0:
+				Url=m3u8Line[0]
+				parse=0
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
@@ -185,20 +202,25 @@ class Spider(Spider):
 		headers = {
 			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'auete.com'
+			'Host': 'www.ktkkt2.com'
 		}
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'data-tid="\d+?"><a\s*href="(.+?)"\s*class="pic"\s*target="_blank"><img\s*src="/img.php\?url=(.+?)"\s*alt="(.+?)"'
+		patternTxt=r'<a title="(.+?)" href="(.+?)">\r\n<div class="list-poster">\r\n<img src="(.+?)"\sclass="thumb"/>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
+		imgPattern = re.compile('<img src="(.+?)"\sclass="thumb"/>')
+		imgListRe=imgPattern.findall(html)
 		videos = []
+		i=0
+		if len(imgListRe)!=len(ListRe):
+			return videos
 		for vod in ListRe:
-			url = vod[0]
-			title =vod[2]
-			img =vod[1]
+			url = vod[1]
+			title =vod[0]
+			img =imgListRe[i]
 			if len(url) == 0:
 				url = '_'
 			videos.append({
@@ -207,24 +229,16 @@ class Spider(Spider):
 				"vod_pic":img,
 				"vod_remarks":''
 			})
+			i=i+1
 		return videos
-
-	def get_lineList(self,Txt,mark,after):
-		circuit=[]
-		origin=Txt.find(mark)
-		while origin>8:
-			end=Txt.find(after,origin)
-			circuit.append(Txt[origin:end])
-			origin=Txt.find(mark,end)
-		return circuit
 	config = {
 		"player": {},
 		"filter": {}
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'auete.com'
-	}
+		'Host': 'www.ktkkt2.com',
+		"Referer": "https://www.ktkkt2.com/"}
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
