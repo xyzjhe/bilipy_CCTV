@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影5": "dianying",
+			"电影6": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman",
@@ -53,8 +53,9 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		#url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
-		url='http://www.meheme.com/vodshow/dianying--------2---.html'
-		htmlTxt=self.get_webReadFile(urlStr=url)
+		url='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/1.txt'
+		rsp = self.fetch(url)
+		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		pag=999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
