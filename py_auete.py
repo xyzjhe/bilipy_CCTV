@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影2": "Movie",
+			"电影3": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -43,8 +43,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('https://auete.com/')
-		htmlTxt = rsp.text
+		htmlTxt = self.get_webReadFile(urlStr='https://auete.com/')
 		videos = self.get_list(html=htmlTxt)
 		result = {
 			'list': videos
@@ -54,8 +53,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url='https://auete.com/{0}/index{1}.html'.format(tid,pg)
-		rsp = self.fetch(url,headers=self.header)
-		htmlTxt = rsp.text
+		htmlTxt = self.get_webReadFile(urlStr=url)
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
@@ -80,7 +78,7 @@ class Spider(Spider):
 		playFrom='无资源'
 		if len(line)>0:
 			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<div id="player_list"',after='</div>')
-			playFrom=[self.removeHtml(txt=t[0]) for t in line]
+			playFrom=[self.removeHtml(txt=t[1]) for t in line]
 			pattern = re.compile(r'<a class="btn btn-orange"\s*title="(.+?)" href="(.+?)"')
 			for v in circuit:
 				ListRe=pattern.findall(v)
@@ -187,7 +185,7 @@ class Spider(Spider):
 		headers = {
 			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.kukemv.com'
+			'Host': 'auete.com'
 		}
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
