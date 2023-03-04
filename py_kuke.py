@@ -56,10 +56,13 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
+		if pag=="":
+			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999
+		result['pagecount'] = pag
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
