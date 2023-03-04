@@ -54,7 +54,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'https://auete.com/{0}/index{1}.html'.format(tid,pg)
-		htmlTxt=self.get_webReadFile(urlStr=url)
+		htmlTxt=self.get_webReadFile(urlStr='https://auete.com/Movie/index.html')
 		videos = self.get_list(html=htmlTxt)
 		numvL = len(videos)
 		result['list'] = videos
