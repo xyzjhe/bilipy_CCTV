@@ -53,7 +53,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'https://www.5dy6.cc/vodshow/{0}--------{1}---.html'.format(tid,pg)
-		rsp = self.fetch(url)
+		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodshow/\d+?--------(.+?)---.html" class="page-link page-next" title="βҳ">βҳ</a>',Index=1)
