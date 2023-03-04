@@ -52,7 +52,7 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/1.txt'
+		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
