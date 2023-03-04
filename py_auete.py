@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影4": "Movie",
+			"电影5": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -43,7 +43,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('https://www.ktkkt2.com/')
+		rsp = self.fetch('https://auete.com/')
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -53,16 +53,13 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url = 'https://www.ktkkt2.com/frim/index{0}-{1}.html'.format(tid,pg)
+		url = 'https://auete.com/{0}/index{1}.html'.format(tid,pg)
 		htmlTxt=self.get_webReadFile(urlStr=url)
 		videos = self.get_list(html=htmlTxt)
-		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r"<li><a href='.+?-(\d+?).html'>尾页</a></li>",Index=1)
-		if pag=="":
-			pag=999
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pag
+		result['pagecount'] = 999
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
@@ -202,7 +199,7 @@ class Spider(Spider):
 		headers = {
 			'Referer':urlStr,
 			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.ktkkt2.com'
+			'Host': 'auete.com'
 		}
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
@@ -237,8 +234,8 @@ class Spider(Spider):
 	}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'www.ktkkt2.com',
-		"Referer": "https://www.ktkkt2.com/"}
+		'Host': 'auete.com',
+		"Referer": "https://auete.com/"}
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
