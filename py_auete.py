@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影5": "Movie",
+			"电影6": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -205,19 +205,14 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a title="(.+?)" href="(.+?)">\r\n<div class="list-poster">\r\n<img src="(.+?)"\sclass="thumb"/>'
+		patternTxt=r'data-tid="\d+?"><a\s*href="(.+?)"\s*class="pic"\s*target="_blank"><img\s*src="/img.php\?url=(.+?)"\s*alt="(.+?)"'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
-		imgPattern = re.compile('<img src="(.+?)"\sclass="thumb"/>')
-		imgListRe=imgPattern.findall(html)
 		videos = []
-		i=0
-		if len(imgListRe)!=len(ListRe):
-			return videos
 		for vod in ListRe:
 			url = vod[1]
-			title =vod[0]
-			img =imgListRe[i]
+			title =vod[2]
+			img =vod[1]
 			if len(url) == 0:
 				url = '_'
 			videos.append({
@@ -226,7 +221,6 @@ class Spider(Spider):
 				"vod_pic":img,
 				"vod_remarks":''
 			})
-			i=i+1
 		return videos
 	config = {
 		"player": {},
