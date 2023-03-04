@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影1": "dianying",
+			"电影": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman",
@@ -68,61 +68,62 @@ class Spider(Spider):
 		return result
 
 	def detailContent(self,array):
- 		aid = array[0]
- 		result={}
- 		url='http://www.meheme.com{0}'.format(aid)
- 		rsp = self.fetch(url)
- 		htmlTxt = rsp.text
- 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'alt="(.+?)"\srel="nofollow"><i class=".+?">',Index=1)
- 		playFrom = []
- 		videoList=[]
- 		vodItems = []
- 		playFrom='无资源'
- 		if len(line)>0:
- 			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
- 			playFrom=[t for t in line]
- 			pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
- 			for v in circuit:
- 				ListRe=pattern.findall(v)
- 				vodItems = []
- 				for value in ListRe:
- 					vodItems.append(value[1]+"$"+value[0])
- 				joinStr = "#".join(vodItems)
- 				videoList.append(joinStr)
- 		
- 		vod_play_from='$$$'.join(playFrom)
- 		vod_play_url = "$$$".join(videoList)
- 		title=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<h1 class="title">(.+?)</h1>',Index=1)
- 		pic=self.get_RegexGetText(Text=htmlTxt,RegexText=r'data-original="(.+?)"',Index=1)
- 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
- 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
- 		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
- 		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span>(.+?)<span class="split_line">',Index=1)
- 		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span>(.+?)<span class="split_line">',Index=1)
- 		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="content_desc context clearfix"><span>(.+?)</span></div>',Index=1)
- 		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
- 
- 		vod = {
- 			"vod_id": aid,
- 			"vod_name": title,
- 			"vod_pic": pic,
- 			"type_name":self.removeHtml(txt=typeName),
- 			"vod_year": self.removeHtml(txt=year),
- 			"vod_area": area,
- 			"vod_remarks": rem,
- 			"vod_actor":  self.removeHtml(txt=act),
- 			"vod_director": self.removeHtml(txt=dir),
- 			"vod_content": self.removeHtml(txt=cont)
- 		}
- 		vod['vod_play_from'] = vod_play_from
- 		vod['vod_play_url'] = vod_play_url
- 
- 		result = {
- 			'list': [
- 				vod
- 			]
- 		}
- 		return result
+		aid = array[0].split('###')
+		idUrl=aid[1]
+		title=aid[0]
+		pic=aid[2]
+		result={}
+		url='http://www.meheme.com{0}'.format(idUrl)
+		rsp = self.fetch(url)
+		htmlTxt = rsp.text
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'alt="(.+?)"\srel="nofollow"><i class=".+?">',Index=1)
+		playFrom = []
+		videoList=[]
+		vodItems = []
+		playFrom='无资源'
+		if len(line)>0:
+			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
+			playFrom=[t for t in line]
+			pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
+			for v in circuit:
+				ListRe=pattern.findall(v)
+				vodItems = []
+				for value in ListRe:
+					vodItems.append(value[1]+"$"+value[0])
+				joinStr = "#".join(vodItems)
+				videoList.append(joinStr)
+		
+		vod_play_from='$$$'.join(playFrom)
+		vod_play_url = "$$$".join(videoList)
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
+		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span>(.+?)<span class="split_line">',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span>(.+?)<span class="split_line">',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="content_desc context clearfix"><span>(.+?)</span></div>',Index=1)
+		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
+
+		vod = {
+			"vod_id": array[0],
+			"vod_name": title,
+			"vod_pic": pic,
+			"type_name":self.removeHtml(txt=typeName),
+			"vod_year": self.removeHtml(txt=year),
+			"vod_area": area,
+			"vod_remarks": rem,
+			"vod_actor":  self.removeHtml(txt=act),
+			"vod_director": self.removeHtml(txt=dir),
+			"vod_content": self.removeHtml(txt=cont)
+		}
+		vod['vod_play_from'] = vod_play_from
+		vod['vod_play_url'] = vod_play_url
+
+		result = {
+			'list': [
+				vod
+			]
+		}
+		return result
 
 	def verifyCode(self):
 		pass
@@ -190,23 +191,23 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		 		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
- 		pattern = re.compile(patternTxt)
- 		ListRe=pattern.findall(html)
- 		videos = []
- 		for vod in ListRe:
- 			lastVideo = vod[0]
- 			title =vod[1]
- 			img =vod[2]
- 			if len(lastVideo) == 0:
- 				lastVideo = '_'
- 			videos.append({
- 				"vod_id":lastVideo,
- 				"vod_name":title,
- 				"vod_pic":img,
- 				"vod_remarks":''
- 			})
- 		return videos
+		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(html)
+		videos = []
+		for vod in ListRe:
+			url = vod[0]
+			title =vod[1]
+			img =vod[2]
+			if len(url) == 0:
+				url = '_'
+			videos.append({
+				"vod_id":"{0}###{1}###{2}".format(title,url,img),
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
+		return videos
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
 		origin=Txt.find(mark)
