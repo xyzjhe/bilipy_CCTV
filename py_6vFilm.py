@@ -166,11 +166,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
 		ListRe=pattern.findall(htmlTxt)
 		url=""
+		parse=0
 		if ListRe==[]:	
 			url=self.get_playUrlMethodOne(html=htmlTxt)
 		else:
 			url=ListRe[0]
-		result["parse"] = 0
+		if Url.find('.m3u8')<0:
+			url=id
+			parse=1
+		result["parse"] = parse
 		result["playUrl"] =""
 		result["url"] = url
 		result["header"] = ''
