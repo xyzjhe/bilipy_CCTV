@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影2": "dianying",
+			"电影3": "dianying",
 			"电视剧": "lianxuju",
 			"综艺": "zongyi",
 			"动漫": "dongman",
@@ -52,20 +52,20 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
-		rsp = self.fetch(url,headers=self.header)
-		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt)
-		#pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
-		#if pag=="":
-		pag=999
-		numvL = len(videos)
-		result['list'] = videos
-		result['page'] = pg
-		result['pagecount'] = pgc
-		result['limit'] = numvL
-		result['total'] = numvL
-		return result
+ 		url = 'http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
+ 		rsp = self.fetch(url)
+ 		htmlTxt=rsp.text
+ 		videos = self.get_list(html=htmlTxt)
+ 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
+ 		if pag=="":
+ 			pag=1
+ 		numvL = len(videos)
+ 		result['list'] = videos
+ 		result['page'] = pg
+ 		result['pagecount'] = pag
+ 		result['limit'] = numvL
+ 		result['total'] = numvL
+ 		return result
 
 	def detailContent(self,array):
 		aid = array[0].split('###')
