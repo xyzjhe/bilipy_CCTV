@@ -194,14 +194,14 @@
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
     },
     {
-	"key": "csp_Auete",
-	"name": "👨‍🌾Auete影视(xBPQ)",
+	"key": "py_auete",
+	"name": "👨‍🌾Auete影视(PY)",
 	"type": 3,
-	"api": "csp_xBPQ",
+	"api": "py_auete",
 	"searchable": 1,
 	"quickSearch": 1,
 	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Auete影视.json"
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_auete.py"
     },
     {
 	"key": "py_ktkkt",
