@@ -40,11 +40,11 @@
     //分类截取片单图片，截取前缀&&截取后缀
     "cat_pic": "<img src=\"&&\"",
     //分类截取片单标题，截取前缀&&截取后缀
-    "cat_title": "title=\"&&\"",
+    "cat_title": "<img src=\"&&\"",
     //分类截取片单副标题，截取前缀&&截取后缀
     "cat_subtitle": "alt=\"&&\"",
     //分类截取片单链接，截取前缀&&截取后缀
-    "cat_url": "<img src=\"&&\"",  
+    "cat_url": "data-href=\"&&\"",  
     //分类片单链接补前缀  
     "cat_prefix": "https://auete.com",
     //分类片单链接补后缀
