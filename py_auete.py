@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影8": "Movie",
+			"电影1": "Movie",
 			"电视剧": "Tv",
 			"综艺": "Zy",
 			"动漫": "Dm",
@@ -43,7 +43,7 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('https://auete.com/')
+		rsp = self.fetch('https://auete.com/',headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -54,7 +54,8 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'https://auete.com/{0}/index{1}.html'.format(tid,pg)
-		htmlTxt=self.get_webReadFile(urlStr='https://auete.com/Movie/index.html')
+		rsp = self.fetch(url,headers=self.header)
+		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		numvL = len(videos)
 		result['list'] = videos
