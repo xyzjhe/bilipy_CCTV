@@ -43,6 +43,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
+		htmlTxt=''
+		videos=[]
 		rsp = self.fetch('http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)',headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -61,21 +63,30 @@ class Spider(Spider):  # 元类 默认的元类 type
 		logo = aid[2]
 		url = aid[1]
 		title = aid[0]
-		if url == '_':
+		vodItems=[]
+		if title=='妈咪说MommyTalk':
+			rsp = self.fetch(Url)
+			htmlTxt = rsp.text
+			pattern = re.compile('')
+			ListRe=pattern.findall(htmlTxt)
+			for value in ListRe:
+				vodItems.append(value[1]+"$"+value[0])
+		else:
+			if url == '_':
 			return result
-		vodItems = [title+"$"+url]
-		vod = {
-			"vod_id":array[0],
-			"vod_name":title,
-			"vod_pic":logo,
-			"type_name":tid,
-			"vod_year":"",
-			"vod_area":"",
-			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
-		}
+			vodItems = [title+"$"+url]
+			vod = {
+				"vod_id":array[0],
+				"vod_name":title,
+				"vod_pic":logo,
+				"type_name":tid,
+				"vod_year":"",
+				"vod_area":"",
+				"vod_remarks":"",
+				"vod_actor":"",
+				"vod_director":"",
+				"vod_content":""
+			}
 		vod['vod_play_from'] = "线路"
 		vod['vod_play_url'] = "#".join(vodItems)
 		result = {
@@ -93,46 +104,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		header= {
-			"User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
-		}
-		result["parse"] = 2
-		result["playUrl"] =""
-		result["url"] = id
-		result["header"] =''
-		return result
-	def get_playUrlMethodOne(self,html):
-		#自定义函数时self参数是必要的,调用时self参数留空
-		pattern =re.search( r'<div class="video"><iframe.+?src="(.+?)"></iframe></div>', html, re.M|re.I).group(1)
-		if len(pattern)<4:
-			return ""
-		rsp = self.fetch(pattern)
-		htmlTxt=rsp.text
-		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
-		if len(head)<4:
-			return ""
-		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
-		url=head+url
-		return url
-	def get_collection_xg(html):
-		videoList = []
-		pattern = re.compile(r'title="(.+?)"\s*href="(.+?&amp;)".+? src="(.+?)"')
-		ListRe=pattern.findall(html)
-		for video in ListRe:
-			videoList.append(video[0]+"$https://www.ixigua.com"+video[1].replace('&amp;' , '&'))
-		return videoList
-	def webReadFile(self,urlStr):
-		if urlStr.find("http")<0:
-			return ""
-		req = urllib.request.Request(url=urlStr, headers=self.header)
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		return html
-	def get_UrlParameter(self,parameter):
-		aid =parameter.split('###')
-		for t in aid:
-			if t.find("http")>-1 and t.find("html")>-1:
-				return t	
-		return "https://www.ixigua.com/"	
+		parse=1
+		Url=id
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(http.+?m3u8)',Index=1)
+		if len(m3u8Line)>0:
+			Url=m3u8Line[0].replace("/","")
+			parse=0 
+		result["parse"] = parse
+		result["playUrl"] = ''
+		result["url"] = Url
+		result["header"] = ''	
 	def get_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)

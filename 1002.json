@@ -296,22 +296,12 @@
 	"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_cyys.py"
     },
     {
-	"key": "csp_555",
-	"name": "👨‍🌾555电影网(xBPQ)",
-	"type": 3,
-	"api": "csp_xBPQ",
-	"searchable": 1,
-	"quickSearch": 1,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/555电影.json"
-    },
-    {
 	"key": "csp_auete",
 	"name": "👨‍🌾auete影视(xBPQ)",
 	"type": 3,
 	"api": "csp_xBPQ",
-	"searchable": 1,
-	"quickSearch": 1,
+	"searchable": 0,
+	"quickSearch": 0,
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Auete影视.json"
     },
@@ -324,6 +314,16 @@
 	"quickSearch": 1,
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
+    },
+    {
+	"key": "py_collect",
+	"name": "空间",
+	"type": 3,
+	"api": "py_collect",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
     },
     {
           "key": "csp_Nmys",
@@ -1182,16 +1182,6 @@
       "quickSearch": 1,
       "filterable": 0,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/tvb%E4%BA%91%E6%92%AD.json"
-    },
-    {
-      "key": "Auete影视",
-      "name": "🍬Auete影视",
-      "type": 3,
-      "api": "csp_XBiubiu",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 0,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/Auete%E5%BD%B1%E8%A7%86.json"
     },
     {
       "key": "csp_XBiubiu哔嘀影视",
