@@ -78,7 +78,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return result
 		tid = aid[0]
 		logo = aid[3]
-		lastVideo = self.get_UrlParameter(parameter=array[0])
+		lastVideo =aid[2]
 		title = aid[1]
 		date = aid[0]
 		if lastVideo == '_':
@@ -166,15 +166,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
 		ListRe=pattern.findall(htmlTxt)
 		url=""
-		parse=0
 		if ListRe==[]:	
 			url=self.get_playUrlMethodOne(html=htmlTxt)
 		else:
 			url=ListRe[0]
-		if Url.find('.m3u8')<0:
-			url=id
-			parse=1
-		result["parse"] = parse
+		result["parse"] = 0
 		result["playUrl"] =""
 		result["url"] = url
 		result["header"] = ''
@@ -226,12 +222,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
-	def get_UrlParameter(self,parameter):
-		aid =parameter.split('###')
-		for t in aid:
-			if t.find("http")>-1 and t.find("html")>-1:
-				return t	
-		return "https://www.66s.cc/kehuanpian/18941.html"	
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt="null"
 		Regex=re.search(RegexText, Text, re.M|re.I)
