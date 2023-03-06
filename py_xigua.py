@@ -49,7 +49,7 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		if pg>1:
+		if int(pg)>1:
 			return result
 		url = ''
 		if tid=='history':#历史
