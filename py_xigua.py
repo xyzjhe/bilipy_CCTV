@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"关注": "follow",
+			"关注1": "follow",
 			"收藏":"collect",
 			"观看历史":"history"
 		}
@@ -50,7 +50,7 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url = 'https://159i22.cc/video/{0}/{1}.html'.format(tid,pg)
+		url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -152,22 +152,31 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'rel="bookmark">(.+?)</a>'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
-		URLpattern = re.compile(r"url:\s*'(http.+?\.m3u8)',(\r|\n|\r\n)")
-		URLListRe=URLpattern.findall(html)
-		PicPattern = re.compile(r"pic:\s*'(.+?)'")
-		PicListRe=PicPattern.findall(html)
-		videos = []
-		for i in range(0, len(ListRe)):
-			url = URLListRe[i][0]
-			title =ListRe[i]
-			img ="https://159i22.cc"+PicListRe[i]
+		result={}
+		jRoot = json.loads(html)
+		if jRoot['code']!=200:
+			return result
+		jo = jRoot['data']['channelFeed']
+		vodList = jo['Data']
+		if len(vodList)<1:
+			return result
+		videos=[]
+		for vod in vodList:
+			data=vod['data']
+			if len(data)<1:
+				continue
+			url =vod['key']
+			title =data['title']
+			img =vod['data'].get('image_url') 
+			maxTime=vod['maxTime']
+			if img is None:
+				img =data['coverList'][0].get('url')
 			if len(url) == 0:
-				url = '_'
+				continue
+			#maxTime###标题###地址###封面
+			vod_id="{0}###{1}###{2}###{3}".format(maxTime,title,url,img)
 			videos.append({
-				"vod_id":"{0}###{1}###{2}".format(title,url,img),
+				"vod_id":vod_id,
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
@@ -186,8 +195,9 @@ class Spider(Spider):
 		"filter": {}
 	}
 	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': '159i22.cc'
+		"Referer": 'https://www.ixigua.com/my/favorite',
+		'User-Agent':'my.ie.2345.com',
+		'Cookie':'ttcid=cd196cbb0b844d559391fbb1cc90dbd350; __ac_nonce=06404494600b70f8a89b2; __ac_signature=_02B4Z6wo00f01MXq0BwAAIDBJBSBkSJFPQjFyNSAAFWEIDpvxjkTcANBTvMl0fMzITEkmmzddYvCCaE7.W0YLajEdH-JWf0lpAc5flpY14TgosM9tcYWPrDB2-cP0sv-pxR7n8N5FVw5ZJDef7; MONITOR_WEB_ID=45c3b6ab-7ad4-4805-b971-5962d1d6909a; s_v_web_id=verify_lev3h43l_rrTPrFDG_ztWQ_4ugg_8WBA_yGVYsXlVyoBh; passport_csrf_token=80e0efe90bc8bd6681a896dd90cd08cc; passport_csrf_token_default=80e0efe90bc8bd6681a896dd90cd08cc; odin_tt=91b5d4bd5b2c49b52a7eff16c14df7c66e509864a8ec7edd5612e67cbdd863ae7227ed4b95d66dbb65a3a427caf69fd7; sid_guard=54266b282adf9c8dbb69f9cc37342191%7C1678002757%7C3024000%7CSun%2C+09-Apr-2023+07%3A52%3A37+GMT; uid_tt=3c0e8cb286ad3de4d95252bb7d5e0fc6; uid_tt_ss=3c0e8cb286ad3de4d95252bb7d5e0fc6; sid_tt=54266b282adf9c8dbb69f9cc37342191; sessionid=54266b282adf9c8dbb69f9cc37342191; sessionid_ss=54266b282adf9c8dbb69f9cc37342191; sid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; ssid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; support_webp=true; support_avif=false; ttwid=1%7CCueNR-HU9tGVF30WaiFCjXDxh0FUXoXsZr-cIb9Dogg%7C1678003714%7C668bcb31fd4bbd27d96c2e9b8b54ee19d432e07e2dc29424ed7d4f565afbb72f; csrf_session_id=5bbbd0c6b4a64b19dc32694083983872; msToken=zneoThG9FFaRAzZIk88NksVv1_nOKubCtSbgADqPrvnQfGmRu3awlR-RqO_kdAauJffkdzGnSKGfatuHr_NDK5gVV559naHVVms0KBugXVh3pb7w6eaJPnt0LClhXL4=; tt_scid=dt.GJVugJWLpeXtGQtz6SCsIykASc.5FpVWCkR3J2nt-7Rr8igGA9UlwRtQlKKKf621b; ixigua-a-s=1'
 	}
 
 	def localProxy(self,param):
