@@ -49,6 +49,8 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
+		if pg>1:
+			return result
 		url = ''
 		if tid=='history':#历史
 			url = 'https://www.ixigua.com/api/videov2/get/history?maxTime=1678090877&type=lvideo&count=4'
