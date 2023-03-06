@@ -56,9 +56,7 @@ class Spider(Spider):
 			url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
-		videos=[]
-		if tid=='follow':
-			videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=htmlTxt)
 		
 		
 		numvL = len(videos)
