@@ -196,7 +196,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if url.find('://')>0:
 			returnTxt={"url":url,"parse":0}
 		elif head.find('://')>0 and url.find('://')<0:
-			returnTxt={"url":head+url,"parse":9}	
+			returnTxt={"url":head+url,"parse":0}	
 		return returnTxt
 	def get_list(self,html,tid):
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
