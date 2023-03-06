@@ -162,32 +162,42 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
+		parse=0
 		htmlTxt=self.webReadFile(urlStr=id)
 		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
 		ListRe=pattern.findall(htmlTxt)
 		url=""
-		if ListRe==[]:	
-			url=self.get_playUrlMethodOne(html=htmlTxt)
+		if len(ListRe)<1:	
+			returnTxt=self.get_playUrlMethodOne(html=htmlTxt)
+			if returnTxt[url]=='':
+				url=id
+				parse=1
+			else:
+				url=returnTxt['url']
+				parse=returnTxt['parse']
 		else:
 			url=ListRe[0]
-		result["parse"] = 0
+		result["parse"] = parse
 		result["playUrl"] =""
 		result["url"] = url
 		result["header"] = ''
 		return result
 	def get_playUrlMethodOne(self,html):
 		#自定义函数时self参数是必要的,调用时self参数留空
-		pattern =re.search( r'<div class="video"><iframe.+?src="(.+?)"></iframe></div>', html, re.M|re.I).group(1)
-		if len(pattern)<4:
-			return ""
-		rsp = self.fetch(pattern)
+		returnTxt={"url":"","parse":1}
+		txt =self.get_RegexGetText(Text=html,RegexText=r'scrolling="no"\s*src="(.+?)"></iframe>',Index=1)
+		if txt=='':
+			return ""	
+		returnTxt["url"]=txt
+		rsp = self.fetch(txt)
 		htmlTxt=rsp.text
-		head=re.search( r'(https{0,1}://.+?)/', pattern, re.M|re.I).group(1)
-		if len(head)<4:
-			return ""
-		url=re.search( r'var\smain\s*=\s*"(.+?)"', htmlTxt, re.M|re.I).group(1)
-		url=head+url
-		return url
+		head=self.get_RegexGetText(Text=txt,RegexText=r'(https{0,1}://.+?)/',Index=1)
+		url=self.get_RegexGetText(Text=htmlTxt, RegexText=r'var\smain\s*=\s*"(.+?)"', Index=1)
+		if url.find('://')>0:
+			returnTxt={"url":url,"parse":0}
+		elif head.find('://')>0 and url.find('://')<0:
+			returnTxt={"url":head+url,"parse":9}	
+		return returnTxt
 	def get_list(self,html,tid):
 		patternTxt='<div class="thumbnail">\s*<a href="(.+)"\s*class="zoom".*?title="(.+?)".*?\n*\s*<img src="(.+?)"'
 		pattern = re.compile(patternTxt)

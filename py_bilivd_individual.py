@@ -626,15 +626,19 @@ class Spider(Spider):  # 元类 默认的元类 type
         }
         url = 'https://api.bilibili.com/x/web-interface/view?bvid={0}'.format(ids[1])
         rsp = self.fetch(url, headers=header)
+        if rsp.text.find'code')<1:
+            return result
         jRoot = json.loads(rsp.text)
         jo = jRoot['data']
         aid=jo['aid']
         cid=jo['cid']
         url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=120&fnval=0&128=128&fourk=1'.format(aid,cid)
         rsp = self.fetch(url, headers=header)
+        if rsp.text.find'code')<1:
+            return result
         jRoot = json.loads(rsp.text)
         jo = jRoot['data']
-        if jRoot['code']==-404:
+        if jRoot['code']!=0:
             return result
         ja = jo['durl']
         maxSize = -1
