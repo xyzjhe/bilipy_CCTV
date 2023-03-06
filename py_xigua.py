@@ -45,7 +45,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		htmlTxt=''
 		rsp = self.fetch('https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12',headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list_json(jsonTxt=htmlTxt)		
@@ -131,7 +130,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if t.find("http")>-1 and t.find("html")>-1:
 				return t	
 		return "https://www.ixigua.com/"	
-	def get_list_json(jsonTxt):
+	def get_list_json(self,jsonTxt):
 		result={}
 		jRoot = json.loads(jsonTxt)
 		if jRoot['code']!=200:
