@@ -46,11 +46,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		htmlTxt=''
-		videos=[]
-		if tid=='collect':
-			rsp = self.fetch('https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12',headers=self.header)
-			htmlTxt = rsp.text
-			videos = self.get_list_json(jsonTxt=htmlTxt)		
+		rsp = self.fetch('https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12',headers=self.header)
+		htmlTxt = rsp.text
+		videos = self.get_list_json(jsonTxt=htmlTxt)		
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
@@ -60,36 +58,30 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		if aid[1].find("http")<0:
-			return result
 		tid = aid[0]
-		logo = aid[2]
+		logo = aid[3]
 		url = aid[1]
-		title = aid[0]
+		title = aid[1]
 		vodItems=[]
-		if title=='妈咪说MommyTalk':
-			rsp = self.fetch(Url)
-			htmlTxt = rsp.text
-			pattern = re.compile('')
-			ListRe=pattern.findall(htmlTxt)
-			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
-		else:
-			if url == '_':
-			return result
-			vodItems = [title+"$"+url]
-			vod = {
-				"vod_id":array[0],
-				"vod_name":title,
-				"vod_pic":logo,
-				"type_name":tid,
-				"vod_year":"",
-				"vod_area":"",
-				"vod_remarks":"",
-				"vod_actor":"",
-				"vod_director":"",
-				"vod_content":""
-			}
+		Url=''
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		pattern = re.compile('')
+		ListRe=pattern.findall(htmlTxt)
+		for value in ListRe:
+			vodItems.append(value[1]+"$"+value[0])
+		vod = {
+			"vod_id":array[0],
+			"vod_name":title,
+			"vod_pic":logo,
+			"type_name":tid,
+			"vod_year":"",
+			"vod_area":"",
+			"vod_remarks":"",
+			"vod_actor":"",
+			"vod_director":"",
+			"vod_content":""
+		}
 		vod['vod_play_from'] = "线路"
 		vod['vod_play_url'] = "#".join(vodItems)
 		result = {
@@ -151,18 +143,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 		videos=[]
 		for vod in vodList:
 			data=vod['data']
-			if len(data)<1:
-				continue
-			url = vod['key']
-			title =data['title']
-			img =vod['data'].get('image_url') 
-			Key=vod['key']
-			if img is None:
-				img =data['coverList'][0].get('url')
-			if len(url) == 0:
-				continue
-			#Key###标题###地址###封面
-			vod_id="{0}###{1}###{2}###{3}".format(Key,title,url,img)
+		if len(data)<1:
+			continue
+		url =vod['key']
+		title =data['title']
+		img =vod['data'].get('image_url') 
+		maxTime=vod['maxTime']
+		if img is None:
+			img =data['coverList'][0].get('url')
+		if len(url) == 0:
+			continue
+		#maxTime###标题###地址###封面
+		vod_id="{0}###{1}###{2}###{3}".format(maxTime,title,url,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
