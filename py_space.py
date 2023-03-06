@@ -43,11 +43,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		htmlTxt=''
 		videos=[]
 		rsp = self.fetch('http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)',headers=self.header)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=rsp.text)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
@@ -63,30 +61,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 		logo = aid[2]
 		url = aid[1]
 		title = aid[0]
-		vodItems=[]
-		if title=='妈咪说MommyTalk':
-			rsp = self.fetch(Url)
-			htmlTxt = rsp.text
-			pattern = re.compile('')
-			ListRe=pattern.findall(htmlTxt)
-			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
-		else:
-			if url == '_':
-			return result
-			vodItems = [title+"$"+url]
-			vod = {
-				"vod_id":array[0],
-				"vod_name":title,
-				"vod_pic":logo,
-				"type_name":tid,
-				"vod_year":"",
-				"vod_area":"",
-				"vod_remarks":"",
-				"vod_actor":"",
-				"vod_director":"",
-				"vod_content":""
-			}
+		vodItems = [title+"$"+url]
+		vod = {
+			"vod_id":array[0],
+			"vod_name":title,
+			"vod_pic":logo,
+			"type_name":tid,
+			"vod_year":"",
+			"vod_area":"",
+			"vod_remarks":"",
+			"vod_actor":"",
+			"vod_director":"",
+			"vod_content":""
+		}
 		vod['vod_play_from'] = "线路"
 		vod['vod_play_url'] = "#".join(vodItems)
 		result = {
