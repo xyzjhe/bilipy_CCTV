@@ -184,6 +184,8 @@ class Spider(Spider):
 				"vod_pic":img,
 				"vod_remarks":''
 			})
+		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
+		videos = res
 		return videos
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
