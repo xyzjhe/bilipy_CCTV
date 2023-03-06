@@ -167,9 +167,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		pattern=re.compile(r'(https{0,1}://.+?\.m3u8.*?)')
 		ListRe=pattern.findall(htmlTxt)
 		url=""
-		if len(ListRe)<1:	
+		if ListRe==[]:	
 			returnTxt=self.get_playUrlMethodOne(html=htmlTxt)
-			if returnTxt[url]=='':
+			if returnTxt['url']==''):
 				url=id
 				parse=1
 			else:
@@ -187,7 +187,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		returnTxt={"url":"","parse":1}
 		txt =self.get_RegexGetText(Text=html,RegexText=r'scrolling="no"\s*src="(.+?)"></iframe>',Index=1)
 		if txt=='':
-			return ""	
+			return returnTxt	
 		returnTxt["url"]=txt
 		rsp = self.fetch(txt)
 		htmlTxt=rsp.text
