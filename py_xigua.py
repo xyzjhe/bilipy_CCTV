@@ -24,7 +24,6 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"关注1": "follow",
 			"收藏":"collect",
 			"观看历史":"history"
 		}
@@ -50,12 +49,18 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
+		url = ''
+		if tid=='history':#历史
+			url = 'https://www.ixigua.com/api/videov2/get/history?maxTime=1678090877&type=lvideo&count=4'
+		elif tid=='collect':#收藏
+			url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos=[]
+		if tid=='follow':
+			videos = self.get_list(html=htmlTxt)
 		
-		pag=999
+		
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
