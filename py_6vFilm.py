@@ -169,7 +169,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url=""
 		if ListRe==[]:	
 			returnTxt=self.get_playUrlMethodOne(html=htmlTxt)
-			if returnTxt['url']==''):
+			if returnTxt['url']=='':
 				url=id
 				parse=1
 			else:
