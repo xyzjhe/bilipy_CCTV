@@ -25,7 +25,9 @@ class Spider(Spider):
 		result = {}
 		cateManual = {
 			"收藏":"collect",
-			"观看历史":"history"
+			"观看历史":"history",
+			"关注":"feedv"
+
 		}
 		classes = []
 		for k in cateManual:
@@ -56,6 +58,8 @@ class Spider(Spider):
 			url = 'https://www.ixigua.com/api/videov2/get/history?maxTime=1678090877&type=lvideo&count=4'
 		elif tid=='collect':#收藏
 			url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
+		elif tid=='feedv':
+			url = 'https://www.ixigua.com/api/feedv2/feedById?channelId=94349549215&count=12&maxTime=1678090877&request_from=701&queryCount=1&offset=0&referrer=https:%2F%2Fwww.ixigua.com%2F7062326666139599391%3FlogTag%3Dcf6c40e6a230f78de634&msToken=JAGm4EesuoLDNG5E5Fx-H6CngUFk3nUXhQKy7_oVRZUuwT8OFpiTxoPH83pkBSd-pa_AFBgREZ9XRxbtkdIv7-8m7NVcdYDdJDwqfSuqLrCAVx99O2HcAldeMG_jacE=&X-Bogus=DFSzs5VuefzAN9eQtahmIQ1Nl0t0&_signature=_02B4Z6wo00001mna8VQAAIDDiCSg2VBl5Z5p2PXAAP6CTObwgBl1XQa6J9GwzTJWkIOCFpO3Ta6RoHwyYoZyer5JwhdxdRi7U8eNkBlSdcbmg8dGvO2YWQWmNdCj2pHfVsxODby0F-llPcD4cf'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
