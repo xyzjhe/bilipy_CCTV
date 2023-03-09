@@ -59,7 +59,7 @@ class Spider(Spider):
 		elif tid=='collect':#收藏
 			url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
 		elif tid=='feedv':
-			url = 'https://www.ixigua.com/api/feedv2/feedById?channelId=94349549215&count=12&maxTime=1678090877&request_from=701&queryCount=1&offset=0&referrer=https:%2F%2Fwww.ixigua.com%2F7062326666139599391%3FlogTag%3Dcf6c40e6a230f78de634&msToken=JAGm4EesuoLDNG5E5Fx-H6CngUFk3nUXhQKy7_oVRZUuwT8OFpiTxoPH83pkBSd-pa_AFBgREZ9XRxbtkdIv7-8m7NVcdYDdJDwqfSuqLrCAVx99O2HcAldeMG_jacE=&X-Bogus=DFSzs5VuefzAN9eQtahmIQ1Nl0t0&_signature=_02B4Z6wo00001mna8VQAAIDDiCSg2VBl5Z5p2PXAAP6CTObwgBl1XQa6J9GwzTJWkIOCFpO3Ta6RoHwyYoZyer5JwhdxdRi7U8eNkBlSdcbmg8dGvO2YWQWmNdCj2pHfVsxODby0F-llPcD4cf'
+			url = 'https://www.ixigua.com/api/feedv2/feedById?channelId=94349549215&count=12&maxTime=0&request_from=701&queryCount=1&offset=0&referrer=&msToken=6BEdLzMeWnfHRD8irIiJUGVn4mXx800CSRGYwVy_1E_IOis1OpmTvD5czQcgRWxma6PQbTGXIqF2mRWl4AAIVzWye2w1BHhPr9emiOZXiislTBZMlSaUvu01fRQEwKxd&X-Bogus=DFSzs5VuTEhAN9eQtaxdW51Nl0SX'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -76,26 +76,45 @@ class Spider(Spider):
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		logo = aid[2]
-		url = aid[1]
-		title = aid[0]
-		if url == '_':
+		key=aid[2]
+		pic=aid[3]
+		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt=rsp.text
+		playFrom = []
+		videoList=[]
+		vodItems = []
+		jRoot = json.loads(html)
+		if jRoot['code']!=200:
 			return result
-		vodItems = [title+"$"+url]
+		jo = jRoot['data']
+		jsonList=jo['playlist']
+		videoList=self.get_EpisodesList(jsonList=jsonList)
+		vod_play_url = "$$$".join(videoList)
+		title=jo['albumInfo']['title']
+		playFrom=[v for v in jo['albumInfo']['tagList']]
+		typeName='/'.join(playFrom)
+		playFrom=[v for v in jo['albumInfo']['areaList']]
+		area='/'.join(playFrom)
+		playFrom=[v['name'] for v in jo['albumInfo']['actorList']]#问题
+		act='/'.join(playFrom)
+		playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
+		dir='/'.join(playFrom)
+		cont=jo['albumInfo']['intro']
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
-			"vod_pic":logo,
+			"vod_pic":pic,
 			"type_name":'',
 			"vod_year":"",
 			"vod_area":"",
 			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_actor":act,
+			"vod_director":dir,
+			"vod_content":cont
 		}
 		vod['vod_play_from'] = "线路"
-		vod['vod_play_url'] = "#".join(vodItems)
+		vod['vod_play_url'] = vod_play_url
 		result = {
 			'list': [
 				vod
@@ -201,13 +220,18 @@ class Spider(Spider):
 			circuit.append(Txt[origin:end])
 			origin=Txt.find(mark,end)
 		return circuit
+	def get_EpisodesList(self,jsonList):
+		vodItems=[]
+		for value in jsonList:
+			vodItems.append(value['title']+"$"+value['shareUrl'])
+		return vodItems
 	config = {
 		"player": {},
 		"filter": {}
 	}
 	header = {
-		"Referer": 'https://www.ixigua.com/my/favorite',
-		'User-Agent':'my.ie.2345.com',
+		"Referer": 'https://www.ixigua.com/',
+		'User-Agent':'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
 		'Cookie':'ttcid=cd196cbb0b844d559391fbb1cc90dbd350; __ac_nonce=06404494600b70f8a89b2; __ac_signature=_02B4Z6wo00f01MXq0BwAAIDBJBSBkSJFPQjFyNSAAFWEIDpvxjkTcANBTvMl0fMzITEkmmzddYvCCaE7.W0YLajEdH-JWf0lpAc5flpY14TgosM9tcYWPrDB2-cP0sv-pxR7n8N5FVw5ZJDef7; MONITOR_WEB_ID=45c3b6ab-7ad4-4805-b971-5962d1d6909a; s_v_web_id=verify_lev3h43l_rrTPrFDG_ztWQ_4ugg_8WBA_yGVYsXlVyoBh; passport_csrf_token=80e0efe90bc8bd6681a896dd90cd08cc; passport_csrf_token_default=80e0efe90bc8bd6681a896dd90cd08cc; odin_tt=91b5d4bd5b2c49b52a7eff16c14df7c66e509864a8ec7edd5612e67cbdd863ae7227ed4b95d66dbb65a3a427caf69fd7; sid_guard=54266b282adf9c8dbb69f9cc37342191%7C1678002757%7C3024000%7CSun%2C+09-Apr-2023+07%3A52%3A37+GMT; uid_tt=3c0e8cb286ad3de4d95252bb7d5e0fc6; uid_tt_ss=3c0e8cb286ad3de4d95252bb7d5e0fc6; sid_tt=54266b282adf9c8dbb69f9cc37342191; sessionid=54266b282adf9c8dbb69f9cc37342191; sessionid_ss=54266b282adf9c8dbb69f9cc37342191; sid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; ssid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; support_webp=true; support_avif=false; ttwid=1%7CCueNR-HU9tGVF30WaiFCjXDxh0FUXoXsZr-cIb9Dogg%7C1678003714%7C668bcb31fd4bbd27d96c2e9b8b54ee19d432e07e2dc29424ed7d4f565afbb72f; csrf_session_id=5bbbd0c6b4a64b19dc32694083983872; msToken=zneoThG9FFaRAzZIk88NksVv1_nOKubCtSbgADqPrvnQfGmRu3awlR-RqO_kdAauJffkdzGnSKGfatuHr_NDK5gVV559naHVVms0KBugXVh3pb7w6eaJPnt0LClhXL4=; tt_scid=dt.GJVugJWLpeXtGQtz6SCsIykASc.5FpVWCkR3J2nt-7Rr8igGA9UlwRtQlKKKf621b; ixigua-a-s=1'
 	}
 
