@@ -91,17 +91,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		parse=1
-		Url=id
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'(http.+?m3u8)',Index=1)
-		if len(m3u8Line)>0:
-			Url=m3u8Line[0].replace("/","")
-			parse=0 
-		result["parse"] = parse
+		result["parse"] = 1
 		result["playUrl"] = ''
-		result["url"] = Url
+		result["url"] = id
 		result["header"] = ''	
 	def get_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
