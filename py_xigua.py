@@ -25,8 +25,7 @@ class Spider(Spider):
 		result = {}
 		cateManual = {
 			"收藏":"collect",
-			"观看历史":"history",
-			"关注":"feedv"
+			"观看历史":"history"
 
 		}
 		classes = []
@@ -58,8 +57,6 @@ class Spider(Spider):
 			url = 'https://www.ixigua.com/api/videov2/get/history?maxTime=1678090877&type=lvideo&count=4'
 		elif tid=='collect':#收藏
 			url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
-		elif tid=='feedv':
-			url = 'https://www.ixigua.com/api/feedv2/feedById?channelId=94349549215&count=12&maxTime=0&request_from=701&queryCount=1&offset=0&referrer=&msToken=6BEdLzMeWnfHRD8irIiJUGVn4mXx800CSRGYwVy_1E_IOis1OpmTvD5czQcgRWxma6PQbTGXIqF2mRWl4AAIVzWye2w1BHhPr9emiOZXiislTBZMlSaUvu01fRQEwKxd&X-Bogus=DFSzs5VuTEhAN9eQtaxdW51Nl0SX'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -80,7 +77,7 @@ class Spider(Spider):
 		pic=aid[3]
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
-		htmlTxt=rsp.text
+		html=rsp.text
 		playFrom = []
 		videoList=[]
 		vodItems = []
@@ -89,11 +86,12 @@ class Spider(Spider):
 			return result
 		jo = jRoot['data']
 		jsonList=jo['playlist']
-		videoList=self.get_EpisodesList(jsonList=jsonList)
+		videoList=self.get_EpisodesList(jsonList)
 		vod_play_url = "$$$".join(videoList)
 		title=jo['albumInfo']['title']
 		playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName='/'.join(playFrom)
+		year=''
 		playFrom=[v for v in jo['albumInfo']['areaList']]
 		area='/'.join(playFrom)
 		playFrom=[v['name'] for v in jo['albumInfo']['actorList']]#问题
@@ -102,18 +100,18 @@ class Spider(Spider):
 		dir='/'.join(playFrom)
 		cont=jo['albumInfo']['intro']
 		vod = {
-			"vod_id":array[0],
-			"vod_name":title,
-			"vod_pic":pic,
-			"type_name":'',
-			"vod_year":"",
-			"vod_area":"",
-			"vod_remarks":"",
-			"vod_actor":act,
-			"vod_director":dir,
-			"vod_content":cont
+			"vod_id": aid,
+			"vod_name": title,
+			"vod_pic": pic,
+			"type_name": typeName,
+			"vod_year": year,
+			"vod_area": area,
+			"vod_remarks": '',
+			"vod_actor": act,
+			"vod_director": dir,
+			"vod_content": cont
 		}
-		vod['vod_play_from'] = "线路"
+		vod['vod_play_from'] = '西瓜'
 		vod['vod_play_url'] = vod_play_url
 		result = {
 			'list': [
