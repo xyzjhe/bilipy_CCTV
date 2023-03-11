@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"收藏":"collect",
+			"收藏1":"collect",
 			"观看历史":"history"
 
 		}
@@ -86,7 +86,8 @@ class Spider(Spider):
 			return result
 		jo = jRoot['data']
 		jsonList=jo['playlist']
-		videoList=self.get_EpisodesList(jsonList)
+		for value in jsonList:
+			videoList.append(value['title']+"$"+value['shareUrl'])
 		vod_play_url = "$$$".join(videoList)
 		title=jo['albumInfo']['title']
 		playFrom=[v for v in jo['albumInfo']['tagList']]
