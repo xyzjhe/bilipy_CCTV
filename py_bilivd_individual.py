@@ -634,7 +634,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         rsp = self.fetch(url, headers=header)
         jRoot = json.loads(rsp.text)
         jo = jRoot['data']
-        if jRoot['code']==-404:
+        if jRoot['code']!=0:
             return result
         ja = jo['durl']
         maxSize = -1
@@ -661,12 +661,17 @@ class Spider(Spider):  # 元类 默认的元类 type
     def playerContent(self, flag, id, vipFlags):
         result={}
         mark=''
-        if id.find('bvid:')<0:
-            mark="av"+id.split("_")[0]
-            result = self.get_Url(idTxt=id)
-        else:
-            mark=id.split(":")[1]
-            result = self.get_Url_pu(idTxt=id)
+        try:
+                if id.find('bvid:')<0:
+                    mark="av"+id.split("_")[0]
+                    result = self.get_Url(idTxt=id)
+                else:
+                    mark=id.split(":")[1]
+                    result = self.get_Url_pu(idTxt=id)
+        except Exception as e:
+                    print(e)
+        finally:
+                    result={}
         if result=={}:
             url='https://m.bilibili.com/video/{0}'.format(mark)
             header= {

@@ -90,16 +90,16 @@ class Spider(Spider):
 			videoList.append(value['title']+"$"+value['shareUrl'])
 		vod_play_url = "$$$".join(videoList)
 		title=jo['albumInfo']['title']
-		playFrom=[v for v in jo['albumInfo']['tagList']]
-		typeName='/'.join(playFrom)
+		#playFrom=[v for v in jo['albumInfo']['tagList']]
+		typeName=''#'/'.join(playFrom)
 		year=''
-		playFrom=[v for v in jo['albumInfo']['areaList']]
-		area='/'.join(playFrom)
-		playFrom=[v['name'] for v in jo['albumInfo']['actorList']]#问题
-		act='/'.join(playFrom)
-		playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
-		dir='/'.join(playFrom)
-		cont=jo['albumInfo']['intro']
+		#playFrom=[v for v in jo['albumInfo']['areaList']]
+		area=''#'/'.join(playFrom)
+		#playFrom=[v['name'] for v in jo['albumInfo']['actorList']]#问题
+		act=''#'/'.join(playFrom)
+		#playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
+		dir=''#'/'.join(playFrom)
+		cont=''#jo['albumInfo']['intro']
 		vod = {
 			"vod_id": aid,
 			"vod_name": title,

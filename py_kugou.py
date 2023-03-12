@@ -75,22 +75,17 @@ class Spider(Spider):
 		pic=aid[2]
 		vodItems = [title+"$"+url]
 		typeName=aid[4]
-		year=''
-		act=aid[3]
-		dir=''
-		area=''
-		cont=''
 		vod = {
 			"vod_id": array[0],
 			"vod_name": title,
 			"vod_pic": pic,
 			"type_name": typeName,
-			"vod_year": year,
-			"vod_area": area,
+			"vod_year": '',
+			"vod_area": '',
 			"vod_remarks": "",
-			"vod_actor":  act,
-			"vod_director": dir,
-			"vod_content": cont
+			"vod_actor":  '',
+			"vod_director": '',
+			"vod_content": ''
 		}
 		vod['vod_play_from'] = '酷狗'
 		vod['vod_play_url'] = "#".join(vodItems)
