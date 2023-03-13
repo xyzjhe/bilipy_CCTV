@@ -113,8 +113,7 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=1
-		Url='https://www.kugou.com/mv/64p0h18/
-'
+		Url='https://www.kugou.com/mv/64p0h18/'
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
