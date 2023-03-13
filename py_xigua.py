@@ -78,16 +78,14 @@ class Spider(Spider):
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
 		html=rsp.text
-		playFrom = []
 		videoList=[]
-		vodItems = []
+		
 		jRoot = json.loads(html)
 		if jRoot['code']!=200:
 			return result
 		jo = jRoot['data']
 		jsonList=jo['playlist']
-		for value in jsonList:
-			vodItems.append(value['title']+"$"+value['shareUrl'])
+		vodItems = self.get_EpisodesList(jsonList=jsonList)
 		title=aid[1]
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
