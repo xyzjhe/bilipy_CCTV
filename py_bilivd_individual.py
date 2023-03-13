@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             self.getCookie()
         if self.login is True:
             cateManual = {
-                "频道1": "频道",
+                "频道2": "频道",
                 "动态": "动态",
                 "关注的pu主": "pu主",
                 "热门": "热门",
@@ -155,7 +155,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         if int(pg) > 50:
             return result
         videos = []
-        vmid='321534564'#get_userid
+        vmid=get_userid()
         for i in range(0,1):
             url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention'.format(pg,vmid)
             rsp = self.fetch(url,cookies=self.getCookie())
@@ -670,7 +670,6 @@ class Spider(Spider):  # 元类 默认的元类 type
                     result = self.get_Url_pu(idTxt=id)
         except Exception as e:
                     print(e)
-      
         if result=={}:
             url='https://m.bilibili.com/video/{0}'.format(mark)
             header= {

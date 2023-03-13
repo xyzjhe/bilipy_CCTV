@@ -70,7 +70,7 @@ class Spider(Spider):
 
 	def detailContent(self,array):
 		aid = array[0].split('###')
-		idUrl=aid[1]
+		url=aid[1]
 		title=aid[0]
 		pic=aid[2]
 		vodItems = [title+"$"+url]
