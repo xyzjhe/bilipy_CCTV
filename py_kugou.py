@@ -113,7 +113,7 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=1
-		Url='https://www.kugou.com/mv/64p0h18.html'
+		Url='https://m.kugou.com/mv/index.php?hash=68C69D60B1F3FDCEC80B715BF63908D1&from=message&isappinstalled=1'
 		headers = {
 		"User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
 		}
