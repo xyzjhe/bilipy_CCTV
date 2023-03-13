@@ -87,8 +87,7 @@ class Spider(Spider):
 		jo = jRoot['data']
 		jsonList=jo['playlist']
 		for value in jsonList:
-			videoList.append(value['title']+"$"+value['shareUrl'])
-		vod_play_url = "$$$".join(videoList)
+			vodItems.append(value['title']+"$"+value['shareUrl'])
 		title=jo['albumInfo']['title']
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
@@ -104,16 +103,16 @@ class Spider(Spider):
 			"vod_id": aid,
 			"vod_name": title,
 			"vod_pic": pic,
-			"type_name": typeName,
-			"vod_year": year,
-			"vod_area": area,
+			"type_name": '',
+			"vod_year": '',
+			"vod_area": '',
 			"vod_remarks": '',
-			"vod_actor": act,
-			"vod_director": dir,
-			"vod_content": cont
+			"vod_actor": '',
+			"vod_director": '',
+			"vod_content": ''
 		}
 		vod['vod_play_from'] = '西瓜'
-		vod['vod_play_url'] = vod_play_url
+		vod['vod_play_url'] = "#".join(vodItems)
 		result = {
 			'list': [
 				vod
