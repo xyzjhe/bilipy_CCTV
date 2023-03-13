@@ -156,25 +156,24 @@ class Spider(Spider):  # 元类 默认的元类 type
             return result
         videos = []
         vmid=self.userid
-        for i in range(0,1):
-            url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention'.format(pg,vmid)
-            rsp = self.fetch(url,cookies=self.getCookie())
-            content = rsp.text
-            jo = json.loads(content)
-            if jo['code'] == 0:
-                vodList = jo['data']['list']
-                for vod in vodList:
-                    aid = str(vod['mid']).strip()
-                    title = vod['uname'].strip()
-                    img = vod['face'].strip()
-                    remark = str(vod['sign']).strip()
-                    desc=str(vod['official_verify']['desc']).strip()
-                    videos.append({
-                        "vod_id":title+"###"+aid+"###"+img+"###"+desc+"###"+remark,
-                        "vod_name":title,
-                        "vod_pic":img,
-                        "vod_remarks":remark
-                    })
+        url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention'.format(pg,vmid)
+        rsp = self.fetch(url,cookies=self.getCookie())
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] == 0:
+            vodList = jo['data']['list']
+            for vod in vodList:
+                aid = str(vod['mid']).strip()
+                title = vod['uname'].strip()
+                img = vod['face'].strip()
+                remark = str(vod['sign']).strip()
+                desc=str(vod['official_verify']['desc']).strip()
+                videos.append({
+                    "vod_id":title+"###"+aid+"###"+img+"###"+desc+"###"+remark,
+                    "vod_name":title,
+                    "vod_pic":img,
+                    "vod_remarks":remark
+                })
         numvL = len(videos)
         result['list'] = videos
         result['page'] = pg
