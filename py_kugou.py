@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"新歌推荐2": "9",
+			"新歌推荐3": "9",
 			"华语精选": "13",
 			"日韩精选": "17",
 			"欧美精选": "16"
@@ -113,7 +113,7 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=1
-		Url='https://www.kugou.com/mv/64p0h18/'
+		Url='https://www.kugou.com/mv/64p0h18.html'
 		headers = {
 		"User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
 		}
