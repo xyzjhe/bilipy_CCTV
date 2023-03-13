@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"新歌推荐1": "9",
+			"新歌推荐2": "9",
 			"华语精选": "13",
 			"日韩精选": "17",
 			"欧美精选": "16"
@@ -114,10 +114,13 @@ class Spider(Spider):
 		result = {}
 		parse=1
 		Url='https://www.kugou.com/mv/64p0h18/'
-		result["parse"] = parse
+		headers = {
+		"User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+		}
+		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = Url
-		result["header"] = ''
+		result["header"] = headers
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt=""
@@ -189,7 +192,7 @@ class Spider(Spider):
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
 		'Host': 'www.kugou.com',
-		"Referer": "https://www.kugou.com/"}
-
+		"Referer": "https://www.kugou.com/"
+		}
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
