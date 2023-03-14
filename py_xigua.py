@@ -80,12 +80,7 @@ class Spider(Spider):
 		html=rsp.text
 		videoList=[]
 		
-		jRoot = json.loads(html)
-		if jRoot['code']!=200:
-			return result
-		jo = jRoot['data']
-		jsonList=jo['playlist']
-		vodItems = self.get_EpisodesList(jsonList=jsonList)
+		vodItems = []
 		title=aid[1]
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
