@@ -85,8 +85,10 @@ class Spider(Spider):
 			return result
 		jo = jRoot['data']
 		jsonList=jo['playlist']
-		videoList=self.get_EpisodesList(jsonList=jsonList)
-			
+		if len(jsonList)>0:
+			videoList=self.get_EpisodesList(jsonList=jsonList)
+		else:
+			vodItems = [title+"$"+"https://www.ixigua.com/"+key]
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
 		year=''
