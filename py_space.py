@@ -91,7 +91,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		vipFlags=1
 		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = id
