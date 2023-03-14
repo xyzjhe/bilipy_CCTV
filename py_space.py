@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"个人收藏": "Collection"
+			"个人收藏1": "Collection"
 		}
 		classes = []
 		for k in cateManual:
