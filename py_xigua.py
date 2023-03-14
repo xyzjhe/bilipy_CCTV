@@ -75,11 +75,11 @@ class Spider(Spider):
 		aid = array[0].split('###')
 		key=aid[2]
 		pic=aid[3]
-		
+		title=aid[1]
 		videoList=[]
 		
-		vodItems = [title+"$"+url]
-		title=aid[1]
+		vodItems = [title+"$"+key]
+		
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
 		year=''
