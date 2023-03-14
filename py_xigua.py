@@ -76,7 +76,7 @@ class Spider(Spider):
 		key=aid[2]
 		pic=aid[3]
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
-		rsp = self.fetch(Url,headers=self.header)
+		rsp = self.fetch('https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname1.json',headers=self.header)
 		html=rsp.text
 		videoList=[]
 		
