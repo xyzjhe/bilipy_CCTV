@@ -97,6 +97,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = id
+		result['jx'] = 1
 		result["header"] = headers	
 		return result
 	def get_list(self,html):
