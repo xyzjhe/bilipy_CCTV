@@ -91,7 +91,7 @@ class Spider(Spider):
 		dir=''#'/'.join(playFrom)
 		cont=''#jo['albumInfo']['intro']
 		vod = {
-			"vod_id": aid,
+			"vod_id": array[0],
 			"vod_name": title,
 			"vod_pic": pic,
 			"type_name": '',
