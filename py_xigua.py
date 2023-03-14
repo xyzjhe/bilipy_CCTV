@@ -73,8 +73,8 @@ class Spider(Spider):
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		key=''#aid[2]
-		pic=''#aid[3]
+		key=aid[2]
+		pic=aid[3]
 		title=aid[1]
 		videoList=[]
 		
