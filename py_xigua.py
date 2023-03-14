@@ -78,7 +78,7 @@ class Spider(Spider):
 		
 		videoList=[]
 		
-		vodItems = []
+		vodItems = [title+"$"+url]
 		title=aid[1]
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
