@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"新歌推荐3": "9",
+			"新歌推荐4": "9",
 			"华语精选": "13",
 			"日韩精选": "17",
 			"欧美精选": "16"
@@ -113,14 +113,14 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=1
-		Url='https://m.kugou.com/mv/index.php?hash=68C69D60B1F3FDCEC80B715BF63908D1&from=message&isappinstalled=1'
+		Url=id
 		headers = {
 		"User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
 		}
 		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = Url
-		result["header"] = headers
+		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt=""
