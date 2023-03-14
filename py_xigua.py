@@ -77,9 +77,16 @@ class Spider(Spider):
 		pic=aid[3]
 		title=aid[1]
 		videoList=[]
-		
-		vodItems = [title+"$"+key]
-		
+		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt=rsp.text
+		jRoot = json.loads(htmlTxt)
+		if jRoot['code']!=200:
+			return result
+		jo = jRoot['data']
+		jsonList=jo['playlist']
+		videoList=get_EpisodesList(jsonList=jsonList)
+			
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
 		year=''
@@ -103,7 +110,7 @@ class Spider(Spider):
 			"vod_content": ''
 		}
 		vod['vod_play_from'] = '西瓜'
-		vod['vod_play_url'] = "#".join(vodItems)
+		vod['vod_play_url'] = "#".join(videoList)
 		result = {
 			'list': [
 				vod
