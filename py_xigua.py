@@ -85,7 +85,7 @@ class Spider(Spider):
 			return result
 		jo = jRoot['data']
 		jsonList=jo['playlist']
-		videoList=get_EpisodesList(jsonList=jsonList)
+		videoList=self.get_EpisodesList(jsonList=jsonList)
 			
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
