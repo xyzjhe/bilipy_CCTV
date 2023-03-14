@@ -91,9 +91,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
+		vipFlags=1
 		result["parse"] = 1
-		result["playUrl"] = id
-		result["url"] = ''
+		result["playUrl"] = ''
+		result["url"] = id
 		result["header"] = ''	
 	def get_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
