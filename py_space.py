@@ -98,6 +98,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["playUrl"] = ''
 		result["url"] = id
 		result["header"] = headers	
+		return result
 	def get_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
