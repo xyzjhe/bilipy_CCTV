@@ -75,9 +75,7 @@ class Spider(Spider):
 		aid = array[0].split('###')
 		key=aid[2]
 		pic=aid[3]
-		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
-		rsp = self.fetch('https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Noname1.json',headers=self.header)
-		html=rsp.text
+		
 		videoList=[]
 		
 		vodItems = []
