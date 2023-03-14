@@ -133,7 +133,7 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		result["parse"] = 0
+		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = id
 		result["header"] = ''
