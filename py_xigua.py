@@ -80,15 +80,21 @@ class Spider(Spider):
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt=rsp.text
+		b=true
 		jRoot = json.loads(htmlTxt)
-		if jRoot['code']!=200:
-			return result
-		jo = jRoot['data']
-		jsonList=jo['playlist']
-		if len(jsonList)>0:
-			videoList=self.get_EpisodesList(jsonList=jsonList)
+		if jRoot['code']!=200 :
+			b=false
+		if b==true:
+			try:
+				jo = jRoot['data']
+				jsonList=jo['playlist']
+				videoList=self.get_EpisodesList(jsonList=jsonList)
+			except Exception as e:
+				vodItems = [title+"$"+"https://www.ixigua.com/"+key]
 		else:
 			vodItems = [title+"$"+"https://www.ixigua.com/"+key]
+		
+		
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
 		year=''

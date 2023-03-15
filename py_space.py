@@ -94,12 +94,27 @@ class Spider(Spider):  # 元类 默认的元类 type
 		headers = {
 			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
 		}
+		jx=self.ifJx(urlTxt=id)
 		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = id
-		result['jx'] = 1
+		result['jx'] = jx#VIP解析
 		result["header"] = headers	
 		return result
+	def ifJx(self,urlTxt):
+		Isjiexi=0
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|xigua.com)'
+		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1):
+			Isjiexi=1
+		return Isjiexi
+	def get_RegexGetText(self,Text,RegexText,Index):
+		returnTxt=""
+		Regex=re.search(RegexText, Text, re.M|re.S)
+		if Regex is None:
+			returnTxt=""
+		else:
+			returnTxt=Regex.group(Index)
+		return returnTxt	
 	def get_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
