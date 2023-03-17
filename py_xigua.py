@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"收藏2":"collect",
+			"收藏3":"collect",
 			"观看历史":"history"
 
 		}
@@ -88,10 +88,11 @@ class Spider(Spider):
 			try:
 				jo = jRoot['data']
 				jsonList=jo['playlist']
-				videoList=self.get_EpisodesList(jsonList=jsonList)
+				if jsonList Is not None:
+					videoList=self.get_EpisodesList(jsonList=jsonList)
 			except Exception as e:
-				vodItems = [title+"$"+"https://www.ixigua.com/"+key]
-		else:
+				pass
+		if len(vodItems)<1:
 			vodItems = [title+"$"+"https://www.ixigua.com/"+key]
 		
 		
