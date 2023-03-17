@@ -48,7 +48,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		videos=[]
-		if tid=='new':
+		if tid=='new' and int(pg)>1:
 			return result
 		url='https://www.panghuys.com/vodshow/{0}/page/{1}.html'.format(tid,pg)
 		if tid=='new':
@@ -176,6 +176,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 			circuit.append(Txt[origin:end])
 			origin=Txt.find(mark,end)
 		return circuit
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
 	config = {
 		"player": {},
 		"filter": {}
