@@ -48,7 +48,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		videos=[]
-		if tid=='new' and int(pg)>1:
+		if tid=='new':
 			return result
 		url='https://www.panghuys.com/vodshow/{0}/page/{1}.html'.format(tid,pg)
 		if tid=='new':
