@@ -54,7 +54,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if tid=='new':
 			url='https://www.panghuys.com/label/new.html'
 		rsp = self.fetch(url,headers=self.header)
-		videos = self.get_list(html=rsp.text)
+		htmlTxt=rsp.text
+		videos = self.get_list(html=htmlTxt)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a\shref="/vodshow/[0-9]/page/([0-9]+?).html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
