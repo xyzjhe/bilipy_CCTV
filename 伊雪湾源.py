@@ -131,7 +131,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
 		if len(m3u8Line)>0:
 			Url=m3u8Line[0].replace("/","")
-			parse=0 if Url.find('.m3u8')>1 else 1
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
