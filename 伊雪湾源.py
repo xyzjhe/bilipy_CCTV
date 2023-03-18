@@ -126,7 +126,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		parse=1
 		Url='https://www.panghuys.com{0}'.format(id)
-		rsp = self.fetch(Url)
+		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
 		if len(m3u8Line)>0:
