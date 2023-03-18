@@ -194,16 +194,6 @@
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
     },
     {
-	"key": "csp_auete",
-	"name": "👨‍🌾auete影视(xBPQ)",
-	"type": 3,
-	"api": "csp_xBPQ",
-	"searchable": 0,
-	"quickSearch": 0,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Auete影视.json"
-    },
-    {
 	"key": "py_ktkkt",
 	"name": "卡通站(PY)",
 	"type": 3,
@@ -211,7 +201,7 @@
 	"searchable": 1,
 	"quickSearch": 1,
 	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt2.py"
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
     },
     {
 	"key": "csp_Nmys",

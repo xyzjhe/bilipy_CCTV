@@ -141,7 +141,9 @@ class Spider(Spider):
 		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
 		if len(m3u8Line)>0:
 			Url=m3u8Line[0].replace("/","")
-			parse=0 if Url.find('.m3u8')>1 else 1
+		if Url.find('.m3u8')<1:
+			parse=0
+			Url='http://www.dm88.me{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url

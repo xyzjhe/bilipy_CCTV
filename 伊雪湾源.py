@@ -82,7 +82,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		vodItems = []
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<div\sclass=".+?"\sdata-dropdown-value="(.+?)">',Index=1)
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'class="module-play-list">',after='</div>')
-		vod_play_from='$$$'.join([self.removeHtml(txt=t) for t in line])
 		for v in circuit:
 			ListRe=re.finditer('<a class="module-play-list-link" href="(?P<href>.+?)" title=".*?">(<span>){0,1}(?P<title>.+?)(</span>){0,1}</a>', v, re.M|re.S)
 			vodItems = []
@@ -90,18 +89,24 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vodItems.append(value.group('title')+"$"+value.group('href'))
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
+		vod_play_from='$$$'.join([self.removeHtml(txt=t) for t in line])
 		vod_play_url = "$$$".join(videoList)
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodshow/\d+?/class/.+?.html">(.+?)</a>',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a title="(\d{4})" href="/vodshow/\d+?/year/\d{4}.html">',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/phsch/director/.*?.html" target="_blank">(.*?)</a>',Index=1)
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：(.*?)更新：',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="module-info-introduction-content show-desc".*?>(.*?)</div>',Index=1)
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
-			"type_name":'',
-			"vod_year":"",
-			"vod_area":"",
+			"type_name":self.removeHtml(txt=typeName),
+			"vod_year":year,
+			"vod_area":'',
 			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_actor":self.removeHtml(txt=act),
+			"vod_director":self.removeHtml(txt=dir),
+			"vod_content":self.removeHtml(txt=cont)
 		}
 		vod['vod_play_from'] = vod_play_from
 		vod['vod_play_url'] =vod_play_url
@@ -119,13 +124,18 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		headers = {
-			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
-		}
-		result["parse"] = 1
+		parse=1
+		Url='https://www.panghuys.com{0}'.format(id)
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
+		if len(m3u8Line)>0:
+			Url=m3u8Line[0].replace("/","")
+			parse=0 if Url.find('.m3u8')>1 else 1
+		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = id
-		result["header"] = headers	
+		result["url"] = Url
+		result["header"] = ''
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0

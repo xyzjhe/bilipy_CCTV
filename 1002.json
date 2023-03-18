@@ -221,7 +221,7 @@
 		"searchable": 1,
 		"quickSearch": 1,
 		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt2.py"
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
     },
     {
 		"key": "py_kuke",
@@ -264,34 +264,24 @@
 		"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_cyys.py"
     },
     {
-	"key": "csp_auete",
-	"name": "👨‍🌾auete影视(xBPQ)",
-	"type": 3,
-	"api": "csp_xBPQ",
-	"searchable": 0,
-	"quickSearch": 0,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/Auete影视.json"
+		"key": "csp_webdillo",
+		"name": "👨‍🌾宝仙HD(xBPQ)",
+		"type": 3,
+		"api": "csp_xBPQ",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
     },
     {
-	"key": "csp_webdillo",
-	"name": "👨‍🌾宝仙HD(xBPQ)",
-	"type": 3,
-	"api": "csp_xBPQ",
-	"searchable": 1,
-	"quickSearch": 1,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
-    },
-    {
-	"key": "py_collect",
-	"name": "个人收藏",
-	"type": 3,
-	"api": "py_collect",
-	"searchable": 0,
-	"quickSearch": 0,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
+		"key": "py_collect",
+		"name": "个人收藏",
+		"type": 3,
+		"api": "py_collect",
+		"searchable": 0,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
     },
     {
 		"key": "py_webqq",
