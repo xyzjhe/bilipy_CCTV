@@ -41,8 +41,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
+		rsp = self.fetch('https://www.panghuys.com/',headers=self.header)
+		htmlTxt=rsp.text
+		videos = self.get_list(html=htmlTxt,patternTxt=r'<a\shref="(?P<url>/v/.{4,20}\.html)"\stitle="(?P<title>.+?)"\sclass=".+?"><div class=".+?"><div class=".+?">(.*?)</div><div class=".+?"><img\sclass=".+?"\sdata-original="(?P<img>.+?)"')
 		result = {
-			'list':[]
+			'list':videos
 		}
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
@@ -55,7 +58,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url='https://www.panghuys.com/label/new.html'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=htmlTxt,patternTxt=r'<a\shref="(?P<url>/v/.{4,20}\.html)"\stitle="(?P<title>.+?)"\sclass=".+?"><div class=".+?"><div class=".+?">(.*?)</div><div class=".+?"><img\sclass=".+?"\sdata-original="(?P<img>.+?)"')
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a\shref="/vodshow/[0-9]/page/([0-9]+?).html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
@@ -151,8 +154,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if Regex is not None:
 			returnTxt=Regex.group(Index)
 		return returnTxt	
-	def get_list(self,html):
-		patternTxt=r'<a\shref="(?P<url>/v/.{4,20}\.html)"\stitle="(?P<title>.+?)"\sclass=".+?"><div class=".+?"><div class=".+?">(.*?)</div><div class=".+?"><img\sclass=".+?"\sdata-original="(?P<img>.+?)"'
+	def get_list(self,html,patternTxt):
 		ListRe=re.finditer(patternTxt, html, re.M|re.S)
 		videos = []
 		i=0
