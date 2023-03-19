@@ -43,7 +43,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeVideoContent(self):
 		rsp = self.fetch('https://www.panghuys.com/',headers=self.header)
 		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt,patternTxt=r'<a\shref="(?P<url>/v/.{4,20}\.html)"\stitle="(?P<title>.+?)"\sclass=".+?"><div class=".+?"><div class=".+?">(.*?)</div><div class=".+?"><img\sclass=".+?"\sdata-original="(?P<img>.+?)"')
+		videos = self.get_list(html=htmlTxt,patternTxt=r'<a href="(?P<url>/v/.+?\.html)" title="(?P<title>.+?)" class=".*?"><div class=".*?"><div class=".*?">.*?</div><div class="module-item-pic"><img class=".*?" data-original="(?P<img>.+?)"')
 		result = {
 			'list':videos
 		}
@@ -121,8 +121,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 
 	def searchContent(self,key,quick):
+		Url='https://www.panghuys.com/phsch.html?wd={0}'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt=rsp.text
+		videos = self.get_list(html=htmlTxt,patternTxt=r'<a href="(?P<url>/v/.+?\.html)" class=".*?"><div class=".*?"><div class=".*?">.+?</div><div class=".*?"><img class=".*?" data-original="(?P<img>.+?)"\salt="(?P<title>.+?)"')
 		result = {
-			'list':[]
+			'list':videos
 		}
 		return result
 	def playerContent(self,flag,id,vipFlags):
