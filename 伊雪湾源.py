@@ -174,7 +174,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_id":"{0}###{1}###{2}".format(title,lastVideo,img),
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":vod.group(3)
+				"vod_remarks":''
 			})
 		return videos
 	def get_RegexGetTextLine(self,Text,RegexText,Index):
