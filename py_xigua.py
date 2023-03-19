@@ -77,22 +77,20 @@ class Spider(Spider):
 		pic=aid[3]
 		title=aid[1]
 		videoList=[]
+		jo=''
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt=rsp.text
 		b=true
 		jRoot = json.loads(htmlTxt)
-		if jRoot['code']!=200 :
+		if jRoot['code']!=200 or htmlTxt.find('playlist')<2:
 			b=false
 		if b==true:
-			try:
 				jo = jRoot['data']
 				jsonList=jo['playlist']
 				if jsonList Is not None:
 					videoList=self.get_EpisodesList(jsonList=jsonList)
-			except Exception as e:
-				pass
-		if len(vodItems)<1:
+		else:
 			vodItems = [title+"$"+"https://www.ixigua.com/"+key]
 		
 		
