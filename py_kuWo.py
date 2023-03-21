@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"首播1": "236682871",
+			"首播": "236682871",
 			"华语": "236682731",
 			"日韩": "236742444",
 			"欧美": "236682735",
@@ -46,11 +46,8 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('https://www.ktkkt2.com/')
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
 		result = {
-			'list': videos
+			'list': []
 		}
 		return result
 
@@ -103,10 +100,8 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		key=urllib.parse.quote(key)
-		Url='http://www.kuwo.cn/api/www/search/searchMvBykeyWord?key={0}&pn=1&rn=20&httpsStatus=1&reqId=4aa962c0-c633-11ed-a98b-415331bc6c4d'.format(key)
-		self.header['Referer']='http://www.kuwo.cn/search/mv?key='+key
-		rsp = self.fetch(Url,headers=self.header)
+		Url='https://www.ktkkt2.com/search.php?searchword={0}'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
