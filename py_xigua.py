@@ -77,6 +77,7 @@ class Spider(Spider):
 		pic=aid[3]
 		title=aid[1]
 		videoList=[]
+		typeName=''
 		jo=''
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
@@ -89,10 +90,10 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				videoList=self.get_EpisodesList(jsonList=jsonList)
+			playFrom=[v for v in jo['albumInfo']['tagList']]
+			typeName='/'.join(playFrom)
 		else:
-			videoList= [title+"$"+key]
-		#playFrom=[v for v in jo['albumInfo']['tagList']]
-		typeName=''#'/'.join(playFrom)
+			videoList= [title+"$https://www.ixigua.com/"+key]
 		year=''
 		#playFrom=[v for v in jo['albumInfo']['areaList']]
 		area=''#'/'.join(playFrom)
