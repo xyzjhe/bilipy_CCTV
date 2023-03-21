@@ -46,11 +46,8 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('https://www.ktkkt2.com/')
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
 		result = {
-			'list': videos
+			'list': []
 		}
 		return result
 
@@ -73,8 +70,10 @@ class Spider(Spider):
 		aid = array[0].split('###')
 		url=aid[1]
 		title=aid[0]
-		pic=aid[2]
+		pic=aid[3]
+		artist=aid[2]
 		vodItems = [title+"$"+'http://www.kuwo.cn/mvplay/'+url]
+		cont=
 		vod = {
 			"vod_id": array[0],
 			"vod_name": title,
@@ -83,11 +82,11 @@ class Spider(Spider):
 			"vod_year": '',
 			"vod_area": '',
 			"vod_remarks": "",
-			"vod_actor":  '',
+			"vod_actor": artist,
 			"vod_director": '',
 			"vod_content": ''
 		}
-		vod['vod_play_from'] = '酷狗'
+		vod['vod_play_from'] = '酷我'
 		vod['vod_play_url'] = "#".join(vodItems)
 
 		result = {
@@ -101,8 +100,10 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='https://www.ktkkt2.com/search.php?searchword={0}'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
+		key=urllib.parse.quote(key)
+		Url='http://www.kuwo.cn/api/www/search/searchMvBykeyWord?key={0}&pn=1&rn=20&httpsStatus=1&reqId=4aa962c0-c633-11ed-a98b-415331bc6c4d'.format(key)
+		self.header['Referer']='http://www.kuwo.cn/search/mv?key='+key
+		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -174,10 +175,11 @@ class Spider(Spider):
 			title =vod['name']
 			img =vod['pic']
 			remarks=vod['songTimeMinutes']
+			artist=vod['artist']
 			if len(title)==0:
 				continue
-			#标题###地址###封面
-			vod_id="{0}###{1}###{2}".format(title,url,img)
+			#标题###地址###作者###封面
+			od_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
