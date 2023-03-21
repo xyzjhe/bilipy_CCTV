@@ -90,7 +90,7 @@ class Spider(Spider):
 			if jsonList is not None:
 				videoList=self.get_EpisodesList(jsonList=jsonList)
 		else:
-			videoList= [title+"$"+url]
+			videoList= [title+"$"+key]
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
 		year=''
