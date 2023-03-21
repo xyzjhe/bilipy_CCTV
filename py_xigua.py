@@ -83,11 +83,11 @@ class Spider(Spider):
 		htmlTxt=rsp.text
 		b=true
 		jRoot = json.loads(htmlTxt)
-		if jRoot['code']!=200 or htmlTxt.find('playlist')<2:
+		if jRoot['code']!=200:
 			return result
 		jo = jRoot['data']
 		jsonList=jo['playlist']
-		if jsonList Is not None:
+		if jsonList is not None:
 			videoList=self.get_EpisodesList(jsonList=jsonList)
 		
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
