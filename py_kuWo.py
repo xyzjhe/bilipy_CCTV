@@ -115,10 +115,16 @@ class Spider(Spider):
 		result = {}
 		parse=1
 		Url=id
-		headers = {
-		"User-Agent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
-		}
-		result["parse"] = 1
+		self.header['Referer']='http://www.kuwo.cn'
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'src:"(http.+?mp4)"',Index=1)
+		if len(m3u8Line)>0:
+			Url=m3u8Line[0].replace('\\u002F',r'/')
+		if Url.find('.mp4')<1:
+			parse=0
+			Url=id
+		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
