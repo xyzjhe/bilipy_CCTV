@@ -234,32 +234,32 @@
 	"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duboku.json"
     },
     {
-      "key": "csp_Nkdy",
-      "name": "🎨南柯电影",
-      "type": 3,
-      "api": "csp_Nkdy",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+	"key": "csp_Nkdy",
+	"name": "🎨南柯电影",
+	"type": 3,
+	"api": "csp_Nkdy",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1
     },
     {
-      "key": "Kuaikan",
-      "name": "🦋快看影视",
-      "type": 3,
-      "api": "csp_Kuaikan",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+	"key": "Kuaikan",
+	"name": "🦋快看影视",
+	"type": 3,
+	"api": "csp_Kuaikan",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1
     },
     {
-      "key": "csp_xpath_789kp",
-      "name": "🎗️数字影院",
-      "type": 3,
-      "api": "csp_XPathMacFilter",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/789ba.json"
+	"key": "csp_xpath_789kp",
+	"name": "🎗️数字影院",
+	"type": 3,
+	"api": "csp_XPathMacFilter",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/789ba.json"
     },
     {
       "key": "csp_xBPQ_真不卡",
@@ -298,16 +298,6 @@
       "quickSearch": 0,
       "filterable": 1,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
-    },
-    {
-      "key": "csp_XBPQ极品影视",
-      "name": "🌻极品影视",
-      "type": 3,
-      "api": "csp_xBPQ",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/极品影视.json"
     },
     {
       "key": "py_czspp",

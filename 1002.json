@@ -294,39 +294,30 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/伊雪湾源.py"
     },
     {
-          "key": "csp_Nmys",
-          "name": "👨‍🌾农民影视",
-          "type": 3,
-          "api": "csp_Nmys",
-          "searchable": 1,
-          "quickSearch": 1,
-          "filterable": 1,
-          "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/Nmys.json"
+		"key": "csp_Nmys",
+		"name": "👨‍🌾农民影视",
+		"type": 3,
+		"api": "csp_Nmys",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1,
+		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/Nmys.json"
     },
     {
-      "key": "csp_xpath_独播库",
-      "name": "🐲独播库",
-      "type": 3,
-      "api": "csp_XPathMacFilter",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duboku.json"
+		"key": "csp_xpath_独播库",
+		"name": "🐲独播库",
+		"type": 3,
+		"api": "csp_XPathMacFilter",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1,
+		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duboku.json"
     },
     {
       "key": "csp_Nkdy",
       "name": "🎨南柯电影",
       "type": 3,
       "api": "csp_Nkdy",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
-    },
-    {
-      "key": "APPTT",
-      "name": "🗺️图图影视",
-      "type": 3,
-      "api": "csp_AppTT",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -387,16 +378,6 @@
       "quickSearch": 0,
       "filterable": 1,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
-    },
-    {
-      "key": "csp_XBPQ极品影视",
-      "name": "🌻极品影视",
-      "type": 3,
-      "api": "csp_xBPQ",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/极品影视.json"
     },
     {
       "key": "py_czspp",
