@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"收藏3":"collect",
+			"收藏4":"collect",
 			"观看历史":"history"
 
 		}
@@ -81,15 +81,16 @@ class Spider(Spider):
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt=rsp.text
-		b=true
 		jRoot = json.loads(htmlTxt)
 		if jRoot['code']!=200:
 			return result
-		jo = jRoot['data']
-		jsonList=jo['playlist']
-		if jsonList is not None:
-			videoList=self.get_EpisodesList(jsonList=jsonList)
-		
+		if htmlTxt.find('')>2:
+			jo = jRoot['data']
+			jsonList=jo['playlist']
+			if jsonList is not None:
+				videoList=self.get_EpisodesList(jsonList=jsonList)
+		else:
+			videoList= [title+"$"+url]
 		#playFrom=[v for v in jo['albumInfo']['tagList']]
 		typeName=''#'/'.join(playFrom)
 		year=''
