@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"首播": "236682871",
+			"首播1": "236682871",
 			"华语": "236682731",
 			"日韩": "236742444",
 			"欧美": "236682735",
