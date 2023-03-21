@@ -57,7 +57,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		url = 'http://www.kuwo.cn/api/www/music/mvList?pid={0}&pn={1}&rn=20'.format(tid,pg)
-		header['Referer']='http://www.kuwo.cn/mvs'
+		self.header['Referer']='http://www.kuwo.cn/mvs'
 		rsp = self.fetch(url,headers=self.header)
 		htmlTxt=rsp.text
 		videos = self.get_list(html=htmlTxt)
