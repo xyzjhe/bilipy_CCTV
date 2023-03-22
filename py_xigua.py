@@ -144,7 +144,7 @@ class Spider(Spider):
 		result["parse"] = 0
 		result["playUrl"] = ''
 		result["url"] = id
-		result["header"] = headers
+		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt=""
