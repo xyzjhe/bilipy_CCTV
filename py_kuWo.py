@@ -185,7 +185,7 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###作者###封面
-			od_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
+			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
