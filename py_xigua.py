@@ -93,7 +93,7 @@ class Spider(Spider):
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
 		else:
-			videoList= [title+"$https://www.ixigua.com/"+key]
+			videoList= [title+"$https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04".format(key)]
 		year=''
 		#playFrom=[v for v in jo['albumInfo']['areaList']]
 		area=''#'/'.join(playFrom)
