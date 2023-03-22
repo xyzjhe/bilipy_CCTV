@@ -102,8 +102,10 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='https://www.ktkkt2.com/search.php?searchword={0}'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
+		key=urllib.parse.quote(key)
+		Url='http://www.kuwo.cn/api/www/search/searchMvBykeyWord?key={0}&pn=1&rn=20&httpsStatus=1&reqId=4aa962c0-c633-11ed-a98b-415331bc6c4d'.format(key)
+		self.header['Referer']='http://www.kuwo.cn/search/mv?key='+key
+		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
