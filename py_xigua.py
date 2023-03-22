@@ -141,7 +141,7 @@ class Spider(Spider):
 		headers = {
 			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
 		}
-		result["parse"] = 1
+		result["parse"] = 0
 		result["playUrl"] = ''
 		result["url"] = id
 		result["header"] = headers
