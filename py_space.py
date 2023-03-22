@@ -103,7 +103,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|xigua.com)'
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
 		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1):
 			Isjiexi=1
 		return Isjiexi
