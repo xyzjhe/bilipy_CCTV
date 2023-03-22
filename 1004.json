@@ -36,12 +36,12 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_555.py"
     },
     {
-      "key": "py_kg",
-      "name": "Mv",
+      "key": "py_kuwo",
+      "name": "酷我Mv",
       "type": 3,
-      "api": "py_kg",
+      "api": "py_kuwo",
       "searchable": 1,
-      "quickSearch": 1,
+      "quickSearch": 0,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuWo.py"
     },

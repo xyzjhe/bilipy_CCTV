@@ -294,6 +294,16 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/伊雪湾源.py"
     },
     {
+		"key": "py_kuwo",
+		"name": "酷我Mv(PY)",
+		"type": 3,
+		"api": "py_kuwo",
+		"searchable": 1,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuWo.py"
+    },
+    {
 		"key": "csp_Nmys",
 		"name": "👨‍🌾农民影视",
 		"type": 3,
@@ -314,22 +324,22 @@
 		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duboku.json"
     },
     {
-      "key": "csp_Nkdy",
-      "name": "🎨南柯电影",
-      "type": 3,
-      "api": "csp_Nkdy",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+		"key": "csp_Nkdy",
+		"name": "🎨南柯电影",
+		"type": 3,
+		"api": "csp_Nkdy",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1
     },
     {
-      "key": "Kuaikan",
-      "name": "🦋快看影视",
-      "type": 3,
-      "api": "csp_Kuaikan",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+		"key": "Kuaikan",
+		"name": "🦋快看影视",
+		"type": 3,
+		"api": "csp_Kuaikan",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1
     },
     {
       "key": "csp_xpath_789kp",
