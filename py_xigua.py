@@ -227,7 +227,7 @@ class Spider(Spider):
 	def get_EpisodesList(self,jsonList):
 		vodItems=[]
 		for value in jsonList:
-			vodItems.append(value['title']+"$"+value['shareUrl'])
+			vodItems.append(value['title']+"$"+'https://www.ixigua.com/{0}'.format(value['episodeId']))
 		return vodItems
 	config = {
 		"player": {},
