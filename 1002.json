@@ -106,16 +106,8 @@
 		"quickSearch": 0,
 		"filterable": 1,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
-	},{
-		"key": "py_ikan",
-		"name": "🔥爱看影视(PY)",
-		"type": 3,
-		"api": "py_ikan",
-		"searchable": 0,
-		"quickSearch": 0,
-		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
-    },{
+	 },
+	 {
 		"key": "py_tqyb",
 		"name": "🔥天气预报(PY)",
 		"type": 3,
