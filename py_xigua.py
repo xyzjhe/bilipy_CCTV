@@ -24,8 +24,12 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"收藏5":"collect",
-			"观看历史":"history"
+			"电视剧":"dianshiju",
+			"电影":"dianying",
+			"动漫":"dongman",
+			"纪录片":"jilupian",
+			"少儿":"shaoer",
+			"综艺":"zongyi"
 
 		}
 		classes = []
@@ -50,22 +54,31 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		if int(pg)>1:
-			return result
-		url = ''
-		if tid=='history':#历史
-			url = 'https://www.ixigua.com/api/videov2/get/history?maxTime=1678090877&type=lvideo&count=4'
-		elif tid=='collect':#收藏
-			url = 'https://www.ixigua.com/api/videov2/get/favorite?maxTime=1678003966&type=all&count=12'
-		rsp = self.fetch(url,headers=self.header)
-		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt)
-		
-		
+		idTxt='电视剧'
+		url = 'https://www.ixigua.com/api/cinema/filterv2/albums'
+		if tid=='dianying':
+			idTxt='电影'
+		elif tid=='zongyi':
+			idTxt='综艺'
+		elif tid=='dianshiju':
+			idTxt='电视剧'
+		elif tid=='dongman':
+			idTxt='动漫'
+		elif tid=='jilupian':
+			idTxt='纪录片'
+		elif tid=='shaoer':
+			idTxt='少儿'	
+		offset=0 if int(pg)<2 else 18*int(pg)
+		self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
+		data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"全部资费"},"offset":'+str(offset)+',"limit":18}'
+		req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
+		response = request.urlopen(req)
+		urlTxt=response.read().decode('utf-8')
+		videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999
+		result['pagecount'] = pg if int(numvL)<17 else int(pg)+1
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
@@ -216,6 +229,40 @@ class Spider(Spider):
 		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
 		videos = res
 		return videos
+	def get_list_videoGroup_json(self,jsonTxt):
+		result={}
+		jRoot = json.loads(jsonTxt)
+		if jRoot['code']!=200:
+			return result
+		jo = jRoot['data']
+		vodList = jo['albumList']
+		if len(vodList)<1:
+			return result
+		videos=[]
+		img='_'
+		artist=''
+		for vod in vodList:
+			url =vod['albumId']
+			title =vod['title']
+			imgList =vod.get('coverList') 
+			if len(imgList)>0:
+				img=imgList[0]['url']
+			remarks=vod['subTitle']
+			artistList=vod.get('actorList') 
+			if artistList is not None:
+				artistList=artistList if len(artistList)<5 else artistList[0:4]
+				artist='/'.join(artistList)
+			if len(title)==0:
+				continue
+			#标题###地址###演员###封面
+			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
+			videos.append({
+				"vod_id":vod_id,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":remarks
+			})
+		return videos
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
 		origin=Txt.find(mark)
@@ -227,16 +274,21 @@ class Spider(Spider):
 	def get_EpisodesList(self,jsonList):
 		vodItems=[]
 		for value in jsonList:
-			vodItems.append(value['title']+"$"+'https://www.ixigua.com/{0}'.format(value['episodeId']))
+			vodItems.append(value['title']+"$"+'https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04'.format(value['episodeId']))
 		return vodItems
 	config = {
 		"player": {},
 		"filter": {}
 	}
 	header = {
-		"Referer": 'https://www.ixigua.com/',
-		'User-Agent':'User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-		'Cookie':'ttcid=cd196cbb0b844d559391fbb1cc90dbd350; __ac_nonce=06404494600b70f8a89b2; __ac_signature=_02B4Z6wo00f01MXq0BwAAIDBJBSBkSJFPQjFyNSAAFWEIDpvxjkTcANBTvMl0fMzITEkmmzddYvCCaE7.W0YLajEdH-JWf0lpAc5flpY14TgosM9tcYWPrDB2-cP0sv-pxR7n8N5FVw5ZJDef7; MONITOR_WEB_ID=45c3b6ab-7ad4-4805-b971-5962d1d6909a; s_v_web_id=verify_lev3h43l_rrTPrFDG_ztWQ_4ugg_8WBA_yGVYsXlVyoBh; passport_csrf_token=80e0efe90bc8bd6681a896dd90cd08cc; passport_csrf_token_default=80e0efe90bc8bd6681a896dd90cd08cc; odin_tt=91b5d4bd5b2c49b52a7eff16c14df7c66e509864a8ec7edd5612e67cbdd863ae7227ed4b95d66dbb65a3a427caf69fd7; sid_guard=54266b282adf9c8dbb69f9cc37342191%7C1678002757%7C3024000%7CSun%2C+09-Apr-2023+07%3A52%3A37+GMT; uid_tt=3c0e8cb286ad3de4d95252bb7d5e0fc6; uid_tt_ss=3c0e8cb286ad3de4d95252bb7d5e0fc6; sid_tt=54266b282adf9c8dbb69f9cc37342191; sessionid=54266b282adf9c8dbb69f9cc37342191; sessionid_ss=54266b282adf9c8dbb69f9cc37342191; sid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; ssid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; support_webp=true; support_avif=false; ttwid=1%7CCueNR-HU9tGVF30WaiFCjXDxh0FUXoXsZr-cIb9Dogg%7C1678003714%7C668bcb31fd4bbd27d96c2e9b8b54ee19d432e07e2dc29424ed7d4f565afbb72f; csrf_session_id=5bbbd0c6b4a64b19dc32694083983872; msToken=zneoThG9FFaRAzZIk88NksVv1_nOKubCtSbgADqPrvnQfGmRu3awlR-RqO_kdAauJffkdzGnSKGfatuHr_NDK5gVV559naHVVms0KBugXVh3pb7w6eaJPnt0LClhXL4=; tt_scid=dt.GJVugJWLpeXtGQtz6SCsIykASc.5FpVWCkR3J2nt-7Rr8igGA9UlwRtQlKKKf621b; ixigua-a-s=1'
+		"Cookie":"MONITOR_WEB_ID=45c3b6ab-7ad4-4805-b971-5962d1d6909a; s_v_web_id=verify_lev3h43l_rrTPrFDG_ztWQ_4ugg_8WBA_yGVYsXlVyoBh; passport_csrf_token=80e0efe90bc8bd6681a896dd90cd08cc; passport_csrf_token_default=80e0efe90bc8bd6681a896dd90cd08cc; sid_guard=54266b282adf9c8dbb69f9cc37342191%7C1678002757%7C3024000%7CSun%2C+09-Apr-2023+07%3A52%3A37+GMT; uid_tt=3c0e8cb286ad3de4d95252bb7d5e0fc6; uid_tt_ss=3c0e8cb286ad3de4d95252bb7d5e0fc6; sid_tt=54266b282adf9c8dbb69f9cc37342191; sessionid=54266b282adf9c8dbb69f9cc37342191; sessionid_ss=54266b282adf9c8dbb69f9cc37342191; sid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; ssid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; odin_tt=b9c6f308ba52ea67e84bbbb1024c5071bd43a8f9d3497ff8a336c5e8817236caad3e164515580da83f5a1e4a06a3fab0; __ac_signature=_02B4Z6wo00f01Ktz.lQAAIDBSo2v2RT8BmSrUfrAAE7L2ueb1h-CroqOkPYbaRIeEXRo4R54VWHBZuGMQa5lzlf.ijuXpSsSFdusaGnHj5Ro3JyJCPMcTlPk9Fzj0RPKPk3LCZJ1GmV34nYRe4; support_webp=true; support_avif=false; csrf_session_id=275ef26f7fdf33c95da9f03b9ac611a5; tt_scid=gUK2TRTHs4pYCo-hadXfF.Wjghm2O-.0Cyiy.DGfxytfVrUY-KptBB4prgcFsqqD97d6; ttwid=1%7CCueNR-HU9tGVF30WaiFCjXDxh0FUXoXsZr-cIb9Dogg%7C1679469911%7C2162c32be8a2a1eb373391fcb0d61ec0f684fc7f156dce997de6a4625c0608e8; msToken=e-9KuEl6xQfyp-QconAVI1oSUsTWd_zCP31LrWs8QzVZqlwb4q9PN2gVGAKcb3TWHGauqavlSZ5RNkdCSzHjRyUfrPAawZ5LKXDNZQFkVN6Oi_lnfAiSDPgs4q8Kf6Y7; ixigua-a-s=3",
+		"Referer": 'https://www.ixigua.com/cinema/filter/dianshiju/',
+		'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+		'Host': 'www.ixigua.com',
+		'Accept': 'application/json, text/plain, */*',
+		'x-secsdk-csrf-token': '000100000001db13c92a327d9db47823c4f782dc02c349c214e04ea5b3bc8054eec1bd6f816b174eacf8235b8e44',
+		'tt-anti-token': 'iL5itcx8Te-7529d0098c507a2182a34a68b46aaac6cb20382728cbc3083d40028ed01f5c8a',
+		'content-type': 'application/json'	
 	}
 
 	def localProxy(self,param):
