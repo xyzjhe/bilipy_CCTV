@@ -86,11 +86,18 @@ class Spider(Spider):
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		key=aid[2]
-		pic=aid[3]
-		title=aid[1]
+		key = aid[1]
+		title = aid[0]
+		act=aid[2]
+		logo = aid[3]
+		
+		if len(key)<4:
+			return result
 		videoList=[]
 		typeName=''
+		area=''
+		dir=''
+		cont=''
 		jo=''
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
@@ -102,30 +109,28 @@ class Spider(Spider):
 			jo = jRoot['data']
 			jsonList=jo['playlist']
 			if jsonList is not None:
-				videoList=self.get_EpisodesList(jsonList=jsonList)
+				for value in jsonList:
+					videoList.append(value['title']+"$"+'https://www.ixigua.com/{0}'.format(value['episodeId']))
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
+			playFrom=[v for v in jo['albumInfo']['areaList']]
+			area='/'.join(playFrom)
+			playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
+			dir='/'.join(playFrom)
+			cont=jo['albumInfo']['intro']
 		else:
 			videoList= [title+"$https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04".format(key)]
-		year=''
-		#playFrom=[v for v in jo['albumInfo']['areaList']]
-		area=''#'/'.join(playFrom)
-		#playFrom=[v['name'] for v in jo['albumInfo']['actorList']]#问题
-		act=''#'/'.join(playFrom)
-		#playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
-		dir=''#'/'.join(playFrom)
-		cont=''#jo['albumInfo']['intro']
 		vod = {
-			"vod_id": array[0],
-			"vod_name": title,
-			"vod_pic": pic,
-			"type_name": '',
-			"vod_year": '',
-			"vod_area": '',
-			"vod_remarks": '',
-			"vod_actor": '',
-			"vod_director": '',
-			"vod_content": ''
+			"vod_id":arrayt,
+			"vod_name":title,
+			"vod_pic":logo,
+			"type_name":typeName,
+			"vod_year":'',
+			"vod_area":area,
+			"vod_remarks":"",
+			"vod_actor":'',
+			"vod_director":dir,
+			"vod_content":cont
 		}
 		vod['vod_play_from'] = '西瓜'
 		vod['vod_play_url'] = "#".join(videoList)
@@ -240,7 +245,7 @@ class Spider(Spider):
 			return result
 		videos=[]
 		img='_'
-		artist=''
+		artist='_'
 		for vod in vodList:
 			url =vod['albumId']
 			title =vod['title']
