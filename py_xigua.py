@@ -90,18 +90,16 @@ class Spider(Spider):
 		title = aid[0]
 		act=aid[2]
 		logo = aid[3]
-		
 		if len(key)<4:
 			return result
-		videoList=[]
+		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt = rsp.text
 		typeName=''
 		area=''
 		dir=''
 		cont=''
-		jo=''
-		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
-		rsp = self.fetch(Url,headers=self.header)
-		htmlTxt=rsp.text
+		videoList=[]
 		if htmlTxt.find('playlist')>2:
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=200:
@@ -121,7 +119,7 @@ class Spider(Spider):
 		else:
 			videoList= [title+"$https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04".format(key)]
 		vod = {
-			"vod_id":arrayt,
+			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":typeName,
@@ -135,7 +133,7 @@ class Spider(Spider):
 		vod['vod_play_from'] = '西瓜'
 		vod['vod_play_url'] = "#".join(videoList)
 		result = {
-			'list': [
+			'list':[
 				vod
 			]
 		}
