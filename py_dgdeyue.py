@@ -85,7 +85,7 @@ class Spider(Spider):
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append('http://www.dgdeyue.com'+value[1]+"$"+value[0])
+				vodItems.append(value[1]+"$"+'http://www.dgdeyue.com'+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 
