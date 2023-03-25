@@ -135,16 +135,11 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		parse=0
+		parse=1
 		Url='http://www.dgdeyue.com{0}'.format(id)
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(\w+?)",',Index=1)
-		if len(m3u8Line)>0:
-			Url=m3u8Line[0].replace("/","")
 		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = Url
+		result["url"] = 'http://www.dgdeyue.com/edu255722-1-10.html'
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
