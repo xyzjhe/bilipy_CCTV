@@ -123,7 +123,8 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.dm88.me/search.asp?searchword={0}&submit='.format(urllib.parse.quote(key))
+		Url='http://www.dgdeyue.com/vodsearch{0}.html'.format(urllib.parse.quote(key))
+		#<a rel="nofollow"\sclass="myui-vodlist__thumb.+?"\shref="(.+?)"\stitle="(.+?)"\sdata-original="(.+?)">
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -134,16 +135,9 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		parse=1
+		parse=0
 		Url='http://www.dgdeyue.com{0}'.format(id)
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
-		if len(m3u8Line)>0:
-			Url=m3u8Line[0].replace("/","")
-		if Url.find('.m3u8')<1:
-			parse=0
-			Url='http://www.dgdeyue.com{0}'.format(id)
+		
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
