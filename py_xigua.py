@@ -156,6 +156,7 @@ class Spider(Spider):
 		return result
 
 	def playerContent(self,flag,id,vipFlags):
+		result={}
 		UrlId=id.split('_')
 		Url='https://www.ixigua.com/{0}'.format(UrlId[0])
 		jx=1 if UrlId[1]=='true' else 0
