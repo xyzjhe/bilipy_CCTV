@@ -108,7 +108,10 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					videoList.append(value['title']+"$"+'https://www.ixigua.com/{0}'.format(value['episodeId']))
+					vipControl=value['vipControl']
+					vip='true' if len(vipControl)>0 else 'false'
+					id="{0}${1}_{2}".format(value['title'],value['episodeId'],vip)
+					videoList.append(id)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
 			playFrom=[v for v in jo['albumInfo']['areaList']]
@@ -153,13 +156,14 @@ class Spider(Spider):
 		return result
 
 	def playerContent(self,flag,id,vipFlags):
-		result = {}
-		headers = {
-			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
-		}
-		result["parse"] = 1
+		UrlId=id.split('_')
+		Url='https://www.ixigua.com/{0}'.format(UrlId[0])
+		jx=1 if UrlId[1]=='true' else 0
+		parse=1 if jx=='1' else 0
+		result["parse"] = parse
+		result["jx"] = jx
 		result["playUrl"] = ''
-		result["url"] = id
+		result["url"] = Url
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
