@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影": "1",
+			"电影1": "1",
 			"电视剧": "2",
 			"综艺": "3",
 			"动漫": "4"
@@ -85,7 +85,7 @@ class Spider(Spider):
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append(value[1]+"$"+'http://www.dgdeyue.com'+value[0])
+				vodItems.append(value[1]+"$"+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 
@@ -136,8 +136,15 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=0
-		Url=id
-		
+		Url='http://www.dgdeyue.com{0}'.format(id)
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(\w+?)",',Index=1)
+		if len(m3u8Line)>0:
+			Url=m3u8Line[0].replace("/","")
+		if Url.find('.m3u8')<1:
+			parse=0
+			Url='http://www.dgdeyue.com{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
