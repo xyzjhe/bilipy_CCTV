@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电影1": "1",
+			"电影2": "1",
 			"电视剧": "2",
 			"综艺": "3",
 			"动漫": "4"
@@ -142,9 +142,6 @@ class Spider(Spider):
 		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(\w+?)",',Index=1)
 		if len(m3u8Line)>0:
 			Url=m3u8Line[0].replace("/","")
-		if Url.find('.m3u8')<1:
-			parse=0
-			Url='http://www.dgdeyue.com{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
