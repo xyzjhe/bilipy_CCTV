@@ -36,14 +36,14 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_555.py"
     },
     {
-      "key": "py_kuwo",
-      "name": "酷我Mv",
+      "key": "py_dgdeyue",
+      "name": "喝茶影视",
       "type": 3,
-      "api": "py_kuwo",
+      "api": "py_dgdeyue",
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuWo.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_dgdeyue.py"
     },
     {
       "key": "py_xigua",
