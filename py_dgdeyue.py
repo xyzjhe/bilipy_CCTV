@@ -139,7 +139,7 @@ class Spider(Spider):
 		Url='http://www.dgdeyue.com{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = 'http://www.dgdeyue.com/edu255722-1-10.html'
+		result["url"] = Url
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
