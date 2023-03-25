@@ -79,13 +79,13 @@ class Spider(Spider):
 		videoList=[]
 		vodItems = []
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="myui-content__list sort-list clearfix',after='</ul>')
-		playFrom=[t[1] for t in line]
+		playFrom=[t for t in line]
 		pattern = re.compile(r'href="(.+?)">(.+?)</a>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
 			vodItems = []
 			for value in ListRe:
-				vodItems.append(value[1]+"$"+value[0])
+				vodItems.append('http://www.dgdeyue.com'+value[1]+"$"+value[0])
 			joinStr = "#".join(vodItems)
 			videoList.append(joinStr)
 
@@ -136,7 +136,7 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		parse=0
-		Url='http://www.dgdeyue.com{0}'.format(id)
+		Url=id
 		
 		result["parse"] = parse
 		result["playUrl"] = ''
