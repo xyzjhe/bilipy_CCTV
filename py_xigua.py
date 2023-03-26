@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧":"dianshiju",
+			"电视剧1":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -165,7 +165,7 @@ class Spider(Spider):
 		result["parse"] = 1#0=直接播放,1=解析
 		result["playUrl"] = ''
 		result["url"] = Url
-		result['jx'] = 0#VIP解析
+		result['jx'] = 1#VIP解析
 		result["header"] =headers
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
