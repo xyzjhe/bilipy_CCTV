@@ -118,7 +118,7 @@ class Spider(Spider):
 			area='/'.join(playFrom)
 			playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
 			dir='/'.join(playFrom)
-			cont=jo['albumInfo']['intro']
+			cont=array[1]#jo['albumInfo']['intro']
 		else:
 			videoList= [title+"$https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04".format(key)]
 		vod = {
@@ -162,6 +162,7 @@ class Spider(Spider):
 		headers = {
 			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
 		}
+		jx=1 if UrlId[1]=='true' else 0
 		result["parse"] = 1#0=直接播放,1=解析
 		result["playUrl"] = ''
 		result["url"] = Url
