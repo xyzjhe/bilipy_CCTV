@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧2":"dianshiju",
+			"电视剧3":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -164,6 +164,7 @@ class Spider(Spider):
 			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
 		}
 		result["parse"] = 1
+		result["jx"] = 1
 		result["playUrl"] = ''
 		result["url"] = 'https://www.ixigua.com/6845542928715088391'
 		result["header"] =headers
