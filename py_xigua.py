@@ -110,7 +110,7 @@ class Spider(Spider):
 				for value in jsonList:
 					vipControl=value['vipControl']
 					vip='true' if len(vipControl)>0 else 'false'
-					id="{0}${1}_{2}".format(value['title'],value['episodeId'],vip)
+					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
 					videoList.append(id)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
@@ -163,7 +163,7 @@ class Spider(Spider):
 		headers = {
 			'User-Agent':'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36'
 		}
-		result["parse"] = 1
+		result["parse"] = 1#0=直接播放,1=解析
 		result["playUrl"] = ''
 		result["url"] = 'https://www.ixigua.com/6845527478388130312?id=6845542928715088391&logTag=82f4e8def3cd91e495c5'
 		result["header"] =headers
