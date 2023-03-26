@@ -165,7 +165,7 @@ class Spider(Spider):
 		result["parse"] = 1#0=直接播放,1=解析
 		result["playUrl"] = ''
 		result["url"] = Url
-		result['jx'] = 0#VIP解析
+		#result['jx'] = 0#VIP解析
 		result["header"] =headers
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
