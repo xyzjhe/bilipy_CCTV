@@ -118,7 +118,7 @@ class Spider(Spider):
 			area='/'.join(playFrom)
 			playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
 			dir='/'.join(playFrom)
-			cont=array[1]#jo['albumInfo']['intro']
+			cont=jo['albumInfo']['intro']
 		else:
 			videoList= [title+"$https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04".format(key)]
 		vod = {
