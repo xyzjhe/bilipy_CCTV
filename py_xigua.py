@@ -159,10 +159,9 @@ class Spider(Spider):
 		result={}
 		UrlId=id.split('_')
 		Url='https://www.ixigua.com/{0}'.format(UrlId[0])
-		jx=1 if UrlId[1]=='true' else 0
-		parse=1 if jx=='1' else 0
-		result["parse"] = parse
-		result["jx"] = jx
+		#jx=1 if UrlId[1]=='true' else 0
+		result["parse"] = 1
+		result["jx"] = 1
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
