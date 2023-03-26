@@ -165,7 +165,7 @@ class Spider(Spider):
 		}
 		result["parse"] = 1#0=直接播放,1=解析
 		result["playUrl"] = ''
-		result["url"] = 'https://www.ixigua.com/6845527478388130312?id=6845542928715088391&logTag=82f4e8def3cd91e495c5'
+		result["url"] = Url
 		result["header"] =headers
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
