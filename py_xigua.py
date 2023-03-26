@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧":"dianshiju",
+			"电视剧1":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -161,9 +161,8 @@ class Spider(Spider):
 		Url='https://www.ixigua.com/{0}'.format(UrlId[0])
 		#jx=1 if UrlId[1]=='true' else 0
 		result["parse"] = 1
-		result["jx"] = 1
 		result["playUrl"] = ''
-		result["url"] = Url
+		result["url"] = 'https://www.ixigua.com/6845542928715088391'
 		result["header"] = ''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
