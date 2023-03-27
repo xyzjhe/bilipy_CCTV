@@ -281,15 +281,6 @@
       "filterable": 1
     },
     {
-      "key": "小苹果",
-      "name": "🍏小苹果",
-      "type": 3,
-      "api": "csp_LiteApple",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
-    },
-    {
       "key": "搭配",
       "name": "💃多多搭配",
       "type": 3,
@@ -299,25 +290,7 @@
       "filterable": 1,
       "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
     },
-    {
-      "key": "py_czspp",
-      "name": "🏘️厂长(PY)",
-      "type": 3,
-      "api": "py_czspp",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/czspp2.py"
-    },
-    {
-      "key": "csp_CZSPP",
-      "name": "🏭厂长(SP)",
-      "type": 3,
-      "api": "csp_Czsapp",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
-    },
+    {,
     {
       "key": "csp_Ddys",
       "name": "🐞低端影视",

@@ -296,6 +296,16 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/伊雪湾源.py"
     },
     {
+		"key": "py_dgdeyue",
+		"name": "喝茶影视(PY)",
+		"type": 3,
+		"api": "py_dgdeyue",
+		"searchable": 1,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_dgdeyue.py"
+    },
+    {
 		"key": "py_kuwo",
 		"name": "酷我Mv(PY)",
 		"type": 3,
@@ -344,71 +354,43 @@
 		"filterable": 1
     },
     {
-      "key": "csp_xpath_789kp",
-      "name": "🎗️数字影院",
-      "type": 3,
-      "api": "csp_XPathMacFilter",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/789ba.json"
+		"key": "csp_xpath_789kp",
+		"name": "🎗️数字影院",
+		"type": 3,
+		"api": "csp_XPathMacFilter",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1,
+		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/789ba.json"
     },
     {
-      "key": "csp_xBPQ_真不卡",
-      "name": "🚀真不卡XB",
-      "type": 3,
-      "api": "csp_xBPQ",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/真不卡.json"
+		"key": "csp_xBPQ_真不卡",
+		"name": "🚀真不卡XB",
+		"type": 3,
+		"api": "csp_xBPQ",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1,
+		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/真不卡.json"
     },
     {
-      "key": "Lezhu_spider",
-      "name": "🐷乐猪影视",
-      "type": 3,
-      "api": "csp_Lezhu",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+		"key": "Lezhu_spider",
+		"name": "🐷乐猪影视",
+		"type": 3,
+		"api": "csp_Lezhu",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1
     },
     {
-      "key": "小苹果",
-      "name": "🍏小苹果",
-      "type": 3,
-      "api": "csp_LiteApple",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
-    },
-    {
-      "key": "搭配",
-      "name": "💃多多搭配",
-      "type": 3,
-      "api": "csp_Bili",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
-    },
-    {
-      "key": "py_czspp",
-      "name": "🏘️厂长(PY)",
-      "type": 3,
-      "api": "py_czspp",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/czspp2.py"
-    },
-    {
-      "key": "csp_CZSPP",
-      "name": "🏭厂长(SP)",
-      "type": 3,
-      "api": "csp_Czsapp",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+		"key": "搭配",
+		"name": "💃多多搭配",
+		"type": 3,
+		"api": "csp_Bili",
+		"searchable": 0,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
     },
     {
       "key": "csp_Ddys",
