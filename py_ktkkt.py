@@ -77,6 +77,8 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="#(playlist[1-9]{1,8})"\s*.+?=".+?">(.+?)</a>',Index=1)
+		if len(line)<1:
+			return  {'list': []}
 		circuit=[]
 		for i in line:
 			circuit.append(self.get_playlist(Text=htmlTxt,headStr='id="'+i[0],endStr="</div>"))

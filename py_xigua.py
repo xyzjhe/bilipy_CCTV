@@ -146,8 +146,8 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.ikmjw.com/ppyssearch.html?wd={0}&submit='.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
+		Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
 		result = {
@@ -209,35 +209,46 @@ class Spider(Spider):
 	def get_list(self,html):
 		result={}
 		jRoot = json.loads(html)
-		if jRoot['code']!=200:
+		if jRoot['code']!=0:
 			return result
-		jo = jRoot['data']['channelFeed']
-		vodList = jo['Data']
+		jo = jRoot['data']
+		if len(jo)<1:
+			return result
+		vodList = jo['data']
 		if len(vodList)<1:
 			return result
 		videos=[]
+		img='_'
+		artist='_'
 		for vod in vodList:
+			if vod['type']!='lvideo':
+				continue
 			data=vod['data']
-			if len(data)<1:
+			display=data['display']
+			title =display['name']
+			if len(title)==0:
 				continue
-			url =vod['key']
-			title =data['title']
-			img =vod['data'].get('image_url') 
-			maxTime=vod['maxTime']
-			if img is None:
-				img =data['coverList'][0].get('url')
-			if len(url) == 0:
-				continue
-			#maxTime###标题###地址###封面
-			vod_id="{0}###{1}###{2}###{3}".format(maxTime,title,url,img)
+			episode_link=display.get('episode_link')
+			asc_link=episode_link.get('asc_link')
+			KeyName='album_id'
+			if asc_link is None:
+				asc_link=episode_link.get('desc_link')
+				KeyName='album_id'
+			id=asc_link[0].get('album_id')
+			video_cover_info=display.get('video_cover_info')
+			img=video_cover_info['url'] if video_cover_info is not None else '_'
+			try:
+				artist=display['actor']
+			except Exception:
+				artist=''
+			remarks=display['rating']
+			vod_id="{0}###{1}###{2}###{3}".format(title,id,artist,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":''
+				"vod_remarks":remarks
 			})
-		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
-		videos = res
 		return videos
 	def get_list_videoGroup_json(self,jsonTxt):
 		result={}
