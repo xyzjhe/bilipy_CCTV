@@ -120,7 +120,7 @@ class Spider(Spider):
 			dir='/'.join(playFrom)
 			cont=jo['albumInfo']['intro']
 		else:
-			videoList= [title+"$https://www.ixigua.com/{0}?logTag=55abe18cfb733871bb04".format(key)]
+			videoList= [title+"${0}_{1}".format(key,'false')]
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -150,6 +150,10 @@ class Spider(Spider):
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
+		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt = rsp.text
+		videos.append(self.get_list_user(html=htmlTxt))
 		result = {
 				'list': videos
 			}
@@ -166,7 +170,7 @@ class Spider(Spider):
 		result["parse"] = 1#0=直接播放,1=解析
 		result["playUrl"] = ''
 		result["url"] = Url
-		result['jx'] = 1#VIP解析
+		result['jx'] = jx#VIP解析
 		result["header"] =''
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
@@ -235,6 +239,9 @@ class Spider(Spider):
 				asc_link=episode_link.get('desc_link')
 				KeyName='album_id'
 			id=asc_link[0].get('album_id')
+			sslocal=asc_link[0]['scheme_url']
+			if sslocal!=None and sslocal.find('sslocal:')<0:
+				continue
 			video_cover_info=display.get('video_cover_info')
 			img=video_cover_info['url'] if video_cover_info is not None else '_'
 			try:
@@ -249,6 +256,39 @@ class Spider(Spider):
 				"vod_pic":img,
 				"vod_remarks":remarks
 			})
+		return videos
+	def get_list_user(self,html):
+		result={}
+		jRoot = json.loads(html)
+		if jRoot['code']!=0:
+			return result
+		jo = jRoot['data']
+		if len(jo)<1:
+			return result
+		vodList = jo['data']
+		if len(vodList)<1:
+			return result
+		videos=[]
+		img='_'
+		artist='_'
+		for vod in vodList:
+			if vod['type']!='user':
+				continue
+			data=vod['data']
+			img=data['avatar']
+			title =data['name']
+			log_pb=json.loads(data.get('log_pb'))
+			user_auth_info=json.loads(data.get('user_auth_info'))
+			remarks=user_auth_info['auth_info']
+			id=log_pb.get('search_result_id')
+			vod_id="{0}###{1}###{2}###{3}###{4}".format(title,id,artist,img,'user')
+			videos.append({
+				"vod_id":vod_id,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":remarks
+			})
+			print(title)
 		return videos
 	def get_list_videoGroup_json(self,jsonTxt):
 		result={}
