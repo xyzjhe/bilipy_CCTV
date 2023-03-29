@@ -103,7 +103,17 @@ class Spider(Spider):
 		cont=''
 		vip='false'
 		videoList=[]
-		if htmlTxt.find('playlist')>2:
+		if len(aid)==5:
+			jRoot = json.loads(htmlTxt)
+			if jRoot['code']!=200:
+				return result
+			jo = jRoot['data']
+			jsonList=jo['videoList']
+			for value in jsonList:
+					id="{0}${1}_false".format(value['title'],value.get('group_id'))
+					videoList.append(id)
+			dir=title
+		elif htmlTxt.find('playlist')>2:
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=200:
 				return result
@@ -120,7 +130,7 @@ class Spider(Spider):
 			playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
 			dir='/'.join(playFrom)
 			cont=jo['albumInfo']['intro']
-		if len(videoList):
+		if len(videoList)<1:
 			return result
 		vod = {
 			"vod_id":array[0],
