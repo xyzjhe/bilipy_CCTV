@@ -128,6 +128,7 @@ class Spider(Spider):
 						vip='true' if label['text']=='会员' else 'false'
 					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
 					videoList.append(id)
+					print(vip)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
 			playFrom=[v for v in jo['albumInfo']['areaList']]
@@ -166,10 +167,10 @@ class Spider(Spider):
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
-		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url,headers=self.header)
-		htmlTxt = rsp.text
-		videos.extend(self.get_list_user(html=htmlTxt))
+		#Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
+		#rsp = self.fetch(Url,headers=self.header)
+		#htmlTxt = rsp.text
+		#videos.extend(self.get_list_user(html=htmlTxt))
 		result = {
 				'list': videos
 			}
