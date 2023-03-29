@@ -121,7 +121,6 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					 value in jsonList:
 					label=value.get('label')
 					if label is  None:
 						vip='false'
