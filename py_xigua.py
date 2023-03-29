@@ -93,14 +93,27 @@ class Spider(Spider):
 		if len(key)<4:
 			return result
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
+		if len(aid)==5:
+			Url='https://www.ixigua.com/api/videov2/author/new_video_list?to_user_id={0}'.format(key)
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		typeName=''
 		area=''
 		dir=''
 		cont=''
+		vip='false'
 		videoList=[]
-		if htmlTxt.find('playlist')>2:
+		if len(aid)==5:
+			jRoot = json.loads(htmlTxt)
+			if jRoot['code']!=200:
+				return result
+			jo = jRoot['data']
+			jsonList=jo['videoList']
+			for value in jsonList:
+					id="{0}${1}_false".format(value['title'],value.get('group_id'))
+					videoList.append(id)
+			dir=title
+		elif htmlTxt.find('playlist')>2:
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=200:
 				return result
@@ -108,8 +121,11 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					vipControl=value['vipControl']
-					vip='true' if len(vipControl)>0 else 'false'
+					label=value.get('label')
+					if label is  None:
+						vip='false'
+					else:
+						vip='true' if label['text']=='会员' else 'false'
 					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
 					videoList.append(id)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
@@ -119,8 +135,8 @@ class Spider(Spider):
 			playFrom=[v['name'] for v in jo['albumInfo']['directorList']]
 			dir='/'.join(playFrom)
 			cont=jo['albumInfo']['intro']
-		else:
-			videoList= [title+"${0}_{1}".format(key,'false')]
+		if len(videoList):
+			return result
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -153,7 +169,7 @@ class Spider(Spider):
 		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
-		videos.append(self.get_list_user(html=htmlTxt))
+		videos.extend(self.get_list_user(html=htmlTxt))
 		result = {
 				'list': videos
 			}
@@ -171,7 +187,7 @@ class Spider(Spider):
 		result["playUrl"] = ''
 		result["url"] = Url
 		result['jx'] = jx#VIP解析
-		result["header"] =''
+		result["header"] =headers
 		return result
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt=""

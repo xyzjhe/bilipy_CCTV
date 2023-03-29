@@ -76,14 +76,16 @@ class Spider(Spider):
 		url='http://www.meheme.com{0}'.format(idUrl)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'alt="(.+?)"\srel="nofollow"><i class=".+?">',Index=1)
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'class="active"\salt="(.+?)"\srel="nofollow">',Index=1)
+		if len(line)<1:
+			return result
 		playFrom = []
 		videoList=[]
 		vodItems = []
-		playFrom='无资源'
+		playFrom=['无资源']
 		if len(line)>0:
 			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
-			playFrom=[t for t in line]
+			playFrom=[self.removeHtml(txt=t) for t in line]
 			pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
 			for v in circuit:
 				ListRe=pattern.findall(v)
@@ -92,7 +94,7 @@ class Spider(Spider):
 					vodItems.append(value[1]+"$"+value[0])
 				joinStr = "#".join(vodItems)
 				videoList.append(joinStr)
-		
+
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
 		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
