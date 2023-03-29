@@ -121,14 +121,8 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					label=value.get('label')
-					if label is  None:
-						vip='false'
-					else:
-						vip='true' if label['text']=='会员' else 'false'
-					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
+					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],'true')
 					videoList.append(id)
-					print(vip)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
 			playFrom=[v for v in jo['albumInfo']['areaList']]
