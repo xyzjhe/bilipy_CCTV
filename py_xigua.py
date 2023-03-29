@@ -101,7 +101,6 @@ class Spider(Spider):
 		area=''
 		dir=''
 		cont=''
-		vip='false'
 		videoList=[]
 		if len(aid)==5:
 			jRoot = json.loads(htmlTxt)
@@ -121,12 +120,7 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					label=value.get('label')
-					if label is  None:
-						vip='false'
-					else:
-						vip='true' if label['text']=='会员' else 'false'
-					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
+					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],'true')
 					videoList.append(id)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
@@ -162,14 +156,14 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url,headers=self.header)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
-		#Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
+		#Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
 		#rsp = self.fetch(Url,headers=self.header)
 		#htmlTxt = rsp.text
-		#videos.extend(self.get_list_user(html=htmlTxt))
+		#videos = self.get_list(html=htmlTxt)
+		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt = rsp.text
+		videos=self.get_list_user(html=htmlTxt)
 		result = {
 				'list': videos
 			}
