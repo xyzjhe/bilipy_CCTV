@@ -70,13 +70,22 @@ class Spider(Spider):
 		elif tid=='shaoer':
 			idTxt='少儿'	
 		elif tid=='follow':
+			#idTxt=self.get_userid()
 			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format('100096175307')
-		videos=[]
 		
-		#idTxt=self.get_userid()
-		rsp = self.fetch(url,headers=self.header)
-		urlTxt=rsp.text
-		videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
+		videos=[]
+		if tid!='follow':
+			offset=0 if int(pg)<2 else 18*int(pg)
+			self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
+			data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"全部资费"},"offset":'+str(offset)+',"limit":18}'
+			req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
+			response = request.urlopen(req)
+			urlTxt=response.read().decode('utf-8')
+			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
+		else:
+			req = urllib.request.Request(url=url,headers=self.header)
+			urlTxt = urllib.request.urlopen(req).read().decode('utf-8')
+			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
