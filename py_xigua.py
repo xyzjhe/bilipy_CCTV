@@ -156,7 +156,6 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		'''
 		Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
@@ -166,7 +165,7 @@ class Spider(Spider):
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt1 = rsp.text
 		videos=self.get_list_user(html=htmlTxt1)
-		
+		'''
 		result = {
 				'list': videos
 			}
