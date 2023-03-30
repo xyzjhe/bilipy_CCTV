@@ -83,7 +83,7 @@ class Spider(Spider):
 			urlTxt=response.read().decode('utf-8')
 			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		else:
-			rsp=self.fetch('https://agit.ai/lanhaidixingren/Tvbox/src/branch/master/7.txt')
+			rsp=self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
 			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
 		numvL = len(videos)
@@ -344,7 +344,7 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###演员###封面
-			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img,'user')
+			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
@@ -374,7 +374,7 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###演员###封面
-			vod_id="{0}###{1}###{2}###{3}###{4}".format(title,url,artist,img)
+			vod_id="{0}###{1}###{2}###{3}###{4}".format(title,url,artist,img,'user')
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
