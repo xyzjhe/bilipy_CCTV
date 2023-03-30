@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧5":"dianshiju",
+			"电视剧":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -164,9 +164,6 @@ class Spider(Spider):
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos1=self.get_list_user(html=htmlTxt)
-		if len(videos1)>0:
-			for v in videos1:
-				videos.append(v)
 		result = {
 				'list': videos
 			}
