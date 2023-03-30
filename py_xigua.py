@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧4":"dianshiju",
+			"电视剧5":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -294,7 +294,6 @@ class Spider(Spider):
 				"vod_pic":img,
 				"vod_remarks":remarks
 			})
-			print(title)
 		return videos
 	def get_list_videoGroup_json(self,jsonTxt):
 		result={}
