@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧4":"dianshiju",
+			"电视剧5":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -83,7 +83,7 @@ class Spider(Spider):
 			urlTxt=response.read().decode('utf-8')
 			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		else:
-			rsp=self.fetch(url,headers=self.header)
+			rsp=self.fetch('https://agit.ai/lanhaidixingren/Tvbox/src/branch/master/7.txt')
 			urlTxt=rsp.text
 			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
 		numvL = len(videos)
