@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧":"dianshiju",
+			"电视剧1":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -101,6 +101,7 @@ class Spider(Spider):
 		area=''
 		dir=''
 		cont=''
+		vip='false'
 		videoList=[]
 		if len(aid)==5:
 			jRoot = json.loads(htmlTxt)
@@ -120,7 +121,12 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],'true')
+					label=value.get('label')
+					if label is  None:
+						vip='false'
+					else:
+						vip='true' if label['text']=='会员' else 'false'
+					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
 					videoList.append(id)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
 			typeName='/'.join(playFrom)
