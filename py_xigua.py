@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧2":"dianshiju",
+			"电视剧3":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -81,7 +81,7 @@ class Spider(Spider):
 			urlTxt=response.read().decode('utf-8')
 			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		else:
-			idTxt=self.get_userid()
+			#idTxt=self.get_userid()
 			rsp = self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
 			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
