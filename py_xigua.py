@@ -156,22 +156,14 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		txtLine=key.split('-')
-		way=1
-		videos=[]
-		if len(txtLine)==2:
-			way=0 if txtLine[1]=='-' else 1
-		if way==0:
-			Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
-			rsp = self.fetch(Url,headers=self.header)
-			htmlTxt = rsp.text
-			videos=self.get_list(html=htmlTxt)
-		else:
-			key=txtLine[0]
-			Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
-			rsp = self.fetch(Url,headers=self.header)
-			htmlTxt = rsp.text
-			videos=self.get_list_user(html=htmlTxt)
+		Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt = rsp.text
+		videos=self.get_list(html=htmlTxt)
+		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url,headers=self.header)
+		htmlTxt1 = rsp.text
+		videos=self.get_list_user(html=htmlTxt1)
 		result = {
 				'list': videos
 			}
