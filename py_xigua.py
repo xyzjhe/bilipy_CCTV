@@ -92,7 +92,12 @@ class Spider(Spider):
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
-
+	def get_userid():
+		Url='https://www.ixigua.com/'
+		rsp=self.fetch(Url,headers=self.header)
+		htmlTxt = rsp.text
+		userid= self.get_RegexGetText(Text=htmlTxt,RegexText=r'"identity":{"id":"(\d+?)",',Index=1)
+		return userid
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
