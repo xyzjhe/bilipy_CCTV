@@ -29,7 +29,8 @@ class Spider(Spider):
 			"动漫":"dongman",
 			"纪录片":"jilupian",
 			"少儿":"shaoer",
-			"综艺":"zongyi"
+			"综艺":"zongyi",
+			"关注":"follow"
 
 		}
 		classes = []
@@ -68,13 +69,22 @@ class Spider(Spider):
 			idTxt='纪录片'
 		elif tid=='shaoer':
 			idTxt='少儿'	
-		offset=0 if int(pg)<2 else 18*int(pg)
-		self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
-		data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"全部资费"},"offset":'+str(offset)+',"limit":18}'
-		req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
-		response = request.urlopen(req)
-		urlTxt=response.read().decode('utf-8')
-		videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
+		elif tid=='follow':
+			idTxt=get_userid()
+			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format(idTxt)
+		videos=[]
+		if tid!='follow':
+			offset=0 if int(pg)<2 else 18*int(pg)
+			self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
+			data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"全部资费"},"offset":'+str(offset)+',"limit":18}'
+			req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
+			response = request.urlopen(req)
+			urlTxt=response.read().decode('utf-8')
+			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
+		else:
+			rsp = self.fetch(url,headers=self.header)
+			urlTxt=rsp.text
+			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
@@ -101,7 +111,7 @@ class Spider(Spider):
 		area=''
 		dir=''
 		cont=''
-		vip='false'
+		vip='true'
 		videoList=[]
 		if len(aid)==5:
 			jRoot = json.loads(htmlTxt)
@@ -121,11 +131,6 @@ class Spider(Spider):
 			jsonList=jo['playlist']
 			if jsonList is not None:
 				for value in jsonList:
-					label=value.get('label')
-					if label is  None:
-						vip='false'
-					else:
-						vip='true' if label['text']=='会员' else 'false'
 					id="{0}${1}?id={2}_{3}".format(value['title'],value['albumId'],value['episodeId'],vip)
 					videoList.append(id)
 			playFrom=[v for v in jo['albumInfo']['tagList']]
@@ -333,7 +338,37 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###演员###封面
-			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
+			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img,'user')
+			videos.append({
+				"vod_id":vod_id,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":remarks
+			})
+		return videos
+	def get_list_videoGroup_follow_json(self,jsonTxt):
+		videos=[]
+		jRoot = json.loads(jsonTxt)
+		if jRoot['code']!=0:
+			return videos
+		jo = jRoot['data']
+		vodList=jo['data']
+		if len(vodList)<1:
+			return videos
+		img='_'
+		artist=''
+		for vod in vodList:
+			url =vod.get('user_id') 
+			print(url)
+			title =vod['name']
+			img =vod.get('avatar_url') 
+			remarks=vod['description']
+			artistList=vod.get('actorList') 
+			artist=title
+			if len(title)==0:
+				continue
+			#标题###地址###演员###封面
+			vod_id="{0}###{1}###{2}###{3}###{4}".format(title,url,artist,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
