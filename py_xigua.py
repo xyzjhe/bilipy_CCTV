@@ -70,7 +70,7 @@ class Spider(Spider):
 		elif tid=='shaoer':
 			idTxt='少儿'	
 		elif tid=='follow':
-			idTxt=get_userid()
+			idTxt=self.get_userid()
 			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format(idTxt)
 		videos=[]
 		if tid!='follow':
