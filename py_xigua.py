@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧3":"dianshiju",
+			"电视剧4":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -156,10 +156,7 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='https://www.ixigua.com/api/searchv2/lvideo/{0}/0'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url,headers=self.header)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		
 		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
