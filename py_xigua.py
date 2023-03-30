@@ -71,7 +71,7 @@ class Spider(Spider):
 			idTxt='少儿'	
 		elif tid=='follow':
 			idTxt=self.get_userid()
-			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format(idTxt)
+			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format('100096175307')
 		videos=[]
 		if tid!='follow':
 			offset=0 if int(pg)<2 else 18*int(pg)
