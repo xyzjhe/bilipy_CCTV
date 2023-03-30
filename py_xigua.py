@@ -160,10 +160,8 @@ class Spider(Spider):
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
 		videos=self.get_list(html=htmlTxt)
-		Url='https://www.ixigua.com/api/searchv2/user/{0}/10'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url,headers=self.header)
-		htmlTxt = rsp.text
-		videos1=self.get_list_user(html=htmlTxt)
+		
+		
 		result = {
 				'list': videos
 			}
