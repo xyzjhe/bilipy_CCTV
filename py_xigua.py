@@ -168,7 +168,7 @@ class Spider(Spider):
 			for v in videos1:
 				videos.append(v)
 		result = {
-				'list': videos1
+				'list': videos
 			}
 		return result
 
