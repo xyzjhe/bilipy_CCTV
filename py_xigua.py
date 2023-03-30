@@ -83,9 +83,8 @@ class Spider(Spider):
 			urlTxt=response.read().decode('utf-8')
 			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		else:
-			req = request.Request(url=url,headers=self.header, method='GET')
-			response = request.urlopen(req)
-			urlTxt=response.read().decode('utf-8')
+			rsp=self.fetch(url,headers=self.header)
+			urlTxt=rsp.text
 			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
 		numvL = len(videos)
 		result['list'] = videos
