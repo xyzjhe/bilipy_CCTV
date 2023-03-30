@@ -70,7 +70,6 @@ class Spider(Spider):
 		elif tid=='shaoer':
 			idTxt='少儿'	
 		elif tid=='follow':
-			idTxt=self.get_userid()
 			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format('100096175307')
 		videos=[]
 		if tid!='follow':
@@ -82,6 +81,7 @@ class Spider(Spider):
 			urlTxt=response.read().decode('utf-8')
 			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		else:
+			idTxt=self.get_userid()
 			rsp = self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
 			videos= self.get_list_videoGroup_follow_json(jsonTxt=urlTxt)
@@ -92,7 +92,7 @@ class Spider(Spider):
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
-	def get_userid():
+	def get_userid(self):
 		Url='https://www.ixigua.com/'
 		rsp=self.fetch(Url,headers=self.header)
 		htmlTxt = rsp.text
