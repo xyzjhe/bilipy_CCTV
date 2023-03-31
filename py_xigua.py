@@ -16,7 +16,7 @@ class Spider(Spider):
 	def getName(self):
 		return "西瓜视频(个人中心)"
 	def init(self,extend=""):
-		pass
+		self.userid=self.get_userid()
 	def isVideoFormat(self,url):
 		pass
 	def manualVideoCheck(self):
@@ -33,6 +33,8 @@ class Spider(Spider):
 			"关注":"follow"
 
 		}
+		if self.userid!='':
+			del cateManual['关注']
 		classes = []
 		for k in cateManual:
 			classes.append({
@@ -71,9 +73,8 @@ class Spider(Spider):
 		elif tid=='shaoer':
 			idTxt='少儿'	
 		elif tid=='follow':
-			self.userid=self.get_userid()
 			offset=0 if int(pg)<2 else 10*int(pg)
-			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc&sortType=desc&cursor={1}'.format('100096175307',offset)
+			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc&sortType=desc&cursor={1}'.format(self.userid,offset)
 			maximum=12
 		videos=[]
 		if tid!='follow':
@@ -367,7 +368,7 @@ class Spider(Spider):
 		artist=''
 		for vod in vodList:
 			url =vod.get('user_id') 
-			title =self.userid+"-"+vod['name']
+			title =vod['name']
 			img =vod.get('avatar_url') 
 			remarks=vod['description']
 			artistList=vod.get('actorList') 
