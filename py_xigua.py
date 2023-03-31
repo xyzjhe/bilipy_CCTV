@@ -56,6 +56,7 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		idTxt='电视剧'
+		maximum=17
 		url = 'https://www.ixigua.com/api/cinema/filterv2/albums'
 		if tid=='dianying':
 			idTxt='电影'
@@ -71,9 +72,9 @@ class Spider(Spider):
 			idTxt='少儿'	
 		elif tid=='follow':
 			#self.userid=self.get_userid()
-			#offset=0 if int(pg)<2 else 10*int(pg)
-			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format('100096175307')
-		
+			offset=0 if int(pg)<2 else 10*int(pg)
+			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc&sortType=desc&cursor={1}'.format('100096175307',offset)
+			maximum=12
 		videos=[]
 		if tid!='follow':
 			offset=0 if int(pg)<2 else 18*int(pg)
@@ -90,7 +91,7 @@ class Spider(Spider):
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = pg if int(numvL)<17 else int(pg)+1
+		result['pagecount'] = pg if int(numvL)<maximum else int(pg)+1
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
