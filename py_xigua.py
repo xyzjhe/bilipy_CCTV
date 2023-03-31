@@ -33,7 +33,7 @@ class Spider(Spider):
 			"关注":"follow"
 
 		}
-		if self.userid!='':
+		if self.userid=='':
 			del cateManual['关注']
 		classes = []
 		for k in cateManual:
