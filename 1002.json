@@ -99,7 +99,7 @@
          },
          {
 		"key": "py_xigua",
-		"name": "西瓜视频(PY,官)",
+		"name": "🍉西瓜视频(PY,官)",
 		"type": 3,
 		"api": "py_xigua",
 		"searchable": 0,
@@ -109,7 +109,7 @@
          },
 	 {
 		"key": "py_bilivd",
-		"name": "🔥B站个人中心(PY)",
+		"name": "🇧B站个人中心(PY)",
 		"type": 3,
 		"api": "py_bilivd",
 		"searchable": 1,
@@ -129,7 +129,7 @@
     },
     {
 		"key": "百度",
-		"name": "百度",
+		"name": "⛑百度",
 		"type": 1,
 		"api": "https://api.apibdzy.com/api.php/provide/vod/",
 		"searchable": 1,
@@ -152,7 +152,7 @@
     },
     {
 		"key": "快播",
-		"name": "快播",
+		"name": "⛑⛑快播",
 		"type": 1,
 		"api": "https://www.kuaibozy.com/api.php/provide/vod/",
 		"searchable": 1,
@@ -391,16 +391,6 @@
 		"quickSearch": 0,
 		"filterable": 1,
 		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
-    },
-    {
-      "key": "csp_Ddys",
-      "name": "🐞低端影视",
-      "type": 3,
-      "api": "csp_Dora",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "1cc92323700909e7d46623bc85b958d6"
     },
     {
       "key": "csp_剧荒",

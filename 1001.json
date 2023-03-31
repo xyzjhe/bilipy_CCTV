@@ -85,7 +85,7 @@
      {
 
 	"key": "py_ikmjw",
-	"name": "新视觉(PY)",
+	"name": "⛑⛑⛑新视觉(PY)",
 	"type": 3,
 	"api": "py_ikmjw",
 	"searchable": 1,
@@ -262,44 +262,33 @@
 	"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/789ba.json"
     },
     {
-      "key": "csp_xBPQ_真不卡",
-      "name": "🚀真不卡XB",
-      "type": 3,
-      "api": "csp_xBPQ",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/真不卡.json"
+	"key": "csp_xBPQ_真不卡",
+	"name": "🚀真不卡XB",
+	"type": 3,
+	"api": "csp_xBPQ",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1,
+	"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/真不卡.json"
     },
     {
-      "key": "Lezhu_spider",
-      "name": "🐷乐猪影视",
-      "type": 3,
-      "api": "csp_Lezhu",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+	"key": "Lezhu_spider",
+	"name": "🐷乐猪影视",
+	"type": 3,
+	"api": "csp_Lezhu",
+	"searchable": 1,
+	"quickSearch": 1,
+	"filterable": 1
     },
     {
-      "key": "搭配",
-      "name": "💃多多搭配",
-      "type": 3,
-      "api": "csp_Bili",
-      "searchable": 0,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
-    },
-    {,
-    {
-      "key": "csp_Ddys",
-      "name": "🐞低端影视",
-      "type": 3,
-      "api": "csp_Dora",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1,
-      "ext": "1cc92323700909e7d46623bc85b958d6"
+	"key": "搭配",
+	"name": "💃多多搭配",
+	"type": 3,
+	"api": "csp_Bili",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
     },
     {
       "key": "csp_剧荒",
