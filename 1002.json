@@ -152,7 +152,7 @@
     },
     {
 		"key": "快播",
-		"name": "⛑⛑快播",
+		"name": "🍛快播",
 		"type": 1,
 		"api": "https://www.kuaibozy.com/api.php/provide/vod/",
 		"searchable": 1,
