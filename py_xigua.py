@@ -24,7 +24,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧5":"dianshiju",
+			"电视剧":"dianshiju",
 			"电影":"dianying",
 			"动漫":"dongman",
 			"纪录片":"jilupian",
@@ -70,8 +70,9 @@ class Spider(Spider):
 		elif tid=='shaoer':
 			idTxt='少儿'	
 		elif tid=='follow':
-			#idTxt=self.get_userid()
-			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}&sortType=desc'.format('100096175307')
+			idTxt=self.get_userid()
+			offset=0 if int(pg)<2 else 10*int(pg)
+			url='https://www.ixigua.com/api/userv2/follow/list?authorId={0}}&sortType=desc&cursor={1}'.format(idTxt,offset)
 		
 		videos=[]
 		if tid!='follow':
