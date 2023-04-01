@@ -47,14 +47,11 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('http://www.ikmjw.com/')
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
 		result = {
-			'list': videos
+			'list': []
 		}
 		return result
-	userid='0'
+	userid=''
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		idTxt='电视剧'
