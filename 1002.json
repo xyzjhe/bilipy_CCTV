@@ -109,7 +109,7 @@
          },
 	 {
 		"key": "py_bilivd",
-		"name": "🇧B站个人中心(PY)",
+		"name": "🅱️B站个人中心(PY)",
 		"type": 3,
 		"api": "py_bilivd",
 		"searchable": 1,
@@ -152,7 +152,7 @@
     },
     {
 		"key": "快播",
-		"name": "🍛快播",
+		"name": "🗃快播",
 		"type": 1,
 		"api": "https://www.kuaibozy.com/api.php/provide/vod/",
 		"searchable": 1,
@@ -177,7 +177,7 @@
     },
     {
 		"key": "py_COKEMV",
-		"name": "COKEMV(PY)",
+		"name": "🀪COKEMV(PY)",
 		"type": 3,
 		"api": "py_COKEMV",
 		"searchable": 0,
@@ -393,10 +393,10 @@
 		"ext": "https://gitlab.com/duomv/duo/-/raw/main/json/duodapei.json"
     },
     {
-      "key": "csp_剧荒",
-      "name": "⛱️剧荒TV",
+      "key": "小苹果",
+      "name": "🍏小苹果",
       "type": 3,
-      "api": "csp_Juhuang",
+      "api": "csp_LiteApple",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
