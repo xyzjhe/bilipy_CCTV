@@ -77,6 +77,8 @@ class Spider(Spider):
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'data-dropdown-value="(.+?)"><span>.+?</span>',Index=1)
+		if len(line)<1:
+			return  {'list': []}
 		circuit=self.get_lineList(Txt=htmlTxt)
 		playFrom = []
 		videoList=[]
@@ -141,7 +143,7 @@ class Spider(Spider):
 			parse=0
 		if playUrl.count('https:')>1 and len(m3u8Line)>0:
 			playUrl=m3u8Line[0].replace("\\","")
-		if self.get_RegexGetText(Text=id,RegexText=r'-([0-9]{1,2})-[0-9]+?',Index=1)=='1':
+		if self.get_RegexGetText(Text=id,RegexText=r'-([0-9]{1,2})-[0-9]+?',Index=1)=='1' or playUrl.find('.m3u8')<1:
 			playUrl='https://cokemv.me{0}'.format(id)
 			parse=1
 		result["parse"] = parse
@@ -225,7 +227,8 @@ class Spider(Spider):
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
 		'Host': 'cokemv.me',
-		"Referer": "http://cokemv.me/"}
+		"Referer": "http://cokemv.me/"
+		}
 
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]

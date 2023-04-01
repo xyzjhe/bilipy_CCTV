@@ -43,7 +43,7 @@ class Spider(Spider):
 	def homeVideoContent(self):
 		rsp = self.fetch('http://www.dgdeyue.com/')
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt,patternTxt=r'class="myui-vodlist__thumb lazyload"\shref="(.+?)"\stitle="(.+?)"\sdata-original="(.+?)"')
+		videos = self.get_list(html=htmlTxt)
 		result = {
 			'list': videos
 		}
@@ -54,7 +54,7 @@ class Spider(Spider):
 		url = 'http://www.dgdeyue.com/xfenlei{0}-/page/{1}.html'.format(tid,pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt,patternTxt=r'class="myui-vodlist__thumb lazyload"\shref="(.+?)"\stitle="(.+?)"\sdata-original="(.+?)"')
+		videos = self.get_list(html=htmlTxt)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/fenlei\d*?-(\d+?).html">尾页</a>',Index=1)
 		if pag=="":
 			pag=999
@@ -75,11 +75,13 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'href="#playlist\d"\sdata-toggle="tab">(.+?)</a>',Index=1)
+		if len(line)<1:
+			return  {'list': []}
 		playFrom = []
 		videoList=[]
 		vodItems = []
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="myui-content__list sort-list clearfix',after='</ul>')
-		playFrom=[t for t in line]
+		playFrom=[t[1] for t in line]
 		pattern = re.compile(r'href="(.+?)">(.+?)</a>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
@@ -123,10 +125,10 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.dgdeyue.com/vodsearch{0}.html'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url,headers=self.header)
+		Url='http://www.dm88.me/search.asp?searchword={0}&submit='.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt,patternTxt=r'<a rel="nofollow"\sclass="myui-vodlist__thumb.+?"\shref="(.+?)"\stitle="(.+?)"\sdata-original="(.+?)">')
+		videos = self.get_list(html=htmlTxt)
 		result = {
 				'list': videos
 			}
@@ -134,16 +136,15 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		parse=0
+		parse=1
 		Url='http://www.dgdeyue.com{0}'.format(id)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(\w+?)",',Index=1)
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
 		if len(m3u8Line)>0:
-			Url=urllib.parse.unquote(str(base64.b64decode(m3u8Line[0])))
-			Url=self.get_RegexGetText(Text=Url,RegexText=r"b'(.+?)'",Index=1)
-		if Url.find('.m3u8')<2:
-			parse=1
+			Url=m3u8Line[0].replace("/","")
+		if Url.find('.m3u8')<1:
+			parse=0
 			Url='http://www.dgdeyue.com{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
@@ -178,8 +179,17 @@ class Spider(Spider):
 		soup = re.compile(r'<[^>]+>',re.S)
 		txt =soup.sub('', txt)
 		return txt.replace("&nbsp;"," ")
-	
-	def get_list(self,html,patternTxt):
+	def get_webReadFile(self,urlStr):
+		headers = {
+			'Referer':urlStr,
+			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
+			'Host': 'www.dm88.me'
+		}
+		req = urllib.request.Request(url=urlStr, headers=headers)
+		html = urllib.request.urlopen(req).read().decode('utf-8')
+		return html
+	def get_list(self,html):
+		patternTxt=r'class="myui-vodlist__thumb lazyload"\shref="(.+?)"\stitle="(.+?)"\sdata-original="(.+?)"'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []

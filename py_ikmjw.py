@@ -75,6 +75,8 @@ class Spider(Spider):
 		rsp = self.fetch(Url,headers=self.header)
 		htmlTxt=rsp.text	
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d+?)" data-toggle="tab" rel="nofollow">(.+?)</a>',Index=1)
+		if len(line)<1:
+			return  {'list': []}
 		playFrom = []
 		videoList=[]
 		vodItems = []

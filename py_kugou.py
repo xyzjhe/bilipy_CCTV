@@ -73,6 +73,7 @@ class Spider(Spider):
 		url=aid[1]
 		title=aid[0]
 		pic=aid[2]
+		actor=aid[3]
 		vodItems = [title+"$"+url]
 		typeName=aid[4]
 		vod = {
@@ -83,13 +84,12 @@ class Spider(Spider):
 			"vod_year": '',
 			"vod_area": '',
 			"vod_remarks": "",
-			"vod_actor":  '',
+			"vod_actor":  actor,
 			"vod_director": '',
 			"vod_content": ''
 		}
 		vod['vod_play_from'] = '酷狗'
 		vod['vod_play_url'] = "#".join(vodItems)
-
 		result = {
 			'list': [
 				vod
@@ -101,12 +101,8 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='https://www.ktkkt2.com/search.php?searchword={0}'.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
 		result = {
-				'list': videos
+				'list': []
 			}
 		return result
 
@@ -115,7 +111,6 @@ class Spider(Spider):
 		parse=1
 		Url=id
 		headers = {
-
 		"User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1"
 		}
 		result["parse"] = 1
