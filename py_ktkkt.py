@@ -139,7 +139,17 @@ class Spider(Spider):
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		Url='http://ktkkt.top{0}'.format(id)
-		result["parse"] = 1
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		parse=1
+		UrlStr=self.get_RegexGetText(Text=htmlTxt,RegexText=r'now=base64decode\("(.+?)"\)',Index=1)
+		UrlStr=str(base64.b64decode(UrlStr),'utf-8')
+		if UrlStr.find('.m3u8')<2:
+			Url='http://ktkkt.top{0}'.format(id)
+			parse=0
+		else:
+			Url=UrlStr
+		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
