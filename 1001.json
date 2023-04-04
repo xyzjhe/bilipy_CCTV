@@ -18,7 +18,7 @@
   "sites": [
      {
 	"key": "ks",
-	"name": "🌈快速启动(按菜单键选择站点)",
+	"name": "🏡快速启动(按菜单键选择站点)",
 	"api": "csp_SP360",
 	"type": 0,
 	"filterable": 0,
@@ -85,7 +85,7 @@
      {
 
 	"key": "py_ikmjw",
-	"name": "⛑⛑⛑新视觉(PY)",
+	"name": "🕵新视觉(PY)",
 	"type": 3,
 	"api": "py_ikmjw",
 	"searchable": 1,
@@ -94,18 +94,18 @@
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikmjw.py"
     },
     {
-	"key": "Bili",
-	"name": "🅱️B站",
+	"key": "py_bilivd",
+	"name": "🇧B站个人中心(PY)",
 	"type": 3,
-	"api": "csp_Bili",
+	"api": "py_bilivd",
 	"searchable": 1,
-	"quickSearch": 1,
+	"quickSearch": 0,
 	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bili.json"
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
     },
     {
 	"key": "py_6vFilm",
-	"name": "6v电影(PY)",
+	"name": "🔅6v电影(PY)",
 	"type": 3,
 	"api": "py_6vFilm",
 	"searchable": 1,
@@ -115,7 +115,7 @@
     },
     {
 	"key": "py_kuke",
-	"name": "酷客影院(PY)",
+	"name": "🛳️酷客影院(PY)",
 	"type": 3,
 	"api": "py_kuke",
 	"searchable": 1,
@@ -125,7 +125,7 @@
     },
     {
 	"key": "py_yhd",
-	"name": "樱花动漫(PY)",
+	"name": "🥒樱花动漫(PY)",
 	"type": 3,
 	"api": "py_yhd",
 	"searchable": 1,
@@ -135,7 +135,7 @@
     },
     {
 	"key": "py_COKEMV",
-	"name": "🀪COKEMV",
+	"name": "🕵COKEMV",
 	"type": 3,
 	"api": "py_COKEMV",
 	"searchable": 0,
@@ -145,7 +145,7 @@
     },   
     {
 	"key": "py_cctv",
-	"name": "CCTV-节目大全",
+	"name": "🔥CCTV-节目大全",
 	"type": 3,
 	"api": "py_cctv",
 	"searchable": 0,
@@ -155,7 +155,7 @@
     },
     {
 	"key": "py_cctv_1",
-	"name": "央视-片库(PY)",
+	"name": "👀央视-片库(PY)",
 	"type": 3,
 	"api": "py_cctv",
 	"searchable": 0,
@@ -185,7 +185,7 @@
     },
     {
 	"key": "py_ktkkt",
-	"name": "卡通站(PY)",
+	"name": "🥒卡通站(PY)",
 	"type": 3,
 	"api": "py_ktkkt",
 	"searchable": 1,
@@ -221,7 +221,7 @@
 	"searchable": 0,
 	"quickSearch": 0,
 	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
+	"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_ikan.py"
     },
     {
 	"key": "py_kugou.py",

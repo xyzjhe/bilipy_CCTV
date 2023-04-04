@@ -140,7 +140,7 @@ class Spider(Spider):
 		Url='http://www.dgdeyue.com{0}'.format(id)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(h.+?)",',Index=1)
+		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'url":"(\w+?)",',Index=1)
 		if len(m3u8Line)>0:
 			Url=m3u8Line[0].replace("/","")
 			Url=str(base64.b64decode(Url),'utf-8')
