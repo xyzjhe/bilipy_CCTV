@@ -81,7 +81,7 @@ class Spider(Spider):
 		videoList=[]
 		vodItems = []
 		circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="myui-content__list sort-list clearfix',after='</ul>')
-		playFrom=[t[1] for t in line]
+		playFrom=[t for t in line]
 		pattern = re.compile(r'href="(.+?)">(.+?)</a>')
 		for v in circuit:
 			ListRe=pattern.findall(v)
