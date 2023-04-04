@@ -1830,22 +1830,7 @@
         "type": 0,
         "url": "https://jx.aidouer.net/?url="
     },
-        {
-          "name": "LB",
-          "type": 0,
-          "url": "https://svip.bljiex.cc/?v="
-        },
         {"name":"爱酷嗅探","type":0,"url":"https://jx.zhanlangbu.com/?url="},
-	{
-        "name": "B站(测试)",
-        "type": 0,
-        "url": "https://jx.jsonplayer.com/player/?url="
-        },
-    {
-        "name": "听乐(测试)",
-        "type": 0,
-        "url": "https://jx.dj6u.com/?url="
-    },
 {"name":"M1907","type":0,"url":"https://z1.m1907.top/?jx=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}},
 {"name":"人人迷(测试)","type":0,"url":"https://jx.blbo.cc:4433/?url=","ext":{"flag":["qq","腾讯","qiyi","爱奇艺","奇艺","youku","优酷","mgtv","芒果","搜狐","sohu","letv","乐视","bilibili","哔哩哔哩","哔哩","xigua","西瓜","1905","ltnb","renrenmi","rx","rongxing"]}}
     ],
