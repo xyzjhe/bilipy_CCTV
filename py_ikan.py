@@ -7,7 +7,7 @@ import base64
 import math
 import json
 import requests
-
+import re
 class Spider(Spider):
 	def getName(self):
 		return "爱看影视"
@@ -80,6 +80,7 @@ class Spider(Spider):
 		node = html.xpath("//div[@class='module-main']")[0]
 		title = node.xpath(".//div[@class='module-info-heading']/h1/text()")[0]
 		pic = html.xpath("//div[@class='module-item-pic']/img/@data-original")[0]
+		content=html.xpath(".//div[@class='show-desc']/p/text()")[0]
 		vod = {
 			"vod_id": aid,
 			"vod_name": title,
@@ -90,7 +91,7 @@ class Spider(Spider):
 			"vod_remarks": '',
 			"vod_actor": '',
 			"vod_director": '',
-			"vod_content": ''
+			"vod_content": content
 		}
 		playFrom = ''
 		playfromList = html.xpath("//div[@class='module-tab-items-box hisSwiper']/div")
