@@ -287,7 +287,7 @@
     },
     {
 		"key": "py_collect",
-		"name": "个人收藏",
+		"name": "🤖个人收藏",
 		"type": 3,
 		"api": "py_collect",
 		"searchable": 0,
@@ -297,7 +297,7 @@
     },
     {
 		"key": "py_webqq",
-		"name": "伊雪湾影视(PY)",
+		"name": "🛫伊雪湾影视(PY)",
 		"type": 3,
 		"api": "py_webqq",
 		"searchable": 0,
@@ -307,7 +307,7 @@
     },
     {
 		"key": "py_dgdeyue",
-		"name": "喝茶影视(PY)",
+		"name": "🧩喝茶影视(PY)",
 		"type": 3,
 		"api": "py_dgdeyue",
 		"searchable": 1,
@@ -317,7 +317,7 @@
     },
     {
 		"key": "py_kuwo",
-		"name": "酷我Mv(PY)",
+		"name": "🥩酷我Mv(PY)",
 		"type": 3,
 		"api": "py_kuwo",
 		"searchable": 1,
@@ -404,7 +404,7 @@
     },
     {
 		"key": "小苹果",
-		"name": "🍏小苹果",
+		"name": "🍎小苹果",
 		"type": 3,
 		"api": "csp_LiteApple",
 		"searchable": 1,
