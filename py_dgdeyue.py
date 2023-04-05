@@ -43,7 +43,7 @@ class Spider(Spider):
 	def homeVideoContent(self):
 		rsp = self.fetch('http://www.dgdeyue.com/')
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=htmlTxt,patternTxt=r'class="myui-vodlist__thumb lazyload"\shref="(?P<url>.+?)"\stitle="(?P<title>.+?)"\sdata-original="(?P<img>.+?)"')
 		result = {
 			'list': videos
 		}
@@ -54,7 +54,7 @@ class Spider(Spider):
 		url = 'http://www.dgdeyue.com/xfenlei{0}-/page/{1}.html'.format(tid,pg)
 		rsp = self.fetch(url)
 		htmlTxt=rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=htmlTxt,patternTxt=r'class="myui-vodlist__thumb lazyload"\shref="(?P<url>.+?)"\stitle="(?P<title>.+?)"\sdata-original="(?P<img>.+?)"')
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'href="/fenlei\d*?-(\d+?).html">尾页</a>',Index=1)
 		if pag=="":
 			pag=999
@@ -125,10 +125,10 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.dm88.me/search.asp?searchword={0}&submit='.format(urllib.parse.quote(key))
+		Url='http://www.dgdeyue.com/vodsearch{0}.html'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=htmlTxt,RegexText=r'class="myui-vodlist__thumb.+?"\shref="(?P<url>.+?)"\stitle="(?P<title>.+?)"\sdata-original="(?P<img>.+?)">')
 		result = {
 				'list': videos
 			}
@@ -190,15 +190,13 @@ class Spider(Spider):
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
-	def get_list(self,html):
-		patternTxt=r'class="myui-vodlist__thumb lazyload"\shref="(.+?)"\stitle="(.+?)"\sdata-original="(.+?)"'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
+	def get_list(self,html,patternTxt):
+		ListRe=re.finditer(patternTxt, html, re.M|re.S)
 		videos = []
 		for vod in ListRe:
-			url = vod[0]
-			title =vod[1]
-			img =vod[2]
+			url = vod.group('url')
+			title =vod.group('title')
+			img =vod.group('img')
 			if len(url) == 0:
 				url = '_'
 			videos.append({
