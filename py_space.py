@@ -129,6 +129,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if flag=='直播':
 			parse=0
 			jx=0
+			headers = {
+                    "Referer": "https://live.bilibili.com",
+                    "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+                }
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
