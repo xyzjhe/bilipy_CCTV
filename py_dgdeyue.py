@@ -74,7 +74,7 @@ class Spider(Spider):
 		url='http://www.dgdeyue.com{0}'.format(idUrl)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,patternTxt=r'href="#playlist\d"\sdata-toggle="tab">(.+?)</a>',Index=1)
+		line=self.get_RegexGetTextLine(Text=htmlTxt)
 		if len(line)<1:
 			return  {'list': []}
 		playFrom = []
