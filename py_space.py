@@ -10,6 +10,7 @@ import re
 from urllib import request, parse
 import urllib
 import urllib.request
+import time
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -24,7 +25,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"个人收藏": "Collection"
+			"个人收藏": "Collection",
+			"B站直播":"B"
 		}
 		classes = []
 		for k in cateManual:
@@ -44,8 +46,24 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		videos=[]
-		rsp = self.fetch('http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)',headers=self.header)
-		videos = self.get_list(html=rsp.text)
+		if pg!='1':
+			return result
+		Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
+		headers1=self.header
+		if tid=='B':
+			ts=str(int(time.time())*1000)
+			Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_='+ts
+			headers1= {
+				"Referer": 'https://www.bilibili.com/',
+				'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
+				'Host': 'api.live.bilibili.com',
+				'cookie':'LIVE_BUVID=AUTO2616462757465937; fingerprint=77c85d9ff313891ec90a199813ae4113; CURRENT_QUALITY=64; CURRENT_BLACKGAP=1; blackside_state=0; fingerprint3=b9d652f66e003973ba5e01bdfd8721f7; hit-dyn-v2=1; b_ut=5; nostalgia_conf=-1; rpdid=|(u))ul)ukR~0JuYYmkl~kRu; i-wanna-go-back=-1; buvid_fp_plain=undefined; buvid_fp=77c85d9ff313891ec90a199813ae4113; buvid3=3693BDBE-2B47-E988-B3C2-204329BE615328103infoc; b_nut=1677837728; _uuid=6CC54C6D-2FAF-4DDC-B2B3-77468A910363B36562infoc; bp_video_offset_671023938=779182113663483900; SESSDATA=33fcc227%2C1695808020%2C713b2%2A31; bili_jct=f6d2e39f6a74593ef4e02e6bf206351b; DedeUserID=321534564; DedeUserID__ckMd5=4cf4212075f2f1eb; bp_video_offset_321534564=779812314217971800; CURRENT_FNVAL=4048; bp_t_offset_321534564=780280852185612341; buvid4=2E8D615F-F1D9-B7AD-63C2-1C9A145C98D117909-022030512-5ZCNRwNsIx1ENAcLMkU%2FQg%3D%3D; hit-new-style-dyn=1; b_lsid=C91089B16_18754630CC9'
+			}
+		rsp = self.fetch(Url,headers=headers1)
+		if tid=='B':
+			videos=self.get_list_B(jsonTxt=rsp.text)
+		else:
+			videos = self.get_list(html=rsp.text)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
@@ -136,6 +154,30 @@ class Spider(Spider):  # 元类 默认的元类 type
 			})
 		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
 		videos = res
+		return videos
+	def get_list_B(self,jsonTxt):
+		videos=[]
+		jRoot = json.loads(jsonTxt)
+		if jRoot['code']!=0:
+			return videos
+		jo = jRoot['data']
+		vodList = jo['list']
+		rooms=jo['rooms']
+		for vod in vodList:
+			url =vod['room_id']
+			title =vod['title']
+			img=vod['keyframe']
+			remarks=vod['uname']
+			artist=vod['area_name']
+			if len(img)<3:
+				img='https://www.baidu.com/link?url=w4owbtzM4I-UZp_1mOG3XAfrgl20sGkgnjZDyVglrgGRk9g2S3TpFA0Sh9E0YqsJ&wd=&eqid=f583e14d00056df100000003642e34bd'
+			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
+			videos.append({
+				"vod_id":vod_id,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":remarks
+			})
 		return videos
 	config = {
 		"player": {},

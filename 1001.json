@@ -59,7 +59,7 @@
      },
      {
 	"key": "快播",
-	"name": "🗃快播",
+	"name": "⏩️快播",
 	"type": 1,
 	"api": "https://www.kuaibozy.com/api.php/provide/vod/",
 	"searchable": 1,
@@ -205,7 +205,7 @@
     },
     {
 	"key": "py_dgdeyue",
-	"name": "🧩喝茶影视(PY)",
+	"name": "🩹喝茶影视(PY)",
 	"type": 3,
 	"api": "py_dgdeyue",
 	"searchable": 1,
