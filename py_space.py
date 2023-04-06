@@ -243,7 +243,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			idTxt='platform=web&quality=4_{0}'.format(room_id)
 			ids = idTxt.split("_")
 			Url = 'https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%s&%s'%(ids[1],ids[0])
-			htmlTxt = webReadFile(urlStr=Url,header=header)
+			rsp = self.fetch(Url,headers=self.header)
+			htmlTxt = rsp.text
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=0:
 				return videos
