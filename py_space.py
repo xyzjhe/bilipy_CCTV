@@ -229,7 +229,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 						})
 		if len(urlM3u8)>0:
 			for x in urlM3u8:
-				url=x['host']+x['Url'].replace("?","")
+				url=x['host']+x['Url']+x['extra']
 				title=descMass.get(x['qn'])+"["+x['format_name'].replace("fmp4","m3u8")+"]"
 				videos.append(title+"$"+url)
 		return videos
