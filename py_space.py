@@ -73,8 +73,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
-		if aid[1].find("http")<0:
-			return result
 		tid = aid[0]
 		logo = aid[2]
 		url = aid[1]
