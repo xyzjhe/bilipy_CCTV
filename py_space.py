@@ -204,6 +204,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if jRoot['code']!=0:
 			return videos
 		jo = jRoot['data']
+		room_id=jo['room_id']
 		playurl=jo['playurl_info']
 		playurl=playurl['playurl']
 		desc=playurl['g_qn_desc']
@@ -236,7 +237,23 @@ class Spider(Spider):  # 元类 默认的元类 type
 				url=x['host']+x['Url']+x['extra']
 				title=descMass.get(x['qn'])+"["+x['format_name'].replace("fmp4","m3u8")+"]"
 				if x['format_name']=='flv':
-					title=descMass.get(x['qn'])+"["+x['format_name']+'格式可能无法播放]'
+				continue
+				videos.append(title+"$"+url)
+		if len(videos)<1:
+			idTxt='platform=web&quality=4_{0}'.format(room_id)
+			ids = idTxt.split("_")
+			Url = 'https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%s&%s'%(ids[1],ids[0])
+			htmlTxt = webReadFile(urlStr=Url,header=header)
+			jRoot = json.loads(htmlTxt)
+			if jRoot['code']!=0:
+				return videos
+			jo = jRoot['data']
+			ja = jo['durl']
+			quality=jo['quality_description']
+			url = ''
+			if len(ja) > 0:
+				url = ja[0]['url']
+				title=quality[0]['desc']
 				videos.append(title+"$"+url)
 		return videos
 	config = {
