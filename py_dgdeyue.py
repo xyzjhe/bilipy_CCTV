@@ -74,7 +74,7 @@ class Spider(Spider):
 		url='http://www.dgdeyue.com{0}'.format(idUrl)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'href="#playlist\d"\sdata-toggle="tab">(.+?)</a>',Index=1)
+		line=self.get_RegexGetTextLine(Text=htmlTxt,patternTxt=r'href="#playlist\d"\sdata-toggle="tab">(.+?)</a>',Index=1)
 		if len(line)<1:
 			return  {'list': []}
 		playFrom = []
@@ -128,7 +128,7 @@ class Spider(Spider):
 		Url='http://www.dgdeyue.com/vodsearch{0}.html'.format(urllib.parse.quote(key))
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt,RegexText=r'class="myui-vodlist__thumb.+?"\shref="(?P<url>.+?)"\stitle="(?P<title>.+?)"\sdata-original="(?P<img>.+?)">')
+		videos = self.get_list(html=htmlTxt,patternTxt=r'class="myui-vodlist__thumb.+?"\shref="(?P<url>.+?)"\stitle="(?P<title>.+?)"\sdata-original="(?P<img>.+?)">')
 		result = {
 				'list': videos
 			}
@@ -181,15 +181,7 @@ class Spider(Spider):
 		soup = re.compile(r'<[^>]+>',re.S)
 		txt =soup.sub('', txt)
 		return txt.replace("&nbsp;"," ")
-	def get_webReadFile(self,urlStr):
-		headers = {
-			'Referer':urlStr,
-			'User-Agent': 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36',
-			'Host': 'www.dm88.me'
-		}
-		req = urllib.request.Request(url=urlStr, headers=headers)
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		return html
+	
 	def get_list(self,html,patternTxt):
 		ListRe=re.finditer(patternTxt, html, re.M|re.S)
 		videos = []
