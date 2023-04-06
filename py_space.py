@@ -79,7 +79,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		title = aid[0]
 		vodItems=[]
 		vod_play_from='线路'
-		if url.find('http')<0:
+		if url.find('http')>-1:
 			vodItems = [title+"$"+url]
 		else:
 			Url='https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo?room_id={0}&no_playurl=0&mask=1&qn=0&platform=web&protocol=0,1&format=0,2&codec=0,1'.format(url)
