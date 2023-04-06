@@ -237,7 +237,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				url=x['host']+x['Url']+x['extra']
 				title=descMass.get(x['qn'])+"["+x['format_name'].replace("fmp4","m3u8")+"]"
 				if x['format_name']=='flv':
-				continue
+					continue
 				videos.append(title+"$"+url)
 		if len(videos)<1:
 			idTxt='platform=web&quality=4_{0}'.format(room_id)
@@ -253,9 +253,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 			quality=jo['quality_description']
 			url = ''
 			if len(ja) > 0:
-				url = ja[0]['url']
+				url1 = ja[0]['url']
 				title=quality[0]['desc']
-				videos.append(title+"$"+url)
+				videos.append(title+"$"+url1)
 		return videos
 	config = {
 		"player": {},
