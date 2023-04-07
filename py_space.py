@@ -236,8 +236,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			for x in urlM3u8:
 				url=x['host']+x['Url']+x['extra']
 				title=descMass.get(x['qn'])+"["+x['format_name'].replace("fmp4","m3u8")+"]"
-				if x['format_name']=='flv':
-					continue
 				videos.append(title+"$"+url)
 		if len(videos)<1:
 			idTxt='platform=web&quality=4_{0}'.format(room_id)
