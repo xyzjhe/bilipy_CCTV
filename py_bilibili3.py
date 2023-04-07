@@ -351,9 +351,10 @@ class Spider(Spider):  # 元类 默认的元类 type
         if int(pg) > 50:
             return result
         videos = []
-        vmid='321534564'#self.userid
+        vmid=self.userid
         url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention'.format(pg,vmid)
-        content =webReadFile(urlStr=url,header=header)
+        rsp = self.fetch(url, cookies=self.cookies)
+        content =rsp.text
         jo = json.loads(content)
         if jo['code'] == 0:
             vodList = jo['data']['list']
