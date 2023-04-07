@@ -1055,7 +1055,12 @@ class Spider(Spider):  # 元类 默认的元类 type
                     result["contentType"] = ''
                 else:
                     result["contentType"] = 'video/x-flv'
-
+        elif self.box_video_type == 'pu':
+                try:
+                    mark="av"+id.split("_")[0]
+                    result = self.get_Url(idTxt=id)
+                except Exception as e:
+                    print(e)
         else:
 
             ids = id.split("_")
@@ -1093,7 +1098,47 @@ class Spider(Spider):  # 元类 默认的元类 type
             result["contentType"] = 'video/x-flv'
             
         return result
-
+    def get_Url_pu(self, idTxt):
+        result = {}
+        ids = idTxt.split(":")
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        url = 'https://api.bilibili.com/x/web-interface/view?bvid={0}'.format(ids[1])
+        rsp = self.fetch(url, headers=header)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']
+        aid=jo['aid']
+        cid=jo['cid']
+        url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=120&fnval=0&128=128&fourk=1'.format(aid,cid)
+        rsp = self.fetch(url, headers=header)
+        jRoot = json.loads(rsp.text)
+        jo = jRoot['data']
+        if jRoot['code']!=0:
+            return result
+        ja = jo['durl']
+        maxSize = -1
+        position = -1
+        for i in range(len(ja)):
+            tmpJo = ja[i]
+            if maxSize < int(tmpJo['size']):
+                maxSize = int(tmpJo['size'])
+                position = i
+        url = ''
+        if len(ja) > 0:
+            if position == -1:
+                position = 0
+            url = ja[position]['url']
+        result["parse"] = 0
+        result["playUrl"] = ''
+        result["url"] = url
+        result["header"] = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        result["contentType"] = 'video/x-flv'
+        return result
     config = {
         "player": {},
         "filter": {
