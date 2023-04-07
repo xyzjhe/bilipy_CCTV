@@ -24,7 +24,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     vod_area=''
 
     def getName(self):
-        return "哔哩3_带直播"
+        return "B站个人中心"#自己增加关注pu主和pu主直播(以关注的)
 
 
     def __init__(self):
@@ -98,6 +98,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result = {}
         cateManual = {
             "动态": "动态",
+            "关注的pu主":'pu主',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -106,6 +107,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "热门": "热门",
             
             "排行榜": "排行榜",
+            "正在直播":'正在直播',
             "频道": "频道",
             "直播": "直播",
             "舞蹈": "舞蹈",
@@ -344,6 +346,36 @@ class Spider(Spider):  # 元类 默认的元类 type
             result['total'] = 999999
         return result
 
+    def get_pu(self,pg):
+        result = {}
+        if int(pg) > 50:
+            return result
+        videos = []
+        vmid='321534564'#self.userid
+        url= 'https://api.bilibili.com/x/relation/followings?vmid={1}&pn={0}&ps=20&order=desc&order_type=attention'.format(pg,vmid)
+        content =webReadFile(urlStr=url,header=header)
+        jo = json.loads(content)
+        if jo['code'] == 0:
+            vodList = jo['data']['list']
+            for vod in vodList:
+                aid = str(vod['mid']).strip()
+                title = vod['uname'].strip()
+                img = vod['face'].strip()
+                remark = str(vod['sign']).strip()
+                desc=str(vod['official_verify']['desc']).strip()
+                videos.append({
+                    "vod_id":title+"###"+aid+"###"+img+"###"+desc+"###"+remark,
+                    "vod_name":title,
+                    "vod_pic":img,
+                    "vod_remarks":remark
+                })
+        numvL = len(videos)
+        result['list'] = videos
+        result['page'] = pg
+        result['pagecount'] = int(pg)+1 if numvL>19 else pg
+        result['limit'] = numvL
+        result['total'] = numvL
+        return result
 
     time_diff1={'1':[0,300],
     '2':[300,900],'3':[900,1800],'4':[1800,3600],
@@ -571,6 +603,9 @@ class Spider(Spider):  # 元类 默认的元类 type
         if tid == "热门":
             self.box_video_type = '热门'
             return self.get_hot(pg=pg)
+        elif tid == "热门":
+            self.box_video_type = 'pu主'
+            return self.get_pu(pg=pg)
         elif tid == "排行榜":
             self.box_video_type = '排行榜'
             return self.get_rank()
