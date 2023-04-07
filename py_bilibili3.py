@@ -365,7 +365,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 remark = str(vod['sign']).strip()
                 desc=str(vod['official_verify']['desc']).strip()
                 videos.append({
-                    "vod_id":title+"###"+aid+"###"+img+"###"+desc+"###"+remark,
+                    "vod_id":title+"###"+aid+"###"+img+"###"+desc+"###"+remark+"&pu",
                     "vod_name":title,
                     "vod_pic":img,
                     "vod_remarks":remark
@@ -841,7 +841,9 @@ class Spider(Spider):  # 元类 默认的元类 type
                         vod
                     ]
                 }
-
+        elif arrays[-1] == 'pu':
+            self.box_video_type='pu'
+            result=get_list_pu(aid=arrays[0])
         else :
             self.box_video_type='其他'
             aid = arrays[0]
@@ -891,7 +893,56 @@ class Spider(Spider):  # 元类 默认的元类 type
                     ]
                 }
         return result
+    def get_list_pu(self, aid):
+        aidList=aid.split('###')
+        title = aidList[0]
+        mid=aidList[1]
+        pic = aidList[2]
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+        }
+        videoList=[]
+        for i in range(1, 3):
+            url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
+            rsp = self.fetch(url,headers=header)
+            htmlTxt=rsp.text
+            jRoot = json.loads(htmlTxt)
+            jo = jRoot['data']
+            ja = jo['list']
+            videos=ja['vlist']
+            if len(videos)<1:
+                break
+            for tmpJo in videos:
+                vodTitle = tmpJo['title']
+                bvid = tmpJo['bvid']
+                videoList.append(vodTitle+"$"+'bvid:'+bvid)
+        typeName = aidList[3]
+        remark = aidList[4]
+        vod = {
+            "vod_id": aid,
+            "vod_name": title,
+            "vod_pic": pic,
+            "type_name": typeName,
+            "vod_year": '',
+            "vod_area": "",
+            "vod_remarks": '',
+            "vod_actor": "",
+            "vod_director": '',
+            "vod_content": remark
+        }
+        playUrl="#"
+        if len(videoList)>0:
+            playUrl="#".join(videoList)
+        vod['vod_play_from'] = 'B站视频'
+        vod['vod_play_url'] = playUrl
 
+        result = {
+            'list': [
+                vod
+            ]
+        }
+        return result
     def searchContent(self, key, quick):
         self.box_video_type = '搜索'
         header = {
