@@ -1056,11 +1056,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 else:
                     result["contentType"] = 'video/x-flv'
         elif self.box_video_type == 'pu':
-                try:
-                    mark="av"+id.split("_")[0]
-                    result = self.get_Url(idTxt=id)
-                except Exception as e:
-                    print(e)
+            result = self.get_Url_pu(idTxt=id)
         else:
 
             ids = id.split("_")
@@ -1098,7 +1094,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             result["contentType"] = 'video/x-flv'
             
         return result
-    def get_Url_pu(self, idTxt):
+    def get_Url_pu(self,idTxt):
         result = {}
         ids = idTxt.split(":")
         header = {
@@ -1106,7 +1102,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
         }
         url = 'https://api.bilibili.com/x/web-interface/view?bvid={0}'.format(ids[1])
-        rsp = self.fetch(url, headers=header)
+        rsp =self.fetch(url, headers=header)
         jRoot = json.loads(rsp.text)
         jo = jRoot['data']
         aid=jo['aid']
@@ -1133,11 +1129,11 @@ class Spider(Spider):  # 元类 默认的元类 type
         result["parse"] = 0
         result["playUrl"] = ''
         result["url"] = url
+        result["contentType"] = 'video/x-flv'
         result["header"] = {
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
         }
-        result["contentType"] = 'video/x-flv'
         return result
     config = {
         "player": {},
