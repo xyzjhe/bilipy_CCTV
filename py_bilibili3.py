@@ -893,7 +893,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                     ]
                 }
         return result
-    def get_list_pu(self, aid):
+    def get_list_pu(self,aid):
         aidList=aid.split('###')
         title = aidList[0]
         mid=aidList[1]
@@ -902,7 +902,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         for i in range(1, 3):
             url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
             rsp = self.fetch(url,headers=self.header)
-            htmlTxt=rsp.text
+            htmlTxt= rsp.text
             jRoot = json.loads(htmlTxt)
             jo = jRoot['data']
             ja = jo['list']
@@ -914,7 +914,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 bvid = tmpJo['bvid']
                 videoList.append(vodTitle+"$"+'bvid:'+bvid)
         typeName = aidList[3]
-        remark = aidList[4]
+        remark = aidList[4].replace("&pu","")
         vod = {
             "vod_id": aid,
             "vod_name": title,
