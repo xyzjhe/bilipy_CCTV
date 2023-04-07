@@ -898,14 +898,10 @@ class Spider(Spider):  # 元类 默认的元类 type
         title = aidList[0]
         mid=aidList[1]
         pic = aidList[2]
-        header = {
-            "Referer": "https://www.bilibili.com",
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
-        }
         videoList=[]
         for i in range(1, 3):
             url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
-            rsp = self.fetch(url,headers=header)
+            rsp = self.fetch(url,headers=self.header)
             htmlTxt=rsp.text
             jRoot = json.loads(htmlTxt)
             jo = jRoot['data']
