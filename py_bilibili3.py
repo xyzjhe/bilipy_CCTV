@@ -98,7 +98,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result = {}
         cateManual = {
             "动态": "动态",
-            "关注的pu主":'pu主',
+            "关注的pu主":'关注的pu主',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -603,8 +603,8 @@ class Spider(Spider):  # 元类 默认的元类 type
         if tid == "热门":
             self.box_video_type = '热门'
             return self.get_hot(pg=pg)
-        elif tid == "热门":
-            self.box_video_type = 'pu主'
+        elif tid == "关注的pu主":
+            self.box_video_type = '关注的pu主'
             return self.get_pu(pg=pg)
         elif tid == "排行榜":
             self.box_video_type = '排行榜'
