@@ -1133,9 +1133,9 @@ class Spider(Spider):  # 元类 默认的元类 type
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
         }
-        #self.fetch(url,headers=header1)
-        #html=rsp.text
-        url='https://cn-hnzz-cm-01-04.bilivideo.com/upgcxcode/59/43/317854359/317854359_nb2-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1680943448&gen=playurlv2&os=bcache&oi=1881581105&trid=00003ee46e6998dd446bb753634b7a9a4376h&mid=0&platform=html5&upsig=c4cfeaa4a538752b4faf30516e0225c2&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=5368&bvc=vod&nettype=0&bw=41901&logo=80000000'
+        rsp=self.fetch(url,headers=header1)
+        html=rsp.text
+        url=self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)","readyDuration":',Index=1)
         result["parse"] = 0
         result["playUrl"] = ''
         result["url"] = url
