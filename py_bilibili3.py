@@ -592,10 +592,9 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
 
     def get_live_goodFor(self, pg):
-        videos=[]
         result={}
-        #ts=str(int(time.time())*1000)
-        Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_='.format('1')
+        ts=str(int(time.time())*1000)
+        Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_={0}'.format(ts)
         rsp = self.fetch(Url,cookies=self.cookies)
         jsonTxt=rsp.text
         jRoot = json.loads(jsonTxt)
@@ -603,20 +602,21 @@ class Spider(Spider):  # 元类 默认的元类 type
             return result
         jo = jRoot['data']
         vodList = jo['list']
+        videos=[]
         for vod in vodList:
-            url =vod['room_id']
+            aid =str(vod['room_id']).strip()
             title =vod['title']
             img=vod['keyframe']
             remarks=vod['online']
             if len(img)<3:
                 img='https://pics2.baidu.com/feed/b2de9c82d158ccbfc8ba4234381f9e39b035418c.jpeg@f_auto?token=9e3686f85afb08f862ddb42dc9b9682c'
             videos.append({
-                "vod_id":str(url)+'&live',
+                "vod_id":aid+'&live',
                 "vod_name":title,
                 "vod_pic":img,
                 "vod_remarks":remarks
             })
-           
+        result['list'] = videos
         result['page'] = pg
         result['pagecount'] =999
         result['limit'] = 90
