@@ -591,7 +591,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
         return result
 
-    def get_live_goodFor(self,pg,parent_area_id,area_id):
+    def get_live(self,pg,parent_area_id,area_id):
         result = {}
         self.box_video_type = '直播'
 
