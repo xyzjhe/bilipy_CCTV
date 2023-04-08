@@ -997,6 +997,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
     def playerContent(self, flag, id, vipFlags):
         result = {}
+
         avId=0
         try:
             if self.box_video_type == '影视':
@@ -1088,7 +1089,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             else:
 
                 ids = id.split("_")
-                avId="av"+ids[0]
+                avId="av"+id.ids[0]
                 url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=116'.format(ids[0], ids[1])
 
                 if len(self.cookies) <= 0:
@@ -1123,7 +1124,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 result["contentType"] = 'video/x-flv'
         except Exception as e:
             print('吕军涛'+e)
-        result= self.get_mp4(av=avId)  
+        result= self.get_mp4(av='BV1RB4y1P7eD')  
         return result
     def get_mp4(self,av):
         result={}
