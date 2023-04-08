@@ -595,9 +595,9 @@ class Spider(Spider):  # 元类 默认的元类 type
         self.box_video_type = '直播'
         ts=str(int(time.time()*1000))
         url = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_={0}'.format(ts)
-        #rsp = self.fetch(url, cookies=self.cookies)
+        rsp = self.fetch(url, cookies=self.cookies)
 
-        content = webReadFile(urlStr=url,header=header)#rsp.text
+        content = rsp.text
         jo = json.loads(content)
         if jo['code'] == 0:
             videos = []
