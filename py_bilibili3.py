@@ -1123,8 +1123,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 result["contentType"] = 'video/x-flv'
         except Exception as e:
             print('吕军涛'+e)
-        if len(result)<2 and self.box_video_type != '直播':
-                result= self.get_mp4(av=avId)  
+        result= self.get_mp4(av=avId)  
         return result
     def get_mp4(self,av):
         result={}
