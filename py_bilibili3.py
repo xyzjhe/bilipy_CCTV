@@ -592,46 +592,37 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
 
     def get_live_goodFor(self, pg):
-        result = {}
-        self.box_video_type = '直播'
-
-
+        videos=[]
+        result={}
         ts=str(int(time.time())*1000)
-        url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
-        rsp = self.fetch(url, cookies=self.cookies)
-
-        content = rsp.text
-        jo = json.loads(content)
-        if jo['code'] == 0:
-            videos = []
-            vodList = jo['data']['list']
-
-            for vod in vodList:
-
-
-
-                        aid = str(vod['room_id']).strip()
-                        title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
-                        img =  vod.get('keyframe').strip()
-                        remark = '直播间人数:'+str( vod['online']).strip()
-                        videos.append({
-                            "vod_id": aid+'&live',
-                            "vod_name": title,
-                            "vod_pic": img,
-                            "vod_remarks": remark
-
-                        })
-
-
-
-                #videos=self.filter_duration(videos, duration_diff)
-            result['list'] = videos
-            result['page'] = pg
-            result['pagecount'] = 9999
-            result['limit'] = 90
-            result['total'] = 999999
-
+        Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
+        rsp = self.fetch(Url,cookies=self.cookies)
+        jsonTxt=rsp.text
+        jRoot = json.loads(jsonTxt)
+        if jRoot['code']!=0:
+            return result
+        jo = jRoot['data']
+        vodList = jo['list']
+        for vod in vodList:
+            url =vod['room_id']
+            title =vod['title']
+            img=vod['keyframe']
+            remarks=vod['online']
+            if len(img)<3:
+                img='https://pics2.baidu.com/feed/b2de9c82d158ccbfc8ba4234381f9e39b035418c.jpeg@f_auto?token=9e3686f85afb08f862ddb42dc9b9682c'
+            videos.append({
+                "vod_id":str(url)+'&toview',
+                "vod_name":title,
+                "vod_pic":img,
+                "vod_remarks":remarks
+            })
+           
+        result['page'] = pg
+        result['pagecount'] =999
+        result['limit'] = 90
+        result['total'] = 999999
         return result
+
     def categoryContent(self, tid, pg, filter, extend):
 
         result = {}
