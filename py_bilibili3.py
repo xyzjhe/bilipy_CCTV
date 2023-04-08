@@ -594,8 +594,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     def get_live_goodFor(self,pg):
         result = {}
         self.box_video_type = '直播'
-        ts=str(int(time.time()*1000))
-        url = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_={0}'.format(ts)
+        url = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_='
         rsp = self.fetch(url, cookies=self.cookies)
 
         content = rsp.text
