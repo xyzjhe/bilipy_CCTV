@@ -591,7 +591,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
         return result
 
-    def get_live_goodFor(self, pg):
+    def get_live_goodFor(self,pg):
         result={}
         ts=str(int(time.time())*1000)
         Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_={0}'.format(ts)
