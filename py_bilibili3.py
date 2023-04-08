@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         cateManual = {
             "动态": "动态",
             "关注的pu主":'关注的pu主',
-            "直播中4":'直播中',
+            "直播中2":'直播中',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -1123,16 +1123,21 @@ class Spider(Spider):  # 元类 默认的元类 type
                 result["contentType"] = 'video/x-flv'
         except Exception as e:
             print('吕军涛'+e)
-        result= self.get_mp4(av='BV1RB4y1P7eD')  
+        if result=={} and self.box_video_type != '直播':
+                result= self.get_mp4(av=avId)  
         return result
     def get_mp4(self,av):
         result={}
         url='https://m.bilibili.com/video/{0}'.format(av)
+        header1= {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+        }
        
         result["parse"] = 0
         result["playUrl"] = ''
-        result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/0929-audiofreehighqps/60/83/CKwRIRwEca7LACrvxACqYzO6.m4a'
-        result["header"] = ''
+        result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/29a1-audiofreehighqps/DB/8C/CKwRIUEEca_zAD0HHgCqY8_Q.m4a'
+        result["header"] = header
         return result
     def get_RegexGetText(self,Text,RegexText,Index):
         returnTxt=""
