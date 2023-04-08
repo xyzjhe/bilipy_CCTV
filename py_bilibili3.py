@@ -598,8 +598,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         rsp = self.fetch(Url,cookies=self.cookies)
         jsonTxt=rsp.text
         jRoot = json.loads(jsonTxt)
-        if jRoot['code']!=0:
-            return result
         jo = jRoot['data']
         vodList = jo['list']
         videos=[]
@@ -608,8 +606,6 @@ class Spider(Spider):  # 元类 默认的元类 type
             title =vod['title']
             img=vod['keyframe']
             remarks=vod['online']
-            if len(img)<3:
-                img='https://pics2.baidu.com/feed/b2de9c82d158ccbfc8ba4234381f9e39b035418c.jpeg@f_auto?token=9e3686f85afb08f862ddb42dc9b9682c'
             videos.append({
                 "vod_id":aid+'&live',
                 "vod_name":title,
