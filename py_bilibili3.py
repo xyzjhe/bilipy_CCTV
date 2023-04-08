@@ -1132,10 +1132,12 @@ class Spider(Spider):  # 元类 默认的元类 type
             "Referer": "https://www.bilibili.com",
             "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
         }
-       
+        self.fetch(url, headers=header1)
+        html=rsp.text
+        url=get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)","readyDuration":',Index=1)
         result["parse"] = 0
         result["playUrl"] = ''
-        result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/29a1-audiofreehighqps/DB/8C/CKwRIUEEca_zAD0HHgCqY8_Q.m4a'
+        result["url"] = url
         result["header"] = header1
         return result
     def get_RegexGetText(self,Text,RegexText,Index):
