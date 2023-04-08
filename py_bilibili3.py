@@ -1122,7 +1122,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 }
                 result["contentType"] = 'video/x-flv'
         except Exception as e:
-            print('吕军涛'+e)
+            print('吕军涛'+e)result={}
         result= self.get_mp4(av=avId)  
         return result
     def get_mp4(self,av):
@@ -1136,7 +1136,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result["parse"] = 0
         result["playUrl"] = ''
         result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/29a1-audiofreehighqps/DB/8C/CKwRIUEEca_zAD0HHgCqY8_Q.m4a'
-        result["header"] = header
+        result["header"] = header1
         return result
     def get_RegexGetText(self,Text,RegexText,Index):
         returnTxt=""
