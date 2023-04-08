@@ -598,7 +598,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         ts=str(int(time.time())*1000)
         Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
         rsp = self.fetch(Url,cookies=self.cookies)
-        jsonTxt=webReadFile(urlStr=Url,header=header)
+        jsonTxt=rsp.text
         jRoot = json.loads(jsonTxt)
         if jRoot['code']!=0:
             return result
