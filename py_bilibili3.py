@@ -591,10 +591,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 
         return result
 
-    def get_live_goodFor(self,pg):
+    def get_live_goodFor(self,pg,parent_area_id,area_id):
         result = {}
         self.box_video_type = '直播'
-        url = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_='
+
+
+        url = 'https://api.live.bilibili.com/xlive/web-interface/v1/second/getList?platform=web&parent_area_id=%s&area_id=%s&sort_type=online&page=%s'%(parent_area_id,area_id,pg)
         rsp = self.fetch(url, cookies=self.cookies)
 
         content = rsp.text
@@ -607,9 +609,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 
 
 
-                        aid = str(vod['room_id']).strip()
+                        aid = str(vod['roomid']).strip()
                         title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
-                        img =  vod.get('keyframe').strip()
+                        img =  vod.get('cover').strip()
                         remark = '直播间人数:'+str( vod['online']).strip()
                         videos.append({
                             "vod_id": aid+'&live',
@@ -629,6 +631,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             result['total'] = 999999
 
         return result
+
 
     def categoryContent(self, tid, pg, filter, extend):
 
@@ -676,8 +679,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 
         
         elif tid == '直播中':
-            self.box_video_type = '直播'
-            return  self.self.get_live_goodFor(pg=pg)
+             self.box_video_type = '直播'
+            parent_area_id = '1'
+            if 'parent_area_id' in extend:
+                parent_area_id = extend['parent_area_id']
+            return  self.get_live_goodFor(pg=pg,parent_area_id=parent_area_id,area_id='')
 
         elif tid == '频道':
             self.box_video_type = '频道'
