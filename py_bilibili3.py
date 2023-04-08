@@ -99,6 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         cateManual = {
             "动态": "动态",
             "关注的pu主":'关注的pu主',
+            "直播中":'直播中',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -107,7 +108,6 @@ class Spider(Spider):  # 元类 默认的元类 type
             "热门": "热门",
             
             "排行榜": "排行榜",
-            "直播中":'直播中',
             "频道": "频道",
             "直播": "直播",
             "舞蹈": "舞蹈",
@@ -614,7 +614,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                         })
             result['list'] = videos
             result['page'] = pg
-            result['pagecount'] = 9999
+            result['pagecount'] = pg+1 if len(videos)==10 else pg
             result['limit'] = 90
             result['total'] = 999999
         return result
