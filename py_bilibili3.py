@@ -597,12 +597,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result={}
         ts=str(int(time.time())*1000)
         Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
-        rsp = self.fetch(Url,cookies=self.cookies)
-        jsonTxt=rsp.text
-        jRoot = json.loads(jsonTxt)
-        if jRoot['code']!=0:
-            return result
-    
+        
         url ='222272'
         title ='瑶息'#vod['title']
         img='https://i0.hdslb.com/bfs/live-key-frame/keyframe04081000000000222272soy7ho.jpg'#vod['keyframe']
