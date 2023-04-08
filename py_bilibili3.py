@@ -591,47 +591,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
         return result
 
-    def get_live_goodFor(self,pg,parent_area_id,area_id):
-        result = {}
-        self.box_video_type = '直播'
-
-
-        url = 'https://api.live.bilibili.com/xlive/web-interface/v1/second/getList?platform=web&parent_area_id=%s&area_id=%s&sort_type=online&page=%s'%(parent_area_id,area_id,pg)
-        rsp = self.fetch(url, cookies=self.cookies)
-
-        content = rsp.text
-        jo = json.loads(content)
-        if jo['code'] == 0:
-            videos = []
-            vodList = jo['data']['list']
-
-            for vod in vodList:
-
-
-
-                        aid = str(vod['roomid']).strip()
-                        title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
-                        img =  vod.get('cover').strip()
-                        remark = '直播间人数:'+str( vod['online']).strip()
-                        videos.append({
-                            "vod_id": aid+'&live',
-                            "vod_name": title,
-                            "vod_pic": img,
-                            "vod_remarks": remark
-
-                        })
-
-
-
-                #videos=self.filter_duration(videos, duration_diff)
-            result['list'] = videos
-            result['page'] = pg
-            result['pagecount'] = 9999
-            result['limit'] = 90
-            result['total'] = 999999
-
-        return result
-
+    
 
     def categoryContent(self, tid, pg, filter, extend):
 
