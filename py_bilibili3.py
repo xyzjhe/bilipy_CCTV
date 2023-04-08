@@ -591,7 +591,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
         return result
 
-    def get_live(self,pg,parent_area_id,area_id):
+    def get_live_goodFor(self,pg,parent_area_id,area_id):
         result = {}
         self.box_video_type = '直播'
 
@@ -683,7 +683,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             parent_area_id = '1'
             if 'parent_area_id' in extend:
                 parent_area_id = extend['parent_area_id']
-            return  self.get_live(pg=pg,parent_area_id=parent_area_id,area_id='')
+            return  self.get_live_goodFor(pg=pg,parent_area_id=parent_area_id,area_id='')
 
         elif tid == '频道':
             self.box_video_type = '频道'
