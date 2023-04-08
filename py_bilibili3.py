@@ -1120,8 +1120,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
             }
             result["contentType"] = 'video/x-flv'
-         if len(result["url"])<5 and self.box_video_type != '直播':
-                result= self.get_mp4(av=avId)  
+            
         return result
     def get_mp4(self,av):
         result={}
