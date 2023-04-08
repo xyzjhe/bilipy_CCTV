@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         cateManual = {
             "动态": "动态",
             "关注的pu主":'关注的pu主',
-            "直播中2":'直播中',
+            "直播中3":'直播中',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -1123,7 +1123,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 result["contentType"] = 'video/x-flv'
         except Exception as e:
             print('吕军涛'+e)
-        result= self.get_mp4(av=avId)  
+        result= self.get_mp4(av='BV1RB4y1P7eD')  
         return result
     def get_mp4(self,av):
         result={}
