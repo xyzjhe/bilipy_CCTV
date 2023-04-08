@@ -611,7 +611,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         result['pagecount'] =999
         result['limit'] = 90
         result['total'] = 999999
-        return videos
+        return result
 
 
     def categoryContent(self, tid, pg, filter, extend):
