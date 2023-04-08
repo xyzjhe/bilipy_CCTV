@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         cateManual = {
             "动态": "动态",
             "关注的pu主":'关注的pu主',
-            "直播中4":'直播中',
+            "直播中":'直播中',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -1002,7 +1002,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         try:
             if self.box_video_type == '影视':
                 ids = id.split("_")
-                avId="av"+ids[1]
+                avId="av"+ids[0]
                 header = {
                     "Referer": "https://www.bilibili.com",
                     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
@@ -1125,7 +1125,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         except Exception as e:
             print(e)
             result={}
-        if result=={}:
+        if result=={} and self.box_video_type.find('直播')<0:
             result= self.get_mp4(av=avId)  
         return result
     def get_mp4(self,av):
