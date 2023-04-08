@@ -1122,7 +1122,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 }
                 result["contentType"] = 'video/x-flv'
         except Exception as e:
-            result={}
+            print('吕军涛'+e)
         result= self.get_mp4(av=avId)  
         return result
     def get_mp4(self,av):
