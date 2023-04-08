@@ -595,8 +595,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         self.box_video_type = '直播'
         videos=[]
         result={}
-        ts=str(int(time.time())*1000)
-        Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
         
         url ='222272'
         title ='瑶息'#vod['title']
@@ -610,7 +608,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         })
         result['list'] = videos
         result['page'] = pg
-        result['pagecount'] =pg if len(videos)<10 else 999
+        result['pagecount'] =999
         result['limit'] = 90
         result['total'] = 999999
         return videos
