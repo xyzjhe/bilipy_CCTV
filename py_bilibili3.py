@@ -595,11 +595,6 @@ class Spider(Spider):  # 元类 默认的元类 type
         self.box_video_type = '直播'
         videos=[]
         result={}
-        result['list'] = videos
-        result['page'] = pg
-        result['pagecount'] = pg
-        result['limit'] = 90
-        result['total'] = 999999
         ts=str(int(time.time())*1000)
         Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
         rsp = self.fetch(Url,cookies=self.cookies)
@@ -618,7 +613,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             if len(img)<3:
                 img='https://pics2.baidu.com/feed/b2de9c82d158ccbfc8ba4234381f9e39b035418c.jpeg@f_auto?token=9e3686f85afb08f862ddb42dc9b9682c'
             videos.append({
-                "vod_id":str(url)+'&toview',
+                "vod_id":str(url)+'&live',
                 "vod_name":title,
                 "vod_pic":img,
                 "vod_remarks":remarks
