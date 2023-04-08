@@ -14,7 +14,7 @@ from time import strftime
 from time import gmtime
 import time
 time_stamp = str(int(time.time()))
-
+import re
 
 
 
@@ -614,7 +614,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                         })
             result['list'] = videos
             result['page'] = pg
-            result['pagecount'] = pg+1 if len(videos)==10 else pg
+            result['pagecount'] = int(pg)+1 if len(videos)==10 else int(pg)
             result['limit'] = 90
             result['total'] = 999999
         return result
@@ -997,8 +997,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 
     def playerContent(self, flag, id, vipFlags):
         result = {}
+        avId=0
         if self.box_video_type == '影视':
             ids = id.split("_")
+            avId="av"+ids[1]
             header = {
                 "Referer": "https://www.bilibili.com",
                 "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
@@ -1080,10 +1082,12 @@ class Spider(Spider):  # 元类 默认的元类 type
                 else:
                     result["contentType"] = 'video/x-flv'
         elif self.box_video_type == 'pu':
+            avId=mark=id.split(":")[1]
             result = self.get_Url_pu(idTxt=id)
         else:
 
             ids = id.split("_")
+            avId="av"+ids[1]
             url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=116'.format(ids[0], ids[1])
 
             if len(self.cookies) <= 0:
@@ -1116,8 +1120,30 @@ class Spider(Spider):  # 元类 默认的元类 type
                 "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
             }
             result["contentType"] = 'video/x-flv'
-            
+         if len(result["url"])<5 and self.box_video_type != '直播':
+                result= self.get_mp4(av=avId)  
         return result
+    def get_mp4(self,av):
+        result={}
+        url='https://m.bilibili.com/video/{0}'.format(av)
+        header1= {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
+        }
+        rsp = self.fetch(url, headers=header1)
+        html=rsp.text
+        url=self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)","readyDuration":',Index=1)
+        result["parse"] = 0
+        result["playUrl"] = ''
+        result["url"] = url
+        result["header"] = header
+        return result
+    def get_RegexGetText(self,Text,RegexText,Index):
+        returnTxt=""
+        Regex=re.search(RegexText, Text, re.M|re.S)
+        if Regex is not None:
+            returnTxt=Regex.group(Index)
+        return returnTxt    
     def get_Url_pu(self,idTxt):
         result = {}
         ids = idTxt.split(":")
