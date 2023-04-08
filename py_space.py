@@ -50,20 +50,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return result
 		Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
 		headers1=self.header
-		if tid=='B':
-			ts=str(int(time.time())*1000)
-			Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10&_='+ts
-			headers1= {
-				"Referer": 'https://www.bilibili.com/',
-				'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-				'Host': 'api.live.bilibili.com',
-				'cookie':'LIVE_BUVID=AUTO2616462757465937; fingerprint=77c85d9ff313891ec90a199813ae4113; CURRENT_QUALITY=64; CURRENT_BLACKGAP=1; blackside_state=0; fingerprint3=b9d652f66e003973ba5e01bdfd8721f7; hit-dyn-v2=1; b_ut=5; nostalgia_conf=-1; rpdid=|(u))ul)ukR~0JuYYmkl~kRu; i-wanna-go-back=-1; buvid_fp_plain=undefined; buvid_fp=77c85d9ff313891ec90a199813ae4113; buvid3=3693BDBE-2B47-E988-B3C2-204329BE615328103infoc; b_nut=1677837728; _uuid=6CC54C6D-2FAF-4DDC-B2B3-77468A910363B36562infoc; bp_video_offset_671023938=779182113663483900; SESSDATA=33fcc227%2C1695808020%2C713b2%2A31; bili_jct=f6d2e39f6a74593ef4e02e6bf206351b; DedeUserID=321534564; DedeUserID__ckMd5=4cf4212075f2f1eb; bp_video_offset_321534564=779812314217971800; CURRENT_FNVAL=4048; bp_t_offset_321534564=780280852185612341; buvid4=2E8D615F-F1D9-B7AD-63C2-1C9A145C98D117909-022030512-5ZCNRwNsIx1ENAcLMkU%2FQg%3D%3D; hit-new-style-dyn=1; b_lsid=C91089B16_18754630CC9'
-			}
 		rsp = self.fetch(Url,headers=headers1)
-		if tid=='B':
-			videos=self.get_list_B(jsonTxt=rsp.text)
-		else:
-			videos = self.get_list(html=rsp.text)
+		videos = self.get_list(html=rsp.text)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
@@ -79,19 +67,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		title = aid[0]
 		vodItems=[]
 		vod_play_from='线路'
-		if url.find('http')>-1:
-			vodItems = [title+"$"+url]
-		else:
-			Url='https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo?room_id={0}&no_playurl=0&mask=1&qn=0&platform=web&protocol=0,1&format=0,2&codec=0,1'.format(url)
-			headers1= {
-				"Referer": 'https://www.bilibili.com/',
-				'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-				'Host': 'api.live.bilibili.com',
-				'cookie':'LIVE_BUVID=AUTO2616462757465937; fingerprint=77c85d9ff313891ec90a199813ae4113; CURRENT_QUALITY=64; CURRENT_BLACKGAP=1; blackside_state=0; fingerprint3=b9d652f66e003973ba5e01bdfd8721f7; hit-dyn-v2=1; b_ut=5; nostalgia_conf=-1; rpdid=|(u))ul)ukR~0JuYYmkl~kRu; i-wanna-go-back=-1; buvid_fp_plain=undefined; buvid_fp=77c85d9ff313891ec90a199813ae4113; buvid3=3693BDBE-2B47-E988-B3C2-204329BE615328103infoc; b_nut=1677837728; _uuid=6CC54C6D-2FAF-4DDC-B2B3-77468A910363B36562infoc; bp_video_offset_671023938=779182113663483900; SESSDATA=33fcc227%2C1695808020%2C713b2%2A31; bili_jct=f6d2e39f6a74593ef4e02e6bf206351b; DedeUserID=321534564; DedeUserID__ckMd5=4cf4212075f2f1eb; bp_video_offset_321534564=779812314217971800; CURRENT_FNVAL=4048; bp_t_offset_321534564=780280852185612341; buvid4=2E8D615F-F1D9-B7AD-63C2-1C9A145C98D117909-022030512-5ZCNRwNsIx1ENAcLMkU%2FQg%3D%3D; hit-new-style-dyn=1; b_lsid=C91089B16_18754630CC9'
-			}
-			rsp = self.fetch(Url,headers=headers1)
-			vodItems=self.get_m3u8Url_B(jsonTxt=rsp.text)
-			vod_play_from='直播'
+		vodItems = [title+"$"+url]
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -126,13 +102,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		jx=self.ifJx(urlTxt=id)
 		parse=1
-		if flag=='直播':
-			parse=0
-			jx=0
-			headers = {
-                    "Referer": "https://live.bilibili.com",
-                    "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
-                }
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
@@ -141,7 +110,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|xigua.com)'
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
 		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
