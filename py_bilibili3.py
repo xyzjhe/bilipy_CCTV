@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         cateManual = {
             "动态": "动态",
             "关注的pu主":'关注的pu主',
-            "直播中1":'直播中',
+            "直播中2":'直播中',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -998,129 +998,131 @@ class Spider(Spider):  # 元类 默认的元类 type
     def playerContent(self, flag, id, vipFlags):
         result = {}
         avId=0
-        if self.box_video_type == '影视':
-            ids = id.split("_")
-            avId="av"+ids[1]
-            header = {
-                "Referer": "https://www.bilibili.com",
-                "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
-            }
-            url = 'https://api.bilibili.com/pgc/player/web/playurl?qn=116&ep_id={0}&cid={1}'.format(ids[0], ids[1])
-            if len(self.cookies) <= 0:
-                self.getCookie()
-            rsp = self.fetch(url, cookies=self.cookies, headers=header)
-            jRoot = json.loads(rsp.text)
-            if jRoot['message'] != 'success':
-                print("需要大会员权限才能观看")
-                return {}
-            jo = jRoot['result']
-            ja = jo['durl']
-            maxSize = -1
-            position = -1
-            for i in range(len(ja)):
-                tmpJo = ja[i]
-                if maxSize < int(tmpJo['size']):
-                    maxSize = int(tmpJo['size'])
-                    position = i
-
-            url = ''
-            if len(ja) > 0:
-                if position == -1:
-                    position = 0
-                url = ja[position]['url']
-
-            result["parse"] = 0
-            result["playUrl"] = ''
-            result["url"] = url
-            result["header"] = {
-                "Referer": "https://www.bilibili.com",
-                "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
-            }
-            result["contentType"] = 'video/x-flv'
-            
-
-        elif self.box_video_type == '直播':
-
-            ids = id.split("_")
-
-
-            url = 'https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%s&%s'%(ids[1],ids[0])
-
-            #raise Exception(url)
-            if len(self.cookies) <= 0:
-                self.getCookie()
-            rsp = self.fetch(url, cookies=self.cookies)
-            jRoot = json.loads(rsp.text)
-
-
-            if jRoot['code'] == 0:
-
-
-                jo = jRoot['data']
+        try:
+            if self.box_video_type == '影视':
+                ids = id.split("_")
+                avId="av"+ids[1]
+                header = {
+                    "Referer": "https://www.bilibili.com",
+                    "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+                }
+                url = 'https://api.bilibili.com/pgc/player/web/playurl?qn=116&ep_id={0}&cid={1}'.format(ids[0], ids[1])
+                if len(self.cookies) <= 0:
+                    self.getCookie()
+                rsp = self.fetch(url, cookies=self.cookies, headers=header)
+                jRoot = json.loads(rsp.text)
+                if jRoot['message'] != 'success':
+                    print("需要大会员权限才能观看")
+                    return {}
+                jo = jRoot['result']
                 ja = jo['durl']
-
+                maxSize = -1
+                position = -1
+                for i in range(len(ja)):
+                    tmpJo = ja[i]
+                    if maxSize < int(tmpJo['size']):
+                        maxSize = int(tmpJo['size'])
+                        position = i
 
                 url = ''
                 if len(ja) > 0:
-
-                    url = ja[0]['url']
+                    if position == -1:
+                        position = 0
+                    url = ja[position]['url']
 
                 result["parse"] = 0
-                # result['type'] ="m3u8"
                 result["playUrl"] = ''
-
                 result["url"] = url
                 result["header"] = {
-                    "Referer": "https://live.bilibili.com",
+                    "Referer": "https://www.bilibili.com",
                     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
                 }
-
-
+                result["contentType"] = 'video/x-flv'
                 
-                if "h5" in ids[0]:
-                    result["contentType"] = ''
-                else:
-                    result["contentType"] = 'video/x-flv'
-        elif self.box_video_type == 'pu':
-            avId=mark=id.split(":")[1]
-            result = self.get_Url_pu(idTxt=id)
-        else:
 
-            ids = id.split("_")
-            avId="av"+ids[1]
-            url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=116'.format(ids[0], ids[1])
+            elif self.box_video_type == '直播':
 
-            if len(self.cookies) <= 0:
-                self.getCookie()
-            rsp = self.fetch(url, cookies=self.cookies)
-            jRoot = json.loads(rsp.text)
-            jo = jRoot['data']
-            ja = jo['durl']
+                ids = id.split("_")
 
-            maxSize = -1
-            position = -1
 
-            for i in range(len(ja)):
-                tmpJo = ja[i]
-                if maxSize < int(tmpJo['size']):
-                    maxSize = int(tmpJo['size'])
-                    position = i
+                url = 'https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%s&%s'%(ids[1],ids[0])
 
-            url = ''
-            if len(ja) > 0:
-                if position == -1:
-                    position = 0
-                url = ja[position]['url']
+                #raise Exception(url)
+                if len(self.cookies) <= 0:
+                    self.getCookie()
+                rsp = self.fetch(url, cookies=self.cookies)
+                jRoot = json.loads(rsp.text)
 
-            result["parse"] = 0
-            result["playUrl"] = ''
-            result["url"] = url
-            result["header"] = {
-                "Referer": "https://www.bilibili.com",
-                "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
-            }
-            result["contentType"] = 'video/x-flv'
 
+                if jRoot['code'] == 0:
+
+
+                    jo = jRoot['data']
+                    ja = jo['durl']
+
+
+                    url = ''
+                    if len(ja) > 0:
+
+                        url = ja[0]['url']
+
+                    result["parse"] = 0
+                    # result['type'] ="m3u8"
+                    result["playUrl"] = ''
+
+                    result["url"] = url
+                    result["header"] = {
+                        "Referer": "https://live.bilibili.com",
+                        "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+                    }
+
+
+                    
+                    if "h5" in ids[0]:
+                        result["contentType"] = ''
+                    else:
+                        result["contentType"] = 'video/x-flv'
+            elif self.box_video_type == 'pu':
+                avId=mark=id.split(":")[1]
+                result = self.get_Url_pu(idTxt=id)
+            else:
+
+                ids = id.split("_")
+                avId="av"+ids[1]
+                url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=116'.format(ids[0], ids[1])
+
+                if len(self.cookies) <= 0:
+                    self.getCookie()
+                rsp = self.fetch(url, cookies=self.cookies)
+                jRoot = json.loads(rsp.text)
+                jo = jRoot['data']
+                ja = jo['durl']
+
+                maxSize = -1
+                position = -1
+
+                for i in range(len(ja)):
+                    tmpJo = ja[i]
+                    if maxSize < int(tmpJo['size']):
+                        maxSize = int(tmpJo['size'])
+                        position = i
+
+                url = ''
+                if len(ja) > 0:
+                    if position == -1:
+                        position = 0
+                    url = ja[position]['url']
+
+                result["parse"] = 0
+                result["playUrl"] = ''
+                result["url"] = url
+                result["header"] = {
+                    "Referer": "https://www.bilibili.com",
+                    "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+                }
+                result["contentType"] = 'video/x-flv'
+        except Exception as e:
+            print('吕军涛'+e)
         if len(result)<2 and self.box_video_type != '直播':
                 result= self.get_mp4(av=avId)  
         return result
