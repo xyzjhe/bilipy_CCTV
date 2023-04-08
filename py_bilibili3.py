@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         cateManual = {
             "动态": "动态",
             "关注的pu主":'关注的pu主',
-            "直播中3":'直播中',
+            "直播中4":'直播中',
 
             "收藏夹": '收藏夹',
             "历史记录": '历史记录',
@@ -1128,17 +1128,11 @@ class Spider(Spider):  # 元类 默认的元类 type
     def get_mp4(self,av):
         result={}
         url='https://m.bilibili.com/video/{0}'.format(av)
-        header1= {
-            "Referer": "https://www.bilibili.com",
-            "User-Agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3947.100 Mobile Safari/537.36"
-        }
-        rsp = self.fetch(url, headers=header1)
-        html=rsp.text
-        url=self.get_RegexGetText(Text=html,RegexText=r'"readyVideoUrl":"(.+?)","readyDuration":',Index=1)
+       
         result["parse"] = 0
         result["playUrl"] = ''
-        result["url"] = url
-        result["header"] = header
+        result["url"] = 'http://aod.cos.tx.xmcdn.com/storages/0929-audiofreehighqps/60/83/CKwRIRwEca7LACrvxACqYzO6.m4a'
+        result["header"] = ''
         return result
     def get_RegexGetText(self,Text,RegexText,Index):
         returnTxt=""
