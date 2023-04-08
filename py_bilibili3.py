@@ -595,17 +595,29 @@ class Spider(Spider):  # 元类 默认的元类 type
         self.box_video_type = '直播'
         videos=[]
         result={}
-        
-        url ='222272'
-        title ='瑶息'#vod['title']
-        img='https://i0.hdslb.com/bfs/live-key-frame/keyframe04081000000000222272soy7ho.jpg'#vod['keyframe']
-        remarks='9'#vod['online']
-        videos.append({
-            "vod_id":str(url)+'&live',
-            "vod_name":title,
-            "vod_pic":img,
-            "vod_remarks":remarks
-        })
+        ts=str(int(time.time())*1000)
+        Url='https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page={0}&page_size=10&_={1}'.format(pg,ts)
+        rsp = self.fetch(Url,cookies=self.cookies)
+        jsonTxt=webReadFile(urlStr=Url,header=header)
+        jRoot = json.loads(jsonTxt)
+        if jRoot['code']!=0:
+            return result
+        jo = jRoot['data']
+        vodList = jo['list']
+        rooms=jo['rooms']
+        for vod in vodList:
+            url =vod['room_id']
+            title =vod['title']
+            img=vod['keyframe']
+            remarks=vod['online']
+            if len(img)<3:
+                img='https://pics2.baidu.com/feed/b2de9c82d158ccbfc8ba4234381f9e39b035418c.jpeg@f_auto?token=9e3686f85afb08f862ddb42dc9b9682c'
+            videos.append({
+                "vod_id":str(url)+'&live',
+                "vod_name":title,
+                "vod_pic":img,
+                "vod_remarks":remarks
+            })
         result['list'] = videos
         result['page'] = pg
         result['pagecount'] =999
