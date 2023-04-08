@@ -1001,7 +1001,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         try:
             if self.box_video_type == '影视':
                 ids = id.split("_")
-                avId="av"+ids[1]
+                avId="av"+ids[0]
                 header = {
                     "Referer": "https://www.bilibili.com",
                     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
@@ -1088,7 +1088,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             else:
 
                 ids = id.split("_")
-                avId="av"+ids[1]
+                avId="av"+ids[0]
                 url = 'https://api.bilibili.com:443/x/player/playurl?avid={0}&cid={1}&qn=116'.format(ids[0], ids[1])
 
                 if len(self.cookies) <= 0:
