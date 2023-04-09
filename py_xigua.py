@@ -88,7 +88,7 @@ class Spider(Spider):
 			req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
 			response = request.urlopen(req)
 			urlTxt=response.read().decode('utf-8')
-			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt,idTxet=vip)
+			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt,IsVip=vip)
 		else:
 			rsp=self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
@@ -125,6 +125,10 @@ class Spider(Spider):
 		dir=''
 		cont=''
 		vip='true'
+		if aid[4]=='免费':
+			vip='false'
+		elif aid[4]=='付费':
+			vip='true'
 		videoList=[]
 		if len(aid)==5:
 			jRoot = json.loads(htmlTxt)
@@ -325,7 +329,7 @@ class Spider(Spider):
 				"vod_remarks":remarks
 			})
 		return videos
-	def get_list_videoGroup_json(self,jsonTxt,idTxet):
+	def get_list_videoGroup_json(self,jsonTxt,IsVip):
 		result={}
 		jRoot = json.loads(jsonTxt)
 		if jRoot['code']!=200:
@@ -339,7 +343,7 @@ class Spider(Spider):
 		artist='_'
 		for vod in vodList:
 			url =vod['albumId']
-			title =str(idTxet)+vod['title']
+			title =vod['title']
 			imgList =vod.get('coverList') 
 			if len(imgList)>0:
 				img=imgList[0]['url']
@@ -351,7 +355,7 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###演员###封面
-			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
+			vod_id="{0}###{1}###{2}###{3}###{4}".format(title,url,artist,img,IsVip)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
