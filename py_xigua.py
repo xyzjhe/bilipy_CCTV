@@ -125,10 +125,7 @@ class Spider(Spider):
 		dir=''
 		cont=''
 		vip='true'
-		if aid[4]=='免费':
-			vip='false'
-		if aid[4]=='付费':
-			vip='true'
+	
 		videoList=[]
 		if len(aid)==4:
 			jRoot = json.loads(htmlTxt)
