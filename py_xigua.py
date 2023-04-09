@@ -77,7 +77,7 @@ class Spider(Spider):
 		if tid!='follow':
 			offset=0 if int(pg)<2 else 18*int(pg)
 			self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
-			vip=extend['order']
+			vip=extend['order'] if 'order' in extend.keys() else '全部资费'
 			if vip=='free':
 				vip='免费'
 			elif vip=='vip':
