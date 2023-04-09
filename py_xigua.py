@@ -127,7 +127,7 @@ class Spider(Spider):
 		vip='true'
 		if aid[4]=='免费':
 			vip='false'
-		elif aid[4]=='付费':
+		if aid[4]=='付费':
 			vip='true'
 		videoList=[]
 		if len(aid)==5:
