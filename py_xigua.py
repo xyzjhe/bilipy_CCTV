@@ -81,7 +81,7 @@ class Spider(Spider):
 			req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
 			response = request.urlopen(req)
 			urlTxt=response.read().decode('utf-8')
-			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
+			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt,idTxt=extend['order'])
 		else:
 			rsp=self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
@@ -352,7 +352,7 @@ class Spider(Spider):
 				"vod_remarks":remarks
 			})
 		return videos
-	def get_list_videoGroup_follow_json(self,jsonTxt):
+	def get_list_videoGroup_follow_json(self,jsonTxt,idTxt):
 		videos=[]
 		jRoot = json.loads(jsonTxt)
 		if jRoot['code']!=0:
@@ -365,7 +365,7 @@ class Spider(Spider):
 		artist=''
 		for vod in vodList:
 			url =vod.get('user_id') 
-			title =vod['name']
+			title =idTxt+vod['name']
 			img =vod.get('avatar_url') 
 			remarks=vod['description']
 			artistList=vod.get('actorList') 
