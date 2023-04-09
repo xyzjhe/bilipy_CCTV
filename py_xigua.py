@@ -130,7 +130,7 @@ class Spider(Spider):
 		if aid[4]=='付费':
 			vip='true'
 		videoList=[]
-		if len(aid)==5:
+		if len(aid)==4:
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=200:
 				return result
