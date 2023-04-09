@@ -88,7 +88,7 @@ class Spider(Spider):
 			req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
 			response = request.urlopen(req)
 			urlTxt=response.read().decode('utf-8')
-			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt,idTxet=extend['order'])
+			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt,idTxet=vip)
 		else:
 			rsp=self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
