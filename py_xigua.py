@@ -130,7 +130,7 @@ class Spider(Spider):
 		if aid[4]=='付费':
 			vip='true'
 		videoList=[]
-		if len(aid)==6:
+		if len(aid)==5:
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=200:
 				return result
@@ -355,7 +355,7 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###演员###封面
-			vod_id="{0}###{1}###{2}###{3}###{4}".format(title,url,artist,img,IsVip)
+			vod_id="{0}_{4}###{1}###{2}###{3}".format(title,url,artist,img,IsVip)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
