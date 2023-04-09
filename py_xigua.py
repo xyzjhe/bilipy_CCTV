@@ -77,7 +77,7 @@ class Spider(Spider):
 		if tid!='follow':
 			offset=0 if int(pg)<2 else 18*int(pg)
 			self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
-			vip=extend['order']
+			vip=''#extend['order']
 			if vip='':
 				vip='全部资费'
 			data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"全部资费"},"offset":'+str(offset)+',"limit":18}'
