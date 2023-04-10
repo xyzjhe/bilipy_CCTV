@@ -365,7 +365,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 remark = str(vod['sign']).strip()
                 desc=str(vod['official_verify']['desc']).strip()
                 videos.append({
-                    "vod_id":aid+"###"+img+"###"+desc+"###"+remark+"&pu",
+                    "vod_id":title+"###"+aid+"###"+img+"###"+desc+"###"+remark+"&pu",
                     "vod_name":title,
                     "vod_pic":img,
                     "vod_remarks":remark
@@ -866,7 +866,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                     ]
                 }
         elif arrays[-1] == 'pu':
-            self.box_video_type='影视'
+            self.box_video_type='pu'
             aidList=arrays[0].split('###')
             title = aidList[0]
             mid=aidList[1]
