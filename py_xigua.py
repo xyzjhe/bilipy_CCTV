@@ -77,18 +77,11 @@ class Spider(Spider):
 		if tid!='follow':
 			offset=0 if int(pg)<2 else 18*int(pg)
 			self.header['Referer']='https://www.ixigua.com/cinema/filter/'.format(tid)
-			vip=extend['order'] if 'order' in extend.keys() else '全部资费'
-			if vip=='free':
-				vip='免费'
-			elif vip=='vip':
-				vip='付费'
-			else:
-				vip='全部资费'
-			data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"'+vip+'"},"offset":'+str(offset)+',"limit":18}'
+			data=r'{"pinyin":"'+tid+'","filters":{"type":"'+idTxt+'","area":"全部地区","tag":"全部类型","sort":"综合排序","paid":"全部资费"},"offset":'+str(offset)+',"limit":18}'
 			req = request.Request(url=url, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
 			response = request.urlopen(req)
 			urlTxt=response.read().decode('utf-8')
-			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt,IsVip=vip)
+			videos= self.get_list_videoGroup_json(jsonTxt=urlTxt)
 		else:
 			rsp=self.fetch(url,headers=self.header)
 			urlTxt=rsp.text
@@ -113,8 +106,6 @@ class Spider(Spider):
 		title = aid[0]
 		act=aid[2]
 		logo = aid[3]
-		if len(key)<4:
-			return result
 		Url='https://www.ixigua.com/api/albumv2/details?albumId={0}'.format(key)
 		if len(aid)==5:
 			Url='https://www.ixigua.com/api/videov2/author/new_video_list?to_user_id={0}'.format(key)
@@ -126,7 +117,7 @@ class Spider(Spider):
 		cont=''
 		vip='true'
 		videoList=[]
-		if len(aid)==4:
+		if len(aid)==5:
 			jRoot = json.loads(htmlTxt)
 			if jRoot['code']!=200:
 				return result
@@ -325,7 +316,7 @@ class Spider(Spider):
 				"vod_remarks":remarks
 			})
 		return videos
-	def get_list_videoGroup_json(self,jsonTxt,IsVip):
+	def get_list_videoGroup_json(self,jsonTxt):
 		result={}
 		jRoot = json.loads(jsonTxt)
 		if jRoot['code']!=200:
@@ -351,7 +342,7 @@ class Spider(Spider):
 			if len(title)==0:
 				continue
 			#标题###地址###演员###封面
-			vod_id="{0}_{4}###{1}###{2}###{3}".format(title,url,artist,img,IsVip)
+			vod_id="{0}###{1}###{2}###{3}".format(title,url,artist,img)
 			videos.append({
 				"vod_id":vod_id,
 				"vod_name":title,
@@ -403,7 +394,7 @@ class Spider(Spider):
 		return vodItems
 	config = {
 		"player": {},
-		"filter": {"dianying":[{"key": "order","name": "类型","value": [{"n": "免费","v": "free"},{"n": "收费","v": "vip"}]}]}
+		"filter": {}
 	}
 	header = {
 		"Cookie":"MONITOR_WEB_ID=45c3b6ab-7ad4-4805-b971-5962d1d6909a; s_v_web_id=verify_lev3h43l_rrTPrFDG_ztWQ_4ugg_8WBA_yGVYsXlVyoBh; passport_csrf_token=80e0efe90bc8bd6681a896dd90cd08cc; passport_csrf_token_default=80e0efe90bc8bd6681a896dd90cd08cc; sid_guard=54266b282adf9c8dbb69f9cc37342191%7C1678002757%7C3024000%7CSun%2C+09-Apr-2023+07%3A52%3A37+GMT; uid_tt=3c0e8cb286ad3de4d95252bb7d5e0fc6; uid_tt_ss=3c0e8cb286ad3de4d95252bb7d5e0fc6; sid_tt=54266b282adf9c8dbb69f9cc37342191; sessionid=54266b282adf9c8dbb69f9cc37342191; sessionid_ss=54266b282adf9c8dbb69f9cc37342191; sid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; ssid_ucp_v1=1.0.0-KDQ5MzZiMjFhZjBkODU1MjRiZDMxNThkMzhlNDExYWUwMTY5NTNlZTkKFQjL2cnx9AIQxZSRoAYYGCAMOAhABRoCaGwiIDU0MjY2YjI4MmFkZjljOGRiYjY5ZjljYzM3MzQyMTkx; odin_tt=b9c6f308ba52ea67e84bbbb1024c5071bd43a8f9d3497ff8a336c5e8817236caad3e164515580da83f5a1e4a06a3fab0; __ac_signature=_02B4Z6wo00f01Ktz.lQAAIDBSo2v2RT8BmSrUfrAAE7L2ueb1h-CroqOkPYbaRIeEXRo4R54VWHBZuGMQa5lzlf.ijuXpSsSFdusaGnHj5Ro3JyJCPMcTlPk9Fzj0RPKPk3LCZJ1GmV34nYRe4; support_webp=true; support_avif=false; csrf_session_id=275ef26f7fdf33c95da9f03b9ac611a5; tt_scid=gUK2TRTHs4pYCo-hadXfF.Wjghm2O-.0Cyiy.DGfxytfVrUY-KptBB4prgcFsqqD97d6; ttwid=1%7CCueNR-HU9tGVF30WaiFCjXDxh0FUXoXsZr-cIb9Dogg%7C1679469911%7C2162c32be8a2a1eb373391fcb0d61ec0f684fc7f156dce997de6a4625c0608e8; msToken=e-9KuEl6xQfyp-QconAVI1oSUsTWd_zCP31LrWs8QzVZqlwb4q9PN2gVGAKcb3TWHGauqavlSZ5RNkdCSzHjRyUfrPAawZ5LKXDNZQFkVN6Oi_lnfAiSDPgs4q8Kf6Y7; ixigua-a-s=3",
