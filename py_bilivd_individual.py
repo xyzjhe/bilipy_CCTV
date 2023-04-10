@@ -889,7 +889,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             typeName = aidList[3]
             remark = aidList[4].replace("&pu","")
             vod = {
-                "vod_id": arrays[0],
+                "vod_id": title+"###"+mid+"###"+pic+"###"+typeName+"###"+remark+"&pu",
                 "vod_name": title,
                 "vod_pic": pic,
                 "type_name": typeName,
