@@ -795,7 +795,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 dec = jo['evaluate']
                 remark = jo['new_ep']['desc']
                 vod = {
-                    "vod_id": id+"&movie",
+                    "vod_id": array[0],
                     "vod_name": title,
                     "vod_pic": pic,
                     "type_name": typeName,
