@@ -843,7 +843,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 remark = '在线人数:'+str(jo['online']).strip()
 
                 vod = {
-                    "vod_id": aid,
+                    "vod_id": aid+"&live",
                     "vod_name": '(' + dire + ")" + title,
                     "vod_pic": pic,
                     "type_name": typeName,
