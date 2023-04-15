@@ -544,9 +544,9 @@ class Spider(Spider):  # 元类 默认的元类 type
                     })
             result['list'] = videos
             result['page'] = pg
-            result['pagecount'] = 9999
-            result['limit'] = 90
-            result['total'] = 999999
+            result['pagecount'] = pg
+            result['limit'] = len(videos)
+            result['total'] = len(videos)
         return result
 
 
