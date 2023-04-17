@@ -89,7 +89,7 @@
           },
           {
 		"key": "SPMGTV",
-		"name": "🥭芒果(官)",
+		"name": " 🍋芒果(官)",
 		"type": 3,
 		"api": "csp_MGTV",
 		"searchable": 1,
@@ -422,13 +422,13 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kugou.py"
     },
     {
-      "key": "追剧喵",
-      "name": "😻追剧喵",
-      "type": 3,
-      "api": "csp_ZJMiao",
-      "searchable": 1,
-      "quickSearch": 1,
-      "filterable": 1
+		"key": "追剧喵",
+		"name": "😻追剧喵",
+		"type": 3,
+		"api": "csp_ZJMiao",
+		"searchable": 1,
+		"quickSearch": 1,
+		"filterable": 1
     },
     {
       "key": "csp_Ysgc",
@@ -1667,47 +1667,16 @@
         }
       }
     },
-       {
-      "name": "jx2",
-      "type": 1,
-      "url": "http://jx.vipmv.co/json.php?token=123457&url="
-        }, 
     {
       "name": "ckflv5",
       "type": 1,
       "url": "http://api.ckflv.cn/?url="
     },
     {
-		"name": "rx6",
-		"type": 1,
-		"url": "http://rxjx.kuanjv.com/allm3u8.php?url="
-  	}, 
-    {
-		"name": "tkys7",
-		"type": 1,
-		"url": "https://rx.bt5v.com/json/jsonindex.php/?url=",
-		"ext": {
-			"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
-		       }    
-	  },
-    {
 		"name": "宝盒TV8",
 		"type": 1,
 		"url": "https://jx.52ruo.cc/json/?id=6&url="
 	   },
-       {
-      "name": "jx1",
-      "type": 0,
-      "url": "https://jx.xmflv.com/?url="
-        },
-  {
-		"name": "bozrc",
-		"type": 0,
-		"url": "https://jx.bozrc.com:4433/player/?url=",
-		"ext": {
-			"flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":""}
-		}    
-	},
    {
 		"name": "酷享影视",
 		"type": 1,
@@ -1717,11 +1686,6 @@
       "header":{"User-Agent":"okhttp/4.1.0"}
 		        }    
 	},
-        {
-      "name": "hxys",
-      "type": 0,
-      "url": "https://hxys.tv/bfq/?url="
-    },
         {
           "name": "rongxing7",
           "type": 1,
@@ -1757,19 +1721,6 @@
             ]
           }
         },
-        {
-		        "name": "free",
-		        "type": 0,
-	        	"url": "https://h5.freejson.xyz/player/?url=",
-		        "ext": {
-			      "flag": ["qq", "腾讯", "qiyi", "爱奇艺", "奇艺", "youku", "优酷", "mgtv", "芒果", "letv", "乐视", "pptv", "PPTV", "sohu", "bilibili", "哔哩哔哩", "哔哩"],"header":{"User-Agent":"okhttp/4.1.0"}
-		       }    
-	      },
-        {
-            "name": "okjx",
-            "type": 0,
-            "url": "https://okjx.cc/?url="
-        },
          {
             "name": "小猫咪",
             "type": 1,
@@ -1804,12 +1755,7 @@
                     "m1905"
                 ]
             }
-        },                     
-	{
-		"name": "rx2",
-		"type": 1,
-		"url": "http://rxjx.kuanjv.com/allm3u8.php?url="
-	},
+        },
         {
 	    "name":"OK",
 	    "type":0,
