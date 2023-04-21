@@ -260,7 +260,7 @@
 		"name": "🥒樱花动漫(PY)",
 		"type": 3,
 		"api": "py_yhd",
-		"searchable": 1,
+		"searchable": 0,
 		"quickSearch": 0,
 		"filterable": 0,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_yhdm.py"
