@@ -75,6 +75,8 @@ class Spider(Spider):
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="(#playlist\d)" data-toggle="tab">(.+?)</a>',Index=1)
+		if len(line)<1:
+			return  {'list': []}
 		playFrom = []
 		videoList=[]
 		vodItems = []
@@ -123,12 +125,8 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.dm88.me/search.asp?searchword={0}&submit='.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
 		result = {
-				'list': videos
+				'list': []
 			}
 		return result
 
