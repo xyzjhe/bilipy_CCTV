@@ -25,8 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"个人收藏": "Collection",
-			"B站直播":"B"
+			"个人收藏": "Collection"
 		}
 		classes = []
 		for k in cateManual:
@@ -62,12 +61,32 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		aid = array[0].split('###')
 		tid = aid[0]
-		logo = aid[2]
-		url = aid[1]
-		title = aid[0]
+		logo = aid[3]
+		url = aid[2]
+		title = aid[1]
 		vodItems=[]
 		vod_play_from='线路'
-		vodItems = [title+"$"+url]
+		if tid=='play':
+			vodItems = [title+"$"+url]
+		else:
+		id=self.get_RegexGetText(Text=url,RegexText='www\.(.+?)\.',Index=1)
+		reTxt=''
+		for t in ListRe:
+			if t[0]==id:
+				reTxt=t
+		if reTxt!='':
+			rsp = self.fetch(Url)
+			htmlTxt=rsp.text
+			line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
+			if len(line)<1:
+				return  {'list': []}
+			playFrom=[t for t in line]
+			circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
+			for t in circuit:
+				vodItems.append(get_EpisodesList(html=t,patternTxt=reTxt[4]))
+			logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
+			
+			#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -80,16 +99,31 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_director":"",
 			"vod_content":""
 		}
-		vod['vod_play_from'] = vod_play_from
-		vod['vod_play_url'] = "#".join(vodItems)
+		vod['vod_play_from'] = '$$$'.join(playFrom)
+		vod['vod_play_url'] =  "$$$".join(vodItems)
 		result = {
 			'list':[
 				vod
 			]
 		}
-		print(result)
 		return result
-
+	def get_lineList(self,Txt,mark,after):
+		circuit=[]
+		origin=Txt.find(mark)
+		while origin>8:
+			end=Txt.find(after,origin)
+			circuit.append(Txt[origin:end])
+			origin=Txt.find(mark,end)
+		return circuit	
+	def get_RegexGetTextLine(self,Text,RegexText,Index):
+		returnTxt=[]
+		pattern = re.compile(RegexText, re.M|re.S)
+		ListRe=pattern.findall(Text)
+		if len(ListRe)<1:
+			return returnTxt
+		for value in ListRe:
+			returnTxt.append(value)	
+		return returnTxt
 	def searchContent(self,key,quick):
 		result = {
 			'list':[]
@@ -132,11 +166,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for vod in ListRe:
 			lastVideo = vod[0]
 			title =vod[1]
-			
+			tdi='List' if title.find('_List')>1 else 'play'
 			if len(lastVideo) == 0:
-				lastVideo = '_'
+				continue
 			videos.append({
-				"vod_id":"{0}###{1}###{2}".format(title,lastVideo,img),
+				"vod_id":"{0}###{1}###{2}###{3}".format(tdi,title,lastVideo,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
