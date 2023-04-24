@@ -1001,7 +1001,8 @@ class Spider(Spider):  # 元类 默认的元类 type
     def playerContent(self, flag, id, vipFlags):
         result = {}
 
-        avId='BV1RB4y1P7eD'
+        avId=''
+        isVip=False
         try:
             if self.box_video_type == '影视':
                 ids = id.split("_")
@@ -1017,7 +1018,9 @@ class Spider(Spider):  # 元类 默认的元类 type
                 jRoot = json.loads(rsp.text)
                 if jRoot['message'] != 'success':
                     print("需要大会员权限才能观看")
-                    return {}
+                    isVip=True
+                    result=self.Get_vip(ep=ids[0])
+                    return result
                 jo = jRoot['result']
                 ja = jo['durl']
                 maxSize = -1
@@ -1130,6 +1133,15 @@ class Spider(Spider):  # 元类 默认的元类 type
             result={}
         if result=={} and self.box_video_type.find('直播')<0:
             result= self.get_mp4(av=avId)  
+        return result
+    def Get_vip(self,ep):
+        url='https://www.bilibili.com/bangumi/play/ep{0}'.format(ep)
+        result={}
+        result["parse"] = 1
+        result['jx'] = 1
+        result["playUrl"] = ''
+        result["url"] = url
+        result["header"] = ''
         return result
     def get_mp4(self,av):
         result={}
