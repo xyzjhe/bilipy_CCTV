@@ -69,24 +69,24 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if tid=='play':
 			vodItems = [title+"$"+url]
 		else:
-		id=self.get_RegexGetText(Text=url,RegexText='www\.(.+?)\.',Index=1)
-		reTxt=''
-		for t in self.ListRe:
-			if t[0]==id:
-				reTxt=t
-		if reTxt!='':
-			rsp = self.fetch(url)
-			htmlTxt=rsp.text
-			line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
-			if len(line)<1:
-				return  {'list': []}
-			playFrom=[t for t in line]
-			circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
-			for t in circuit:
-				vodItems.append(self.get_EpisodesList(html=t,patternTxt=reTxt[4]))
-			logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
-			
-			#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
+			id=self.get_RegexGetText(Text=url,RegexText='www\.(.+?)\.',Index=1)
+			reTxt=''
+			for t in self.ListRe:
+				if t[0]==id:
+					reTxt=t
+			if reTxt!='':
+				rsp = self.fetch(url)
+				htmlTxt=rsp.text
+				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
+				if len(line)<1:
+					return  {'list': []}
+				playFrom=[t for t in line]
+				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
+				for t in circuit:
+					vodItems.append(self.get_EpisodesList(html=t,patternTxt=reTxt[4]))
+				logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
+				
+				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
