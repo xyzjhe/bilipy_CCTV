@@ -66,7 +66,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		title = aid[1]
 		vodItems=[]
 		vod_play_from='线路'
-		if tid=='play':
+		if tid!='List':
 			vodItems = [title+"$"+url]
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText='www\.(.+?)\.',Index=1)
@@ -84,7 +84,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
 				for t in circuit:
 					vodItems.append(self.get_EpisodesList(html=t,patternTxt=reTxt[4]))
-				logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
+				#logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
 				
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
 		vod = {
@@ -99,8 +99,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_director":"",
 			"vod_content":""
 		}
-		vod['vod_play_from'] = '$$$'.join(playFrom)
-		vod['vod_play_url'] =  "$$$".join(vodItems)
+		vod['vod_play_from'] =  "线路"
+		vod['vod_play_url'] = "#".join(vodItems)
 		result = {
 			'list':[
 				vod
