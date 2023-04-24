@@ -65,7 +65,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url = aid[2]
 		title = aid[1]
 		vodItems=[]
-		vod_play_from='线路'
+		vod_play_from=['线路',]
 		if tid!='List':
 			vodItems = [title+"$"+url]
 		else:
@@ -99,7 +99,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_director":"",
 			"vod_content":""
 		}
-		vod['vod_play_from'] =  "线路"
+		vod['vod_play_from'] =  "$$$".join(vod_play_from)
 		vod['vod_play_url'] = "#".join(vodItems)
 		result = {
 			'list':[
