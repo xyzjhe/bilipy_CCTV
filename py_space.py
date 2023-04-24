@@ -71,7 +71,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
 			reTxt=''
-			vodItems = [title+"$"+url]
+			for t in self.ListRe:
+				if t[0]==id:
+					reTxt=t
+					break
+			vodItems = [reTxt+"$"+url]
 				#logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
 				
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
