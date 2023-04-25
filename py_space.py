@@ -86,7 +86,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
 				#测试到此
 				for t in circuit:
-					vodItems.append(self.get_EpisodesList(html=t,patternTxt=reTxt[4]))
+					vodItems=self.get_EpisodesList(html=t,patternTxt=reTxt[4])
 				#logo=self.get_RegexGetText(Text=htmlTxt,RegexText=reTxt[5],Index=1)
 				
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
