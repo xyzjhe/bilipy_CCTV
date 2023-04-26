@@ -90,7 +90,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				if t['name']==id:
 					reTxt=t
 			if reTxt!='':
-				htmlTxt=self.webReadFile(urlStr=url,header=header)
+				htmlTxt=self.webReadFile(urlStr=url,header=self.header)
 				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
 				vod_play_from=[t for t in line]
 				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
