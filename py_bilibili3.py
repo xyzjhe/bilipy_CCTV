@@ -976,7 +976,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     def get_search_Fanju(self, key):
         self.box_video_type = '搜索'
         
-        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_bangumi&order=totalrank&pagesize=20'.format(key)
+        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_bangumi&order=totalrank&pagesize=20'.format(urllib.parse.quote(key))
 
         rsp = self.fetch(url, cookies=self.cookies)
         content = rsp.text
