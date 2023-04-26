@@ -77,7 +77,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					reTxt=t
 					break
 			if reTxt!='':
-				rsp = self.fetch(url)
+				rsp = self.swebReadFile(urlStr=url,header=self.header)
 				#htmlTxt=rsp.text
 				#line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
 				vod_play_from=['线路','测 试']#[t for t in line]
@@ -164,6 +164,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			returnTxt=Regex.group(Index)
 		return returnTxt	
+	def webReadFile(self,urlStr,header):
+		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
+		html = urllib.request.urlopen(req).read().decode('utf-8')
+		#print(Host)
+		return html
 	def get_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
