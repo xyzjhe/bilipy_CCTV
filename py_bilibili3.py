@@ -97,7 +97,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     def homeContent(self, filter):
         result = {}
         cateManual = {
-            "动态": "动态",
+            "动态1": "动态",
             "关注的pu主":'关注的pu主',
             "直播中":'直播中',
 
@@ -544,9 +544,9 @@ class Spider(Spider):  # 元类 默认的元类 type
                     })
             result['list'] = videos
             result['page'] = pg
-            result['pagecount'] = 9999
-            result['limit'] = 90
-            result['total'] = 999999
+            result['pagecount'] = pg
+            result['limit'] = len(videos)
+            result['total'] = len(videos)
         return result
 
 
@@ -795,7 +795,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 dec = jo['evaluate']
                 remark = jo['new_ep']['desc']
                 vod = {
-                    "vod_id": id,
+                    "vod_id": array[0],
                     "vod_name": title,
                     "vod_pic": pic,
                     "type_name": typeName,
@@ -843,7 +843,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                 remark = '在线人数:'+str(jo['online']).strip()
 
                 vod = {
-                    "vod_id": aid,
+                    "vod_id": aid+"&live",
                     "vod_name": '(' + dire + ")" + title,
                     "vod_pic": pic,
                     "type_name": typeName,
@@ -872,7 +872,10 @@ class Spider(Spider):  # 元类 默认的元类 type
             mid=aidList[1]
             pic = aidList[2]
             videoList=[]
-            for i in range(1, 3):
+            m=2
+            if mid=='72270557':
+                m=7
+            for i in range(1, m):
                 url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
                 rsp = self.fetch(url,headers=self.header)
                 htmlTxt= rsp.text
@@ -963,6 +966,10 @@ class Spider(Spider):  # 元类 默认的元类 type
     
 
     def searchContent(self, key, quick):
+        result = self.get_search(key=key)
+
+        return result
+    def get_search(self, key):
         self.box_video_type = '搜索'
         header = {
             "Referer": "https://www.bilibili.com",
@@ -998,7 +1005,8 @@ class Spider(Spider):  # 元类 默认的元类 type
     def playerContent(self, flag, id, vipFlags):
         result = {}
 
-        avId='BV1RB4y1P7eD'
+        avId=''
+        isVip=False
         try:
             if self.box_video_type == '影视':
                 ids = id.split("_")
@@ -1014,7 +1022,9 @@ class Spider(Spider):  # 元类 默认的元类 type
                 jRoot = json.loads(rsp.text)
                 if jRoot['message'] != 'success':
                     print("需要大会员权限才能观看")
-                    return {}
+                    isVip=True
+                    result=self.Get_vip(ep=ids[0])
+                    return result
                 jo = jRoot['result']
                 ja = jo['durl']
                 maxSize = -1
@@ -1127,6 +1137,15 @@ class Spider(Spider):  # 元类 默认的元类 type
             result={}
         if result=={} and self.box_video_type.find('直播')<0:
             result= self.get_mp4(av=avId)  
+        return result
+    def Get_vip(self,ep):
+        url='https://www.bilibili.com/bangumi/play/ep{0}'.format(ep)
+        result={}
+        result["parse"] = 1
+        result['jx'] = 1
+        result["playUrl"] = ''
+        result["url"] = url
+        result["header"] = ''
         return result
     def get_mp4(self,av):
         result={}
