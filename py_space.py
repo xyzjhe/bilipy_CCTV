@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"个人收藏3": "Collection"
+			"个人收藏4": "Collection"
 		}
 		classes = []
 		for k in cateManual:
@@ -79,9 +79,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if reTxt!='':
 				rsp = self.fetch(url)
 				htmlTxt=rsp.text
-				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
-				if len(line)<1:
-					return  {'list': []}
+				#line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
 				vod_play_from=['线路','测 试']#[t for t in line]
 				#circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
 				#测试到此
