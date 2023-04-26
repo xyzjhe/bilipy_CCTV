@@ -96,7 +96,14 @@ class Spider(Spider):  # 元类 默认的元类 type
 				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
 				#测试到此
 				for t in circuit:
-					vodItems.append(self.get_EpisodesList(html=t,patternTxt=reTxt['pattern']))
+					ListRe=re.finditer(reTxt['pattern'], html, re.M|re.S)
+					videos = []
+					for vod in ListRe:
+						url = vod.group('url')
+						title =vod.group('title')
+						videos.append(title+"$"+url)
+					joinStr = "#".join(videos)
+					vodItems.append(joinStr)
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
 		vod = {
 			"vod_id":array[0],
