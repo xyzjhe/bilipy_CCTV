@@ -103,7 +103,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					for vod in ListRe:
 						url = vod.group('url')
 						EpisodeTitle =vod.group('title')
-						videos.append(reTxt['url']+EpisodeTitle+"$"+url)
+						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
 					joinStr = "#".join(videos)
 					vodItems.append(joinStr)
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
