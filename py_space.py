@@ -96,7 +96,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
 				#测试到此
 				for t in circuit:
-					ListRe=re.finditer(reTxt['pattern'], html, re.M|re.S)
+					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
 					videos = []
 					for vod in ListRe:
 						url = vod.group('url')
