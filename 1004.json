@@ -36,14 +36,14 @@
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_alist.py"
     },
     {
-      "key": "py_dgdeyue",
-      "name": "喝茶影视",
-      "type": 3,
-      "api": "py_dgdeyue",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_dgdeyue.py"
+	"key": "py_collect",
+	"name": "🤖个人收藏",
+	"type": 3,
+	"api": "py_collect",
+	"searchable": 0,
+	"quickSearch": 0,
+	"filterable": 1,
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
     },
     {
       "key": "py_bilibili3",
