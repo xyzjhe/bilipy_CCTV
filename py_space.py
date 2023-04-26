@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"个人收藏6": "Collection"
+			"个人收藏7": "Collection"
 		}
 		classes = []
 		for k in cateManual:
@@ -71,7 +71,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
 			reTxt=''
-			ListRe=[['dm88','<a href="#playlist\d" data-toggle="tab">(.+?)</a>','<ul class="myui-content__list scrollbar sort-list clearfix" style="max-height: 300px; overflow: auto;">','</ul>','<a class="btn btn-default" href="(?P<url>.+?)">(?P<title>.+?)</a>','original="(.+?)"']]
+			ListRe=[['dm88','<a href="#playlist\d" data-toggle="tab">(.+?)</a>','<ul class="myui-content__list scrollbar sort-list clearfix" style="max-height: 300px; overflow: auto;">','</ul>','<a class="btn btn-default" href="(?P<url>.+?)">(?P<title>.+?)</a>','original="(.+?)"'],
+			['ktkkt2',r'(<h3 class="title"><strong>(.+?))</strong><span class="text-muted pull-mid">','<div id="video_list_','</div>',r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>']
+			]
 			for t in ListRe:
 				if t[0]==id:
 					reTxt=t
