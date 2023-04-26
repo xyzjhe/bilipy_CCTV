@@ -15,7 +15,8 @@ from time import gmtime
 import time
 time_stamp = str(int(time.time()))
 import re
-
+from urllib import request, parse
+import urllib.request
 
 
 
@@ -979,7 +980,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             "Referer": "https://www.bilibili.com",
             "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
         }
-        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_bangumi&order=totalrank&pagesize=20'.format(key)
+        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_bangumi&order=totalrank&pagesize=20'.format(urllib.parse.quote(key))
 
         rsp = self.fetch(url, cookies=self.cookies, headers=header)
         content = rsp.text

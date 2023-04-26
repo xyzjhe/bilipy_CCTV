@@ -71,7 +71,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
 			reTxt=''
-			if reTxt!='':
+			if reTxt=='':
 				#rsp =  self.fetch(url)
 				#htmlTxt=rsp.text
 				#line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
