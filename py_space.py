@@ -78,9 +78,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if reTxt!='':
 				rsp =  self.fetch(url)
 				htmlTxt=rsp.text
-				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
-				vod_play_from=[t for t in line]
-				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
+				#line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
+				#vod_play_from=[t for t in line]
+				#circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
 				#测试到此
 				vodItems = [title+"$"+url]
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)

@@ -975,13 +975,10 @@ class Spider(Spider):  # 元类 默认的元类 type
         return result
     def get_search_Fanju(self, key):
         self.box_video_type = '搜索'
-        header = {
-            "Referer": "https://www.bilibili.com",
-            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
-        }
+        
         url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_bangumi&order=totalrank&pagesize=20'.format(key)
 
-        rsp = self.fetch(url, cookies=self.cookies, headers=header)
+        rsp = self.fetch(url, cookies=self.cookies)
         content = rsp.text
         jo = json.loads(content)
         if jo['code'] != 0:
