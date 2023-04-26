@@ -82,8 +82,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vod_play_from=[t for t in line]
 				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
 				#测试到此
-				for t in circuit:
-					vodItems.append(self.get_EpisodesList(html=t,patternTxt=reTxt['pattern']))
+				vodItems = [title+"$"+url]
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
 		vod = {
 			"vod_id":array[0],
