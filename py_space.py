@@ -71,16 +71,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
 			reTxt=''
-			ListRe=[['dm88','<a href="#playlist\d" data-toggle="tab">(.+?)</a>','<ul class="myui-content__list scrollbar sort-list clearfix" style="max-height: 300px; overflow: auto;">','</ul>','<a class="btn btn-default" href="(?P<url>.+?)">(?P<title>.+?)</a>','original="(.+?)"'],
-			['ktkkt2',r'(<h3 class="title"><strong>(.+?))</strong><span class="text-muted pull-mid">','<div id="video_list_','</div>',r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>']
-			]
-			for t in ListRe:
-				if t[0]==id:
-					reTxt=t
-					break
+			
 			if reTxt!='':
-				rsp = self.swebReadFile(urlStr=url,header=self.header)
-				#htmlTxt=rsp.text
+				rsp = self.fetch(Url)
+				htmlTxt=rsp.text
 				#line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
 				vod_play_from=['线路','测 试']#[t for t in line]
 				#circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt[2],after=reTxt[3])
