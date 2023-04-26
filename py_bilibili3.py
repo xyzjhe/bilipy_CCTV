@@ -991,7 +991,7 @@ class Spider(Spider):  # 元类 默认的元类 type
         videos = []
         vodList = jo['data']['result']
         for vod in vodList:
-            aid = str(vod['media_id']).strip()
+            aid = str(vod['season_id']).strip()
             title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
             img = vod['cover'].strip()
             remark = str(vod['desc']).strip()
