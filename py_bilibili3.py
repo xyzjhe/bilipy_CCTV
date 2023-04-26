@@ -992,7 +992,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             img = vod['cover'].strip()
             remark = str(vod['desc']).strip()
             videos.append({
-               "vod_id": aid+'&movie',
+               "vod_id": aid+'&search',
                 "vod_name": title,
                 "vod_pic": img,
                 "vod_remarks": remark
