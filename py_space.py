@@ -73,7 +73,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			reTxt=''
 			
 			if reTxt!='':
-				rsp = self.fetch('')
+				rsp = self.fetch('http://www.ktkkt2.com/movie/index86485.html')
 				htmlTxt=rsp.text
 				#line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt[1],Index=1)
 				vod_play_from=['线路','测 试']#[t for t in line]
