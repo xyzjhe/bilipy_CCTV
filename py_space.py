@@ -86,7 +86,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			}
 			ReStr.append(vod)
 			reTxt=''
-			for t in ListRe:
+			for t in ReStr:
 				if t['name']==id:
 					reTxt=t
 			if reTxt!='':
