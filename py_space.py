@@ -73,7 +73,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 				'line':'<a href="#playlist\d" data-toggle="tab">(.+?)</a>',
 				'circuit':'<ul class="myui-content__list scrollbar sort-list clearfix" style="max-height: 300px; overflow: auto;">',
 				'after':'</ul>',
-				'pattern':'<a class="btn btn-default" href="(?P<url>.+?)">(?P<title>.+?)</a>'
+				'pattern':'<a class="btn btn-default" href="(?P<url>.+?)">(?P<title>.+?)</a>',
+				'url':'https://www.ktkkt2.com'
 			}
 			ReStr=[]
 			ReStr.append(vod)
@@ -82,7 +83,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 				'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
 				'circuit':'<div id="video_list_',
 				'after':'</div>',
-				'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>'
+				'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
+				'url':'https://www.ktkkt2.com'
 			}
 			ReStr.append(vod)
 			reTxt=''
@@ -100,8 +102,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 					videos = []
 					for vod in ListRe:
 						url = vod.group('url')
-						title =vod.group('title')
-						videos.append(title+"$"+url)
+						EpisodeTitle =vod.group('title')
+						videos.append(reTxt['url']+EpisodeTitle+"$"+url)
 					joinStr = "#".join(videos)
 					vodItems.append(joinStr)
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
