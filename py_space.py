@@ -69,12 +69,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
 			vod={
-				'name':'dm88',
-				'line':'<a href="#playlist\d" data-toggle="tab">(.+?)</a>',
-				'circuit':'<ul class="myui-content__list scrollbar sort-list clearfix" style="max-height: 300px; overflow: auto;">',
-				'after':'</ul>',
-				'pattern':'<a class="btn btn-default" href="(?P<url>.+?)">(?P<title>.+?)</a>',
-				'url':'https://www.ktkkt2.com'
+				'name':'ikanys',
+				'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
+				'circuit':'module-play-list-base">',
+				'after':'</div>',
+				'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
+				'url':'https://ikan6.vip/'
 			}
 			ReStr=[]
 			ReStr.append(vod)
@@ -101,7 +101,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
 					videos = []
 					for vod in ListRe:
-						url = vod.group('url')
+						url = vod.group('url').replace('/','')
 						EpisodeTitle =vod.group('title')
 						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
 					joinStr = "#".join(videos)
@@ -127,14 +127,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			]
 		}
 		return result
-	def get_EpisodesList(self,html,patternTxt):
-		ListRe=re.finditer(patternTxt, html, re.M|re.S)
-		videos = []
-		for vod in ListRe:
-			url = vod.group('url')
-			title =vod.group('title')
-			videos.append(title+"$"+url)
-		return videos
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
 		origin=Txt.find(mark)
@@ -200,7 +192,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for vod in ListRe:
 			lastVideo = vod[0]
 			title =vod[1]
-			tdi='List' if title.find('_List')>1 else 'play'
+			if title.find('_List')>1:
+				tdi='List'
+				title[0:len(title)-5]
+			else:
+				tdi='play'
 			if len(lastVideo) == 0:
 				continue
 			videos.append({
