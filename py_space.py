@@ -74,7 +74,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				'circuit':'module-play-list-base">',
 				'after':'</div>',
 				'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
-				'url':'https://ikan6.vip/'
+				'url':'https://ikan6.vip'
 			}
 			ReStr=[]
 			ReStr.append(vod)
@@ -102,7 +102,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
 					videos = []
 					for vod in ListRe:
-						url = vod.group('url')
+						url = vod.group('url').replace('\\','')
 						EpisodeTitle =vod.group('title')
 						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
 					joinStr = "#".join(videos)
