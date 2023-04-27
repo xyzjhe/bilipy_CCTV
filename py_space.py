@@ -63,7 +63,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url = aid[2]
 		title = aid[1]
 		vodItems=[]
-		vod_play_from=['线路','测试']
+		vod_play_from=['线路',]
 		if tid!='List':
 			vodItems = [title+"$"+url]
 		else:
@@ -91,6 +91,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			for t in ReStr:
 				if t['name']==id:
 					reTxt=t
+					break
 			if reTxt!='':
 				htmlTxt=self.webReadFile(urlStr=url,header=self.header)
 				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)

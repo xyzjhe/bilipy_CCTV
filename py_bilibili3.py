@@ -972,11 +972,17 @@ class Spider(Spider):  # 元类 默认的元类 type
         if len(key)>3 and key.find('-PU')>1:
             key=key[0:len(key)-3]
             isPU=True
-        videos = self.get_search_Movies(key=key)
-        #videos+=self.get_search_Fanju(key=key)
-        #videos+=self.get_search_Movies(key=key)
+        videos = self.get_search(key=key)
+        temporary=self.get_search_Movies(key=key)
+        for vod in temporary:
+            videos.append(vod)
+        temporary=self.get_search_Fanju(key=key)
+        for vod in temporary:
+            videos.append(vod)
         #if isPU=True:
-            #videos+=self.get_search_PU(key=key)
+            temporary=self.get_search_PU(key=key)
+            for vod in temporary:
+                videos.append(vod)
         result = {
             'list': videos
         }
