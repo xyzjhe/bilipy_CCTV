@@ -67,7 +67,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if tid!='List':
 			vodItems = [title+"$"+url]
 		else:
-			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
+			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(www\.){0,1}(.+?)\.',Index=2)
 			vod={
 				'name':'ikan6',
 				'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
