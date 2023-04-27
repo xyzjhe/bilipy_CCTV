@@ -69,7 +69,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			id=self.get_RegexGetText(Text=url,RegexText=r'www\.(.+?)\.',Index=1)
 			vod={
-				'name':'ikanys',
+				'name':'ikan6',
 				'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
 				'circuit':'module-play-list-base">',
 				'after':'</div>',
@@ -194,7 +194,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			title =vod[1]
 			if title.find('_List')>1:
 				tdi='List'
-				title[0:len(title)-5]
+				title=title[0:len(title)-5]
 			else:
 				tdi='play'
 			if len(lastVideo) == 0:
