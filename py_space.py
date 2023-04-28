@@ -183,7 +183,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv)'
 		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
@@ -343,9 +343,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 	vod={
 		'name':'cctv',
 		'line':'>(剧集列表)</li>',
-		'circuit':'<div class="fpy_ind04"><div class="list_box">',
-		'after':'<span class="title" >我要评论</span>',
-		'pattern':r'<div class="tp1"><a title="(?P<title>.+?)" target="_blank" href="(?P<url>.+?)"></a></div>',
+		'circuit':'//相关报导',
+		'after':' </script>',
+		'pattern':r"'title':'(?P<title>.+?)',\r\n\s*'img':'.*?',\r\n\s*'brief':'.*?',\r\n\s*'url':'(?P<url>.+?)'",
 		'url':''
 	}
 	ReStr.append(vod)
