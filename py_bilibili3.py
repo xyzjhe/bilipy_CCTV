@@ -875,9 +875,9 @@ class Spider(Spider):  # 元类 默认的元类 type
             videoList=[]
             m=2
             if mid=='72270557':
-                m=2
+                m=7
             for i in range(1, m):
-                url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
+                url = "https://api.bilibili.com/x/space/wbi/arc/search?mid={0}&ps=30&tid=0&pn={1}".format(mid,i)
                 rsp = self.fetch(url,headers=self.header)
                 htmlTxt= rsp.text
                 jRoot = json.loads(htmlTxt)
