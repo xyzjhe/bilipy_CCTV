@@ -116,7 +116,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
 					videos = []
 					for vod in ListRe:#/vodplay/50548-1-1/
-						url = vod.group('url').replace('\\','')
+						url = vod.group('url').replace('">','')
 						EpisodeTitle =vod.group('title')
 						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
 					joinStr = "#".join(videos)
