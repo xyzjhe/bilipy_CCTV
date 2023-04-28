@@ -1605,6 +1605,21 @@
 		"url": "https://jx.jsonplayer.com/player/?url="
         },
 	{
+		"name": "17云",
+		"type": 0,
+		"url": "https://www.1717yun.com/jx/ty.php?url="
+        },
+	{
+		"name": "纯净/B站",
+		"type": 0,
+		"url": "https://z1.m1907.cn/?jx="
+        },
+	{
+		"name": "盖世",
+		"type": 0,
+		"url": "https://www.gai4.com/?url="
+        },
+	{
 		"name": "诺讯",
 		"type": 0,
 		"url": "https://www.nxflv.com/?url="
