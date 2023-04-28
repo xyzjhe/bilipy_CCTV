@@ -101,27 +101,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			vodItems = [title+"$"+url]
 		elif tid=='List':
 			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(www\.){0,1}(.+?)\.',Index=2)
-			vod={
-				'name':'ikan6',
-				'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
-				'circuit':'module-play-list-base">',
-				'after':'</div>',
-				'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
-				'url':'https://ikan6.vip'
-			}
-			ReStr=[]
-			ReStr.append(vod)
-			vod={
-				'name':'ktkkt2',
-				'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
-				'circuit':'<div id="video_list_',
-				'after':'</div>',
-				'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
-				'url':'https://www.ktkkt2.com'
-			}
-			ReStr.append(vod)
 			reTxt=''
-			for t in ReStr:
+			for t in self.ReStr:
 				if t['name']==id:
 					reTxt=t
 					break
@@ -141,8 +122,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 					joinStr = "#".join(videos)
 					vodItems.append(joinStr)
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
-		else:
+		elif tid=='Collection':
 			vodItems = [title+"$"+url]
+		else:
+			pass
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -338,5 +321,24 @@ class Spider(Spider):  # 元类 默认的元类 type
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		#print(Host)
 		return html
+	vod={
+		'name':'ikan6',
+		'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
+		'circuit':'module-play-list-base">',
+		'after':'</div>',
+		'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
+		'url':'https://ikan6.vip'
+	}
+	ReStr=[]
+	ReStr.append(vod)
+	vod={
+		'name':'ktkkt2',
+		'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
+		'circuit':'<div id="video_list_',
+		'after':'</div>',
+		'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
+		'url':'https://www.ktkkt2.com'
+	}
+	ReStr.append(vod)
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
