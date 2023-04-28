@@ -345,7 +345,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		'line':'>(剧集列表)</li>',
 		'circuit':'<div class="fpy_ind04"><div class="list_box">',
 		'after':'<span class="title" >我要评论</span>',
-		'pattern':r'<a title="(?P<title>.+?)" target="_blank" href="(?P<url>.+?)"><img width="\d+?"',
+		'pattern':r'<a title="(?P<title>.+?)" target="_blank" href="(?P<url>.+?\.shtml)"><img width="\d+?"',
 		'url':''
 	}
 	ReStr.append(vod)
