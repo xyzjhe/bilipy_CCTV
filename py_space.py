@@ -100,7 +100,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if tid=='play':
 			vodItems = [title+"$"+url]
 		elif tid=='List':
-			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(www\.){0,1}(.+?)\.',Index=2)
+			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(tv\.|www\.){0,1}(.+?)\.',Index=2)
 			reTxt=''
 			for t in self.ReStr:
 				if t['name']==id:
@@ -338,6 +338,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 		'after':'</div>',
 		'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
 		'url':'https://www.ktkkt2.com'
+	}
+	ReStr.append(vod)
+	vod={
+		'name':'cctv',
+		'line':'>(剧集列表)</li>',
+		'circuit':'<div class="fpy_ind04"><div class="list_box">',
+		'after':'<span class="title" >我要评论</span>',
+		'pattern':r'<a title="(?P<title>.+?)" target="_blank" href="(?P<url>.+?)"><img width="\d+?"',
+		'url':''
 	}
 	ReStr.append(vod)
 	def localProxy(self,param):
