@@ -171,7 +171,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
 		headers = {
-			'User-Agent':'Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; Redmi 6 Pro Build/OPM1.171019.019) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/9.8.7'
+			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 		}
 		jx=self.ifJx(urlTxt=id)
 		parse=1
@@ -183,7 +183,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv)'
 		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
