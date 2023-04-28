@@ -25,7 +25,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"个人收藏6": "Collection"
+			"个人收藏": "Collection",
+			"天气预报":"weather"
 		}
 		classes = []
 		for k in cateManual:
@@ -47,14 +48,44 @@ class Spider(Spider):  # 元类 默认的元类 type
 		videos=[]
 		if pg!='1':
 			return result
-		Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
-		videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
+		if tid=='Collection':
+			Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
+			videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
+		elif  tid=='weather':
+			Url = 'http://www.weather.com.cn/pubm/video_lianbo_2021.htm'
+			headers = {
+				"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+				"Origin": "https://tv.cctv.com",
+				"Referer": "https://tv.cctv.com/"
+			}
+			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
+			videos = self.get_list(html=htmlTxt)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
+	def get_list_weather(self,html):
+		patternTxt='"url":"(.+?\.mp4)","pubDate":"(.+?)","title":"(.+?)",'
+		pattern = re.compile(patternTxt)
+		ListRe=pattern.findall(html)
+		videos = []
+		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
+		for vod in ListRe:
+			lastVideo = vod[0]
+			title =vod[2]
+			if len(lastVideo) == 0:
+				lastVideo = '_'
+			guid="{0}###{1}###{2}###{3}".format('weather',title,lastVideo,img)
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":vod[1]
+			})
+			#print(img)
+		return videos
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
@@ -64,9 +95,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		title = aid[1]
 		vodItems=[]
 		vod_play_from=['线路',]
-		if tid!='List':
+		if tid=='play':
 			vodItems = [title+"$"+url]
-		else:
+		elif tid=='List':
 			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(www\.){0,1}(.+?)\.',Index=2)
 			vod={
 				'name':'ikan6',
@@ -101,13 +132,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 				for t in circuit:
 					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
 					videos = []
-					for vod in ListRe:
+					for vod in ListRe:#/vodplay/50548-1-1/
 						url = vod.group('url').replace('\\','')
 						EpisodeTitle =vod.group('title')
 						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
 					joinStr = "#".join(videos)
 					vodItems.append(joinStr)
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
+		else:
+			vodItems = [title+"$"+url]
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
