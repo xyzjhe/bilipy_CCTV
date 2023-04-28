@@ -59,7 +59,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"Referer": "https://tv.cctv.com/"
 			}
 			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
-			videos = self.get_list(html=htmlTxt)
+			videos = self.get_list_weather(html=htmlTxt)
+		else:
+			pass
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 1
