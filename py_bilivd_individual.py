@@ -15,7 +15,8 @@ from time import gmtime
 import time
 time_stamp = str(int(time.time()))
 import re
-
+from urllib import request, parse
+import urllib.request
 
 
 
@@ -876,7 +877,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             if mid=='72270557':
                 m=7
             for i in range(1, m):
-                url = "https://api.bilibili.com/x/space/arc/search?mid={0}&ps=30&tid=0&pn={1}&keyword=&order=pubdate&jsonp=jsonp".format(mid,i)
+                url = "https://api.bilibili.com/x/space/wbi/arc/search?mid={0}&ps=30&tid=0&pn={1}".format(mid,i)
                 rsp = self.fetch(url,headers=self.header)
                 htmlTxt= rsp.text
                 jRoot = json.loads(htmlTxt)
@@ -966,6 +967,86 @@ class Spider(Spider):  # 元类 默认的元类 type
     
 
     def searchContent(self, key, quick):
+        videos=[]
+        isPU=False
+        if len(key)>3 and key.find('-PU')>1:
+            key=key[0:len(key)-3]
+            isPU=True
+        videos = self.get_search(key=key)
+        temporary=self.get_search_Movies(key=key)
+        for vod in temporary:
+            videos.append(vod)
+        temporary=self.get_search_Fanju(key=key)
+        for vod in temporary:
+            videos.append(vod)
+        #if isPU=True:
+            temporary=self.get_search_PU(key=key)
+            for vod in temporary:
+                videos.append(vod)
+        result = {
+            'list': videos
+        }
+        return result
+        #番剧搜索
+    def get_search_Fanju(self, key):
+        self.box_video_type = '搜索'
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+        }
+        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_bangumi&order=totalrank&pagesize=20'.format(urllib.parse.quote(key))
+
+        rsp = self.fetch(url, cookies=self.cookies, headers=header)
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] != 0:
+            return []
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['result']
+        for vod in vodList:
+            aid = str(vod['season_id']).strip()
+            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = vod['cover'].strip()
+            remark = str(vod['desc']).strip()
+            videos.append({
+               "vod_id": aid+'&movie',
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+            })
+        return videos
+        #PU搜索
+    def get_search_PU(self, key):
+        self.box_video_type = '搜索'
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+        }
+        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=bili_user&order=totalrank&pagesize=20'.format(urllib.parse.quote(key))
+
+        rsp = self.fetch(url, cookies=self.cookies, headers=header)
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] != 0:
+            return []
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['result']
+        for vod in vodList:
+            aid = str(vod['mid']).strip()
+            title = vod['uname'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = 'https://'+vod['upic'].strip()
+            remark = str(vod['usign']).strip()
+            videos.append({
+               "vod_id": aid+'&pu',
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+            })
+        return videos
+        #视频搜索
+    def get_search(self, key):
         self.box_video_type = '搜索'
         header = {
             "Referer": "https://www.bilibili.com",
@@ -993,20 +1074,46 @@ class Spider(Spider):  # 元类 默认的元类 type
                 "vod_pic": img,
                 "vod_remarks": remark
             })
-        result = {
-            'list': videos
+        return videos
+        #影视搜索
+    def get_search_Movies(self, key):
+        self.box_video_type = '搜索'
+        header = {
+            "Referer": "https://www.bilibili.com",
+            "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
         }
-        return result
+        url = 'https://api.bilibili.com/x/web-interface/search/type?keyword={0}&page=1&search_type=media_ft&order=totalrank&pagesize=20'.format(urllib.parse.quote(key))
+
+        rsp = self.fetch(url, cookies=self.cookies, headers=header)
+        content = rsp.text
+        jo = json.loads(content)
+        if jo['code'] != 0:
+            return []
+        jo = json.loads(content)
+        videos = []
+        vodList = jo['data']['result']
+        for vod in vodList:
+            aid = str(vod['season_id']).strip()
+            title = vod['title'].replace("<em class=\"keyword\">", "").replace("</em>", "").replace("&quot;", '"')
+            img = vod['cover'].strip()
+            remark = str(vod['desc']).strip()
+            videos.append({
+               "vod_id": aid+'&movie',
+                "vod_name": title,
+                "vod_pic": img,
+                "vod_remarks": remark
+            })
+        return videos
 
     def playerContent(self, flag, id, vipFlags):
         result = {}
 
         avId=''
-        isVip=False
         try:
             if self.box_video_type == '影视':
                 ids = id.split("_")
                 avId="av"+ids[0]
+                return self.Get_vip(ep=ids[0])#直接调用vip解析,如果是vip账号请删除
                 header = {
                     "Referer": "https://www.bilibili.com",
                     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
@@ -1018,7 +1125,6 @@ class Spider(Spider):  # 元类 默认的元类 type
                 jRoot = json.loads(rsp.text)
                 if jRoot['message'] != 'success':
                     print("需要大会员权限才能观看")
-                    isVip=True
                     result=self.Get_vip(ep=ids[0])
                     return result
                 jo = jRoot['result']
