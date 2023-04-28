@@ -1125,7 +1125,6 @@ class Spider(Spider):  # 元类 默认的元类 type
                 jRoot = json.loads(rsp.text)
                 if jRoot['message'] != 'success':
                     print("需要大会员权限才能观看")
-                    result=self.Get_vip(ep=ids[0])
                     return result
                 jo = jRoot['result']
                 ja = jo['durl']
