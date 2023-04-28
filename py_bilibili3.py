@@ -1016,7 +1016,6 @@ class Spider(Spider):  # 元类 默认的元类 type
                 "vod_remarks": remark
             })
         return videos
-        #视频搜索
         #PU搜索
     def get_search_PU(self, key):
         self.box_video_type = '搜索'
@@ -1110,11 +1109,11 @@ class Spider(Spider):  # 元类 默认的元类 type
         result = {}
 
         avId=''
-        isVip=False
         try:
             if self.box_video_type == '影视':
                 ids = id.split("_")
                 avId="av"+ids[0]
+                return self.Get_vip(ep=ids[0])#直接调用vip解析,如果是vip账号请删除
                 header = {
                     "Referer": "https://www.bilibili.com",
                     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
@@ -1126,7 +1125,6 @@ class Spider(Spider):  # 元类 默认的元类 type
                 jRoot = json.loads(rsp.text)
                 if jRoot['message'] != 'success':
                     print("需要大会员权限才能观看")
-                    isVip=True
                     result=self.Get_vip(ep=ids[0])
                     return result
                 jo = jRoot['result']
