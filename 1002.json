@@ -1607,8 +1607,14 @@
 	{
 		"name": "17云",
 		"type": 0,
+		        http://www.1717yun.com/jx/vip/index.php?url=
 		"url": "https://www.1717yun.com/jx/ty.php?url="
         },
+	{
+		"name": "1717云",
+		"type": 0,
+		"url": "http://www.1717yun.com/jx/vip/index.php?url="
+	},
 	{
 		"name": "纯净/B站",
 		"type": 0,
