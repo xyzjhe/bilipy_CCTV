@@ -175,8 +175,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		jx=self.ifJx(urlTxt=id)
 		parse=1
-		if id.find('.mp4')>-1:
-			parse=1
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
