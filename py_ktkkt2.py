@@ -78,8 +78,9 @@ class Spider(Spider):
 		playFrom = []
 		videoList=[]
 		vodItems = []
+		if len(line)<1:
+			return  {'list': []}
 		if len(line)<1 and self.get_RegexGetText(Text=htmlTxt,RegexText=r'class="title"><strong>(迅雷下载)',Index=1)!='':
-			line=['迅雷下载(不可播放)']
 			GvodUrls1=self.get_RegexGetText(Text=htmlTxt,RegexText=r'var GvodUrls1\s*=\s*"(.+?)"',Index=1)
 			playFrom=[t for t in line]
 			ListRe=GvodUrls1.split('###')
@@ -164,6 +165,9 @@ class Spider(Spider):
 			if len(m3u8Line)>0:
 				Url=m3u8Line[0]
 				parse=0
+			if Url.find('.m3u8')<1:
+				parse=1
+				Url='https://www.ktkkt2.com{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = Url
