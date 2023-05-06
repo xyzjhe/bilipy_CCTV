@@ -180,13 +180,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		parse=1
 		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
-			jx=0
-			headers=''
-		result["parse"] = 0
+		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
-		result['jx'] = 0#VIP解析
-		result["header"] = ''	
+		result['jx'] = jx#VIP解析
+		result["header"] = headers	
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
