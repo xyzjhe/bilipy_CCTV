@@ -55,7 +55,7 @@ class Spider(Spider):
 		classification=tid
 		if 'classification' in extend.keys():
 			classification=extend['classification']
-		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
+		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(classification,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt,lkt=classification)
