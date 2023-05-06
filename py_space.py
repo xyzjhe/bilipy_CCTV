@@ -55,11 +55,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 			Url = 'http://www.weather.com.cn/pubm/video_lianbo_2021.htm'
 			headers = {
 				"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-				"Origin": "https://tv.cctv.com",
 				"Referer": "https://tv.cctv.com/"
 			}
 			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
-			videos = self.get_list_weather(html=htmlTxt)
+			if len(htmlTxt)>13:
+				htmlTxt=htmlTxt[11:len(htmlTxt)-1]
+				videos = self.get_list_weather(html=htmlTxt)
 		else:
 			pass
 		result['list'] = videos
@@ -69,24 +70,25 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['total'] = 999999
 		return result
 	def get_list_weather(self,html):
-		patternTxt='"url":"(.+?\.mp4)","pubDate":"(.+?)","title":"(.+?)",'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
+		jRoot = json.loads(html)
+		if jRoot['message']!='success':
+			return []
 		videos = []
+		jsonList=jRoot['data']
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
-		for vod in ListRe:
-			lastVideo = vod[0]
-			title =vod[2]
-			if len(lastVideo) == 0:
-				lastVideo = '_'
-			guid="{0}###{1}###{2}###{3}".format('weather',title,lastVideo,img)
+		for vod in jsonList:
+			url = vod['url']
+			title =vod['title']
+			if len(url) == 0:
+				continue
+			guid="{0}###{1}###{2}###{3}".format('weather',title,url,img)
+			print(guid)
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":vod[1]
+				"vod_remarks":vod['updateTime']
 			})
-			#print(img)
 		return videos
 	def detailContent(self,array):
 		result = {}
