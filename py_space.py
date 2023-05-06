@@ -180,6 +180,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		parse=1
 		if self.get_RegexGetText(Text=urlTxt,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
+			jx=0
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
