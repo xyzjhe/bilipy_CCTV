@@ -173,20 +173,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		headers = {
-			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
-		}
-		jx=self.ifJx(urlTxt=id)
-		parse=1
-		if self.get_RegexGetText(Text=urlTxt,RegexText=r'(\.mp4)',Index=1)!='':
-			parse=0
-			jx=0
-			headers=''
-		result["parse"] = parse
+		result["parse"] = 0
 		result["playUrl"] = ''
 		result["url"] = id
-		result['jx'] = jx#VIP解析
-		result["header"] = headers	
+		result['jx'] = 0#VIP解析
+		result["header"] = ''	
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
