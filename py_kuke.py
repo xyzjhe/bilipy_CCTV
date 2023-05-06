@@ -59,6 +59,8 @@ class Spider(Spider):
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
+		for i in xrange(1,len(videos)):
+			videos[i]['vod_name']= extend.keys()
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
