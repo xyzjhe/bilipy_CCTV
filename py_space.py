@@ -125,10 +125,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 					joinStr = "#".join(videos)
 					vodItems.append(joinStr)
 				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
-		elif tid=='Collection':
+		elif tid=='weather':
 			vodItems = [title+"$"+url]
 		else:
-			vodItems = [title+"$"+url]
+			pass
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -178,6 +178,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		jx=self.ifJx(urlTxt=id)
 		parse=1
+		if self.get_RegexGetText(Text=urlTxt,RegexText=r'(\.mp4)',Index=1)!='':
+			parse=0
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
@@ -186,7 +188,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv)'
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
 		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
