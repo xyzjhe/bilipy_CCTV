@@ -55,7 +55,7 @@ class Spider(Spider):
 		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt,lkt=extend['classification'])
+		videos = self.get_list(html=htmlTxt,lkt=extend['classification']['v'])
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
