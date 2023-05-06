@@ -52,13 +52,13 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
+		classification=tid
+		if 'classification' in extend.keys():
+			classification=extend['classification']
 		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		lkt=''
-		for key in extend.keys():
-			lkt+= extend[key]
-		videos = self.get_list(html=htmlTxt,lkt=lkt)
+		videos = self.get_list(html=htmlTxt,lkt=classification)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
