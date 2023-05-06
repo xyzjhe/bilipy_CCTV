@@ -873,9 +873,11 @@ class Spider(Spider):  # 元类 默认的元类 type
             mid=aidList[1]
             pic = aidList[2]
             videoList=[]
-            m=2
+            m=1
             if mid=='72270557':
                 m=7
+            if mid=='743226':
+                m=3
             for i in range(1, m):
                 url = "https://api.bilibili.com/x/space/wbi/arc/search?mid={0}&ps=30&tid=0&pn={1}".format(mid,i)
                 rsp = self.fetch(url,headers=self.header)
@@ -1113,7 +1115,7 @@ class Spider(Spider):  # 元类 默认的元类 type
             if self.box_video_type == '影视':
                 ids = id.split("_")
                 avId="av"+ids[0]
-                return self.Get_vip(ep=ids[0])#直接调用vip解析,如果是vip账号请删除
+                #return self.Get_vip(ep=ids[0])#直接调用vip解析,如果是vip账号请删除
                 header = {
                     "Referer": "https://www.bilibili.com",
                     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
