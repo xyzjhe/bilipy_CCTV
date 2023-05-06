@@ -55,12 +55,10 @@ class Spider(Spider):
 		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(tid,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		videos = self.get_list(html=htmlTxt,lkt=extend['classification'])
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
-		for i in xrange(1,len(videos)):
-			videos[i]['vod_name']= extend.keys()
 		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
@@ -196,14 +194,14 @@ class Spider(Spider):
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
-	def get_list(self,html):
+	def get_list(self,html,lkt):
 		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
 		for vod in ListRe:
 			url = vod[0]
-			title =vod[1]
+			title =lkt+vod[1]
 			img =vod[2]
 			if len(url) == 0:
 				url = '_'
