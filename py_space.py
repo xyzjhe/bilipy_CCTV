@@ -128,7 +128,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		elif tid=='Collection':
 			vodItems = [title+"$"+url]
 		else:
-			pass
+			vodItems = [title+"$"+url]
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
