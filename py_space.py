@@ -59,7 +59,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			}
 			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
 			if len(htmlTxt)>13:
-				htmlTxt=htmlTxt[11:len(htmlTxt)-1]
+				length=htmlTxt.rfind(')')
+				htmlTxt=htmlTxt[11:length]
 				videos = self.get_list_weather(html=htmlTxt)
 		else:
 			pass
