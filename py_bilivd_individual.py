@@ -873,11 +873,11 @@ class Spider(Spider):  # 元类 默认的元类 type
             mid=aidList[1]
             pic = aidList[2]
             videoList=[]
-            m=1
+            m=2
             if mid=='72270557':
-                m=7
+                m=8
             if mid=='743226':
-                m=3
+                m=4
             for i in range(1, m):
                 url = "https://api.bilibili.com/x/space/wbi/arc/search?mid={0}&ps=30&tid=0&pn={1}".format(mid,i)
                 rsp = self.fetch(url,headers=self.header)

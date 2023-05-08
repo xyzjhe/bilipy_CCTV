@@ -11,7 +11,6 @@ import urllib
 from urllib import request, parse
 import urllib.request
 import re
-
 class Spider(Spider):
 	def getName(self):
 		return "酷客影院"
@@ -55,10 +54,22 @@ class Spider(Spider):
 		classification=tid
 		if 'classification' in extend.keys():
 			classification=extend['classification']
-		url='http://www.meheme.com/vodshow/{0}--------{1}---.html'.format(classification,pg)
+		area=''
+		if 'area' in extend.keys():
+			area=urllib.parse.quote(extend['area']) if extend['area']!='' else ''#地区
+		types=''
+		if 'types' in extend.keys():
+			types=urllib.parse.quote(extend['types']) if extend['types']!='' else ''#类型
+		language=''
+		if 'language' in extend.keys():
+			language=urllib.parse.quote(extend['language']) if extend['language']!='' else ''#语言
+		time=''
+		if 'time' in extend.keys():
+			time=urllib.parse.quote(extend['time']) if extend['time']!='' else ''#年份
+		url='http://www.meheme.com/vodshow/{0}-{1}--{2}-{3}----{4}---{5}.html'.format(classification,area,types,language,pg,time)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt,lkt=classification)
+		videos = self.get_list(html=htmlTxt)
 		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'-(\d+?)---.html"\sclass="page-link page-next"\stitle="尾页">',Index=1)
 		if pag=="":
 			pag=999
@@ -197,17 +208,17 @@ class Spider(Spider):
 		req = urllib.request.Request(url=urlStr, headers=headers)
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
-	def get_list(self,html,lkt):
+	def get_list(self,html):
 		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
 		for vod in ListRe:
 			url = vod[0]
-			title =lkt+vod[1]
+			title =vod[1]
 			img =vod[2]
 			if len(url) == 0:
-				url = '_'
+				continue
 			videos.append({
 				"vod_id":"{0}###{1}###{2}".format(title,url,img),
 				"vod_name":title,
