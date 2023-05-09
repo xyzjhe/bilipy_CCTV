@@ -53,7 +53,7 @@ class Spider(Spider):
 
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		types=''
+		types=tid
 		if 'types' in extend.keys():
 			types=urllib.parse.quote(extend['types']) if extend['types']!='' else ''#类型
 		area=''
