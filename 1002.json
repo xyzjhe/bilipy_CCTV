@@ -166,16 +166,6 @@
 		]
 	 },
 	 {
-		"key": "py_ikan",
-		"name": "🔥爱看影视",
-		"type": 3,
-		"api": "py_ikan",
-		"searchable": 0,
-		"quickSearch": 0,
-		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ikan.py"
-	 },
-	 {
 		"key": "py_COKEMV",
 		"name": "🕵COKEMV(PY)",
 		"type": 3,
@@ -204,26 +194,6 @@
 		"quickSearch": 0,
 		"filterable": 1,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv_1.py"
-	 },
-	 {
-		"key": "py_6vFilm",
-		"name": "🔅6v电影(PY)",
-		"type": 3,
-		"api": "py_6vFilm",
-		"searchable": 1,
-		"quickSearch": 1,
-		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
-	 },
-	 {
-		"key": "py_ktkkt",
-		"name": "🥒卡通站(PY)",
-		"type": 3,
-		"api": "py_ktkkt",
-		"searchable": 1,
-		"quickSearch": 1,
-		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
 	 },
 	 {
 		"key": "py_kuke",

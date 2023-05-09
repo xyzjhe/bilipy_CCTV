@@ -95,16 +95,6 @@
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
     },
     {
-	"key": "py_6vFilm",
-	"name": "🔅6v电影(PY)",
-	"type": 3,
-	"api": "py_6vFilm",
-	"searchable": 1,
-	"quickSearch": 1,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_6vFilm.py"
-    },
-    {
 	"key": "py_kuke",
 	"name": "🛳️酷客影院(PY)",
 	"type": 3,
@@ -163,16 +153,6 @@
 	"quickSearch": 1,
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
-    },
-    {
-	"key": "py_ktkkt",
-	"name": "🥒卡通站(PY)",
-	"type": 3,
-	"api": "py_ktkkt",
-	"searchable": 1,
-	"quickSearch": 1,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ktkkt.py"
     },
     {
 	"key": "py_webqq",
