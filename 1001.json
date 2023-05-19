@@ -135,16 +135,6 @@
 	"ext": "https://ghproxy.com/https://raw.githubusercontent.com/lm317379829/PyramidStore/pyramid/plugin/py_cyys.py"
     },
     {
-	"key": "csp_webdillo",
-	"name": "👨‍🌾宝仙HD(xBPQ)",
-	"type": 3,
-	"api": "csp_xBPQ",
-	"searchable": 1,
-	"quickSearch": 1,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/宝仙HD.json"
-    },
-    {
 	"key": "py_webqq",
 	"name": "🛫伊雪湾影视(PY)",
 	"type": 3,
