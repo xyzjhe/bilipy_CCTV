@@ -84,7 +84,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return videos
 	def detailContent(self,array):
 		result = {}
-		aid = array.split('###')
+		aid = array[0].split('###')
 		tid=aid[0]#类型id
 		title = aid[1]#片名
 		urlId = aid[2]#URL
