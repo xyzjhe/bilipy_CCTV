@@ -53,10 +53,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'#+'2' if pg=='1' else pg
 		rsp = self.fetch('https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/1.txt')
 		htmlTxt=rsp.text
-		types=[]
-		if tid=='1':
-			types=['m',tid]
-		videos=self.get_list(html=htmlTxt,types=types)
+		videos=self.get_list(html=htmlTxt,types=tid)
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
@@ -77,7 +74,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			#print(title)
 			if len(url) == 0:
 				continue
-			guid="{0}###{1}###{2}###{3}".format(types[1],title,url,img)
+			guid="{0}###{1}###{2}###{3}".format(types,title,url,img)
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
