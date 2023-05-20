@@ -49,28 +49,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		videos=[]
-		if pg!='1':
-			return result
-		if tid=='Collection':
-			Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
-			videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
-		elif  tid=='weather':
-			Url = 'http://www.weather.com.cn/pubm/video_lianbo_2021.htm'
-			headers = {
-				"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-				"Referer": "https://tv.cctv.com/"
-			}
-			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
-			if len(htmlTxt)>13:
-				length=htmlTxt.rfind(')')
-				htmlTxt=htmlTxt[11:length]
-				videos = self.get_list_weather(html=htmlTxt)
-		else:
-			pass
+		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno='+'2' if pg=='1' else pg
+		rsp = self.fetch(Url, cookies=self.header)
+		htmlTxt=rsp.text
+		types=[]
+		if tid=='1':
+			types=['m',tid]
+		videos=self.get_list(html=htmlTxt,types=types)
+		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 1
-		result['limit'] = 90
+		result['pagecount'] = 999 if listCount>34 else pg
+		result['limit'] = listCount
 		result['total'] = 999999
 		return result
 	def get_list_weather(self,html):
@@ -320,10 +311,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		"filter": {}
 		}
 	header = {
-		"Referer": 'http://my.ie.2345.com/onlinefav/web/',
-		'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36',
-		"Host":'my.ie.2345.com',
-		'Cookie':'uUiD=35752164629621148571735; name_ie=%2534013%2528023%2522320%2526143%2520154; I=i%3D90475631%26u%3D88890231%26n%3D%25C0%25B6%25BA%25A3%25B5%25D8%25D0%25C7%25C8%25CB%26m%3D0%26t%3D1675499574.1711300%26s%3D6a22a64feb086a03715e47d4cc3e8a29%26v%3D1.1; sData=6392F231FBE75023D053CEFE20A81E6EE43333BF6FF9CD4610BA32AB109E43FD1742EBAAA408F5EB45E7E1A10A40174BC8EE73651C7AD84AC5840AEA48B014F46FE421C992A7799DBF763B0E743AC8716814F0237BC8F8CC62FCF9F8A283040ADD791FBDD3470D699AA43B70F9886350F57021D6DB5E7B8E001ABEFE70C38424; site_str_flag=2; need_modify_name=0; skin=0; theme=0; ggbd=0'
+		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+	    'referer':'https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=',
+	    'Host':'api.web.360kan.com'
 	}
 	def webReadFile(self,urlStr,header):
 		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
