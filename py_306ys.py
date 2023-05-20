@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧": "2",
+			"电视剧1": "2",
 			"电影": "1",
 			"动漫": "4",
 			"儿童": "25",
@@ -50,9 +50,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
-		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'#+'2' if pg=='1' else pg
-		#rsp = self.fetch(Url,cookies=self.header)
-		htmlTxt=webReadFile(urlStr=Url,header=self.header)
+		#self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'#+'2' if pg=='1' else pg
+		rsp = self.fetch(Url,cookies=self.header)
+		htmlTxt=rsp.text
 		videos=self.get_list(html=htmlTxt,types=tid)
 		#listCount=len(videos)
 		result['list'] = videos
@@ -71,7 +71,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url = vod['id']
 			title =vod['title']
 			img='https:'+vod['cdncover']
-			#print(title)
 			if len(url) == 0:
 				continue
 			guid="{0}###{1}###{2}###{3}".format(types,title,url,img)
@@ -79,7 +78,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_id":guid,
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":vod['comment']
+				"vod_remarks":''
 			})
 		return videos
 	def detailContent(self,array):
@@ -282,7 +281,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-	    'referer':'https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=',
+	    'referer':'https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2',
 	    'Host':'api.web.360kan.com'
 	}
 	def webReadFile(self,urlStr,header):
