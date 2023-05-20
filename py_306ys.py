@@ -50,24 +50,26 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
-		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno='+'2' if pg=='1' else pg
-		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)#rsp.text
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno={0}'.format('2' if pg=='1' else int(pg)-1)
+		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
 		videos=self.get_list(html=htmlTxt,types=tid)
-		jRoot = json.loads(htmlTxt)
-		total=jRoot['data']['total']
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] =9999# math.ceil(int(total)/35)
-		result['limit'] = 99999
+		result['pagecount'] =pg if listCount<34 else int(pg)+1
+		result['limit'] = listCount
 		result['total'] = 99999
 		return result
 	def get_list(self,html,types):
 		jRoot = json.loads(html)
-		if jRoot['msg']!='ok':
+		if jRoot['errno']=='0':
 			return []
 		videos = []
-		jsonList=jRoot['data']['movies']
+		data=jRoot['data']
+		print(data)
+		if data is None:
+			return []
+		jsonList=data['movies']
 		for vod in jsonList:
 			url = vod['id']
 			title =vod['title']
@@ -327,33 +329,5 @@ class Spider(Spider):  # 元类 默认的元类 type
 		with  urllib.request.urlopen(req)  as response:
 			html = response.read().decode('utf-8')
 		return html
-	vod={
-		'name':'ikan6',
-		'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
-		'circuit':'module-play-list-base">',
-		'after':'</div>',
-		'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
-		'url':'https://ikan6.vip'
-	}
-	ReStr=[]
-	ReStr.append(vod)
-	vod={
-		'name':'ktkkt2',
-		'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
-		'circuit':'<div id="video_list_',
-		'after':'</div>',
-		'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
-		'url':'https://www.ktkkt2.com'
-	}
-	ReStr.append(vod)
-	vod={
-		'name':'cctv',
-		'line':'>(剧集列表)</li>',
-		'circuit':'//相关报导',
-		'after':' </script>',
-		'pattern':r"'title':'(?P<title>.+?)',\r\n\s*'img':'.*?',\r\n\s*'brief':'.*?',\r\n\s*'url':'(?P<url>.+?)'",
-		'url':''
-	}
-	ReStr.append(vod)
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
