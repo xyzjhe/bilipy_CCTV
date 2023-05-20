@@ -50,7 +50,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
-		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'+'2' if pg=='1' else pg
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno='+'2' if pg=='1' else pg
 		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)#rsp.text
 		videos=self.get_list(html=htmlTxt,types=pg)
 		jRoot = json.loads(htmlTxt)
@@ -60,7 +60,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['page'] = pg
 		result['pagecount'] =9999# math.ceil(int(total)/35)
 		result['limit'] = 99999
-		result['total'] = total
+		result['total'] = 99999
 		return result
 	def get_list(self,html,types):
 		jRoot = json.loads(html)
