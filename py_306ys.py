@@ -84,7 +84,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return videos
 	def detailContent(self,array):
 		result = {}
-		aid = arrayt.split('###')
+		aid = array.split('###')
 		tid=aid[0]#类型id
 		title = aid[1]#片名
 		urlId = aid[2]#URL
@@ -115,11 +115,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				allepidetail=data['allepidetail']
 				keyName=list(allepidetail.keys())
 				if len(keyName[0])>0:
-					for vod in allepidetail[keyName[0]]:
-						url = vod['url']
-						title =vod['playlink_num']
-						vodItems.append(title+"$"+url)
-					#vodItems=self.get_EpisodesList(html=allepidetail[keyName[0]])
+					vodItems=self.get_EpisodesList(html=allepidetail[keyName[0]])
 					joinStr = "#".join(vodItems)
 					vod_play_url.append(joinStr)
 				if len(vodItems)>0:
@@ -133,12 +129,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					data=jRoot['data']
 					if 'allepidetail' in data:
 						allepidetail=data['allepidetail']
-						vodItems=[]
-						for vod in allepidetail[x]:
-							url = vod['url']
-							title =vod['playlink_num']
-							vodItems.append(title+"$"+url)
-						#vodItems=self.get_EpisodesList(html=allepidetail[x])
+						vodItems=self.get_EpisodesList(html=allepidetail[x])
 						joinStr = "#".join(vodItems)
 						vod_play_url.append(joinStr)
 			elif 'playlinksdetail' in data:
@@ -153,7 +144,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vod_play_from=self.get_playlink(keyName)
 		
 		vod = {
-			"vod_id":arrayt,
+			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":tid,
