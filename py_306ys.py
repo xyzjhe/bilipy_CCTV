@@ -26,8 +26,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"电影": "1",
 			"动漫": "4",
 			"儿童": "25",
-			"综艺":"43",
-			"经典": "552"
+			"综艺":"43"
 		}
 		classes = []
 		for k in cateManual:
@@ -54,7 +53,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		types=[]
 		if tid=='1':
 			types=['m',tid]
-		videos=self.get_list(htmlTxt,types=types)
+		videos=self.get_list(html=htmlTxt,types=types)
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
@@ -91,7 +90,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		urlId = aid[2]#URL
 		logo = aid[3]#封面
 		vodItems=[]
-		vod_play_from=['线路',]#线路
+		vod_play_from=[]#线路
 		vod_play_url=[]#剧集
 		year=''#年份
 		area=''
@@ -124,7 +123,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 					del vod_play_from_id[0]
 				for x in vod_play_from_id:
 				url='https://api.web.360kan.com/v1/detail?cat={2}&id={0}&site={1}'.format(urlId,x,tid)
-				html=webReadFile(urlStr=url,header=header)
+				rsp = self.fetch(url, cookies=self.header)
+				html=rsp.text
 				if html.find('Success')<0:
 					continue
 				jRoot = json.loads(html)
@@ -234,12 +234,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		hdRsp = self.fetch(hdUrl,headers=self.header)
 		if hdRsp.status_code == 200:
 			url = hdUrl
-
-		result["parse"] = 0
-		result["playUrl"] = ''
-		result["url"] = url
-		result["header"] = ''
-		return result
+		return url
 	def ifJx(self,urlTxt):
 		Isjiexi=1
 		RegexTxt=r'(cntv|cctv)'
