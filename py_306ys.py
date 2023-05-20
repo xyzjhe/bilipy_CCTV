@@ -53,11 +53,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'+'2' if pg=='1' else str(int(pg)-1)
 		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)#rsp.text
 		videos=self.get_list(html=htmlTxt,types=tid)
-		#listCount=len(videos)
+		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999
-		result['limit'] = 999
+		result['pagecount'] = 999 if listCount>34 else pg
+		result['limit'] = listCount
 		result['total'] = 999999
 		return result
 	def get_list(self,html,types):
