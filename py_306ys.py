@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧1": "2",
+			"电视剧2": "2",
 			"电影": "1",
 			"动漫": "4",
 			"儿童": "25",
@@ -51,9 +51,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		videos=[]
 		tid='1'
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,'3')
-		#self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'#+'2' if pg=='1' else pg
-		rsp = self.fetch(Url,cookies=self.header)
-		htmlTxt=rsp.text
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'+'2' if pg=='1' else pg
+		#rsp = self.fetch(Url,cookies=self.header)
+		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)#rsp.text
 		videos=self.get_list(html=htmlTxt,types=tid)
 		#listCount=len(videos)
 		result['list'] = videos
