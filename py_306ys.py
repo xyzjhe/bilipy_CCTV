@@ -84,23 +84,22 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return videos
 	def detailContent(self,array):
 		result = {}
-		aid = array[0].split('###')
+		aid = arrayt.split('###')
 		tid=aid[0]#类型id
 		title = aid[1]#片名
 		urlId = aid[2]#URL
 		logo = aid[3]#封面
-		vodItems=[]
-		vod_play_from=[]#线路
-		vod_play_url=[]#剧集
 		year=''#年份
 		area=''
 		actor=''
 		director=''
 		content=''
+		vodItems=[]
+		vod_play_from=['线路',]#线路
+		vod_play_url=[]#剧集
 		url='https://api.web.360kan.com/v1/detail?cat={0}&id={1}'.format(tid,urlId)
-		self.header['referer']='https://www.360kan.com'
-		rsp = self.fetch(url, cookies=self.header)
-		html=rsp.text
+		header['referer']='https://www.360kan.com'
+		html=self.webReadFile(urlStr=url,header=header)
 		if html.find('Success')>0:
 			jRoot = json.loads(html)
 			data=jRoot['data']
@@ -122,18 +121,17 @@ class Spider(Spider):  # 元类 默认的元类 type
 				if len(vodItems)>0:
 					del vod_play_from_id[0]
 				for x in vod_play_from_id:
-				url='https://api.web.360kan.com/v1/detail?cat={2}&id={0}&site={1}'.format(urlId,x,tid)
-				rsp = self.fetch(url, cookies=self.header)
-				html=rsp.text
-				if html.find('Success')<0:
-					continue
-				jRoot = json.loads(html)
-				data=jRoot['data']
-				if 'allepidetail' in data:
-					allepidetail=data['allepidetail']
-					vodItems=self.get_EpisodesList(html=allepidetail[x])
-					joinStr = "#".join(vodItems)
-					vod_play_url.append(joinStr)
+					url='https://api.web.360kan.com/v1/detail?cat={2}&id={0}&site={1}'.format(urlId,x,tid)
+					html=self.webReadFile(urlStr=url,header=header)
+					if html.find('Success')<0:
+						continue
+					jRoot = json.loads(html)
+					data=jRoot['data']
+					if 'allepidetail' in data:
+						allepidetail=data['allepidetail']
+						vodItems=self.get_EpisodesList(html=allepidetail[x])
+						joinStr = "#".join(vodItems)
+						vod_play_url.append(joinStr)
 			elif 'playlinksdetail' in data:
 				playlinksdetail=data['playlinksdetail']
 				keyName=list(playlinksdetail.keys())
@@ -144,8 +142,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 				joinStr = "#".join(vodItems)
 				vod_play_url.append(joinStr)
 				vod_play_from=self.get_playlink(keyName)
+		
 		vod = {
-			"vod_id":array[0],
+			"vod_id":arrayt,
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":tid,
