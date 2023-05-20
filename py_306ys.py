@@ -10,7 +10,7 @@ import re
 from urllib import request, parse
 import urllib
 import urllib.request
-import time
+import math
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧2": "2",
+			"电视剧3": "2",
 			"电影": "1",
 			"动漫": "4",
 			"儿童": "25",
@@ -53,12 +53,14 @@ class Spider(Spider):  # 元类 默认的元类 type
 		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'+'2' if pg=='1' else str(int(pg)-1)
 		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)#rsp.text
 		videos=self.get_list(html=htmlTxt,types=tid)
+		jRoot = json.loads(htmlTxt)
+		total=jRoot['data']['total']
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999 if listCount>34 else pg
+		result['pagecount'] = math.ceil(int(total)/35)
 		result['limit'] = listCount
-		result['total'] = 999999
+		result['total'] = total
 		return result
 	def get_list(self,html,types):
 		jRoot = json.loads(html)
