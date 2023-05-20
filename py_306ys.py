@@ -54,14 +54,14 @@ class Spider(Spider):  # 元类 默认的元类 type
 		#rsp = self.fetch(Url,cookies=self.header)
 		htmlTxt=webReadFile(urlStr=Url,header=self.header)
 		videos=self.get_list(html=htmlTxt,types=tid)
-		listCount=len(videos)
+		#listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = 999
-		result['limit'] = listCount
+		result['limit'] = 999
 		result['total'] = 999999
 		return result
-	def get_list_weather(self,html,types):
+	def get_list(self,html,types):
 		jRoot = json.loads(html)
 		if jRoot['msg']!='ok':
 			return []
