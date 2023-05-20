@@ -196,33 +196,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		#print(Host)
 		return html
-	def get_list(self,html):
-		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
-		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
-		videos = []
-		i=0
-		tdi=''
-		for vod in ListRe:
-			lastVideo = vod[0]
-			title =vod[1]
-			if title.find('_List')>1:
-				tdi='List'
-				title=title[0:len(title)-5]
-			else:
-				tdi='play'
-			if len(lastVideo) == 0:
-				continue
-			videos.append({
-				"vod_id":"{0}###{1}###{2}###{3}".format(tdi,title,lastVideo,img),
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
-		videos = res
-		return videos
 	def get_list_B(self,jsonTxt):
 		videos=[]
 		jRoot = json.loads(jsonTxt)
