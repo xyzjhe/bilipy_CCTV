@@ -98,8 +98,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		vod_play_from=['线路',]#线路
 		vod_play_url=[]#剧集
 		url='https://api.web.360kan.com/v1/detail?cat={0}&id={1}'.format(tid,urlId)
-		header['referer']='https://www.360kan.com'
-		html=self.webReadFile(urlStr=url,header=header)
+		self.header['referer']='https://www.360kan.com'
+		html=self.webReadFile(urlStr=url,header=self.header)
 		if html.find('Success')>0:
 			jRoot = json.loads(html)
 			data=jRoot['data']
