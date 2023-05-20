@@ -58,7 +58,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = math.ceil(int(total)/35)
+		result['pagecount'] =9999# math.ceil(int(total)/35)
 		result['limit'] = 99999
 		result['total'] = total
 		return result
