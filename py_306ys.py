@@ -50,7 +50,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
-		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno='+'2' if pg=='1' else pg
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'#+'2' if pg=='1' else pg
 		rsp = self.fetch(Url, cookies=self.header)
 		htmlTxt=rsp.text
 		types=[]
@@ -60,7 +60,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 999 if listCount>34 else pg
+		result['pagecount'] = 999
 		result['limit'] = listCount
 		result['total'] = 999999
 		return result
