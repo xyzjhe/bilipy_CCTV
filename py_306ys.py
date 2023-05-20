@@ -66,23 +66,23 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def get_list_weather(self,html):
 		jRoot = json.loads(html)
-		if jRoot['message']!='success':
+		if jRoot['msg']!='ok':
 			return []
 		videos = []
-		jsonList=jRoot['data']
-		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
+		jsonList=jRoot['data']['movies']
 		for vod in jsonList:
-			url = vod['url']
+			url = vod['id']
 			title =vod['title']
+			img='https:'+vod['cdncover']
+			#print(title)
 			if len(url) == 0:
 				continue
-			guid="{0}###{1}###{2}###{3}".format('weather',title,url,img)
-			print(guid)
+			guid="{0}###{1}###{2}###{3}".format(types[1],title,url,img)
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":vod['updateTime']
+				"vod_remarks":vod['comment']
 			})
 		return videos
 	def detailContent(self,array):
