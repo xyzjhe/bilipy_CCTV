@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧3": "2",
+			"电视剧4": "2",
 			"电影": "1",
 			"动漫": "4",
 			"儿童": "25",
@@ -122,7 +122,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 					del vod_play_from_id[0]
 				for x in vod_play_from_id:
 					url='https://api.web.360kan.com/v1/detail?cat={2}&id={0}&site={1}'.format(urlId,x,tid)
-					html=self.webReadFile(urlStr=url,header=header)
+					html=self.webReadFile(urlStr=url,header=self.header)
 					if html.find('Success')<0:
 						continue
 					jRoot = json.loads(html)
