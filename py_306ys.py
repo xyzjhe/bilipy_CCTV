@@ -50,7 +50,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		tid='1'
-		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
+		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,'3')
 		#self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2'#+'2' if pg=='1' else pg
 		rsp = self.fetch(Url,cookies=self.header)
 		htmlTxt=rsp.text
