@@ -64,7 +64,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['limit'] = listCount
 		result['total'] = 999999
 		return result
-	def get_list_weather(self,html):
+	def get_list_weather(self,html,types):
 		jRoot = json.loads(html)
 		if jRoot['msg']!='ok':
 			return []
