@@ -59,7 +59,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['list'] = videos
 		result['page'] = pg
 		result['pagecount'] = math.ceil(int(total)/35)
-		result['limit'] = listCount
+		result['limit'] = 99999
 		result['total'] = total
 		return result
 	def get_list(self,html,types):
