@@ -95,7 +95,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		director=''
 		content=''
 		vodItems=[]
-		vod_play_from=['线路',]#线路
+		vod_play_from=[]#线路
 		vod_play_url=[]#剧集
 		url='https://api.web.360kan.com/v1/detail?cat={0}&id={1}'.format(tid,urlId)
 		self.header['referer']='https://www.360kan.com'
@@ -115,7 +115,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 				allepidetail=data['allepidetail']
 				keyName=list(allepidetail.keys())
 				if len(keyName[0])>0:
-					vodItems=self.get_EpisodesList(html=allepidetail[keyName[0]])
+					for vod in allepidetail[keyName[0]]:
+						url = vod['url']
+						title =vod['playlink_num']
+						vodItems.append(title+"$"+url)
+					#vodItems=self.get_EpisodesList(html=allepidetail[keyName[0]])
 					joinStr = "#".join(vodItems)
 					vod_play_url.append(joinStr)
 				if len(vodItems)>0:
@@ -129,7 +133,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 					data=jRoot['data']
 					if 'allepidetail' in data:
 						allepidetail=data['allepidetail']
-						vodItems=self.get_EpisodesList(html=allepidetail[x])
+						vodItems=[]
+						for vod in allepidetail[x]:
+							url = vod['url']
+							title =vod['playlink_num']
+							vodItems.append(title+"$"+url)
+						#vodItems=self.get_EpisodesList(html=allepidetail[x])
 						joinStr = "#".join(vodItems)
 						vod_play_url.append(joinStr)
 			elif 'playlinksdetail' in data:
