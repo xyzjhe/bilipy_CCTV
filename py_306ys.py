@@ -158,7 +158,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vod_play_from=self.get_playlink(keyName)
 		
 		vod = {
-			"vod_id":array,
+			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":tid,
