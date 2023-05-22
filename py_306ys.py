@@ -82,7 +82,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_remarks":''
 			})
 		return videos
-		def detailContent(self,array):		
+	def detailContent(self,array):		
 		result = {}
 		aid = array[0].split('###')
 		tid=aid[0]#类型id
