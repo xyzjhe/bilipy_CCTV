@@ -49,7 +49,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		videos=[]
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
-		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno={0}'.format('2' if pg=='1' else int(pg)-1)
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno={0}'.format('2' if pg=='1' 9999)
 		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
 		videos=self.get_list(html=htmlTxt,types=tid)
 		listCount=len(videos)
@@ -65,7 +65,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return []
 		videos = []
 		data=jRoot['data']
-		print(data)
 		if data is None:
 			return []
 		jsonList=data['movies']
@@ -80,7 +79,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_id":guid,
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":vod['comment']
+				"vod_remarks":''
 			})
 		return videos
 	def detailContent(self,array):
