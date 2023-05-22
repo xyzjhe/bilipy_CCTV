@@ -66,7 +66,8 @@ class Spider(Spider):
 		time=''
 		if 'time' in extend.keys():
 			time=urllib.parse.quote(extend['time']) if extend['time']!='' else ''#年份
-		url='http://www.meheme.com/vodshow/{0}-{1}--{2}-{3}----{4}---{5}.html'.format(classification,area,types,language,pg,time)
+		#url='http://www.meheme.com/vodshow/{0}-{1}--{2}-{3}----{4}---{5}.html'.format(classification,area,types,language,pg,time)
+		url='http://www.meheme.com/vodfl/{0}-{1}.html'.format(classification,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
 		videos = self.get_list(html=htmlTxt)
@@ -209,7 +210,7 @@ class Spider(Spider):
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		return html
 	def get_list(self,html):
-		patternTxt=r'<a class="vodlist_thumb lazyload" href="(.+?)" title="(.+?)" data-original="(.+?)"'
+		patternTxt=r'<a class="hl-item-thumb hl-lazy" href="(.+?)" title="(.+?)"\s*?data-original="(.+?)">'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		videos = []
