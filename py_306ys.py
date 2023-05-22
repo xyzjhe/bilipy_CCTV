@@ -82,64 +82,114 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_remarks":''
 			})
 		return videos
-	def detailContent(self,array):
-		result = {}
+		def detailContent(self,array):		result = {}
 		aid = array[0].split('###')
-		tid = aid[0]
-		logo = aid[3]
-		url = aid[2]
-		title = aid[1]
+		tid=aid[0]#类型id
+		title = aid[1]#片名
+		urlId = aid[2]#URL
+		logo = aid[3]#封面
+		year=''#年份
+		area=''
+		actor=''
+		director=''
+		content=''
 		vodItems=[]
-		vod_play_from=['线路',]
-		if tid=='play':
-			vodItems = [title+"$"+url]
-		elif tid=='List':
-			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(tv\.|www\.){0,1}(.+?)\.',Index=2)
-			reTxt=''
-			for t in self.ReStr:
-				if t['name']==id:
-					reTxt=t
-					break
-			if reTxt!='':
-				htmlTxt=self.webReadFile(urlStr=url,header=self.header)
-				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
-				vod_play_from=[t for t in line]
-				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
-				#测试到此
-				for t in circuit:
-					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
-					videos = []
-					for vod in ListRe:#/vodplay/50548-1-1/
-						url = vod.group('url').replace('">','')
-						EpisodeTitle =vod.group('title')
-						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
-					joinStr = "#".join(videos)
-					vodItems.append(joinStr)
-				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
-		elif tid=='weather':
-			vodItems = [title+"$"+url]
-		else:
-			pass
+		vod_play_from=[]#线路
+		vod_play_url=[]#剧集
+		url='https://api.web.360kan.com/v1/detail?cat={0}&id={1}'.format(tid,urlId)
+		self.header['referer']='https://www.360kan.com'
+		html=self.webReadFile(urlStr=url,header=self.header)
+
+		if html.find('Success')>0:
+			jRoot = json.loads(html)
+			data=jRoot['data']
+			vod_play_from_id=[t for t in data['playlink_sites']]
+			vod_play_from=self.get_playlink(vod_play_from_id)
+			title=data['title']
+			year=data['pubdate']
+			area='/'.join([v for v in data['area']])
+			actor='/'.join([v for v in data['actor']])
+			director='/'.join([v for v in data['director']])
+			content=data['description']
+			if 'allepidetail' in data:
+				upinfo=int(data['upinfo'])
+				Stepping=49 if upinfo>49 else upinfo-1
+				for x in vod_play_from_id:
+					starting=1
+					end=starting+Stepping
+					vodItems=[]
+
+					while len(vodItems)<upinfo:
+
+						url='https://api.web.360kan.com/v1/detail?cat={0}&id={1}&start={2}&end={3}&site={4}'.format(tid,urlId,starting,end,x)
+						#print('起始:{0},结束:{1}'.format(starting,end))
+						html=self.webReadFile(urlStr=url,header=self.header)
+						#print(url)
+						if html.find('Success')<0:
+							break
+						jRoot = json.loads(html)
+						data=jRoot['data']
+						if 'allepidetail' in data:
+							allepidetail=data['allepidetail']
+							temporary=self.get_EpisodesList(html=allepidetail[x])
+							for vod in temporary:
+								vodItems.append(vod)#extend无效
+						joinStr = "#".join(vodItems)
+						vod_play_url.append(joinStr)
+						
+						if len(temporary)<1:
+							break
+						starting=end+1
+						end+=Stepping
+						if end>upinfo:
+							end=upinfo						
+						time.sleep(1)
+					#print(str(len(vodItems))+x)
+			elif 'playlinksdetail' in data:
+				playlinksdetail=data['playlinksdetail']
+				keyName=list(playlinksdetail.keys())
+				for l in keyName:
+					temporary=playlinksdetail[l]
+					url=temporary['default_url']
+					vodItems.append(title+"$"+url)
+				joinStr = "#".join(vodItems)
+				vod_play_url.append(joinStr)
+				vod_play_from=self.get_playlink(keyName)
+		
 		vod = {
-			"vod_id":array[0],
+			"vod_id":array,
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":tid,
-			"vod_year":"",
-			"vod_area":"",
+			"vod_year":year,
+			"vod_area":area,
 			"vod_remarks":"",
-			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_actor":actor,
+			"vod_director":director,
+			"vod_content":content
 		}
 		vod['vod_play_from'] =  "$$$".join(vod_play_from)
-		vod['vod_play_url'] = "$$$".join(vodItems)
+		vod['vod_play_url'] = "$$$".join(vod_play_url)
 		result = {
 			'list':[
 				vod
 			]
 		}
 		return result
+	def get_playlink(self,link):
+		linkName={'xigua':'西瓜','douyin':'斗音','leshi':'乐视','youku':'优酷','imgo':'芒果','qiyi':'爱奇艺','qq':'腾讯','huanxi':'搜狐','bilibili1':'B站','cntv':'CCTV','cctv':'CCTV','m1905':'1905电影网'}
+		returnName=[]
+		for vod in link:
+			returnName.append(linkName.get(vod,vod))
+		return returnName
+	def get_EpisodesList(self,html):
+		videos = []
+		for vod in html:
+				url = vod['url']
+				title =vod['playlink_num']
+				#print(title)
+				videos.append(title+"$"+url)
+		return videos	
 	def get_lineList(self,Txt,mark,after):
 		circuit=[]
 		origin=Txt.find(mark)
