@@ -1,21 +1,19 @@
-#coding=utf-8
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import sys
 sys.path.append('..') 
 from base.spider import Spider
 import json
-import time
-import base64
 import re
 from urllib import request, parse
 import urllib
 import urllib.request
-import math
 import time
-class Spider:  # 元类 默认的元类 type
+
+class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
 		return "360影视"
-	def init(self,extend=""):
+	def __init__(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
 	def isVideoFormat(self,url):
@@ -28,7 +26,7 @@ class Spider:  # 元类 默认的元类 type
 			"电视剧4": "2",
 			"电影": "1",
 			"动漫": "4",
-			"综艺":"3"
+			"综艺":"4"
 		}
 		classes = []
 		for k in cateManual:
@@ -316,15 +314,7 @@ class Spider:  # 元类 默认的元类 type
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		#print(Host)
 		return html
-	config = {
-		"player": {},
-		"filter": {}
-		}
-	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-	    'referer':'https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2',
-	    'Host':'api.web.360kan.com'
-	}
+	
 	def webReadFile(self,urlStr,header):
 		html=''
 		req=urllib.request.Request(url=urlStr,headers=header)#,headers=header
@@ -333,3 +323,12 @@ class Spider:  # 元类 默认的元类 type
 		return html
 	def localProxy(self,param):
 		pass
+	config = {
+		"player": {},
+		"filter": {}
+	}
+	header = {
+		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+	    'referer':'https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno=2',
+	    'Host':'api.web.360kan.com'
+	}

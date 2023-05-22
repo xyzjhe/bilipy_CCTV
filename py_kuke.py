@@ -91,7 +91,7 @@ class Spider(Spider):
 		url='http://www.meheme.com{0}'.format(idUrl)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
-		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'class="active"\salt="(.+?)"\srel="nofollow">',Index=1)
+		line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'alt="(.+?)"><i class="iconfont hl-icon-shipin"></i>',Index=1)
 		if len(line)<1:
 			return result
 		playFrom = []
@@ -99,9 +99,9 @@ class Spider(Spider):
 		vodItems = []
 		playFrom=['无资源']
 		if len(line)>0:
-			circuit=self.get_lineList(Txt=htmlTxt,mark=r'<ul class="content_playlist clearfix">',after='</div>')
+			circuit=self.get_lineList(Txt=htmlTxt,mark=r'id="hl-plays-list">',after='</div>')
 			playFrom=[self.removeHtml(txt=t) for t in line]
-			pattern = re.compile(r'<li><a href="(/.+?)" rel="nofollow">(.+?)</a></li>')
+			pattern = re.compile(r'<li class="hl-col-xs-4 hl-col-sm-2"><a href="(.+?)">(.+?)</a>')
 			for v in circuit:
 				ListRe=pattern.findall(v)
 				vodItems = []
@@ -112,13 +112,13 @@ class Spider(Spider):
 
 		vod_play_from='$$$'.join(playFrom)
 		vod_play_url = "$$$".join(videoList)
-		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</span>(.+?)<span class="split_line">',Index=1)
-		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</span>(.+?)<span class="split_line">',Index=1)
-		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</span>(.+?)<span class="split_line">',Index=1)
-		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</span>(.+?)<span class="split_line">',Index=1)
-		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</span>(.+?)<span class="split_line">',Index=1)
-		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<div class="content_desc context clearfix"><span>(.+?)</span></div>',Index=1)
-		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</span>(.+?)<span class="split_line">',Index=1)
+		typeName=self.get_RegexGetText(Text=htmlTxt,RegexText=r'类型：</em><a href=".*?" target="_blank">(.*?)</a>&nbsp;</li>',Index=1)
+		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'上映：</em>(.+?)</li>',Index=1)
+		area=self.get_RegexGetText(Text=htmlTxt,RegexText=r'地区：</em><a href=".*?" target="_blank">(.*?)</a>&nbsp;</li>',Index=1)
+		act=self.get_RegexGetText(Text=htmlTxt,RegexText=r'主演：</em><a href=".*?" target="_blank">(.*?)</a>&nbsp;</li>',Index=1)
+		dir=self.get_RegexGetText(Text=htmlTxt,RegexText=r'导演：</em>(.+?)</li>',Index=1)
+		cont=self.get_RegexGetText(Text=htmlTxt,RegexText=r'简介：</em>(.+?)\s*?</li>',Index=1)
+		rem=self.get_RegexGetText(Text=htmlTxt,RegexText=r'语言：</em>(.+?)</li',Index=1)
 
 		vod = {
 			"vod_id": array[0],
