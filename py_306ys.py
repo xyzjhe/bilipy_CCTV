@@ -135,17 +135,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 							temporary=self.get_EpisodesList(html=allepidetail[x])
 							for vod in temporary:
 								vodItems.append(vod)
-						joinStr = "#".join(vodItems)
-						vod_play_url.append(joinStr)
+							joinStr = "#".join(vodItems)
+							vodItems=[]
+							vod_play_url.append(joinStr)
 						
 						if len(temporary)<1:
 							break
 						starting=end+1
 						end+=Stepping
 						if end>upinfo:
-							end=upinfo						
-						#time.sleep(1)
-					#print(str(len(vodItems))+x)
+							end=upinfo	
 			elif 'playlinksdetail' in data:
 				playlinksdetail=data['playlinksdetail']
 				keyName=list(playlinksdetail.keys())
@@ -153,8 +152,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 					temporary=playlinksdetail[l]
 					url=temporary['default_url']
 					vodItems.append(title+"$"+url)
-				joinStr = "#".join(vodItems)
-				vod_play_url.append(joinStr)
+					joinStr = "#".join(vodItems)
+					temporary=[]
+					vod_play_url.append(joinStr)
 				vod_play_from=self.get_playlink(keyName)
 		
 		vod = {
@@ -240,7 +240,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if self.get_RegexGetText(Text=id,RegexText=r'(cntv|cctv)',Index=1)!='':
 			id=self.get_cctv(id=id)
 			parse=0
-			jx=0
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
@@ -250,7 +249,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def ifJx(self,url):
 		Isjiexi=1
 		RegexTxt=r'(cntv|cctv)'
-		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)=='':
+		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=0
 		return Isjiexi
 	def get_cctv(self,id):
