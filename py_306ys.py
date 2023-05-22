@@ -307,8 +307,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 	    'Host':'api.web.360kan.com'
 	}
 	def webReadFile(self,urlStr,header):
-		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		html = urllib.request.urlopen(req).read().decode('utf-8')
+		html=''
+		req=urllib.request.Request(url=urlStr,headers=header)#,headers=header
+		with  urllib.request.urlopen(req)  as response:
+			html = response.read().decode('utf-8')
 		#print(Host)
 		return html
 	vod={
