@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧": "2",
+			"电视剧1": "2",
 			"电影": "1",
 			"动漫": "4",
 			"综艺":"3"
@@ -55,7 +55,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		listCount=len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] =pg if listCount<34 else int(pg)+1
+		result['pagecount'] =999999
 		result['limit'] = listCount
 		result['total'] = 99999
 		return result
