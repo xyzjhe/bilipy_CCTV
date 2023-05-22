@@ -876,8 +876,6 @@ class Spider(Spider):  # 元类 默认的元类 type
             m=2
             if mid=='72270557':
                 m=8
-            if mid=='743226':
-                m=4
             for i in range(1, m):
                 url = "https://api.bilibili.com/x/space/wbi/arc/search?mid={0}&ps=30&tid=0&pn={1}".format(mid,i)
                 rsp = self.fetch(url,headers=self.header)
@@ -892,6 +890,7 @@ class Spider(Spider):  # 元类 默认的元类 type
                     vodTitle = tmpJo['title']
                     bvid = tmpJo['bvid']
                     videoList.append(vodTitle+"$"+'bvid:'+bvid)
+                time.sleep(1)
             typeName = aidList[3]
             remark = aidList[4].replace("&pu","")
             vod = {
