@@ -237,7 +237,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		jx=self.ifJx(url=id)
 		parse=1
-		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
+		if self.get_RegexGetText(Text=id,RegexText=RegexTxt,Index=1)!='':
 			parse=0
 			jx=0
 			id=get_cctv(id=id):
