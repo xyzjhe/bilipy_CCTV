@@ -235,12 +235,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 		headers = {
 			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 		}
-		jx=1#self.ifJx(url=id)
+		jx=self.ifJx(url=id)
 		parse=1
-		result["parse"] = parse
+		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
+			parse=0
+			jx=0
+			id=get_cctv(id=id):
+		result["parse"] = parse#1=嗅探,0=播放
 		result["playUrl"] = ''
 		result["url"] = id
-		result['jx'] = jx#VIP解析
+		result['jx'] = jx#1=VIP解析,0=不解析
 		result["header"] = headers	
 		return result
 	def ifJx(self,url):
