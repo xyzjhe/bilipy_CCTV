@@ -52,8 +52,6 @@ class Spider(Spider):
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		classification=tid
-		if 'classification' in extend.keys():
-			classification=extend['classification']
 		url='http://www.meheme.com/vodfl/{0}-{1}.html'.format(classification,pg)
 		rsp = self.fetch(url)
 		htmlTxt = rsp.text
