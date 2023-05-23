@@ -240,7 +240,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if self.get_RegexGetText(Text=id,RegexText=RegexTxt,Index=1)!='':
 			parse=0
 			jx=0
-			id=get_cctv(id=id):
+			id=get_cctv(id=id)
 		result["parse"] = parse#1=嗅探,0=播放
 		result["playUrl"] = ''
 		result["url"] = id
