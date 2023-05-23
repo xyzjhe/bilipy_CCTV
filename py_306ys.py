@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧2": "2",
+			"电视剧": "2",
 			"电影": "1",
 			"动漫": "4",
 			"综艺":"3"
@@ -48,8 +48,20 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
 		videos=[]
-		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat=&year=&area=&act=&size=35&pageno={1}'.format(tid,pg)
-		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat=&year=&area=&act=&pageno={0}'.format('2' if pg=='1' else int(pg)-1)
+		cat=''
+		if 'cat' in extend.keys():
+			cat=extend['cat']
+		year=''
+		if 'year' in extend.keys():
+			year=extend['year']
+		area=''
+		if 'area' in extend.keys():
+			area=extend['area']
+		act=''
+		if 'act' in extend.keys():
+			act=extend['act']
+		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat={2}&year={3}&area={4}&act={5}&size=35&pageno={1}'.format(tid,pg,cat,year,area,act)
+		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat={1}&year={2}&area={3}&act={4}&pageno={0}'.format('2' if pg=='1' else int(pg)-1,cat,year,area,act)
 		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
 		videos=self.get_list(html=htmlTxt,types=tid)
 		listCount=len(videos)
@@ -235,71 +247,41 @@ class Spider(Spider):  # 元类 默认的元类 type
 		headers = {
 			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 		}
-		jx=self.ifJx(url=id)
+		jx=1
 		parse=1
-		if self.get_RegexGetText(Text=id,RegexText=RegexTxt,Index=1)!='':
-			parse=0
-			jx=0
-			id=get_cctv(id=id)
 		result["parse"] = parse#1=嗅探,0=播放
 		result["playUrl"] = ''
 		result["url"] = id
 		result['jx'] = jx#1=VIP解析,0=不解析
 		result["header"] = headers	
 		return result
-	def ifJx(self,url):
-		Isjiexi=1
-		RegexTxt=r'(cntv|cctv)'
-		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
-			Isjiexi=0
-		return Isjiexi
-	def get_cctv(self,id):
-		result = {}
-		headers={
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		"Host": "tv.cctv.com",
-		"Referer": "https://tv.cctv.com/"
-		}
-		htmlTxt=self.webReadFile(urlStr=id,header=headers)
-		pattern = re.compile(r'var\sguid\s*=\s*"(.+?)";')
-		ListRe=pattern.findall(htmlTxt)
-		if ListRe==[]:
-			return result
-		url = "https://vdn.apps.cntv.cn/api/getHttpVideoInfo.do?pid={0}".format(ListRe[0])
-		jo = self.fetch(url,headers=self.header).json()
-		link = jo['hls_url'].strip()
-		#rsp = self.fetch(link,headers=self.header)
-		content = self.webReadFile(urlStr=link,header=headers).strip()
-		arr = content.split('\n')
-		urlPrefix = self.regStr(link,'(http[s]?://[a-zA-z0-9.]+)/')
-
-		subUrl = arr[-1].split('/')
-		subUrl[3] = '1200'
-		subUrl[-1] = '1200.m3u8'
-		hdUrl = urlPrefix + '/'.join(subUrl)
-
-		url = urlPrefix + arr[-1]
-
-		hdRsp = self.webReadFile(urlStr=hdUrl,header=headers) 
-		if hdRsp.status_code == 200:
-			url = hdUrl
-		return url
-	def get_RegexGetText(self,Text,RegexText,Index):
-		returnTxt=""
-		Regex=re.search(RegexText, Text, re.M|re.S)
-		if Regex is None:
-			returnTxt=""
-		else:
-			returnTxt=Regex.group(Index)
-		return returnTxt	
 	def webReadFile(self,urlStr,header):
 		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
 		html = urllib.request.urlopen(req).read().decode('utf-8')
-		#print(Host)
 		return html
 	config = {
 		"player": {},
-		"filter": {}
+		"filter": {
+		"2":[
+		{"key":"cat","name":"类型","value":[{"n":"全部","v":""},{"n":"言情","v":"言情"},{"n":"剧情","v":"剧情"},{"n":"伦理","v":"伦理"},{"n":"喜剧","v":"喜剧"},{"n":"悬疑","v":"悬疑"},{"n":"都市","v":"都市"},{"n":"偶像","v":"偶像"},{"n":"古装","v":"古装"},{"n":"军事","v":"军事"},{"n":"警匪","v":"警匪"},{"n":"历史","v":"历史"},{"n":"励志","v":"励志"},{"n":"神话","v":"神话"},{"n":"谍战","v":"谍战"},{"n":"青春","v":"青春"},{"n":"家庭","v":"家庭"},{"n":"动作","v":"动作"},{"n":"情景","v":"情景"},{"n":"武侠","v":"武侠"},{"n":"科幻","v":"科幻"},{"n":"其他","v":"其他"}]},
+		{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"更早","v":"lt_year"}]},
+		{"key":"area","name":"地区","value":[{"n":"全部","v":""},{"n":"内地","v":"内地"},{"n":"中国香港","v":"中国香港"},{"n":"中国台湾","v":"中国台湾"},{"n":"泰国","v":"泰国"},{"n":"日本","v":"日本"},{"n":"韩国","v":"韩国"},{"n":"美国","v":"美国"},{"n":"英国","v":"英国"},{"n":"新加坡","v":"新加坡"}]}
+		],
+		"1":[
+		{"key":"cat","name":"类型","value":[{"n":"全部","v":""},{"n":"喜剧","v":"喜剧"},{"n":"爱情","v":"爱情"},{"n":"动作","v":"动作"},{"n":"恐怖","v":"恐怖"},{"n":"科幻","v":"科幻"},{"n":"剧情","v":"剧情"},{"n":"犯罪","v":"犯罪"},{"n":"偶像","v":"偶像"},{"n":"奇幻","v":"奇幻"},{"n":"战争","v":"战争"},{"n":"悬疑","v":"悬疑"},{"n":"动画","v":"动画"},{"n":"文艺","v":"文艺"},{"n":"纪录","v":"纪录"},{"n":"传记","v":"传记"},{"n":"歌舞","v":"歌舞"},{"n":"古装","v":"古装"},{"n":"历史","v":"历史"},{"n":"惊悚","v":"惊悚"},{"n":"伦理","v":"伦理"},{"n":"其他","v":"其他"}]},
+		{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"更早","v":"lt_year"}]},
+		{"key":"area","name":"地区","value":[{"n":"全部","v":""},{"n":"内地","v":"内地"},{"n":"中国香港","v":"中国香港"},{"n":"中国台湾","v":"中国台湾"}{"n":"泰国","v":"泰国"},{"n":"日本","v":"日本"},{"n":"韩国","v":"韩国"},{"n":"美国","v":"美国"},{"n":"英国","v":"英国"},{"n":"法国","v":"法国"},{"n":"德国","v":"德国"},{"n":"印度","v":"印度"},{"n":"其他","v":"其他"}]}
+		],
+		"4":[
+		{"key":"cat","name":"类型","value":[{"n":"全部","v":""},{"n":"热血","v":"热血"},{"n":"科幻","v":"科幻"},{"n":"美少女","v":"美少女"},{"n":"魔幻","v":"魔幻"},{"n":"经典","v":"经典"},{"n":"励志","v":"励志"},{"n":"少儿","v":"少儿"},{"n":"冒险","v":"冒险"},{"n":"搞笑","v":"搞笑"},{"n":"推理","v":"推理"},{"n":"恋爱","v":"恋爱"},{"n":"治愈","v":"治愈"},{"n":"幻想","v":"幻想"},{"n":"校园","v":"校园"},{"n":"动物","v":"动物"},{"n":"机战","v":"机战"},{"n":"亲子","v":"亲子"},{"n":"儿歌","v":"儿歌"},{"n":"运动","v":"运动"},{"n":"悬疑","v":"悬疑"},{"n":"怪物","v":"怪物"},{"n":"战争","v":"战争"},{"n":"益智","v":"益智"},{"n":"青春","v":"青春"},{"n":"童话","v":"童话"},{"n":"竞技","v":"竞技"},{"n":"动作","v":"动作"},{"n":"社会","v":"社会"},{"n":"友情","v":"友情"},{"n":"真人版","v":"真人版"},{"n":"剧场版","v":"电影版"}]},
+		{"key":"year","name":"年份","value":[{"n":"全部","v":""},{"n":"2022","v":"2022"},{"n":"2021","v":"2021"},{"n":"2020","v":"2020"},{"n":"2019","v":"2019"},{"n":"2018","v":"2018"},{"n":"2017","v":"2017"},{"n":"2016","v":"2016"},{"n":"2015","v":"2015"},{"n":"2014","v":"2014"},{"n":"2013","v":"2013"},{"n":"2012","v":"2012"},{"n":"2011","v":"2011"},{"n":"2010","v":"2010"},{"n":"2009","v":"2009"},{"n":"2008","v":"2008"},{"n":"2007","v":"2007"},{"n":"2006","v":"2006"},{"n":"2005","v":"2005"},{"n":"2004","v":"2004"},{"n":"更早","v":"lt_year"}]},
+		{"key":"area","name":"地区","value":[{"n":"全部","v":""},{"n":"内地","v":"内地"},{"n":"日本","v":"日本"},{"n":"美国","v":"美国"}]}
+		],
+		"3":[
+		{"key":"cat","name":"类型","value":[{"n":"全部","v":""},{"n":"脱口秀","v":"脱口秀"},{"n":"真人秀","v":"真人秀"},{"n":"搞笑","v":"搞笑"},{"n":"选秀","v":"选秀"},{"n":"八卦","v":"八卦"},{"n":"访谈","v":"访谈"},{"n":"情感","v":"情感"},{"n":"生活","v":"生活"},{"n":"晚会","v":"晚会"},{"n":"音乐","v":"音乐"},{"n":"职场","v":"职场"},{"n":"美食","v":"美食"},{"n":"时尚","v":"时尚"},{"n":"游戏","v":"游戏"},{"n":"少儿","v":"少儿"},{"n":"纪实","v":"纪实"},{"n":"科教","v":"科教"},{"n":"曲艺","v":"曲艺"},{"n":"歌舞","v":"歌舞"},{"n":"财经","v":"财经"},{"n":"汽车","v":"汽车"},{"n":"播报","v":"播报"},{"n":"其他","v":"其他"}]},
+		{"key":"area","name":"地区","value":[{"n":"全部","v":""},{"n":"内地","v":"内地"},{"n":"中国香港","v":"中国香港"},{"n":"中国台湾","v":"中国台湾"}{"n":"欧美","v":"欧美"}]}
+		]
+		}
 		}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
@@ -313,33 +295,5 @@ class Spider(Spider):  # 元类 默认的元类 type
 			html = response.read().decode('utf-8')
 		#print(Host)
 		return html
-	vod={
-		'name':'ikan6',
-		'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
-		'circuit':'module-play-list-base">',
-		'after':'</div>',
-		'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
-		'url':'https://ikan6.vip'
-	}
-	ReStr=[]
-	ReStr.append(vod)
-	vod={
-		'name':'ktkkt2',
-		'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
-		'circuit':'<div id="video_list_',
-		'after':'</div>',
-		'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
-		'url':'https://www.ktkkt2.com'
-	}
-	ReStr.append(vod)
-	vod={
-		'name':'cctv',
-		'line':'>(剧集列表)</li>',
-		'circuit':'//相关报导',
-		'after':' </script>',
-		'pattern':r"'title':'(?P<title>.+?)',\r\n\s*'img':'.*?',\r\n\s*'brief':'.*?',\r\n\s*'url':'(?P<url>.+?)'",
-		'url':''
-	}
-	ReStr.append(vod)
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
