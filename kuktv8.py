@@ -14,7 +14,7 @@ import base64
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
 		return "酷客影院"
-	def __init__(self,extend=""):
+	def init(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
 	def isVideoFormat(self,url):
