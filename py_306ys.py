@@ -50,16 +50,16 @@ class Spider(Spider):  # 元类 默认的元类 type
 		videos=[]
 		cat=''
 		if 'cat' in extend.keys():
-			cat=extend['cat']
+			cat=urllib.parse.quote(extend['cat'])
 		year=''
 		if 'year' in extend.keys():
 			year=extend['year']
 		area=''
 		if 'area' in extend.keys():
-			area=extend['area']
+			area=urllib.parse.quote(extend['area'])
 		act=''
 		if 'act' in extend.keys():
-			act=extend['act']
+			act=urllib.parse.quote(extend['act'])
 		Url='https://api.web.360kan.com/v1/filter/list?catid={0}&rank=rankhot&cat={2}&year={3}&area={4}&act={5}&size=35&pageno={1}'.format(tid,pg,cat,year,area,act)
 		self.header['referer']='https://www.360kan.com/dianying/list?rank=rankhot&cat={1}&year={2}&area={3}&act={4}&pageno={0}'.format('2' if pg=='1' else int(pg)-1,cat,year,area,act)
 		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
