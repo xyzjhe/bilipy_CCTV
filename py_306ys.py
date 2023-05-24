@@ -255,10 +255,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['jx'] = jx#1=VIP解析,0=不解析
 		result["header"] = headers	
 		return result
-	def webReadFile(self,urlStr,header):
-		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		return html
 	config = {
 		"player": {},
 		"filter": {
