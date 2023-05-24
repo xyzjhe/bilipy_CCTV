@@ -95,14 +95,14 @@
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_bilivd_individual.py"
     },
     {
-	"key": "py_kuke",
+	"key": "py_meheme",
 	"name": "🛳️被窝影院(PY)",
 	"type": 3,
-	"api": "py_kuke",
+	"api": "py_meheme",
 	"searchable": 1,
 	"quickSearch": 1,
 	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kuke.py"
+	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_meheme.py"
     },   
     {
 	"key": "py_cctv",
