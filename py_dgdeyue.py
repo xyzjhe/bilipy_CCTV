@@ -136,7 +136,7 @@ class Spider(Spider):
 
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		parse=1
+		parse=0
 		Url='http://www.dgdeyue.com{0}'.format(id)
 		rsp = self.fetch(Url)
 		htmlTxt = rsp.text
@@ -146,7 +146,7 @@ class Spider(Spider):
 			Url=str(base64.b64decode(Url),'utf-8')
 			Url=urllib.parse.unquote(Url)
 		if Url.find('.m3u8')<1:
-			parse=0
+			parse=1
 			Url='http://www.dgdeyue.com{0}'.format(id)
 		result["parse"] = parse
 		result["playUrl"] = ''
