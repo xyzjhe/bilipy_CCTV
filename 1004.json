@@ -45,7 +45,7 @@
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
     },
-    {"key":"drpy_js_思古影视","name":"📽️思古影视","type":3,"api":"https://cdn.jsdelivr.net/gh/yxcqr/drpy@master/libs/drpy.min.js","ext":"https://cdn.jsdelivr.net/gh/yxcqr/drpy@master/js/思古影视.js"},
+    {"key":"drpy_js_思古影视","name":"📽️思古影视","type":3,"api":"https://cdn.jsdelivr.net/gh/yxcqr/drpy@master/libs/drpy.min.js","ext":"https://cdn.jsdelivr.net/gh/yxcqr/drpy@master/js/思古影视.js"}
     //自己添加的
     ],
 
