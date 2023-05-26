@@ -19,7 +19,7 @@
      {
 	"key": "ks",
 	"name": "🏡快速启动(按菜单键选择站点)",
-	"api": "csp_SP360",
+	"api": "",
 	"type": 0,
 	"filterable": 0,
 	"quickSearch": 0,
@@ -1362,16 +1362,16 @@
       "quickSearch": 0,
       "filterable": 0
     },
-    {
-	"key": "360_spider",
-	"name": "🌈360影视",
-	"type": 3,
-	"api": "py_360ys",
-	"searchable": 1,
-	"quickSearch": 0,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_306ys.py"
-	},
+      {
+		"key": "py_360ys",
+		"name": "🌈360影视",
+		"type": 3,
+		"api": "py_360ys",
+		"searchable": 1,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_306ys.py"
+      },
     {
 	"key": "py_COKEMV",
 	"name": "🕵COKEMV",
