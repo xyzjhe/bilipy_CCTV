@@ -179,7 +179,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 	#访问网页
 	def webReadFile(self,urlStr,header):
 		html=''
-		ssl._create_default_https_context = ssl._create_unverified_context#全局取消证书验证
 		req=urllib.request.Request(url=urlStr,headers=header)#,headers=header
 		with  urllib.request.urlopen(req)  as response:
 			html = response.read().decode('utf-8')
