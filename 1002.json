@@ -16,7 +16,7 @@
     }
   ],
   "sites": [
-      {
+	  {
 		"key": "ks",
 		"name": "🏡快速启动(按菜单键选择站点)",
 		"api": "",
@@ -24,8 +24,8 @@
 		"filterable": 0,
 		"quickSearch": 0,
 		"searchable": 0
-      },
-      {
+	  },
+	  {
 		"key": "py_360ys",
 		"name": "🌈360影视",
 		"type": 3,
@@ -34,8 +34,8 @@
 		"quickSearch": 0,
 		"filterable": 1,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_306ys.py"
-      },
-       {
+	  },
+	  {
 		"key": "SPQQ",
 		"name": "🐧腾讯(官)",
 		"type": 3,
@@ -44,8 +44,8 @@
 		"quickSearch": 1,
 		"filterable": 1,
 		"jar":"https://gitlab.com/duomv/duo/-/raw/main/jar/jun97.jar;md5;BE69D0C9E96E8637BA98436236C82BF6"
-       },
-       {
+	  },
+	  {
 		"key": "SPIQY",
 		"name": "🥝爱奇艺(官)",
 		"type": 3,
@@ -54,40 +54,17 @@
 		"quickSearch": 1,
 		"filterable": 1,
 		"jar":"https://gitlab.com/duomv/duo/-/raw/main/jar/jun97.jar;md5;BE69D0C9E96E8637BA98436236C82BF6"
-        },
-        {
-		"key": "youku",
-		"name": "👑优酷(官)",
-		"type": 0,
-		"api": "https://www.zycaiji.net:7788/api.php/provide/vod/from/youku/at/xml/",
+	  },
+	  {
+		"key": "py_xiguazx",
+		"name": "🤖西瓜影院",
+		"type": 3,
+		"api": "py_xiguazx",
 		"searchable": 0,
 		"quickSearch": 0,
-		"filterable": 0,
-		"categories": [
-		"综艺",
-		"动漫",
-		"动作片",
-		"喜剧片",
-		"爱情片",
-		"科幻片",
-		"恐怖片",
-		"剧情片",
-		"战争片",
-		"国产剧",
-		"港台剧",
-		"日韩剧",
-		"欧美剧",
-		"惊悚片",
-		"犯罪片",
-		"冒险片",
-		"悬疑片",
-		"动画片",
-		"武侠片",
-		"奇幻片",
-		"少儿",
-		"其他片"
-		]
-          },
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_xiguazx.py"
+	  },
           {
 		"key": "SPMGTV",
 		"name": " 🍋芒果(官)",
