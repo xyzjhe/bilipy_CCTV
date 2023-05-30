@@ -156,6 +156,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			jx=0
 		elif url!='':
 			jx=self.ifJx(url=url)
+			parse=1 if jx==1 else 0
 		else:
 			url=id
 		result["parse"] = parse#1=嗅探,0=播放
