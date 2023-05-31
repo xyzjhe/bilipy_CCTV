@@ -144,25 +144,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 	
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		parse=0
-		jx=0
-		url=""
-		htmlTxt=self.webReadFile(urlStr=id,header=self.header)
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText='\},"url":"(.+?)","url_next":".*?","from"',Index=1)
-		if len(m3u8Line)>0:
-			url=m3u8Line[0].replace("/","")
-		if url.find('.m3u8')>1:
-			parse=0
-			jx=0
-		elif url!='':
-			jx=self.ifJx(url=url)
-			parse=1 if jx==1 else 0
-		else:
-			url=id
-		result["parse"] = parse#1=嗅探,0=播放
+		result["parse"] = 1#1=嗅探,0=播放
 		result["playUrl"] = ''
-		result["url"] = url
-		result['jx'] = jx#1=VIP解析,0=不解析
+		result["url"] = id
+		result['jx'] = 0#1=VIP解析,0=不解析
 		result["header"] = ''	
 		return result
 	def localProxy(self,param):
