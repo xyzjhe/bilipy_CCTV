@@ -164,7 +164,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['jx'] = jx#1=VIP解析,0=不解析
 		result["header"] = ''	
 		return result
-		return result
 	def localProxy(self,param):
 		pass
 	config = {
