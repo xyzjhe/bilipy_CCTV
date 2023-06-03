@@ -101,6 +101,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 			joinStr = "#".join(vodItems)
 			vod_play_url.append(joinStr)
 			#print(vod_play_url)
+		if len(vod_play_url)>0:
+			temporaryUrl=vod_play_url
+			temporaryFrom=vod_play_from
+			for i in range(0,len(temporaryUrl)):
+				vod_play_url.append(temporaryUrl[i])
+				vod_play_from.append(temporaryFrom[i]+"(不解析)")
 		temporary=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=r'<a href="/index.php/vod/show/class/.+?/id/\d+.html">(.+?)</a>',Index=1)
 		typeName="/".join(temporary)
 		year=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a class="tag-link" href="/index.php/vod/show/id/\d+?/year/(\d{4}).html">.+?</a>',Index=1)
@@ -147,18 +153,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 		parse=1
 		jx=0
 		url=id
-		htmlTxt=self.webReadFile(urlStr=id,header=self.header)
-		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText='\},"url":"(.+?)","url_next":".*?","from"',Index=1)
-		if len(m3u8Line)>0:
-			url=m3u8Line[0].replace("/","")
-		if url.find('.m3u8')>1:
-			parse=0
-			jx=0
-		elif url!='':
-			jx=self.ifJx(url=url)
-			parse=1 if jx==1 else 0
-		else:
-			url=id
+		if flag.find('不解析')<1:
+			htmlTxt=self.webReadFile(urlStr=id,header=self.header)
+			m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText='\},"url":"(.+?)","url_next":".*?","from"',Index=1)
+			if len(m3u8Line)>0:
+				url=m3u8Line[0].replace("/","")
+			if url.find('.m3u8')>1:
+				parse=0
+				jx=0
+			elif url!='':
+				jx=self.ifJx(url=url)
+				parse=1 if jx==1 else 0
+			else:
+				url=id
 		result["parse"] = parse#1=嗅探,0=播放
 		result["playUrl"] = ''
 		result["url"] = url
@@ -281,7 +288,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	#是否是vip解析
 	def ifJx(self,url):
 		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv|c(c|n)tv|v.pptv)'
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv|c(c|n)tv|v.pptv|mgtv.com)'
 		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
