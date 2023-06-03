@@ -143,9 +143,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	
 	def playerContent(self,flag,id,vipFlags):
+		result={}
 		parse=1
 		jx=0
-		url=""
+		url=id
 		htmlTxt=self.webReadFile(urlStr=id,header=self.header)
 		m3u8Line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText='\},"url":"(.+?)","url_next":".*?","from"',Index=1)
 		if len(m3u8Line)>0:
