@@ -94,28 +94,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 				letter=extend['dataszm-letter']
 			url='https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel={0}&sc={1}&fc={2}&bigday=&letter={3}&p={4}&n=24&serviceId=tvcctv&topv=1&t=json'.format(channel,datafl,id,letter,pg)
 		elif tid=='节目大全':
-			month = ""
-			year = ""
-			if 'month' in extend.keys():
-				month = extend['month']
-			if 'year' in extend.keys():
-				year = extend['year']
-			if year == '':
-				month = ''
-			prefix = year + month
-			extend['p'] = pg
-			filterMap = {
-				"fl":"",
-				"fc":"",
-				"cid":"",
-				"p":"1"
-			}
-			suffix = ""
-			for key in filterMap.keys():
-				if key in extend.keys():
-					filterMap[key] = extend[key]
-				suffix = suffix + '&' + key + '=' + filterMap[key]
-			url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)		
+			cid=''#频道
+			fc=''#分类
+			fl=''#字母
+			url = 'https://api.cntv.cn/lanmu/columnSearch?&fl={0}&fc={1}&cid={2}&p=1&n=20&serviceId=tvcctv&t=json&cb=ko'.format(fl,fc,cid)
 		else:
 			url = 'https://tv.cctv.com/epg/index.shtml'
 
@@ -162,55 +144,70 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
+		if aid[2].find("http")<0:
+			return {}
 		tid = aid[0]
 		logo = aid[3]
-		url = aid[2]
+		lastVideo = aid[2]
 		title = aid[1]
-		vodItems=[]
-		vod_play_from=['线路',]
-		if tid=='play':
-			vodItems = [title+"$"+url]
-		elif tid=='List':
-			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(tv\.|www\.){0,1}(.+?)\.',Index=2)
-			reTxt=''
-			for t in self.ReStr:
-				if t['name']==id:
-					reTxt=t
-					break
-			if reTxt!='':
-				htmlTxt=self.webReadFile(urlStr=url,header=self.header)
-				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
-				vod_play_from=[t for t in line]
-				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
-				#测试到此
-				for t in circuit:
-					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
-					videos = []
-					for vod in ListRe:#/vodplay/50548-1-1/
-						url = vod.group('url').replace('">','')
-						EpisodeTitle =vod.group('title')
-						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
-					joinStr = "#".join(videos)
-					vodItems.append(joinStr)
-				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
-		elif tid=='weather':
-			vodItems = [title+"$"+url]
+		id= aid[4]
+		brief= aid[6]
+		vod_year=aid[5]
+		fromId='CCTV'
+		if tid=="节目大全":
+			lastUrl = 'https://api.cntv.cn/video/videoinfoByGuid?guid={0}&serviceId=tvcctv'.format(id)
+			htmlTxt = self.webReadFile(urlStr=lastUrl,header=self.header)
+			topicId=json.loads(htmlTxt)['ctid']
+			Url = "https://api.cntv.cn/NewVideo/getVideoListByColumn?id={0}&d=&p=1&n=100&sort=desc&mode=0&serviceId=tvcctv&t=json".format(topicId)
+			htmlTxt = self.webReadFile(urlStr=Url,header=self.header)
 		else:
+			Url='https://api.cntv.cn/NewVideo/getVideoListByAlbumIdNew?id={0}&serviceId=tvcctv&p=1&n=100&mode=0&pub=1'.format(id)
+		
+		jRoot = ''
+		videoList = []
+		try:
+			if tid=="搜索":
+				fromId='中央台'
+				videoList=[title+"$"+lastVideo]
+			elif tid!="直播":
+				htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
+				jRoot = json.loads(htmlTxt)
+				data=jRoot['data']
+				jsonList=data['list']
+				videoList=self.get_EpisodesList(jsonList=jsonList)
+				if len(videoList)<1:
+					htmlTxt=self.webReadFile(urlStr=lastVideo,header=self.header)
+					if tid=="电视剧" or tid=="纪录片":
+						patternTxt=r"'title':\s*'(?P<title>.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'url':\s*'(?P<url>.+?)'"
+					elif tid=="特别节目":
+						patternTxt=r'class="tp1"><a\s*href="(?P<url>https://.+?)"\s*target="_blank"\s*title="(?P<title>.+?)"></a></div>'
+					elif tid=="动画片":
+						patternTxt=r"'title':\s*'(?P<title>.+?)',\n{0,1}\s*'img':\s*'(.+?)',\n{0,1}\s*'brief':\s*'(.+?)',\n{0,1}\s*'url':\s*'(?P<url>.+?)'"
+					elif tid=="节目大全":
+						patternTxt=r'href="(?P<url>.+?)" target="_blank" alt="(?P<title>.+?)" title=".+?">'
+					videoList=self.get_EpisodesList_re(htmlTxt=htmlTxt,patternTxt=patternTxt)
+					fromId='央视'
+			else:
+					videoList=[title+"$"+lastVideo]
+					fromId='直播'
+		except:
 			pass
+		if len(videoList) == 0:
+			return {}
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
 			"vod_pic":logo,
 			"type_name":tid,
-			"vod_year":"",
+			"vod_year":vod_year,
 			"vod_area":"",
-			"vod_remarks":"",
+			"vod_remarks":'',
 			"vod_actor":"",
-			"vod_director":"",
-			"vod_content":""
+			"vod_director":'',
+			"vod_content":brief
 		}
-		vod['vod_play_from'] =  "$$$".join(vod_play_from)
-		vod['vod_play_url'] = "$$$".join(vodItems)
+		vod['vod_play_from'] = fromId
+		vod['vod_play_url'] = "#".join(videoList)
 		result = {
 			'list':[
 				vod
