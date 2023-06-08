@@ -14,7 +14,7 @@ import time
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
-		return "蓝海地星人的空间"
+		return "中央电视台"#可搜索
 	def init(self,extend=""):
 		print("============{0}============".format(extend))
 		pass
@@ -238,8 +238,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 			returnTxt.append(value)	
 		return returnTxt
 	def searchContent(self,key,quick):
+		key=urllib.parse.quote(key)
+		Url='https://search.cctv.com/ifsearch.php?page=1&qtext={0}&sort=relevance&pageSize=20&type=video&vtime=-1&datepid=1&channel=&pageflag=0&qtext_str={0}'.format(key)
+		htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
+		videos=self.get_list_search(html=htmlTxt,tid='搜索')
 		result = {
-			'list':[]
+			'list':videos
 		}
 		return result
 	def playerContent(self,flag,id,vipFlags):
@@ -254,7 +258,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		elif flag=='直播':
 			parse=1
 			url=id
-			
 		else:
 			try:
 				html=self.webReadFile(urlStr=id,header=self.header)
@@ -296,43 +299,11 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		}
 	header = {
-		"Referer": 'http://my.ie.2345.com/onlinefav/web/',
-		'User-Agent':'my.ie.2345.com',
-		'Cookie':'uUiD=35752164629621148571735; name_ie=%2534013%2528023%2522320%2526143%2520154; I=i%3D90475631%26u%3D88890231%26n%3D%25C0%25B6%25BA%25A3%25B5%25D8%25D0%25C7%25C8%25CB%26m%3D0%26t%3D1675499574.1711300%26s%3D6a22a64feb086a03715e47d4cc3e8a29%26v%3D1.1; sData=6392F231FBE75023D053CEFE20A81E6EE43333BF6FF9CD4610BA32AB109E43FD1742EBAAA408F5EB45E7E1A10A40174BC8EE73651C7AD84AC5840AEA48B014F46FE421C992A7799DBF763B0E743AC8716814F0237BC8F8CC62FCF9F8A283040ADD791FBDD3470D699AA43B70F9886350F57021D6DB5E7B8E001ABEFE70C38424; site_str_flag=2; need_modify_name=0; skin=0; theme=0; ggbd=0'
+		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+		"Host": "tv.cctv.com",
+		"Referer": "https://tv.cctv.com/"
 	}
-	def webReadFile(self,urlStr,header):
-		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		#print(Host)
-		return html
-	vod={
-		'name':'ikan6',
-		'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
-		'circuit':'module-play-list-base">',
-		'after':'</div>',
-		'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
-		'url':'https://ikan6.vip'
-	}
-	ReStr=[]
-	ReStr.append(vod)
-	vod={
-		'name':'ktkkt2',
-		'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
-		'circuit':'<div id="video_list_',
-		'after':'</div>',
-		'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
-		'url':'https://www.ktkkt2.com'
-	}
-	ReStr.append(vod)
-	vod={
-		'name':'cctv',
-		'line':'>(剧集列表)</li>',
-		'circuit':'//相关报导',
-		'after':' </script>',
-		'pattern':r"'title':'(?P<title>.+?)',\r\n\s*'img':'.*?',\r\n\s*'brief':'.*?',\r\n\s*'url':'(?P<url>.+?)'",
-		'url':''
-	}
-	ReStr.append(vod)
+	
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
 	#-----------------------------------------------自定义函数-----------------------------------------------
