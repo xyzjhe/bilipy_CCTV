@@ -240,12 +240,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		url=''
 		parse=0
-		
+		headers=''
 		if flag=='CCTV':
 			url=self.get_m3u8(urlTxt=id)
 		elif flag=='直播':
 			parse=1
 			url=id
+			headers = {
+			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
+			}
 		else:
 			try:
 				html=self.webReadFile(urlStr=id,header=self.header)
@@ -256,134 +259,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = url
-		result["header"] = ''
+		result["header"] =header
 		return result
-	def ifJx(self,urlTxt):
-		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
-		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
-			Isjiexi=1
-		return Isjiexi
-	def get_RegexGetText(self,Text,RegexText,Index):
-		returnTxt=""
-		Regex=re.search(RegexText, Text, re.M|re.S)
-		if Regex is None:
-			returnTxt=""
-		else:
-			returnTxt=Regex.group(Index)
-		return returnTxt	
-	def webReadFile(self,urlStr,header):
-		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		#print(Host)
-		return html
-	def get_list(self,html):
-		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
-		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
-		videos = []
-		i=0
-		tdi=''
-		for vod in ListRe:
-			lastVideo = vod[0]
-			title =vod[1]
-			if title.find('_List')>1:
-				tdi='List'
-				title=title[0:len(title)-5]
-			else:
-				tdi='play'
-			if len(lastVideo) == 0:
-				continue
-			videos.append({
-				"vod_id":"{0}###{1}###{2}###{3}".format(tdi,title,lastVideo,img),
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
-		videos = res
-		return videos
-	def get_list_B(self,jsonTxt):
-		videos=[]
-		jRoot = json.loads(jsonTxt)
-		if jRoot['code']!=0:
-			return videos
-		jo = jRoot['data']
-		vodList = jo['list']
-		rooms=jo['rooms']
-		for vod in vodList:
-			url =vod['room_id']
-			title =vod['title']
-			img=vod['keyframe']
-			remarks=vod['uname']
-			if len(img)<3:
-				img='https://www.baidu.com/link?url=w4owbtzM4I-UZp_1mOG3XAfrgl20sGkgnjZDyVglrgGRk9g2S3TpFA0Sh9E0YqsJ&wd=&eqid=f583e14d00056df100000003642e34bd'
-			vod_id="{0}###{1}###{2}".format(title,url,img)
-			videos.append({
-				"vod_id":vod_id,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":remarks
-			})
-		return videos
-	def get_m3u8Url_B(self,jsonTxt):
-		videos=[]
-		jRoot = json.loads(jsonTxt)
-		if jRoot['code']!=0:
-			return videos
-		jo = jRoot['data']
-		room_id=jo['room_id']
-		playurl=jo['playurl_info']
-		playurl=playurl['playurl']
-		desc=playurl['g_qn_desc']
-		descMass={}
-		for x in desc:
-			descMass[x['qn']]=x['desc']
-		stream=playurl['stream']
-		urlM3u8=[]
-		for vod in stream:
-			formatJson=vod['format']
-			if len(formatJson)<1:
-				continue
-			for x in formatJson:
-				codec=x['codec']
-				format_name=x['format_name']
-				for x1 in codec:
-					qn=x1['current_qn']
-					url=x1['base_url']
-					host=x1['url_info'][0]['host']
-					extra=x1['url_info'][0]['extra']
-					urlM3u8.append({
-						'Url':url,
-						'host':host,
-						'qn':qn,
-						'extra':extra,
-						'format_name':format_name
-						})
-		if len(urlM3u8)>0:
-			for x in urlM3u8:
-				url=x['host']+x['Url']+x['extra']
-				title=descMass.get(x['qn'])+"["+x['format_name'].replace("fmp4","m3u8")+"]"
-				videos.append(title+"$"+url)
-		if len(videos)<1:
-			idTxt='platform=web&quality=4_{0}'.format(room_id)
-			ids = idTxt.split("_")
-			Url = 'https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%s&%s'%(ids[1],ids[0])
-			rsp = self.fetch(Url,headers=self.header)
-			htmlTxt = rsp.text
-			jRoot = json.loads(htmlTxt)
-			if jRoot['code']!=0:
-				return videos
-			jo = jRoot['data']
-			ja = jo['durl']
-			quality=jo['quality_description']
-			url = ''
-			if len(ja) > 0:
-				url1 = ja[0]['url']
-				title=quality[0]['desc']
-				videos.append(title+"$"+url1)
-		return videos
 	config = {
 		"player": {},
 		"filter": {
@@ -620,7 +497,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url = 'https://tv.cctv.com/live/'+title
 			if title=='cctvchild':
 				url = 'https://tv.cctv.com/live/cctv14'
-			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}".format(tid,title,url,img,id,year,brief)
+			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}".format(tid,title.capitalize(),url,img,id,year,brief)
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
