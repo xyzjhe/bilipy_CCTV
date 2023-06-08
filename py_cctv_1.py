@@ -238,18 +238,25 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def playerContent(self,flag,id,vipFlags):
 		result = {}
-		headers = {
-			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
-		}
-		jx=self.ifJx(urlTxt=id)
-		parse=1
-		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
-			parse=0
+		url=''
+		parse=0
+		
+		if flag=='CCTV':
+			url=self.get_m3u8(urlTxt=id)
+		elif flag=='直播':
+			parse=1
+			url=id
+		else:
+			try:
+				html=self.webReadFile(urlStr=id,header=self.header)
+				guid=self.get_RegexGetText(Text=html,RegexText=r'var\sguid\s*=\s*"(.+?)";',Index=1)
+				url=self.get_m3u8(urlTxt=guid)
+			except :
+				pass
 		result["parse"] = parse
 		result["playUrl"] = ''
-		result["url"] = id
-		result['jx'] = jx#VIP解析
-		result["header"] = headers	
+		result["url"] = url
+		result["header"] = ''
 		return result
 	def ifJx(self,urlTxt):
 		Isjiexi=0
