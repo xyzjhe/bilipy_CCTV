@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"电视剧1": "电视剧",
+			"电视剧": "电视剧",
 			"动画片": "动画片",
 			"纪录片": "纪录片",
 			"特别节目": "特别节目",
@@ -49,28 +49,92 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		videos=[]
-		if pg!='1':
-			return result
-		if tid=='Collection':
-			Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
-			videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
-		elif  tid=='weather':
-			Url = 'http://www.weather.com.cn/pubm/video_lianbo_2021.htm'
-			headers = {
-				"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-				"Referer": "https://tv.cctv.com/"
+		month = ""#月
+		year = ""#年
+		area=''#地区
+		channel=''#频道
+		datafl=''#类型
+		letter=''#字母
+		if tid=='动画片':
+			id=urllib.parse.quote(tid)
+			if 'datadq-area' in extend.keys():
+				area=urllib.parse.quote(extend['datadq-area'])
+			if 'dataszm-letter' in extend.keys():
+				letter=extend['dataszm-letter']
+			if 'datafl-sc' in extend.keys():
+				datafl=urllib.parse.quote(extend['datafl-sc'])
+			url='https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955899450127&area={0}&sc={4}&fc={1}&letter={2}&p={3}&n=24&serviceId=tvcctv&topv=1&t=json'.format(area,id,letter,pg,datafl)
+		elif tid=='纪录片':
+			id=urllib.parse.quote(tid)
+			if 'datapd-channel' in extend.keys():
+				channel=urllib.parse.quote(extend['datapd-channel'])
+			if 'datafl-sc' in extend.keys():
+				datafl=urllib.parse.quote(extend['datafl-sc'])
+			if 'datanf-year' in extend.keys():
+				year=extend['datanf-year']
+			if 'dataszm-letter' in extend.keys():
+				letter=extend['dataszm-letter']
+			url='https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955924871139&fc={0}&channel={1}&sc={2}&year={3}&letter={4}&p={5}&n=24&serviceId=tvcctv&topv=1&t=json'.format(id,channel,datafl,year,letter,pg)
+		elif tid=='电视剧':
+			id=urllib.parse.quote(tid)
+			if 'datafl-sc' in extend.keys():
+				datafl=urllib.parse.quote(extend['datafl-sc'])
+			if 'datanf-year' in extend.keys():
+				year=extend['datanf-year']
+			if 'dataszm-letter' in extend.keys():
+				letter=extend['dataszm-letter']
+			url='https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955853485115&area={0}&sc={1}&fc={2}&year={3}&letter={4}&p={5}&n=24&serviceId=tvcctv&topv=1&t=json'.format(area,datafl,id,year,letter,pg)
+		elif tid=='特别节目':
+			id=urllib.parse.quote(tid)
+			if 'datapd-channel' in extend.keys():
+				channel=urllib.parse.quote(extend['datapd-channel'])
+			if 'datafl-sc' in extend.keys():
+				datafl=urllib.parse.quote(extend['datafl-sc'])
+			if 'dataszm-letter' in extend.keys():
+				letter=extend['dataszm-letter']
+			url='https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel={0}&sc={1}&fc={2}&bigday=&letter={3}&p={4}&n=24&serviceId=tvcctv&topv=1&t=json'.format(channel,datafl,id,letter,pg)
+		elif tid=='节目大全':
+			month = ""
+			year = ""
+			if 'month' in extend.keys():
+				month = extend['month']
+			if 'year' in extend.keys():
+				year = extend['year']
+			if year == '':
+				month = ''
+			prefix = year + month
+			extend['p'] = pg
+			filterMap = {
+				"fl":"",
+				"fc":"",
+				"cid":"",
+				"p":"1"
 			}
-			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
-			if len(htmlTxt)>13:
-				length=htmlTxt.rfind(')')
-				htmlTxt=htmlTxt[11:length]
-				videos = self.get_list_weather(html=htmlTxt)
+			suffix = ""
+			for key in filterMap.keys():
+				if key in extend.keys():
+					filterMap[key] = extend[key]
+				suffix = suffix + '&' + key + '=' + filterMap[key]
+			url = 'https://api.cntv.cn/lanmu/columnSearch?{0}&n=20&serviceId=tvcctv&t=json'.format(suffix)		
 		else:
-			pass
+			url = 'https://tv.cctv.com/epg/index.shtml'
+
+		videos=[]
+		htmlText =self.webReadFile(urlStr=url,header=self.header)
+		if tid=='节目大全':
+			index=htmlText.rfind(');')
+			if index>-1:
+				htmlText=htmlText[3:index]
+				videos =self.get_list1(html=htmlText,tid=tid)
+		elif tid=='直播':
+			videos =self.get_list_live(html=htmlText,tid=tid)
+		else:
+			videos =self.get_list(html=htmlText,tid=tid)
+		#print(videos)
+		
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 1
+		result['pagecount'] = 9999
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
