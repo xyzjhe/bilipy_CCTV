@@ -265,7 +265,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = url
-		result["header"] =header
+		result["header"] =headers
 		return result
 	config = {
 		"player": {},
