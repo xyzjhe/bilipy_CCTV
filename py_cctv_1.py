@@ -55,6 +55,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		channel=''#频道
 		datafl=''#类型
 		letter=''#字母
+		pagecount=24
 		if tid=='动画片':
 			id=urllib.parse.quote(tid)
 			if 'datadq-area' in extend.keys():
@@ -102,8 +103,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 				fc=extend['fc']
 			fl=''#字母
 			if 'fl' in extend.keys():
-				fc=extend['fl']
+				fl=extend['fl']
 			url = 'https://api.cntv.cn/lanmu/columnSearch?&fl={0}&fc={1}&cid={2}&p={3}&n=20&serviceId=tvcctv&t=json&cb=ko'.format(fl,fc,cid,pg)
+			pagecount=20
 		else:
 			url = 'https://tv.cctv.com/epg/index.shtml'
 
@@ -122,31 +124,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 9999
+		result['pagecount'] = 9999 if len(videos)>=pagecount else pg
 		result['limit'] = 90
 		result['total'] = 999999
 		return result
-	def get_list_weather(self,html):
-		jRoot = json.loads(html)
-		if jRoot['message']!='success':
-			return []
-		videos = []
-		jsonList=jRoot['data']
-		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
-		for vod in jsonList:
-			url = vod['url']
-			title =vod['title']
-			if len(url) == 0:
-				continue
-			guid="{0}###{1}###{2}###{3}".format('weather',title,url,img)
-			print(guid)
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":vod['updateTime']
-			})
-		return videos
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
@@ -468,13 +449,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 		id=''
 		brief=''
 		year='  '
+		img='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/CCTV%E5%8F%B0%E6%A0%87.jpg'
+		URLNameList={'cctv1':'CCTV-1综合','cctv2':'CCTV-2经济','cctv3':'CCTV-3综艺','cctv4':'CCTV-4中文国际','cctv5':'CCTV-5体育','cctv6':'CCTV-6电影','cctv7':'CCTV-7国防军事','cctv8':'CCTV-8电视剧','cctvjilu':'CCTV-9纪录','cctv10':'CCTV-10科教','cctv11':'CCTV-11戏曲','cctv12':'CCTV-12社会与法','cctv13':'CCTV-13新闻','cctvchild':'CCTV-14少儿','cctv15':'CCTV-15音乐','cctv16':'CCTV-16奥林匹克','cctv17':'CCTV-17农业农村','cctveurope':'CCTV-4中文国际欧洲','cctvamerica':'CCTV-4中文国际美洲'}
 		for vod in ListRe:
-			img='https:'+vod.group('src')
-			title =vod.group('title')
-			url = 'https://tv.cctv.com/live/'+title
-			if title=='cctvchild':
-				url = 'https://tv.cctv.com/live/cctv14'
-			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}".format(tid,title.capitalize(),url,img,id,year,brief)
+			title1 =vod.group('title')
+			title=URLNameList.get(title1,title1)
+			url = 'https://tv.cctv.com/live/'+title1
+			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}".format(tid,title,url,img,id,year,brief)
 			videos.append({
 				"vod_id":guid,
 				"vod_name":title,
