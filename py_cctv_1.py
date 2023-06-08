@@ -95,9 +95,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 			url='https://api.cntv.cn/list/getVideoAlbumList?channelid=CHAL1460955953877151&channel={0}&sc={1}&fc={2}&bigday=&letter={3}&p={4}&n=24&serviceId=tvcctv&topv=1&t=json'.format(channel,datafl,id,letter,pg)
 		elif tid=='节目大全':
 			cid=''#频道
+			if 'cid' in extend.keys():
+				cid=extend['cid']
 			fc=''#分类
+			if 'fc' in extend.keys():
+				fc=extend['fc']
 			fl=''#字母
-			url = 'https://api.cntv.cn/lanmu/columnSearch?&fl={0}&fc={1}&cid={2}&p=1&n=20&serviceId=tvcctv&t=json&cb=ko'.format(fl,fc,cid)
+			if 'fl' in extend.keys():
+				fc=extend['fl']
+			url = 'https://api.cntv.cn/lanmu/columnSearch?&fl={0}&fc={1}&cid={2}&p={3}&n=20&serviceId=tvcctv&t=json&cb=ko'.format(fl,fc,cid,pg)
 		else:
 			url = 'https://tv.cctv.com/epg/index.shtml'
 
@@ -240,15 +246,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result = {}
 		url=''
 		parse=0
-		headers=''
+		headers = {
+			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
+		}
 		if flag=='CCTV':
 			url=self.get_m3u8(urlTxt=id)
 		elif flag=='直播':
 			parse=1
 			url=id
-			headers = {
-			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
-			}
+			
 		else:
 			try:
 				html=self.webReadFile(urlStr=id,header=self.header)
