@@ -245,11 +245,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 				guid=self.get_RegexGetText(Text=html,RegexText=r'var\sguid\s*=\s*"(.+?)";',Index=1)
 				url=self.get_m3u8(urlTxt=guid)
 			except :
-				pass
-		result["parse"] = parse
+				url=id
+				parse=1
+		if url.find('https:')<0:
+			url=id
+			parse=1
+		result["parse"] = parse#1=嗅探,0=播放
 		result["playUrl"] = ''
 		result["url"] = url
-		result["header"] =headers
+		result["header"] =''
 		return result
 	config = {
 		"player": {},
