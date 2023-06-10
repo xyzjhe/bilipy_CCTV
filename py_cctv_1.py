@@ -29,8 +29,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"动画片": "动画片",
 			"纪录片": "纪录片",
 			"特别节目": "特别节目",
-			"节目大全":"节目大全",
-			"直播":"直播"
+			"节目大全":"节目大全"
 		}
 		classes = []
 		for k in cateManual:
@@ -116,8 +115,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if index>-1:
 				htmlText=htmlText[3:index]
 				videos =self.get_list1(html=htmlText,tid=tid)
-		elif tid=='直播':
-			videos =self.get_list_live(html=htmlText,tid=tid)
 		else:
 			videos =self.get_list(html=htmlText,tid=tid)
 		#print(videos)
@@ -156,7 +153,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if tid=="搜索":
 				fromId='中央台'
 				videoList=[title+"$"+lastVideo]
-			elif tid!="直播":
+			else:
 				htmlTxt=self.webReadFile(urlStr=Url,header=self.header)
 				jRoot = json.loads(htmlTxt)
 				data=jRoot['data']
@@ -174,9 +171,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 						patternTxt=r'href="(?P<url>.+?)" target="_blank" alt="(?P<title>.+?)" title=".+?">'
 					videoList=self.get_EpisodesList_re(htmlTxt=htmlTxt,patternTxt=patternTxt)
 					fromId='央视'
-			else:
-					videoList=[title+"$"+lastVideo]
-					fromId='直播'
 		except:
 			pass
 		if len(videoList) == 0:
@@ -236,9 +230,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		}
 		if flag=='CCTV':
 			url=self.get_m3u8(urlTxt=id)
-		elif flag=='直播':
-			parse=1
-			url=id
 		else:
 			try:
 				html=self.webReadFile(urlStr=id,header=self.header)
@@ -446,28 +437,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			url=''
 		return url
-	#取直播地址
-	def get_list_live(self,html,tid):
-		ListRe=re.finditer('<li( class="first cur")*?><img src="(?P<src>.+?)" title="(?P<title>.+?)" /></li>', html, re.M|re.S)
-		videos=[]
-		id=''
-		brief=''
-		year='  '
-		img='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/CCTV%E5%8F%B0%E6%A0%87.jpg'
-		URLNameList={'cctv1':'CCTV-1综合','cctv2':'CCTV-2经济','cctv3':'CCTV-3综艺','cctv4':'CCTV-4中文国际','cctv5':'CCTV-5体育','cctv6':'CCTV-6电影','cctv7':'CCTV-7国防军事','cctv8':'CCTV-8电视剧','cctvjilu':'CCTV-9纪录','cctv10':'CCTV-10科教','cctv11':'CCTV-11戏曲','cctv12':'CCTV-12社会与法','cctv13':'CCTV-13新闻','cctvchild':'CCTV-14少儿','cctv15':'CCTV-15音乐','cctv16':'CCTV-16奥林匹克','cctv17':'CCTV-17农业农村','cctveurope':'CCTV-4中文国际欧洲','cctvamerica':'CCTV-4中文国际美洲'}
-		for vod in ListRe:
-			title1 =vod.group('title')
-			title=URLNameList.get(title1,title1)
-			url = 'https://tv.cctv.com/live/{0}/m/index.shtml'.format(title)
-			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}".format(tid,title,url,img,id,year,brief)
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-			#print(url)
-		return videos
 	#搜索
 	def get_list_search(self,html,tid):
 		jRoot = json.loads(html)

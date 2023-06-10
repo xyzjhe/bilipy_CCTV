@@ -113,20 +113,10 @@
 	"quickSearch": 1,
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_meheme.py"
-    },   
-    {
-	"key": "py_cctv",
-	"name": "🔥CCTV-节目大全",
-	"type": 3,
-	"api": "py_cctv",
-	"searchable": 0,
-	"quickSearch": 0,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_cctv.py"
     },
     {
 	"key": "py_cctv_1",
-	"name": "👀央视-片库(PY)",
+	"name": "👀CCTV(PY)",
 	"type": 3,
 	"api": "py_cctv",
 	"searchable": 0,
