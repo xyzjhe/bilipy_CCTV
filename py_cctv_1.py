@@ -458,7 +458,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for vod in ListRe:
 			title1 =vod.group('title')
 			title=URLNameList.get(title1,title1)
-			url = 'https://tv.cctv.com/live/{0}/m/index.shtml'+.format(title)
+			url = 'https://tv.cctv.com/live/{0}/m/index.shtml'.format(title)
 			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}".format(tid,title,url,img,id,year,brief)
 			videos.append({
 				"vod_id":guid,
