@@ -387,11 +387,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 			year=vod['uploadtime']
 			if len(url) == 0:
 				continue
-			guid="{0}###{1}###{2}###{3}###{4}".format(tid,title,url,img,id)
-			guid1="{0}###{1}###{2}".format(year,'',brief)
-			vod_id=[guid,guid1]
+			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}###{7}".format(tid,title,url,img,id,year,'',brief)
 			videos.append({
-				"vod_id":vod_id,
+				"vod_id":guid,
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":year

@@ -9,7 +9,7 @@
         {
           "name": "live",
           "urls": [
-            "proxy://do=live&type=txt&ext=aHR0cHM6Ly9hZ2l0LmFpL2xhbmhhaWRpeGluZ3Jlbi9UdmJveC9yYXcvYnJhbmNoL21hc3Rlci8zLmpzb24=="
+            "proxy://do=live&type=txt&ext=aHR0cDovL3R2Lmp0aG4uY24vbGl2ZXMvdmlwLnR4dA=="
           ]
         }
       ]
@@ -26,14 +26,14 @@
             "searchable": 0
       },
     {
-      "key": "py_wangpan.py",
-      "name": "网盘(测试)",
+      "key": "py_kankanmeiju",
+      "name": "看看(测试)",
       "type": 3,
-      "api": "py_wangpan.py",
+      "api": "py_kankanmeiju",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_alist.py"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kankanmeiju.py"
     },
     {
 	"key": "py_collect",
