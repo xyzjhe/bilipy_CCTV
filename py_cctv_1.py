@@ -128,17 +128,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def detailContent(self,array):
 		result={}
 		aid = array[0].split('###')
-		aid1= array[1].split('###')
-		if aid[2].find("http")<0:
-			return {}
 		tid = aid[0]
 		logo = aid[3]
 		lastVideo = aid[2]
 		title = aid[1]
 		id= aid[4]
-		brief='' if len(aid1)<3 else aid1[2]
-		vod_year='' if len(aid1)<3 else aid1[0]
-		actors='' if len(aid1)<3 else aid1[1]
+		
+		vod_year= aid[5]
+		actors= aid[6]
+		brief= aid[7]
 		fromId='CCTV'
 		if tid=="节目大全":
 			lastUrl = 'https://api.cntv.cn/video/videoinfoByGuid?guid={0}&serviceId=tvcctv'.format(id)
@@ -347,71 +345,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for value in ListRe:
 			returnTxt.append(value)	
 		return returnTxt
-	#分类取结果
-	def get_list(self,html,tid):
-		jRoot = json.loads(html)
-		videos = []
-		data=jRoot['data']
-		if data is None:
-			return []
-		jsonList=data['list']
-		for vod in jsonList:
-			url = vod['url']
-			title =vod['title']
-			img=vod['image']
-			id=vod['id']
-			try:
-				brief=vod['brief']
-			except:
-				brief=''
-			try:
-				year=vod['year']
-			except:
-				year=''
-			try:
-				actors=vod['actors']
-			except:
-				actors=''
-			if len(url) == 0:
-				continue
-			guid="{0}###{1}###{2}###{3}###{4}".format(tid,title,url,img,id)
-			guid1="{0}###{1}###{2}".format(year,actors,brief)
-			vod_id=[guid,guid]
-			videos.append({
-				"vod_id":vod_id,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-		#print(videos)
-		return videos
-	def get_list1(self,html,tid):
-		jRoot = json.loads(html)
-		videos = []
-		data=jRoot['response']
-		if data is None:
-			return []
-		jsonList=data['docs']
-		for vod in jsonList:
-			id = vod['lastVIDE']['videoSharedCode']
-			title =vod['column_name']
-			url=vod['column_website']
-			img=vod['column_logo']
-			year=vod['column_playdate']
-			brief=vod['column_brief']
-			actors=''
-			if len(url) == 0:
-				continue
-			guid="{0}###{1}###{2}###{3}###{4}".format(tid,title,url,img,id)
-			guid1="{0}###{1}###{2}".format(year,actors,brief)
-			vod_id=[guid,guid1]
-			videos.append({
-				"vod_id":vod_id,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":''
-			})
-		return videos
 	#删除html标签
 	def removeHtml(self,txt):
 		soup = re.compile(r'<[^>]+>',re.S)
@@ -464,4 +397,67 @@ class Spider(Spider):  # 元类 默认的元类 type
 				"vod_remarks":year
 			})
 		return videos
+		return videos
+	def get_list1(self,html,tid):
+		jRoot = json.loads(html)
+		videos = []
+		data=jRoot['response']
+		if data is None:
+			return []
+		jsonList=data['docs']
+		for vod in jsonList:
+			id = vod['lastVIDE']['videoSharedCode']
+			title =vod['column_name']
+			url=vod['column_website']
+			img=vod['column_logo']
+			year=vod['column_playdate']
+			brief=vod['column_brief']
+			actors=''
+			if len(url) == 0:
+				continue
+			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}###{7}".format(tid,title,url,img,id,year,actors,brief)
+			#print(vod_id)
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
+		#print(videos)
+		return videos
+	#分类取结果
+	def get_list(self,html,tid):
+		jRoot = json.loads(html)
+		videos = []
+		data=jRoot['data']
+		if data is None:
+			return []
+		jsonList=data['list']
+		for vod in jsonList:
+			url = vod['url']
+			title =vod['title']
+			img=vod['image']
+			id=vod['id']
+			try:
+				brief=vod['brief']
+			except:
+				brief=''
+			try:
+				year=vod['year']
+			except:
+				year=''
+			try:
+				actors=vod['actors']
+			except:
+				actors=''
+			if len(url) == 0:
+				continue
+			guid="{0}###{1}###{2}###{3}###{4}###{5}###{6}###{7}".format(tid,title,url,img,id,year,actors,brief)
+			#print(vod_id)
+			videos.append({
+				"vod_id":guid,
+				"vod_name":title,
+				"vod_pic":img,
+				"vod_remarks":''
+			})
 		return videos
