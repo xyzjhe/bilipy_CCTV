@@ -1,15 +1,17 @@
 #coding=utf-8
 #!/usr/bin/python
-import re
-import ssl
-import base64
-from inspect import signature
+import sys
+sys.path.append('..') 
+from base.spider import Spider
 import json
+import time
+import base64
+import re
 from urllib import request, parse
 import urllib
 import urllib.request
 
-class Spider:
+class Spider(Spider):
 	def getName(self):
 		return "看看美剧"
 	def init(self,extend=""):
@@ -38,11 +40,9 @@ class Spider:
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		rsp = self.fetch('http://www.meheme.com/')
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		
 		result = {
-			'list': videos
+			'list': []
 		}
 		return result
 
@@ -137,12 +137,14 @@ class Spider:
 		pass
 
 	def searchContent(self,key,quick):
-		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
-		rsp = self.fetch(Url)
-		htmlTxt = rsp.text
-		videos = self.get_list(html=htmlTxt)
+		data="searchword="+urllib.parse.quote(key)
+		payUrl="https://www.kankanmeiju.com/search.php"
+		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=self.headers, method='POST')
+		response = request.urlopen(req)
+		htmlTxt = response.read().decode('utf-8')
+		videos = self.get_list(html=htmlTxt,,patternTxt=r'href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".*?" alt=".*?"></div><div class="info"><p class="name">.*?</p><p class="zt">(?P<brief>.+?)</p>')
 		result = {
-				'list': []
+				'list': videos
 			}
 		return result
 
@@ -310,14 +312,3 @@ class Spider:
 		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
-T=Spider()
-text=T.categoryContent(tid='1',pg='1',filter=False,extend='')
-i=len(text['list'])
-text=T.detailContent(array=[text['list'][0]['vod_id'],])
-id=T.get_RegexGetTextLine(Text=text['list'][0]['vod_play_url'],RegexText=r'\$(.+?)(#|$)',Index=1)[0]
-#id=text['list'][0]['vod_play_url'].split('$')[1]
-print(id)
-#v=T.searchContent(key='蝶影',quick='')
-#print(v)
-id=T.playerContent(flag=text['list'][0]['vod_play_from'],id='https://www.kankanmeiju.com/play/11499-0-0.html',vipFlags=False)
-print(id)
