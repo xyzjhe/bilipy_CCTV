@@ -1,13 +1,13 @@
+#coding=utf-8
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 import sys
 sys.path.append('..') 
+from base.spider import Spider
+import json
 import re
 from urllib import request, parse
 import urllib
 import urllib.request
-import time
-import base64
 
 class Spider(Spider):
 	def getName(self):
@@ -56,7 +56,7 @@ class Spider(Spider):
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
-		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
+		pag=999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
 		if pag=="":
 			pag=999
 		numvL = len(videos)
@@ -170,7 +170,7 @@ class Spider(Spider):
 	config = {
 		"player": {},
 		"filter": {}
-	}
+		}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
 		'Host': 'www.kankanmeiju.com',
