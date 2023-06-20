@@ -23,7 +23,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"美剧1": "1",
+			"美剧": "1",
 			"其他剧": "10",
 			"动漫": "15",
 			"排行榜":"46"
@@ -54,7 +54,8 @@ class Spider(Spider):
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
 		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
-		htmlTxt = self.webReadFile(urlStr=url,header=self.header)
+		rsp = self.fetch(url)
+		htmlTxt = rsp.text
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
