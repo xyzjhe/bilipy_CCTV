@@ -54,12 +54,12 @@ class Spider(Spider):
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
 		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
-		rsp = self.fetch(url)
+		rsp = self.fetch('https://www.kankanmeiju.com/vodlist/1.html')
 		htmlTxt = rsp.text
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
-		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
+		pag=999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
 		if pag=="":
 			pag=999
 		numvL = len(videos)
@@ -175,7 +175,7 @@ class Spider(Spider):
 		"filter": {}
 		}
 	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+		"User-Agent":"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
 		'Host': 'www.kankanmeiju.com'
 	}
 
