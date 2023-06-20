@@ -30,7 +30,7 @@
       "name": "看看(测试)",
       "type": 3,
       "api": "py_kankanmeiju",
-      "searchable": 0,
+      "searchable": 1,
       "quickSearch": 0,
       "filterable": 1,
       "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kankanmeiju.py"

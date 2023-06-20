@@ -4,8 +4,6 @@ import sys
 sys.path.append('..') 
 from base.spider import Spider
 import json
-import time
-import base64
 import re
 from urllib import request, parse
 import urllib
@@ -40,9 +38,11 @@ class Spider(Spider):
 			result['filters'] = self.config['filter']
 		return result
 	def homeVideoContent(self):
-		
+		rsp = self.fetch('http://www.meheme.com/')
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
 		result = {
-			'list': []
+			'list': videos
 		}
 		return result
 
@@ -139,10 +139,10 @@ class Spider(Spider):
 	def searchContent(self,key,quick):
 		data="searchword="+urllib.parse.quote(key)
 		payUrl="https://www.kankanmeiju.com/search.php"
-		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=self.headers, method='POST')
+		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
 		response = request.urlopen(req)
 		htmlTxt = response.read().decode('utf-8')
-		videos = self.get_list(html=htmlTxt,,patternTxt=r'href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".*?" alt=".*?"></div><div class="info"><p class="name">.*?</p><p class="zt">(?P<brief>.+?)</p>')
+		videos = self.get_list(html=htmlTxt,patternTxt=r'href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".*?" alt=".*?"></div><div class="info"><p class="name">.*?</p><p class="zt">(?P<brief>.+?)</p>')
 		result = {
 				'list': videos
 			}
@@ -163,43 +163,10 @@ class Spider(Spider):
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
-		return result
-	def get_RegexGetText(self,Text,RegexText,Index):
-		returnTxt=""
-		Regex=re.search(RegexText, Text, re.M|re.I)
-		if Regex is None:
-			returnTxt=""
-		else:
-			returnTxt=Regex.group(Index)
-		return returnTxt	
-	def get_RegexGetTextLine(self,Text,RegexText,Index):
-		returnTxt=[]
-		pattern = re.compile(RegexText)
-		ListRe=pattern.findall(Text)
-		if len(ListRe)<1:
-			return returnTxt
-		for value in ListRe:
-			returnTxt.append(value)	
-		return returnTxt
-	def get_playlist(self,Text,headStr,endStr):
-		circuit=""
-		origin=Text.find(headStr)
-		if origin>8:
-			end=Text.find(endStr,origin)
-			circuit=Text[origin:end]
-		return circuit
-	def removeHtml(self,txt):
-		soup = re.compile(r'<[^>]+>',re.S)
-		txt =soup.sub('', txt)
-		return txt.replace("&nbsp;"," ")
-	def get_lineList(self,Txt,mark,after):
-		circuit=[]
-		origin=Txt.find(mark)
-		while origin>8:
-			end=Txt.find(after,origin)
-			circuit.append(Txt[origin:end])
-			origin=Txt.find(mark,end)
-		return circuit
+		return result	
+	
+	def localProxy(self,param):
+		return [200, "video/MP2T", action, ""]
 	config = {
 		"player": {},
 		"filter": {
@@ -226,8 +193,6 @@ class Spider(Spider):
 		'Host': 'www.kankanmeiju.com'
 	}
 
-	def localProxy(self,param):
-		return [200, "video/MP2T", action, ""]
 	#-----------------------------------------------自定义函数-----------------------------------------------
 	#访问网页
 	def webReadFile(self,urlStr,header):
@@ -305,10 +270,10 @@ class Spider(Spider):
 		soup = re.compile(r'<[^>]+>',re.S)
 		txt =soup.sub('', txt)
 		return txt.replace("&nbsp;"," ")
-	#是否是vip解析
-	def ifJx(self,url):
-		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv|c(c|n)tv|v.pptv|mgtv.com)'
-		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
-			Isjiexi=1
-		return Isjiexi
+	def get_playlist(self,Text,headStr,endStr):
+		circuit=""
+		origin=Text.find(headStr)
+		if origin>8:
+			end=Text.find(endStr,origin)
+			circuit=Text[origin:end]
+		return circuit
