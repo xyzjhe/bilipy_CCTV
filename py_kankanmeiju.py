@@ -1,15 +1,13 @@
-#coding=utf-8
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import sys
 sys.path.append('..') 
-from base.spider import Spider
-import json
-import time
-import base64
 import re
 from urllib import request, parse
 import urllib
 import urllib.request
+import time
+import base64
 
 class Spider(Spider):
 	def getName(self):
