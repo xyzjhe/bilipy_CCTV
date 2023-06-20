@@ -4,6 +4,8 @@ import sys
 sys.path.append('..') 
 from base.spider import Spider
 import json
+import time
+import base64
 import re
 from urllib import request, parse
 import urllib
@@ -21,7 +23,7 @@ class Spider(Spider):
 	def homeContent(self,filter):
 		result = {}
 		cateManual = {
-			"美剧": "1",
+			"美剧1": "1",
 			"其他剧": "10",
 			"动漫": "15",
 			"排行榜":"46"
@@ -169,24 +171,7 @@ class Spider(Spider):
 		return [200, "video/MP2T", action, ""]
 	config = {
 		"player": {},
-		"filter": {
-		"1":[
-		{"key":"classification","name":"分类","value":[{"n":"全部","v":"1"},{"n":"动作片","v":"6"},{"n":"喜剧片","v":"7"},{"n":"爱情片","v":"8"},{"n":"科幻片","v":"9"},{"n":"恐怖片","v":"10"},{"n":"剧情片","v":"11"},{"n":"战争片","v":"12"}]}
-		],
-		#分隔
-		"2":[
-		{"key":"classification","name":"分类","value":[{"n":"全部","v":"2"},{"n":"国产剧","v":"13"},{"n":"港台剧","v":"14"},{"n":"日韩剧","v":"15"},{"n":"欧美剧","v":"16"},{"n":"美女写真","v":"24"}]}
-		],
-		#分隔
-		"3":[
-		#分隔
-		{"key":"classification","name":"类型","value":[{"n":"全部","v":"3"},{"n":"国内综艺","v":"49"},{"n":"海外综艺","v":"50"}]}
-		],
-		#分隔
-		"4":[
-		{"key":"classification","name":"分类","value":[{"n":"全部","v":"4"},{"n":"国内动漫","v":"51"},{"n":"海外动漫","v":"52"}]}
-		]
-		}
+		"filter": {}
 		}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
