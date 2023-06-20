@@ -53,9 +53,8 @@ class Spider(Spider):
 		classification=tid
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
-		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
-		rsp = self.fetch('https://www.kankanmeiju.com/vodlist/1.html')
-		htmlTxt = rsp.text
+		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(tid,pg)
+		htmlTxt =self.webReadFile(urlStr=url,header=self.header)
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
@@ -176,7 +175,8 @@ class Spider(Spider):
 		}
 	header = {
 		"User-Agent":"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
-		'Host': 'www.kankanmeiju.com'
+		#'Host': 'www.kankanmeiju.com',
+		'referer':'https://www.kankanmeiju.com/'
 	}
 
 	#-----------------------------------------------自定义函数-----------------------------------------------
