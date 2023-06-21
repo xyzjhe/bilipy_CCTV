@@ -4,10 +4,13 @@ import sys
 sys.path.append('..') 
 from base.spider import Spider
 import json
+import time
+import base64
 import re
 from urllib import request, parse
 import urllib
 import urllib.request
+import time
 
 class Spider(Spider):
 	def getName(self):
@@ -51,7 +54,7 @@ class Spider(Spider):
 		classification=tid
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
-		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(tid,pg)
+		url='https://www.kankanmeiju.com/vodlist/{0}.html'.format(tid)
 		htmlTxt =self.webReadFile(urlStr=url,header=self.header)
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
@@ -181,9 +184,8 @@ class Spider(Spider):
 	#访问网页
 	def webReadFile(self,urlStr,header):
 		html=''
-		req=urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		with  urllib.request.urlopen(req)  as response:
-			html = response.read().decode('utf-8')
+		rsp = self.fetch(urlStr, cookies=header)
+		html = rsp.text
 		return html
 	#正则取文本
 	def get_RegexGetText(self,Text,RegexText,Index):
