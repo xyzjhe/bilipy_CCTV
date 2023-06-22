@@ -26,14 +26,14 @@
             "searchable": 0
       },
     {
-      "key": "py_kankanmeiju",
-      "name": "看看(测试)",
-      "type": 3,
-      "api": "py_kankanmeiju",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 1,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kankanmeiju.py"
+		"key": "py_555dy",
+		"name": "555电影(PY)",
+		"type": 3,
+		"api": "py_555dy",
+		"searchable": 1,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_555电影.py"
     },
     {
 	"key": "py_collect",
@@ -44,9 +44,7 @@
 	"quickSearch": 0,
 	"filterable": 1,
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
-    },
-    {"key":"csp_555","name":"5️⃣️555影视","type":3,"api":"csp_Ys555","searchable":1,"quickSearch":1,"filterable":1,"ext":"https://www.555dyy1.com"}
-
+    }
     ],
 
       "parses": [
