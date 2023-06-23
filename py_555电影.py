@@ -127,7 +127,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result["parse"] = 1
 		result["playUrl"] = ''
 		result["url"] = id
-		result["header"] = ''	
+		result["header"] = self.header
 		return result
 	
 	def localProxy(self,param):
@@ -163,7 +163,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 
 		ListRe=re.finditer(RegexText, html, re.M|re.S)
 		videos = []
-		head="https://fskc177.com"
+		head="https://www.555hd4.com"
 		for vod in ListRe:
 			url = vod.group('url')
 			title =vod.group('title')
@@ -194,7 +194,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def get_list(self,html,patternTxt):
 		ListRe=re.finditer(patternTxt, html, re.M|re.S)
 		videos = []
-		head="https://55dy1.vip"
+		head="https://www.555hd4.com"
 		for vod in ListRe:
 			url = vod.group('url')
 			title =self.removeHtml(txt=vod.group('title'))
