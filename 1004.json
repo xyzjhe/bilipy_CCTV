@@ -1,6 +1,6 @@
 ﻿//友情提醒：本接口中的网络资源均来自于网络和各位互联网大佬（特别感谢应用多多）的仓库，经各种整合而成，仅供测试使用，如有冒犯请联系删除。
 {
-  "spider":"https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/custom_spider.jar",
+  "spider":"http://tv.nxog.top/m/111.php?ou=%E6%AC%A7%E6%AD%8C&mz=all2&jar=ou&b=欧歌/jar/ali.jar;md5;dc97175c63ac1a0e9ce664ab14826926",
   "wallpaper":"",
   "lives": [
     {
@@ -35,16 +35,10 @@
 		"filterable": 1,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ali1.py"
     },
-    {
-	"key": "py_collect",
-	"name": "🤖个人收藏",
-	"type": 3,
-	"api": "py_collect",
-	"searchable": 0,
-	"quickSearch": 0,
-	"filterable": 1,
-	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_space.py"
-    }
+{"key":"易搜","name":"❤️阿里｜易搜","type":3,"api":"csp_YiSo","searchable":1,"filterable":0,"changeable":0,"ext":"http://127.0.0.1:9978/file/tvbox/token.txt"},
+{"key":"阿里云盘","name":"❤️阿里｜云盘","type":3,"api":"csp_Dovx","searchable":1,"filterable":0,"changeable":0,"ext":"http://127.0.0.1:9978/file/tvbox/token.txt"},
+{"key":"盘搜","name":"❤️阿里｜盘搜","type":3,"api":"csp_PanSou","searchable":1,"filterable":0,"changeable":0,"ext":"http://127.0.0.1:9978/file/tvbox/token.txt"},
+{"key":"网盘搜索","name":"❤️阿里｜网盘","type":3,"api":"csp_PanSearch","searchable":1,"filterable":0,"changeable":0,"ext":"http://127.0.0.1:9978/file/tvbox/token.txt"}
     ],
 
       "parses": [
