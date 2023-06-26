@@ -744,16 +744,17 @@
 	   "ext":"998c79f4f189435090049164d503e4e3"
 	 },
 	 {
-	   "key": "AliPS",
-	   "name": "📀盘搜(仅搜索)",
-	   "type": 3,
-	   "api": "csp_AliPS",
-	   "searchable": 1,
-	   "playerType": 1,
-	   "quickSearch": 1,
-	   "filterable": 1,
-	   "ext":"998c79f4f189435090049164d503e4e3"
+	 "key":"阿里云盘",
+	 "name":"❤️阿里｜云盘",
+	 "type":3,
+	 "api":"csp_Dovx",
+	 "searchable":1,
+	 "filterable":0,
+	 "changeable":0,
+	 "ext":"http://127.0.0.1:9978/file/tvbox/token.txt",
+	 "jar":"http://tv.nxog.top/m/111.php?ou=%E6%AC%A7%E6%AD%8C&mz=all2&jar=ou&b=欧歌/jar/ali.jar;md5;dc97175c63ac1a0e9ce664ab14826926"
 	 },
+
 	 {
 	   "key": "push_agent",
 	   "name": "📨推送",
