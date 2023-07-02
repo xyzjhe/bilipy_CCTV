@@ -151,7 +151,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     def getCookie(self):
 
         #在下方cookies_str  后面 双引号里面放置你的cookies
-        cookies_str = "buvid3=8905B4AA-C4CE-4976-853F-57A11EEA856018556infoc; LIVE_BUVID=AUTO8016374005231370; blackside_state=0; buvid_fp_plain=undefined; CURRENT_BLACKGAP=0; fingerprint3=d7577ba1214002a3b3e99ef5a54c11cd; b_nut=100; _uuid=2BD33E68-A3C6-35104-F58A-4491764A7ED772232infoc; buvid4=A698BE3F-38C2-EAC2-179C-A1E59A412ADB47072-022012415-5ZCNRwNsIx2%2Biu7YVq0ofQ%3D%3D; rpdid=|(u))ul)|YJ~0J'uY~|~RYu|~; fingerprint=c3e80ad851e53d02c0d45180af39c827; buvid_fp=d459047df2c1bc4ebd104bb95c3e6c89; hit-new-style-dyn=1; CURRENT_PID=b7f74190-d1f9-11ed-b9f0-fd43ad325ff3; DedeUserID=671023938; DedeUserID__ckMd5=48c152aca085bcce; hit-dyn-v2=1; PVID=1; CURRENT_FNVAL=4048; nostalgia_conf=-1; bp_video_offset_671023938=798457776625942500; SESSDATA=f1c51afc%2C1700472321%2C82dd5%2A51; bili_jct=73f21a5f7e21ff2ed166608e9d327ac3; sid=gil05bhj"
+        cookies_str = "buvid3=8905B4AA-C4CE-4976-853F-57A11EEA856018556infoc; LIVE_BUVID=AUTO8016374005231370; blackside_state=0; buvid_fp_plain=undefined; fingerprint3=d7577ba1214002a3b3e99ef5a54c11cd; b_nut=100; _uuid=2BD33E68-A3C6-35104-F58A-4491764A7ED772232infoc; buvid4=A698BE3F-38C2-EAC2-179C-A1E59A412ADB47072-022012415-5ZCNRwNsIx2%2Biu7YVq0ofQ%3D%3D; rpdid=|(u))ul)|YJ~0J'uY~|~RYu|~; fingerprint=c3e80ad851e53d02c0d45180af39c827; buvid_fp=d459047df2c1bc4ebd104bb95c3e6c89; hit-new-style-dyn=1; CURRENT_PID=b7f74190-d1f9-11ed-b9f0-fd43ad325ff3; DedeUserID=671023938; DedeUserID__ckMd5=48c152aca085bcce; hit-dyn-v2=1; PVID=1; CURRENT_FNVAL=4048; nostalgia_conf=-1; SESSDATA=8bf5246c%2C1702537535%2Ca4282%2A61sdKN-9QQlEQnDBZgJpGVrJUeUeZP6yTZsRZgTDGYbu_RBkPp77L7i0hUXg1E69s5G01FTAAAJgA; bili_jct=3309f49740604afc0f2b0557dfae3b14; sid=gijr4pf7; b_lsid=9BBACB2E_18915C7B838"
         if cookies_str:
             cookies =  dict([co.strip().split('=') for co in cookies_str.split(';')])
             bili_jct = cookies['bili_jct']
@@ -968,21 +968,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 
     def searchContent(self, key, quick):
         videos=[]
-        isPU=False
-        if len(key)>3 and key.find('-PU')>1:
-            key=key[0:len(key)-3]
-            isPU=True
+       
         videos = self.get_search(key=key)
-        temporary=self.get_search_Movies(key=key)
-        for vod in temporary:
-            videos.append(vod)
-        temporary=self.get_search_Fanju(key=key)
-        for vod in temporary:
-            videos.append(vod)
-        #if isPU=True:
-            temporary=self.get_search_PU(key=key)
-            for vod in temporary:
-                videos.append(vod)
+       
         result = {
             'list': videos
         }
