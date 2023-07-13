@@ -155,6 +155,16 @@
 	"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_dgdeyue.py"
     },
     {
+	"key":"mtv_pc_yinfans",
+	"name":"音范丝（蓝光磁力）",
+	"type":3,
+	"api":"csp_XPath",
+	"searchable":1,
+	"quickSearch":1,
+	"filterable":1,
+	"ext":"https://download.kstore.space/download/2863/xpath/yinfans.json"
+    },
+    {
 	"key": "py_kugou.py",
 	"name": "🐶酷狗mv",
 	"type": 3,
