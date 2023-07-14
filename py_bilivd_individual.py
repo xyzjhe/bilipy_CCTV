@@ -25,7 +25,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     vod_area=''
 
     def getName(self):
-        return "B站个人中心"#自己增加关注pu主和pu主直播(以关注的)
+        return "B站个人中心"#自己增加pu主直播(以关注的)
 
 
     def __init__(self):
@@ -151,7 +151,7 @@ class Spider(Spider):  # 元类 默认的元类 type
     def getCookie(self):
 
         #在下方cookies_str  后面 双引号里面放置你的cookies
-        cookies_str = "buvid3=8905B4AA-C4CE-4976-853F-57A11EEA856018556infoc; LIVE_BUVID=AUTO8016374005231370; blackside_state=0; buvid_fp_plain=undefined; fingerprint3=d7577ba1214002a3b3e99ef5a54c11cd; b_nut=100; _uuid=2BD33E68-A3C6-35104-F58A-4491764A7ED772232infoc; buvid4=A698BE3F-38C2-EAC2-179C-A1E59A412ADB47072-022012415-5ZCNRwNsIx2%2Biu7YVq0ofQ%3D%3D; rpdid=|(u))ul)|YJ~0J'uY~|~RYu|~; fingerprint=c3e80ad851e53d02c0d45180af39c827; buvid_fp=d459047df2c1bc4ebd104bb95c3e6c89; hit-new-style-dyn=1; CURRENT_PID=b7f74190-d1f9-11ed-b9f0-fd43ad325ff3; DedeUserID=671023938; DedeUserID__ckMd5=48c152aca085bcce; hit-dyn-v2=1; PVID=1; CURRENT_FNVAL=4048; nostalgia_conf=-1; SESSDATA=8bf5246c%2C1702537535%2Ca4282%2A61sdKN-9QQlEQnDBZgJpGVrJUeUeZP6yTZsRZgTDGYbu_RBkPp77L7i0hUXg1E69s5G01FTAAAJgA; bili_jct=3309f49740604afc0f2b0557dfae3b14; sid=gijr4pf7; b_lsid=9BBACB2E_18915C7B838"
+        cookies_str = "buvid3=8905B4AA-C4CE-4976-853F-57A11EEA856018556infoc; LIVE_BUVID=AUTO8016374005231370; blackside_state=0; buvid_fp_plain=undefined; fingerprint3=d7577ba1214002a3b3e99ef5a54c11cd; b_nut=100; _uuid=2BD33E68-A3C6-35104-F58A-4491764A7ED772232infoc; buvid4=A698BE3F-38C2-EAC2-179C-A1E59A412ADB47072-022012415-5ZCNRwNsIx2%2Biu7YVq0ofQ%3D%3D; rpdid=|(u))ul)|YJ~0J'uY~|~RYu|~; fingerprint=c3e80ad851e53d02c0d45180af39c827; buvid_fp=d459047df2c1bc4ebd104bb95c3e6c89; hit-new-style-dyn=1; CURRENT_PID=b7f74190-d1f9-11ed-b9f0-fd43ad325ff3; DedeUserID=671023938; DedeUserID__ckMd5=48c152aca085bcce; hit-dyn-v2=1; PVID=1; CURRENT_FNVAL=4048; nostalgia_conf=-1; SESSDATA=759a1cf7%2C1704010507%2C416b7%2A71x1Ro025wqMVQRotaCt83td90lVOilnZdoSAeYvwzmOeLlcq9-eAnr-GR0gnsMMdFwRhRegAAJgA; bili_jct=353856a23a3f7244888abb17416405bd; sid=8ebzodf0"
         if cookies_str:
             cookies =  dict([co.strip().split('=') for co in cookies_str.split(';')])
             bili_jct = cookies['bili_jct']
