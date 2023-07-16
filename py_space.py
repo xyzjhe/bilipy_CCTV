@@ -179,7 +179,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		jx=self.ifJx(urlTxt=id)
 		parse=1
 		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
-			parse=0
+			parse=1
 		if id.find('magnet:?xt=')>-1:
 			parse=1
 		result["parse"] = parse
