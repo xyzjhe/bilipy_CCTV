@@ -177,7 +177,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 		}
 		jx=self.ifJx(urlTxt=id)
-		parse=1
+		parse=0
 		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
 		result["parse"] = parse
