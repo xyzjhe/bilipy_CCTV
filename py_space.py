@@ -183,8 +183,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if id.find('magnet:?xt=')>-1:
 			parse=0
 		result["parse"] = parse
-		result["playUrl"] = id
-		result["url"] = ''
+		result["playUrl"] = 'tvbox-torrent:0'
+		result["url"] = id
 		result['jx'] = jx#VIP解析
 		result["header"] = headers	
 		return result
