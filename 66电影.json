@@ -7,10 +7,10 @@
         "cateId": "/@href",
         "cateIdR": "/s/(\\w+)",
         "cateManual": {
-		"喜剧片": "/xijupian",
-		"动作片": "/dongzuopian",
-                "爱情片": "/aiqingpian",
-                "科幻片": "/kehuanpian"
+		"喜剧片": "xijupian",
+		"动作片": "dongzuopian",
+                "爱情片": "aiqingpian",
+                "科幻片": "kehuanpian"
         },
 	//首页
         "homeVodNode": "//div[contains(@class,'wrap')]/div[contains(@class,'tjlist')]/ul/li",
@@ -21,9 +21,10 @@
         "homeVodImgR": "\\S+(http\\S+)",
         "homeVodMark": "",
 
-        "cateUrl": "http://www.5266ys.com/{cateId}",
-        "cateVodNode": "//div[contains(@class,'wrap')]/div[contains(@class,'mainleft')/div[contains(@class,'channellist')]/div[contains(@class,'listBox')]/ul/li",
-        "cateVodName": "/div/a/@title",
+	"catefirstpage":"2",
+        "cateUrl": "http://www.5266ys.com/{cateId}/index_{catePg}.html",
+        "cateVodNode": "//div[contains(@class,'wrap')]/div[contains(@class,'mainleft')/div[contains(@class,'channellist')]/div[contains(@class,'listBox')]/ul",
+        "cateVodName": "/li/div/a/@title",
         "cateVodId": "/a/@href",
         "cateVodIdR": "/(\\S+).htm",
         "cateVodImg": "/a/img/@src",
