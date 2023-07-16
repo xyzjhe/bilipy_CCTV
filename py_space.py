@@ -182,7 +182,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			parse=0
 		result["parse"] = parse
 		result["playUrl"] = 'magnet:?xt=urn:btih:ed53a6179d7c06d3f1227b808fd20cfeda00e771'
-		result["url"] = 'tvbox-torrent:0'
+		result["url"] = ''
 		result['jx'] = jx#VIP解析
 		result["header"] = headers	
 		return result
