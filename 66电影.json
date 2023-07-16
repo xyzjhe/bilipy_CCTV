@@ -13,7 +13,7 @@
                 "科幻片": "/kehuanpian"
         },
 	//首页
-        "homeVodNode": "//div[contains(@class,'tjlist')]/ul/li/",
+        "homeVodNode": "//div[contains(@class,'wrap')]/div[contains(@class,'tjlist')]/ul/li",
         "homeVodName": "/a/@title",
         "homeVodId": "/a/@href",
         "homeVodIdR": "https://www.yinfans.me/movie/(\\S+)",
