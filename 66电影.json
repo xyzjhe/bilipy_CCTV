@@ -22,8 +22,8 @@
         "homeVodMark": "",
 
         "cateUrl": "http://www.5266ys.com/{cateId}",
-        "cateVodNode": "//div[contains(@class,'wrap')]/div[contains(@class,'mainleft')/div[contains(@class,'channellist')]/div[contains(@class,'listBox')]/ul",
-        "cateVodName": "/li/div/a/@title",
+        "cateVodNode": "//div[contains(@class,'wrap')]/div[contains(@class,'mainleft')/div[contains(@class,'channellist')]/div[contains(@class,'listBox')]/ul/li",
+        "cateVodName": "/div/a/@title",
         "cateVodId": "/a/@href",
         "cateVodIdR": "(\\S+)",
         "cateVodImg": "/a/img/@src",
