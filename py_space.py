@@ -181,10 +181,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
 		if id.find('magnet:?xt=')>-1:
-			parse=5
+			parse=0
 		result["parse"] = parse
-		result["playUrl"] = ''
-		result["url"] = id
+		result["playUrl"] = id
+		result["url"] = ''
 		result['jx'] = jx#VIP解析
 		result["header"] = headers	
 		return result
