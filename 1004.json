@@ -26,15 +26,16 @@
             "searchable": 0
       },
     {
-	"key":"mtv_pc_yinfans",
-	"name":"66（蓝光磁力）",
-	"type":3,
-	"api":"csp_XPath",
-	"searchable":1,
-	"quickSearch":1,
-	"filterable":1,
-	"ext":"https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dytt.json"
-    }
+		"key": "py_webqq",
+		"name": "🛫伊雪湾影视(PY)",
+		"type": 3,
+		"api": "py_webqq",
+		"searchable": 0,
+		"quickSearch": 0,
+		"filterable": 1,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kankanmeiju.py"
+    },
+
 ],
 
       "parses": [

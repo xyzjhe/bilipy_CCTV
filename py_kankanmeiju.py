@@ -3,16 +3,15 @@
 import sys
 sys.path.append('..') 
 from base.spider import Spider
-import json
-import time
-import base64
 import re
+import base64
+from inspect import signature
+import json
 from urllib import request, parse
 import urllib
 import urllib.request
-import time
 
-class Spider(Spider):
+class Spider:
 	def getName(self):
 		return "看看美剧"
 	def init(self,extend=""):
@@ -54,12 +53,12 @@ class Spider(Spider):
 		classification=tid
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
-		url='https://www.kankanmeiju.com/vodlist/{0}.html'.format(tid)
-		htmlTxt =self.webReadFile(urlStr=url,header=self.header)
+		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
+		htmlTxt = self.webReadFile(urlStr=url,header=self.header)
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
-		pag=999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
 		if pag=="":
 			pag=999
 		numvL = len(videos)
@@ -140,14 +139,12 @@ class Spider(Spider):
 		pass
 
 	def searchContent(self,key,quick):
-		data="searchword="+urllib.parse.quote(key)
-		payUrl="https://www.kankanmeiju.com/search.php"
-		req = request.Request(url=payUrl, data=bytes(data, encoding='utf8'),headers=self.header, method='POST')
-		response = request.urlopen(req)
-		htmlTxt = response.read().decode('utf-8')
-		videos = self.get_list(html=htmlTxt,patternTxt=r'href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".*?" alt=".*?"></div><div class="info"><p class="name">.*?</p><p class="zt">(?P<brief>.+?)</p>')
+		Url='http://www.meheme.com/vodsearch/-------------.html?wd={0}&submit='.format(urllib.parse.quote(key))
+		rsp = self.fetch(Url)
+		htmlTxt = rsp.text
+		videos = self.get_list(html=htmlTxt)
 		result = {
-				'list': videos
+				'list': []
 			}
 		return result
 
@@ -166,26 +163,78 @@ class Spider(Spider):
 		result["playUrl"] = ''
 		result["url"] = Url
 		result["header"] = ''
-		return result	
-	
-	def localProxy(self,param):
-		return [200, "video/MP2T", action, ""]
+		return result
+	def get_RegexGetText(self,Text,RegexText,Index):
+		returnTxt=""
+		Regex=re.search(RegexText, Text, re.M|re.I)
+		if Regex is None:
+			returnTxt=""
+		else:
+			returnTxt=Regex.group(Index)
+		return returnTxt	
+	def get_RegexGetTextLine(self,Text,RegexText,Index):
+		returnTxt=[]
+		pattern = re.compile(RegexText)
+		ListRe=pattern.findall(Text)
+		if len(ListRe)<1:
+			return returnTxt
+		for value in ListRe:
+			returnTxt.append(value)	
+		return returnTxt
+	def get_playlist(self,Text,headStr,endStr):
+		circuit=""
+		origin=Text.find(headStr)
+		if origin>8:
+			end=Text.find(endStr,origin)
+			circuit=Text[origin:end]
+		return circuit
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
+	def get_lineList(self,Txt,mark,after):
+		circuit=[]
+		origin=Txt.find(mark)
+		while origin>8:
+			end=Txt.find(after,origin)
+			circuit.append(Txt[origin:end])
+			origin=Txt.find(mark,end)
+		return circuit
 	config = {
 		"player": {},
-		"filter": {}
+		"filter": {
+		"1":[
+		{"key":"classification","name":"分类","value":[{"n":"全部","v":"1"},{"n":"动作片","v":"6"},{"n":"喜剧片","v":"7"},{"n":"爱情片","v":"8"},{"n":"科幻片","v":"9"},{"n":"恐怖片","v":"10"},{"n":"剧情片","v":"11"},{"n":"战争片","v":"12"}]}
+		],
+		#分隔
+		"2":[
+		{"key":"classification","name":"分类","value":[{"n":"全部","v":"2"},{"n":"国产剧","v":"13"},{"n":"港台剧","v":"14"},{"n":"日韩剧","v":"15"},{"n":"欧美剧","v":"16"},{"n":"美女写真","v":"24"}]}
+		],
+		#分隔
+		"3":[
+		#分隔
+		{"key":"classification","name":"类型","value":[{"n":"全部","v":"3"},{"n":"国内综艺","v":"49"},{"n":"海外综艺","v":"50"}]}
+		],
+		#分隔
+		"4":[
+		{"key":"classification","name":"分类","value":[{"n":"全部","v":"4"},{"n":"国内动漫","v":"51"},{"n":"海外动漫","v":"52"}]}
+		]
+		}
 		}
 	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36",
-		'Host': 'www.kankanmeiju.com',
-		'referer':'https://www.kankanmeiju.com/'
+		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+		'Host': 'www.kankanmeiju.com'
 	}
 
+	def localProxy(self,param):
+		return [200, "video/MP2T", action, ""]
 	#-----------------------------------------------自定义函数-----------------------------------------------
 	#访问网页
 	def webReadFile(self,urlStr,header):
 		html=''
-		rsp = self.fetch(urlStr, cookies=header)
-		html = rsp.text
+		req=urllib.request.Request(url=urlStr,headers=header)#,headers=header
+		with  urllib.request.urlopen(req)  as response:
+			html = response.read().decode('utf-8')
 		return html
 	#正则取文本
 	def get_RegexGetText(self,Text,RegexText,Index):
@@ -256,10 +305,10 @@ class Spider(Spider):
 		soup = re.compile(r'<[^>]+>',re.S)
 		txt =soup.sub('', txt)
 		return txt.replace("&nbsp;"," ")
-	def get_playlist(self,Text,headStr,endStr):
-		circuit=""
-		origin=Text.find(headStr)
-		if origin>8:
-			end=Text.find(endStr,origin)
-			circuit=Text[origin:end]
-		return circuit
+	#是否是vip解析
+	def ifJx(self,url):
+		Isjiexi=0
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv|c(c|n)tv|v.pptv|mgtv.com)'
+		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
+			Isjiexi=1
+		return Isjiexi
