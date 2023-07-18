@@ -27,14 +27,14 @@
       },
     {
 		"key": "py_webqq",
-		"name": "🛫伊雪湾影视(PY)",
+		"name": "🛫看看美剧(PY)",
 		"type": 3,
 		"api": "py_webqq",
 		"searchable": 0,
 		"quickSearch": 0,
 		"filterable": 1,
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kankanmeiju.py"
-    },
+    }
 
 ],
 
