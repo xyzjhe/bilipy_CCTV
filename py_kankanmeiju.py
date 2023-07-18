@@ -11,7 +11,7 @@ from urllib import request, parse
 import urllib
 import urllib.request
 
-class Spider:
+class Spider(Spider):
 	def getName(self):
 		return "看看美剧"
 	def init(self,extend=""):
