@@ -55,7 +55,17 @@
 	    "jar":"https://agit.ai/n/b/raw/branch/a/b/999.png;md5;3E92F56BD34DBC49F26EBCE77B845255",
             "ext" : "https://agit.ai/l/o/raw/branch/o/o/%E7%A3%81%E5%8A%9B.json"
         
-	}
+	},
+    {
+      "key": "csp_xpath_mj",
+      "name": "看看美剧",
+      "type": 3,
+      "api": "csp_XYQBiu",
+      "searchable": 1,
+      "quickSearch": 0,
+      "filterable": 0,
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kankanmeiju.json"
+    }
 ],
 
       "parses": [
