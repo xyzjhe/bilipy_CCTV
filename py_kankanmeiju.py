@@ -65,27 +65,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['limit'] = numvL
 		result['total'] = numvL
 		return result
-	def get_list_weather(self,html):
-		jRoot = json.loads(html)
-		if jRoot['message']!='success':
-			return []
-		videos = []
-		jsonList=jRoot['data']
-		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
-		for vod in jsonList:
-			url = vod['url']
-			title =vod['title']
-			if len(url) == 0:
-				continue
-			guid="{0}###{1}###{2}###{3}".format('weather',title,url,img)
-			print(guid)
-			videos.append({
-				"vod_id":guid,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":vod['updateTime']
-			})
-		return videos
 	def detailContent(self,array):
 		result = {}
 		aid = array[0].split('###')
@@ -95,35 +74,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		title = aid[1]
 		vodItems=[]
 		vod_play_from=['线路',]
-		if tid=='play':
-			vodItems = [title+"$"+url]
-		elif tid=='List':
-			id=self.get_RegexGetText(Text=url,RegexText=r'https{0,1}://(tv\.|www\.){0,1}(.+?)\.',Index=2)
-			reTxt=''
-			for t in self.ReStr:
-				if t['name']==id:
-					reTxt=t
-					break
-			if reTxt!='':
-				htmlTxt=self.webReadFile(urlStr=url,header=self.header)
-				line=self.get_RegexGetTextLine(Text=htmlTxt,RegexText=reTxt['line'],Index=1)
-				vod_play_from=[t for t in line]
-				circuit=self.get_lineList(Txt=htmlTxt,mark=reTxt['circuit'],after=reTxt['after'])
-				#测试到此
-				for t in circuit:
-					ListRe=re.finditer(reTxt['pattern'], t, re.M|re.S)
-					videos = []
-					for vod in ListRe:#/vodplay/50548-1-1/
-						url = vod.group('url').replace('">','')
-						EpisodeTitle =vod.group('title')
-						videos.append(EpisodeTitle+"$"+reTxt['url']+url)
-					joinStr = "#".join(videos)
-					vodItems.append(joinStr)
-				#array[0]="{0}###{1}###{2}###{3}".format(tid,title,url,logo)
-		elif tid=='weather':
-			vodItems = [title+"$"+url]
-		else:
-			pass
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -152,15 +102,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 			circuit.append(Txt[origin:end])
 			origin=Txt.find(mark,end)
 		return circuit	
-	def get_RegexGetTextLine(self,Text,RegexText,Index):
-		returnTxt=[]
-		pattern = re.compile(RegexText, re.M|re.S)
-		ListRe=pattern.findall(Text)
-		if len(ListRe)<1:
-			return returnTxt
-		for value in ListRe:
-			returnTxt.append(value)	
-		return returnTxt
 	def searchContent(self,key,quick):
 		result = {
 			'list':[]
@@ -183,12 +124,15 @@ class Spider(Spider):  # 元类 默认的元类 type
 		result['jx'] = jx#VIP解析
 		result["header"] = headers	
 		return result
-	def ifJx(self,urlTxt):
-		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
-		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
-			Isjiexi=1
-		return Isjiexi
+	#-----------------------------------------------自定义函数-----------------------------------------------
+	#访问网页
+	def webReadFile(self,urlStr,header):
+		html=''
+		req=urllib.request.Request(url=urlStr,headers=header)#,headers=header
+		with  urllib.request.urlopen(req)  as response:
+			html = response.read().decode('utf-8')
+		return html
+	#正则取文本
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt=""
 		Regex=re.search(RegexText, Text, re.M|re.S)
@@ -196,154 +140,74 @@ class Spider(Spider):  # 元类 默认的元类 type
 			returnTxt=""
 		else:
 			returnTxt=Regex.group(Index)
-		return returnTxt	
-	def webReadFile(self,urlStr,header):
-		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		#print(Host)
-		return html
-	def get_list(self,html):
-		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
-		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
+		return returnTxt
+	#取集数
+	def get_EpisodesList(self,html,RegexText):
+		ListRe=re.finditer(RegexText, html, re.M|re.S)
 		videos = []
-		i=0
-		tdi=''
+		head="https://www.xiguazx.com"
 		for vod in ListRe:
-			lastVideo = vod[0]
-			title =vod[1]
-			if title.find('_List')>1:
-				tdi='List'
-				title=title[0:len(title)-5]
+			url = vod.group('url')
+			title =vod.group('title')
+			if len(url) == 0:
+				continue
+			videos.append(self.removeHtml(txt=title)+"$"+head+url)
+			#print(title)
+		return videos
+	#取剧集区
+	def get_lineList(self,Txt,mark,after):
+		circuit=[]
+		origin=Txt.find(mark)
+		while origin>8:
+			end=Txt.find(after,origin)
+			circuit.append(Txt[origin:end])
+			origin=Txt.find(mark,end)
+		return circuit	
+	#正则取文本,返回数组	
+	def get_RegexGetTextLine(self,Text,RegexText,Index):
+		returnTxt=[]
+		pattern = re.compile(RegexText, re.M|re.S)
+		ListRe=pattern.findall(Text)
+		if len(ListRe)<1:
+			return returnTxt
+		for value in ListRe:
+			returnTxt.append(value)	
+		return returnTxt
+	#分类取结果
+	def get_list(self,html,patternTxt):
+		ListRe=re.finditer(patternTxt, html, re.M|re.S)
+		videos = []
+		head="https://www.kankanmeiju.com"
+		for vod in ListRe:
+			url = vod.group('url')
+			title =self.removeHtml(txt=vod.group('title'))
+			img =vod.group('img')
+			if len(url) == 0:
+				continue
+			if len(img)<5:
+				img='https://www.xiguazx.com/template/mxone/mxstatic/image/loading.gif'
 			else:
-				tdi='play'
-			if len(lastVideo) == 0:
-				continue
+				img='https://www.kankanmeiju.com'+img
+			brief=vod.group('brief')
 			videos.append({
-				"vod_id":"{0}###{1}###{2}###{3}".format(tdi,title,lastVideo,img),
+				"vod_id":"{0}###{1}###{2}".format(title,head+url,img),
 				"vod_name":title,
 				"vod_pic":img,
-				"vod_remarks":''
-			})
-		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
-		videos = res
-		return videos
-	def get_list_B(self,jsonTxt):
-		videos=[]
-		jRoot = json.loads(jsonTxt)
-		if jRoot['code']!=0:
-			return videos
-		jo = jRoot['data']
-		vodList = jo['list']
-		rooms=jo['rooms']
-		for vod in vodList:
-			url =vod['room_id']
-			title =vod['title']
-			img=vod['keyframe']
-			remarks=vod['uname']
-			if len(img)<3:
-				img='https://www.baidu.com/link?url=w4owbtzM4I-UZp_1mOG3XAfrgl20sGkgnjZDyVglrgGRk9g2S3TpFA0Sh9E0YqsJ&wd=&eqid=f583e14d00056df100000003642e34bd'
-			vod_id="{0}###{1}###{2}".format(title,url,img)
-			videos.append({
-				"vod_id":vod_id,
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_remarks":remarks
+				"vod_remarks":brief
 			})
 		return videos
-	def get_m3u8Url_B(self,jsonTxt):
-		videos=[]
-		jRoot = json.loads(jsonTxt)
-		if jRoot['code']!=0:
-			return videos
-		jo = jRoot['data']
-		room_id=jo['room_id']
-		playurl=jo['playurl_info']
-		playurl=playurl['playurl']
-		desc=playurl['g_qn_desc']
-		descMass={}
-		for x in desc:
-			descMass[x['qn']]=x['desc']
-		stream=playurl['stream']
-		urlM3u8=[]
-		for vod in stream:
-			formatJson=vod['format']
-			if len(formatJson)<1:
-				continue
-			for x in formatJson:
-				codec=x['codec']
-				format_name=x['format_name']
-				for x1 in codec:
-					qn=x1['current_qn']
-					url=x1['base_url']
-					host=x1['url_info'][0]['host']
-					extra=x1['url_info'][0]['extra']
-					urlM3u8.append({
-						'Url':url,
-						'host':host,
-						'qn':qn,
-						'extra':extra,
-						'format_name':format_name
-						})
-		if len(urlM3u8)>0:
-			for x in urlM3u8:
-				url=x['host']+x['Url']+x['extra']
-				title=descMass.get(x['qn'])+"["+x['format_name'].replace("fmp4","m3u8")+"]"
-				videos.append(title+"$"+url)
-		if len(videos)<1:
-			idTxt='platform=web&quality=4_{0}'.format(room_id)
-			ids = idTxt.split("_")
-			Url = 'https://api.live.bilibili.com/room/v1/Room/playUrl?cid=%s&%s'%(ids[1],ids[0])
-			rsp = self.fetch(Url,headers=self.header)
-			htmlTxt = rsp.text
-			jRoot = json.loads(htmlTxt)
-			if jRoot['code']!=0:
-				return videos
-			jo = jRoot['data']
-			ja = jo['durl']
-			quality=jo['quality_description']
-			url = ''
-			if len(ja) > 0:
-				url1 = ja[0]['url']
-				title=quality[0]['desc']
-				videos.append(title+"$"+url1)
-		return videos
-	config = {
-		"player": {},
-		"filter": {}
-		}
-	header = {
-		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-		'Host': 'www.kankanmeiju.com'
-	}
-	vod={
-		'name':'ikan6',
-		'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
-		'circuit':'module-play-list-base">',
-		'after':'</div>',
-		'pattern':'<a\sclass="module-play-list-link"\shref="(?P<url>.+?)"\s*title=".+?"><span>(?P<title>.+?)</span></a>',
-		'url':'https://ikan6.vip'
-	}
-	ReStr=[]
-	ReStr.append(vod)
-	vod={
-		'name':'ktkkt2',
-		'line':'<h3 class="title"><strong>(.+?)</strong><span class="text-muted pull-mid">',
-		'circuit':'<div id="video_list_',
-		'after':'</div>',
-		'pattern':r"<li><a title=\'.+?\'\shref=\'(?P<url>.+?)\'"+'\starget="_self">(?P<title>.+?)</a></li>',
-		'url':'https://www.ktkkt2.com'
-	}
-	ReStr.append(vod)
-	vod={
-		'name':'cctv',
-		'line':'>(剧集列表)</li>',
-		'circuit':'//相关报导',
-		'after':' </script>',
-		'pattern':r"'title':'(?P<title>.+?)',\r\n\s*'img':'.*?',\r\n\s*'brief':'.*?',\r\n\s*'url':'(?P<url>.+?)'",
-		'url':''
-	}
-	ReStr.append(vod)
+	#删除html标签
+	def removeHtml(self,txt):
+		soup = re.compile(r'<[^>]+>',re.S)
+		txt =soup.sub('', txt)
+		return txt.replace("&nbsp;"," ")
+	#是否是vip解析
+	def ifJx(self,url):
+		Isjiexi=0
+		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com|tv.cctv|c(c|n)tv|v.pptv|mgtv.com)'
+		if self.get_RegexGetText(Text=url,RegexText=RegexTxt,Index=1)!='':
+			Isjiexi=1
+		return Isjiexi
+
 	def localProxy(self,param):
 		return [200, "video/MP2T", action, ""]
