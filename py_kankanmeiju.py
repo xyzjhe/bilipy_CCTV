@@ -47,30 +47,23 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		videos=[]
-		if pg!='1':
-			return result
-		if tid=='Collection':
-			Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
-			videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
-		elif  tid=='weather':
-			Url = 'http://www.weather.com.cn/pubm/video_lianbo_2021.htm'
-			headers = {
-				"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-				"Referer": "https://tv.cctv.com/"
-			}
-			htmlTxt=self.webReadFile(urlStr=Url,header=headers)
-			if len(htmlTxt)>13:
-				length=htmlTxt.rfind(')')
-				htmlTxt=htmlTxt[11:length]
-				videos = self.get_list_weather(html=htmlTxt)
-		else:
-			pass
+		classification=tid
+		#if 'classification' in extend.keys():
+			#classification=extend['classification']
+		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
+		htmlTxt = self.webReadFile(urlStr=url,header=self.header)
+		
+		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
+		
+		pag=self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
+		if pag=="":
+			pag=999
+		numvL = len(videos)
 		result['list'] = videos
 		result['page'] = pg
-		result['pagecount'] = 1
-		result['limit'] = 90
-		result['total'] = 999999
+		result['pagecount'] = pag
+		result['limit'] = numvL
+		result['total'] = numvL
 		return result
 	def get_list_weather(self,html):
 		jRoot = json.loads(html)
@@ -321,16 +314,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		"filter": {}
 		}
 	header = {
-		"Referer": 'http://my.ie.2345.com/onlinefav/web/',
-		'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36',
-		"Host":'my.ie.2345.com',
-		'Cookie':'uUiD=35752164629621148571735; name_ie=%2534013%2528023%2522320%2526143%2520154; I=i%3D90475631%26u%3D88890231%26n%3D%25C0%25B6%25BA%25A3%25B5%25D8%25D0%25C7%25C8%25CB%26m%3D0%26t%3D1687503738.46911300%26s%3Df8147ba8a21ae867edc8960a27b871a8%26v%3D1.1; sData=6392F231FBE75023D053CEFE20A81E6EE43333BF6FF9CD4610BA32AB109E43FD1742EBAAA408F5EB45E7E1A10A40174B3802B9DA7D3442844AF0093D9E87A22744FA8126F42C9C2BC1B8F88566586F8556548AEDF5FA99D898E168F5ECC2CF17B9FB0D45E3ADFF35BDDF77EF6BEBCDBF059ABFE942766D87F75CBBA205FD695F; site_str_flag=2; need_modify_name=0; skin=0; theme=0; ggbd=0'
+		"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
+		'Host': 'www.kankanmeiju.com'
 	}
-	def webReadFile(self,urlStr,header):
-		req = urllib.request.Request(url=urlStr,headers=header)#,headers=header
-		html = urllib.request.urlopen(req).read().decode('utf-8')
-		#print(Host)
-		return html
 	vod={
 		'name':'ikan6',
 		'line':'<div class="module-tab-item.+?" data-dropdown-value="(.+?)"><span>.+?</span>.*?</div>',
