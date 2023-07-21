@@ -51,7 +51,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
 		url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
-		htmlTxt = self.webReadFile(urlStr=url,header=self.header)
+		htmlTxt = self.webReadFile(urlStr='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/1.html',header=self.header)
 		
 		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
