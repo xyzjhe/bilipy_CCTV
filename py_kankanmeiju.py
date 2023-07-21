@@ -47,14 +47,14 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return result
 	def categoryContent(self,tid,pg,filter,extend):
 		result = {}
-		classification=tid
+		#classification=tid
 		#if 'classification' in extend.keys():
 			#classification=extend['classification']
 		#url='https://www.kankanmeiju.com/vodlist/{0}_{1}.html'.format(classification,pg)
 		rsp=self.fetch('https://www.kankanmeiju.com/vodlist/1.html')
 		htmlTxt =rsp.text# self.webReadFile(urlStr='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/1.html',header=self.header)
 		
-		videos = self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
+		videos =[] #self.get_list(html=htmlTxt,patternTxt=r'<a class="link" href="(?P<url>.+?)" title="(?P<title>.+?)"><div class="pic"><div class="img"><img class="lazy" data-original="(?P<img>.+?)" src=".+?" alt=".+?"><span class="over"></span><span class="ico player-ico"></span><span class="state"><span class="bg2"></span><span class="ico lzpng ztpng">(?P<brief>.+?)</span>')
 		
 		pag=999#self.get_RegexGetText(Text=htmlTxt,RegexText=r'<a href="/vodlist/\d+?_\d+?.html">\.\.(\d+?)</a>',Index=1)
 		if pag=="":
