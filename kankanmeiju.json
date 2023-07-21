@@ -100,33 +100,33 @@
     "play_header": "",
     
     //演员数据，截取前缀&&截取后缀
-    "proj_actor": "◎影片主演:&&</p>",
+    "proj_actor": "<span>主演&&</em>",
     //简介内容，截取前缀&&截取后缀
-    "proj_plot": "◎影片简介:&&<div",
+    "proj_plot": "<div class=\"cdes clearfix\">&&</div>",
     
     //线路截取区域，如果不需要请把tab_title或tab_arr_pre置空或者全部不要填。
     //线路是否二次截取
     "tab_YN_twice": "1",
     //线路二次截取前
-    "tab_twice_pre": "<h2 class=\"title border-top border-bottom mb-3 pt-2 pb-2\">",
+    "tab_twice_pre": "<div class=\"playfrom jsfrom tab1 clearfix\"><ul>",
     //线路二次截取后
-    "tab_twice_suf": "</h2>",
+    "tab_twice_suf": "</ul></div>",
     
     //线路截取数组前
-    "tab_arr_pre": "<i class=\"icon-film\">",
+    "tab_arr_pre": "<li id=\"tab",
     //线路截取数组后
-    "tab_arr_suf": "<span style=\"color:#ff0000; font-size:14px;\">",
+    "tab_arr_suf": "/li>",
     //线路标题，截取前缀&&截取后缀
-    "tab_title": "</i>&&<small>",
+    "tab_title": "</i>&&<",
     
     //列表是否二次截取 ,播放地址集合区
-    "list_YN_twice": "1",
+    "list_YN_twice": "0",
     //列表二次截取前
-    "list_twice_pre": "<div id=\"player_list\"",
+    "list_twice_pre": "",
     //列表二次截取后
-    "list_twice_suf": "</div>",
+    "list_twice_suf": "",
     //列表数组截取前，必须
-    "list_arr_pre": "<ul",
+    "list_arr_pre": "<ul class=\"playul\">",
     //列表数组截取后，必须
     "list_arr_suf": "</ul>",
     
@@ -137,7 +137,7 @@
     //集数二次截取后
     "epi_twice_suf": "",
     //集数数组截取前，必须
-    "epi_arr_pre": "<li",
+    "epi_arr_pre": "<li>",
     //集数数组截取后，必须
     "epi_arr_suf": "</li>",
     //集数标题，截取前缀&&截取后缀
@@ -145,7 +145,7 @@
     //集数链接，截取前缀&&截取后缀
     "epi_url": "href=\"&&\"",
     //集数链接补前缀
-    "epiurl_prefix": "https://auete.com",
+    "epiurl_prefix": "https://www.kankanmeiju.com",
     //集数链接补后缀
     "epiurl_suffix": "",
     
