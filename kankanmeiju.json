@@ -44,9 +44,9 @@
     //分类截取片单副标题，截取前缀&&截取后缀
     "cat_subtitle": "ztpng\">&&</span>",
     //分类截取片单链接，截取前缀&&截取后缀
-    "cat_url": "<a class=\"link\" href=\"&&\"",  
+    "cat_url": "href=\"&&\"",  
     //分类片单链接补前缀  
-    "cat_prefix": "https://www.kankanmeiju.com",
+    "cat_prefix": "",
     //分类片单链接补后缀
     "cat_suffix": "",
     
