@@ -57,14 +57,14 @@
         
 	},
     {
-      "key": "csp_xpath_mj",
+      "key": "csp_xpath_dsz77",
       "name": "看看美剧",
       "type": 3,
       "api": "csp_XYQBiu",
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kankanmeiju.json"
+      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dsz77.json"
     }
 ],
 
