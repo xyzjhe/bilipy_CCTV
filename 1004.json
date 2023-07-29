@@ -17,54 +17,45 @@
   ],
   "sites": [
          {
-            "key": "ks",
-            "name": "🌈快速启动(按菜单键选择站点)",
-            "api": "csp_SP360",
-            "type": 0,
-            "filterable": 0,
-            "quickSearch": 0,
-            "searchable": 0
-      },{"key": "csp_XYQ_lu1",
-"name": "️🍋柠檬电视┃直播",
-"type": 3,
-"api": "csp_XYQHiker",
-"searchable": 1,
-"quickSearch": 1,
-"filterable": 0,
-"ext": "https://agit.ai/66666/yueg/raw/branch/master/柠檬TV.json"
-},
-    {
-		"key": "py_webqq",
-		"name": "🛫看看美剧(PY)",
-		"type": 3,
-		"api": "py_webqq",
-		"searchable": 0,
+		"key": "ks",
+		"name": "🌈快速启动(按菜单键选择站点)",
+		"api": "csp_SP360",
+		"type": 0,
+		"filterable": 0,
 		"quickSearch": 0,
-		"filterable": 1,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_kankanmeiju.py"
-    },
-{"key":"csp_xml_飞速采集","name":"🐝飞速采集","type":1,"api":"https://m3u8.feisuzyapi.com/api.php/provide/vod/","playUrl":"","searchable":1,"quickSearch":1},
-  {
-            "key" : "bdys",
-            "name" : "🧲哔嘀磁力",
-            "type" : 3,
-            "api" : "csp_XPbd",
-            "searchable" : 1,
-            "quickSearch" : 1,
-            "filterable" : 1,
-	    "jar":"https://agit.ai/n/b/raw/branch/a/b/999.png;md5;3E92F56BD34DBC49F26EBCE77B845255",
-            "ext" : "https://agit.ai/l/o/raw/branch/o/o/%E7%A3%81%E5%8A%9B.json"
+		"searchable": 0
+      },
+      {
+		"key": "csp_xpath_dsz77",
+		"name": "电影港(磁链)",
+		"type": 3,
+		"api": "csp_XYQBiu",
+		"searchable": 1,
+		"quickSearch": 0,
+		"filterable": 0,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/%E7%94%B5%E5%BD%B1%E6%B8%AF%E7%A3%81%E5%8A%9B.json"
+     },
+     {
+		"key" : "bdys",
+		"name" : "🧲哔嘀磁力",
+		"type" : 3,
+		"api" : "csp_XPbd",
+		"searchable" : 1,
+		"quickSearch" : 1,
+		"filterable" : 1,
+		"jar":"https://agit.ai/n/b/raw/branch/a/b/999.png;md5;3E92F56BD34DBC49F26EBCE77B845255",
+		"ext" : "https://agit.ai/l/o/raw/branch/o/o/%E7%A3%81%E5%8A%9B.json"
         
-	},
-    {
-      "key": "csp_xpath_dsz77",
-      "name": "新台网",
-      "type": 3,
-      "api": "csp_XYQBiu",
-      "searchable": 1,
-      "quickSearch": 0,
-      "filterable": 0,
-      "ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dsz77.json"
+     },
+     {
+		"key": "csp_xpath_dsz77",
+		"name": "新台网",
+		"type": 3,
+		"api": "csp_XYQBiu",
+		"searchable": 1,
+		"quickSearch": 0,
+		"filterable": 0,
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dsz77.json"
     }
 ],
 
