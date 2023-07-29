@@ -62,7 +62,7 @@
     "epi_arr_pre": "磁力：<a",
     "epi_arr_suf": "/a>",
     "epi_title": ">&&<",
-    "epi_url": "href=\"&&\"",
-    "epiurl_prefix": "",
+    "epi_url": "href=\"mag&&\"",
+    "epiurl_prefix": "mag",
     "epiurl_suffix": ""  
 }
