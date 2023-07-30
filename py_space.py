@@ -182,7 +182,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			parse=0
 		if id=='http://192.168.1.1/':
 			id='ed2k://|file|【高清MP4电影www.mp4us.com】zljxx.2018.BD1080p.zwzm.mp4|2104649660|273ac79bde60d2126ffa3abe3aa924c1|/'
-			parse=0
+			parse=1
 			jx=0
 		result["parse"] = parse
 		result["playUrl"] = ''
