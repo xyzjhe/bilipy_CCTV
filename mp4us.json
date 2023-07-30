@@ -131,7 +131,7 @@
     "list_arr_suf": "复制全部地址",
     
     //集数是否二次截取
-    "epi_YN_twice": "0",
+    "epi_YN_twice": "1",
     //集数二次截取前
     "epi_twice_pre": "<li>",
     //集数二次截取后
