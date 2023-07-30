@@ -126,7 +126,7 @@
     //列表二次截取后
     "list_twice_suf": "",
     //列表数组截取前，必须
-    "list_arr_pre": "<ul class=\"panel down-list thunder1\">",
+    "list_arr_pre": "<ul class=\"panel",
     //列表数组截取后，必须
     "list_arr_suf": "</ul>",
     
@@ -143,7 +143,7 @@
     //集数标题，截取前缀&&截取后缀
     "epi_title": "title=\"&&\"",
     //集数链接，截取前缀&&截取后缀
-    "epi_url": "href=\"&&\"",
+    "epi_url": "value=\"&&\"",
     //集数链接补前缀
     "epiurl_prefix": "",
     //集数链接补后缀
