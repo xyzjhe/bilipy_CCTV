@@ -182,7 +182,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			parse=0
 		if id=='http://192.168.1.1/':
 			id='magnet:?xt=urn:btih:fbbf6a8e001664383aad50b5756ffaa2d3ed81a0'
-			parse=0
+			parse=1
 			jx=0
 		result["parse"] = parse
 		result["playUrl"] = ''
