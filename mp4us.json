@@ -137,9 +137,9 @@
     //集数二次截取后
     "epi_twice_suf": "",
     //集数数组截取前，必须
-    "epi_arr_pre": "<li>",
+    "epi_arr_pre": "<div class=\"url-left\"><a ",
     //集数数组截取后，必须
-    "epi_arr_suf": "</li>",
+    "epi_arr_suf": "</a>",
     //集数标题，截取前缀&&截取后缀
     "epi_title": "title=\"&&\"",
     //集数链接，截取前缀&&截取后缀
