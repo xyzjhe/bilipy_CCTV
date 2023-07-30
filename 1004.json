@@ -26,14 +26,14 @@
 		"searchable": 0
       },
       {
-		"key": "csp_xpath_dyg",
-		"name": "电影港(磁链)",
+		"key": "csp_xpath_mp4us",
+		"name": "MP4电影(磁链)",
 		"type": 3,
 		"api": "csp_XYQBiu",
 		"searchable": 1,
 		"quickSearch": 0,
 		"filterable": 0,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/%E7%94%B5%E5%BD%B1%E6%B8%AF%E7%A3%81%E5%8A%9B.json"
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/mp4us.json"
      },
      {
 		"key" : "bdys",
