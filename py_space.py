@@ -182,7 +182,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			parse=0
 		if id=='http://192.168.1.1/':
 			id='magnet:?xt=urn:btih:0fadfcc172087a00951019312b060cce75129833&dn=Guardians.of.the.Galaxy.Vol.3.2023.1080p.WEB-DL.DDP5.1.Atmos.H.264-CMRG&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce'
-			parse=
+			parse=0
 			jx=0
 		result["parse"] = parse
 		result["playUrl"] = ''
