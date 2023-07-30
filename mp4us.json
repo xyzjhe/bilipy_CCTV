@@ -115,7 +115,7 @@
     //线路截取数组前
     "tab_arr_pre": "<div id=\"download1\"",
     //线路截取数组后
-    "tab_arr_suf": "<div class="alert",
+    "tab_arr_suf": "<div class=\"alert",
     //线路标题，截取前缀&&截取后缀
     "tab_title": "<h2>&&</h2>",
     
