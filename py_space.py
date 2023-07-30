@@ -181,7 +181,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
 		if id=='http://192.168.1.1/':
-			id='magnet:?xt=urn:btih:fbbf6a8e001664383aad50b5756ffaa2d3ed81a0&dn=[www.mp4us.com]九辰风云录.EP1.HD1080p.mp4&tr=https://tracker.iriseden.fr:443/announce&tr=https://tr.highstar.shop:443/announce&tr=https://tr.fuckbitcoin.xyz:443/announce&tr=https://tr.doogh.club:443/announce&tr=https://tr.burnabyhighstar.com:443/announce&tr=https://t.btcland.xyz:443/announce&tr=http://vps02.net.orel.ru:80/announce&tr=https://tracker.kuroy.me:443/announce&tr=http://tr.cili001.com:8070/announce&tr=http://t.overflow.biz:6969/announce&tr=http://t.nyaatracker.com:80/announce&tr=http://open.acgnxtracker.com:80/announce&tr=http://nyaa.tracker.wf:7777/announce&tr=http://home.yxgz.vip:6969/announce&tr=http://buny.uk:6969/announce&tr=https://tracker.tamersunion.org:443/announce&tr=https://tracker.nanoha.org:443/announce&tr=https://tracker.loligirl.cn:443/announce&tr=udp://bubu.mapfactor.com:6969/announce&tr=http://share.camoe.cn:8080/announce&tr=udp://movies.zsw.ca:6969/announce&tr=udp://ipv4.tracker.harry.lu:80/announce&tr=udp://tracker.sylphix.com:6969/announce&tr=http://95.216.22.207:9001/announce'
+			id='ed2k://|file|【高清MP4电影www.mp4us.com】zljxx.2018.BD1080p.zwzm.mp4|2104649660|273ac79bde60d2126ffa3abe3aa924c1|/'
 			parse=0
 			jx=0
 		result["parse"] = parse
