@@ -52,9 +52,9 @@
     
     //搜索链接，搜索关键字用{wd}表示，post请求的最后面加;post
     //POST链接示例 http://www.lezhutv.com/index.php?m=vod-search;post
-    "search_url": "http://www.dsz77.org/search.php?q={wd}",
+    "search_url": "https://img.oeblog.com/magnet/api/bt/ssbc;post",
     //POST搜索body，填写搜索关键字的键值，一般常见的是searchword和wd，不是POST搜索的可留空或删除。
-    "sea_PtBody":"",
+    "sea_PtBody":"key={wd}&type=%E5%BD%B1%E8%A7%86&from=1",
     //搜索模式,0为json搜索，只支持列表在list数组里的，其它为网页截取。
     "search_mode": "1",
     //json片单图片
@@ -69,26 +69,26 @@
     //搜索是否二次截取  
     "sea_YN_twice": "1",
     //搜索二次截取前
-    "sea_twice_pre": "class=\"list bgb \"",
+    "sea_twice_pre": "\"torrent\": [{",
     //搜索二次截取后
-    "sea_twice_suf": "class=\"pagebar\"",
+    "sea_twice_suf": "page",
     
     //搜索数组前缀
-    "sea_arr_pre": "<li>",
+    "sea_arr_pre": ""id":",
     //搜索数组后缀
-    "sea_arr_suf": "</li>",
+    "sea_arr_suf": ""from":",
     //搜索片单图片，截取前缀&&截取后缀
-    "sea_pic": "src=\"&&\"",
+    "sea_pic": "",
     //搜索片单标题，截取前缀&&截取后缀
-    "sea_title": "title=\"&&\"",
+    "sea_title": ""name_simple\":\"&&\"",
     //搜索片单链接，截取前缀&&截取后缀
-    "sea_url": "\"magnet&&=",
+    "sea_url": "id_IK":\"&&\"",
     //搜索片单链接补前缀
-    "search_prefix": "magnet",
+    "search_prefix": "http://www.sv20.pw/Info?id=",
     //搜索片单链接补后缀，这个一般json搜索的需要
     "search_suffix": "",
     //搜索副标题，截取前缀&&截取后缀
-    "sea_subtitle": "",
+    "sea_subtitle": "\"name_IK\":\"&&\"",
     
     //片单链接是否直接播放，1是直接播放，0否。
     "force_play": "0",
@@ -113,7 +113,7 @@
     "tab_twice_suf": "",
     
     //线路截取数组前
-    "tab_arr_pre": "<div id=\"download1\"",
+    "tab_arr_pre": "<div id=\"download",
     //线路截取数组后
     "tab_arr_suf": "<div class=\"alert",
     //线路标题，截取前缀&&截取后缀
@@ -126,7 +126,7 @@
     //列表二次截取后
     "list_twice_suf": "",
     //列表数组截取前，必须
-    "list_arr_pre": "<ul class=\"panel",
+    "list_arr_pre": "<ul class=\"pane",
     //列表数组截取后，必须
     "list_arr_suf": "</ul>",
     
@@ -143,9 +143,9 @@
     //集数标题，截取前缀&&截取后缀
     "epi_title": "title=\"&&\"",
     //集数链接，截取前缀&&截取后缀
-    "epi_url": "value=\"&&\"",
+    "epi_url": "=\"magnet&&\"",
     //集数链接补前缀
-    "epiurl_prefix": "",
+    "epiurl_prefix": "magnet",
     //集数链接补后缀
     "epiurl_suffix": "",
     
