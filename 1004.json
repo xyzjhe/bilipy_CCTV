@@ -48,14 +48,14 @@
         
      },
      {
-		"key": "csp_xpath_dsz77",
-		"name": "新台网",
+		"key": "csp_xpath_meijutt",
+		"name": "美剧天堂",
 		"type": 3,
 		"api": "csp_XYQBiu",
 		"searchable": 1,
 		"quickSearch": 0,
 		"filterable": 0,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/dsz77.json"
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/meijutt.json"
     }
 ],
 
