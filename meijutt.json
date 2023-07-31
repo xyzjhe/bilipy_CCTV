@@ -100,52 +100,52 @@
     "play_header": "",
     
     //演员数据，截取前缀&&截取后缀
-    "proj_actor": ">主演：&&<em >导演",
+    "proj_actor": "<li><b>主演：</b>&&</li>",
     //简介内容，截取前缀&&截取后缀
-    "proj_plot": "介绍</h2><p>&&</p>",
+    "proj_plot": "<span><b>剧情介绍：</b>&&</span>",
     
     //线路截取区域，如果不需要请把tab_title或tab_arr_pre置空或者全部不要填。
     //线路是否二次截取
-    "tab_YN_twice": "0",
+    "tab_YN_twice": "1",
     //线路二次截取前
-    "tab_twice_pre": "",
+    "tab_twice_pre": "<div class=\"arconix-toggle-title\">",
     //线路二次截取后
-    "tab_twice_suf": "",
+    "tab_twice_suf": "</div>",
     
     //线路截取数组前
-    "tab_arr_pre": "<div id=\"download",
+    "tab_arr_pre": "<span class="l bflb",
     //线路截取数组后
-    "tab_arr_suf": "</div></ul>",
+    "tab_arr_suf": "/span>",
     //线路标题，截取前缀&&截取后缀
-    "tab_title": "<h2>&&</h2>",
+    "tab_title": "cili\">&&<",
     
     //列表是否二次截取 ,播放地址集合区
     "list_YN_twice": "0",
     //列表二次截取前
     "list_twice_pre": "",
     //列表二次截取后
-    "list_twice_suf": "",
+    "list_twice_suf": "</ul>",
     //列表数组截取前，必须
-    "list_arr_pre": "<ul class=\"pane",
+    "list_arr_pre": "<div class=\"arconix-toggle-content",
     //列表数组截取后，必须
-    "list_arr_suf": "复制全部地址",
+    "list_arr_suf": "</ul>",
     
     //集数是否二次截取
     "epi_YN_twice": "0",
     //集数二次截取前
-    "epi_twice_pre": "<li>",
+    "epi_twice_pre": "<li",
     //集数二次截取后
     "epi_twice_suf": "</li>",
     //集数数组截取前，必须
-    "epi_arr_pre": "<li>",
+    "epi_arr_pre": "<li",
     //集数数组截取后，必须
     "epi_arr_suf": "</li>",
     //集数标题，截取前缀&&截取后缀
     "epi_title": "title=\"&&\"",
     //集数链接，截取前缀&&截取后缀
-    "epi_url": "\"magnet&&\"",
+    "epi_url": "href=\"&&\"",
     //集数链接补前缀
-    "epiurl_prefix": "magnet",
+    "epiurl_prefix": "",
     //集数链接补后缀
     "epiurl_suffix": "",
     
