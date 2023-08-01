@@ -38,13 +38,13 @@
     //分类数组截取后
     "cat_arr_suf": "</li>",
     //分类截取片单图片，截取前缀&&截取后缀
-    "cat_pic": "src=\"&&\"",
+    "cat_pic": "<img src="=\"&&\"",
     //分类截取片单标题，截取前缀&&截取后缀
-    "cat_title": "alt=\"&&\"",
+    "cat_title": "<h4 class=\"book-title\">&&</h4>",
     //分类截取片单副标题，截取前缀&&截取后缀
-    "cat_subtitle": ">&&</font>",
+    "cat_subtitle": "状态：<span>&&</span>",
     //分类截取片单链接，截取前缀&&截取后缀
-    "cat_url": "href=\"&&\"",  
+    "cat_url": "<a href=\"&&\"",  
     //分类片单链接补前缀  
     "cat_prefix": "https://wap.meijutt.tv",
     //分类片单链接补后缀
