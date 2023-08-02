@@ -81,14 +81,14 @@
         
      },
      {
-		"key": "csp_xpath_meijutt",
-		"name": "美剧天堂",
+		"key": "csp_xpath_bttt",
+		"name": "BT天堂",
 		"type": 3,
 		"api": "csp_XYQBiu",
 		"searchable": 1,
 		"quickSearch": 0,
 		"filterable": 0,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/meijutt.json"
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/bttt.json"
     }
 ],
 
