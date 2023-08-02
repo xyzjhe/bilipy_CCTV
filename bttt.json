@@ -34,7 +34,7 @@
     "cat_twice_suf": "</ul>",
     
     //分类数组截取前
-    "cat_arr_pre": "<li class="col-md",
+    "cat_arr_pre": "<li class=\"col-md",
     //分类数组截取后
     "cat_arr_suf": "</li>",
     //分类截取片单图片，截取前缀&&截取后缀
