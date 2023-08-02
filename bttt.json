@@ -27,7 +27,7 @@
     //筛选数据，json格式，参考xpath的筛选写法
     "filterdata":{},
     //分类是否二次截取
-    "cat_YN_twice": "1",
+    "cat_YN_twice": "0",
     //分类二次截取前
     "cat_twice_pre": "<ul class=\"ul-imgtxt",
     //分类二次截取后
@@ -113,25 +113,25 @@
     "tab_twice_suf": "",
     
     //线路截取数组前
-    "tab_arr_pre": "<span style=\"font-size",
+    "tab_arr_pre": "<span style=\"font-size: large\">",
     //线路截取数组后
     "tab_arr_suf": "</span></strong>",
     //线路标题，截取前缀&&截取后缀
     "tab_title": "下载&&</span>",
     
     //列表是否二次截取 ,播放地址集合区
-    "list_YN_twice": "0",
+    "list_YN_twice": "1",
     //列表二次截取前
-    "list_twice_pre": "",
+    "list_twice_pre": "<p><strong><span style=\"font-size: large\">",
     //列表二次截取后
-    "list_twice_suf": "",
+    "list_twice_suf": "</div>",
     //列表数组截取前，必须
     "list_arr_pre": "</p>",
     //列表数组截取后，必须
     "list_arr_suf": "</p>",
     
     //集数是否二次截取
-    "epi_YN_twice": "1",
+    "epi_YN_twice": "0",
     //集数二次截取前
     "epi_twice_pre": "<p><strong><span style=\"font-size",
     //集数二次截取后
