@@ -180,10 +180,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 		parse=1
 		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
-		if id=='http://192.168.1.1/':
-			id='magnet:?xt=urn:btih:fbbf6a8e001664383aad50b5756ffaa2d3ed81a0'
-			parse=1
-			jx=0
+		if id.find('www.huya.com')>0:
+			headers= {
+			'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36 SE 2.X MetaSr 1.0'
+		}
 		result["parse"] = parse
 		result["playUrl"] = ''
 		result["url"] = id
