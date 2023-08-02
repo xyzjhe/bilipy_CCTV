@@ -17,7 +17,7 @@
     //是否开启获取首页数据，0关闭，1开启
     "homeContent":"1",
     //分类链接起始页码,禁止负数和含小数点。
-    "firstpage": "0",
+    "firstpage": "1",
     //分类链接,{cateId}是分类，{catePg}是页码,第一页没有页码的可以这样写 第二页链接[firstPage=第一页的链接]
     "class_url": "https://www.bt-tt.com/html/{cateId}-{catePg}.html",
     //分类名，分类1&分类2&分类3
@@ -113,11 +113,11 @@
     "tab_twice_suf": "",
     
     //线路截取数组前
-    "tab_arr_pre": "<span style=\"font-size\: large\">",
+    "tab_arr_pre": "<span style=\"font-size",
     //线路截取数组后
     "tab_arr_suf": "</span></strong>",
     //线路标题，截取前缀&&截取后缀
-    "tab_title": "【下载&&】</span>",
+    "tab_title": "下载&&</span>",
     
     //列表是否二次截取 ,播放地址集合区
     "list_YN_twice": "0",
@@ -133,7 +133,7 @@
     //集数是否二次截取
     "epi_YN_twice": "1",
     //集数二次截取前
-    "epi_twice_pre": "<p><strong><span style=\"font-size\: large\">",
+    "epi_twice_pre": "<p><strong><span style=\"font-size",
     //集数二次截取后
     "epi_twice_suf": "</div>",
     //集数数组截取前，必须
