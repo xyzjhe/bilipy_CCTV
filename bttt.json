@@ -113,7 +113,7 @@
     "tab_twice_suf": "",
     
     //线路截取数组前
-    "tab_arr_pre": "<span style=\"font-size: large\">",
+    "tab_arr_pre": "<span style=\"font-size\: large\">",
     //线路截取数组后
     "tab_arr_suf": "</span></strong>",
     //线路标题，截取前缀&&截取后缀
@@ -133,7 +133,7 @@
     //集数是否二次截取
     "epi_YN_twice": "1",
     //集数二次截取前
-    "epi_twice_pre": "<p><strong><span style=\"font-size: large\">",
+    "epi_twice_pre": "<p><strong><span style=\"font-size\: large\">",
     //集数二次截取后
     "epi_twice_suf": "</div>",
     //集数数组截取前，必须
