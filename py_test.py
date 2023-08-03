@@ -3,14 +3,14 @@
 import sys
 sys.path.append('..') 
 from base.spider import Spider
-import json
 import time
 import base64
 import re
 from urllib import request, parse
 import urllib
 import urllib.request
-import time
+import os
+import glob
 
 class Spider(Spider):  # 元类 默认的元类 type
 	def getName(self):
@@ -53,7 +53,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
 		elif  tid=='File':
 			path=r'clan://localhost/tvbox/*'
-			img='https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/CoverError.png'
+			img='http://img1.3png.com/281e284a670865a71d91515866552b5f172b.png'
 			for File_abs in glob.glob(path):
 				title=os.path.basename(File_abs)
 				lastVideo=File_abs
@@ -184,7 +184,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
-		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
+		img ='http://img1.3png.com/281e284a670865a71d91515866552b5f172b.png'
 		videos = []
 		i=0
 		tdi=''
