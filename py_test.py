@@ -52,7 +52,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
 			videos = self.get_list(html=self.webReadFile(urlStr=Url,header=self.header))
 		elif  tid=='File':
-			path=r'*'
+			path='/storage/*'
 			img='http://img1.3png.com/281e284a670865a71d91515866552b5f172b.png'
 			for File_abs in glob.glob(path):
 				title=os.path.basename(File_abs)
