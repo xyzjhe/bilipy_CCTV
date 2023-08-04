@@ -72,8 +72,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		if tid.count('https:')<1:
 			Path="/" if tid.find('baidu')>-1 else tid
 			videos=self.custom_getBaidu(cataloguePath=Path)
-            if videos==[]:
-                return result
 		else:
 		    videos=self.custom_getAlist(tid=tid)
 		result['list'] = videos
@@ -86,10 +84,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def detailContent(self, array):
 		id = array[0]
 		vod=[]
-        if id.find('baidu')<0:
-            vod=self.custom_getPlay(id=id)
-        else:
-            pass
+		if id.find('baidu')<0:
+			vod=self.custom_getPlay(id=id)
+		else:
+			vod=self.custom_getBaiduPlay(id=id)
 		result = {
 		    'list': [
 		        vod
@@ -210,12 +208,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		html = urllib.request.urlopen(req).read().decode('utf-8')
 		#print(Host)
 		return html	
-	def ifJx(self,urlTxt):
-		Isjiexi=0
-		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
-		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
-			Isjiexi=1
-		return Isjiexi
 	def get_RegexGetText(self,Text,RegexText,Index):
 		returnTxt=""
 		Regex=re.search(RegexText, Text, re.M|re.S)
@@ -224,34 +216,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			returnTxt=Regex.group(Index)
 		return returnTxt	
-	def get_list(self,html):
-		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
-		pattern = re.compile(patternTxt)
-		ListRe=pattern.findall(html)
-		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
-		videos = []
-		i=0
-		tdi=''
-		for vod in ListRe:
-			lastVideo = vod[0]
-			title =vod[1]
-			if title.find('_List')>1:
-				tdi='List'
-				title=title[0:len(title)-5]
-			else:
-				tdi='play'
-			if len(lastVideo) == 0:
-				continue
-			videos.append({
-				"vod_id":"{0}###{1}###{2}###{3}".format(tdi,title,lastVideo,img),
-				"vod_name":title,
-				"vod_pic":img,
-				"vod_tag": "folder",
-				"vod_remarks":'vod_tag'
-			})
-		res = [i for n, i in enumerate(videos) if i not in videos[:n]]
-		videos = res
-		return videos
 	def custom_getAlist(self, tid):
 		if tid.count('/') == 2:
 			tid = tid + '/'
@@ -319,43 +283,42 @@ class Spider(Spider):  # 元类 默认的元类 type
 		    })
 		return videos
 	def custom_getBaidu(self,cataloguePath):
-		CometURL=urllib.parse.quote(cataloguePath)
+		CometURL=urllib.parse.quote('/')
 		c='PSTM=1604824989; BIDUPSID=242A986F336B8BBFE138636E5294994A; H_WISE_SIDS_BFESS=110085_127969_179348_184716_189755_190616_191068_191249_192913_194085_194511_194519_194529_195342_196425_197242_197711_197948_197957_198265_199569_200596_200960_200993_201193_201699_202910_203190_203267_203310_203361_203504_204254_204264_204305_204535_204545_204701_204778_204864_204914_205218_205220_205241_205484_205569_205909_206007_206124_206168_206515_206681_206729_206804_206897_206911_207234_207364_207471_207488_207565_207671_207713_207716_207768_207831_207863_207893_207923_208050_208055_208061_208137_208165_208224_208226_208268_208270_208312_208344_208564_208687_208721_208755_208771_208890_209231; BDUSS=nVKWHN1VWthOFpqQXh5Z2J1MHhKVXJQZmptdlAzR3F3d0pHb3d5UTBadEN5MzVqRVFBQUFBJCQAAAAAAQAAAAEAAADbPqk20P7KpdfTMjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEI-V2NCPldja; BDUSS_BFESS=nVKWHN1VWthOFpqQXh5Z2J1MHhKVXJQZmptdlAzR3F3d0pHb3d5UTBadEN5MzVqRVFBQUFBJCQAAAAAAQAAAAEAAADbPqk20P7KpdfTMjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEI-V2NCPldja; BAIDUID=19C93899D50089D40967632F72585F67:FG=1; PANWEB=1; BAIDUID_BFESS=19C93899D50089D40967632F72585F67:FG=1; BAIDU_WISE_UID=wapp_1690174987606_165; ZFY=Pb1LsyQ67lTuPaUlz3fY:Aaa9laL:APWj07kMlDgSUAFI:C; csrfToken=g8Inve3QH9GHm6jRG3C9XMSH; STOKEN=2fff6cb0e330e38b04e90169ad03363f2af7f6c38a4b18e6da076728669352c8; Hm_lvt_7a3960b6f067eb0085b7f96ff5e660b0=1691129967; Hm_lpvt_7a3960b6f067eb0085b7f96ff5e660b0=1691129967; ab_sr=1.0.1_NjUyODdmYzcyZjk0MzZkNTk2ZGQzNThiMzQxNzM3M2I0NGIxMzNmYmQ1YTFiZDllMjg4ZWMyYjhlODhlNjk5N2NkODQ4ZjZkOTIyZjE1YjRiNTE4Mzg0ZWRkNjAzMjg4OTViZjBlMjI2YTgxZGY5OWYzYTMwZjU5ZDEwMjQ5NmE0N2IwNjU5NWMxY2Q2MTBhMmFmZTgzNzIyNTc5ZTUyZDE5YjE2YzllZTU5MzdiM2I3NzFmNDVlMmE1ZjY2Mzk5; PANPSC=8165459457226291555%3AKkwrx6t0uHBS3vas06GEmOL8WewRDWDPZiRMv5L2Uee%2Bp0%2F6razUKuQ4siUfSkANz81ttRoL0tBKQ4Dasb9%2FZstxnmHe8mH%2FVO0c7TtdgDSlxHihS2mgCRrA%2F7VXeEuWLvxjdeGWe14xHgLtt4aYIueFh%2BdfonnAY8uG8AM%2BY0Ih6uZoP3DwQ3ePlzJEAU4t4oRCM5jrTJ0BDChpkEtqiw%3D%3D; AB_EXPERIMENT=%7B%22PC_SESSION_COOKIE_SWITCH%22%3A%22ON%22%2C%22group_cloud_smallflow%22%3A%22%22%2C%22ORDER_SIX_MONTH_CHECK%22%3A%22ON%22%2C%22group_smallflow%22%3A%22off%22%2C%22CHROME80_SET_COOKIE%22%3A%22ON%22%2C%22group_smallflow_uri%22%3A%22%22%2C%22rccGetChannelInfoSink%22%3A%22ON%22%7D'
 		urlString = "https://pan.baidu.com/api/list?order=time&desc=1&showempty=0&web=1&page=1&num=100&dir=路径&t=0.5938627068731255&channel=chunlei&web=1&app_id=250528&bdstoken=27a95f9978ba628abcfaf87afb775f80&logid=MkQwNDREOEMyODE5RDRGN0UxNzQ3MTIxQThCQzQ3MkM6Rkc9MQ==&clienttype=0"
 		url=urlString.replace('路径',CometURL)
 		self.header['Referer']=url
 		self.header['Cookie']=c
 		html=self.custom_webReadFile(urlStr=url,header=self.header)
-		# html=self.readFile(filePath="D:/1.txt")
 		jRoot=json.loads(html)
 		if jRoot['errno']=='0':
 			return []
 		videos=[]
 		tid='baidu'
-        listCollection=jRoot['list']
-        for vod in listCollection:
-            name=vod['server_filename']
-            size=vod['size']
-            if int(size)>0:
-                remark=self.custom_calculationSize(sizeValue=size)
-                tag='file'
-                tid='baidu'
-                img='https://img0.baidu.com/it/u=2963924144,3361713742&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
-            else:
-                remark='文件夹'
-                tid=''
-                tag='folder'
-                img='http://img1.3png.com/281e284a670865a71d91515866552b5f172b.png'
-            aid=vod['path']
-            if len(cataloguePath)>1:
-                aid=cataloguePath+aid
-            videos.append({
-                "vod_id":  tid+aid,
-                "vod_name": name,
-                "vod_pic": img,
-                "vod_tag": tag,
-                "vod_remarks": remark
-            })
+		listCollection=jRoot['list']
+		for vod in listCollection:
+			name=vod['server_filename']
+			size=vod['size']
+			if int(size)>0:
+				remark=self.custom_calculationSize(sizeValue=size)
+				tag='file'
+				tid='baidu'
+				img='https://img0.baidu.com/it/u=2963924144,3361713742&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
+			else:
+				remark='文件夹'
+				tid=''
+				tag='folder'
+				img='http://img1.3png.com/281e284a670865a71d91515866552b5f172b.png'
+			aid=vod['path']
+			if len(cataloguePath)>1:
+				aid=cataloguePath+aid
+			videos.append({
+		        "vod_id":  tid+aid,
+		        "vod_name": name,
+		        "vod_pic": img,
+		        "vod_tag": tag,
+		        "vod_remarks": remark
+		    })
 		return videos
 	def custom_calculationSize(self,sizeValue):
 		if sizeValue > 1024 * 1024 * 1024 * 1024.0:
@@ -375,57 +338,62 @@ class Spider(Spider):  # 元类 默认的元类 type
 			sz = round(sizeValue / (1024.0), 2)
 		remark = str(sz) + fs
 		return remark
-    def custom_getPlay(self,id):
-        if self.ver == '' or self.baseurl == '':
-            self.getVersion(id)
-        ver = self.ver
-        baseurl = self.baseurl
-        fileName = id.replace(baseurl, "")
-        dir = re.findall(r"(.*)/", fileName)[0].replace(baseurl, "")
-        dirparam = {
-            "path": '/' + dir,
-            "password": "",
-            "page_num": 1,
-            "page_size": 100
-        }
-        vod = {
-            "vod_id": fileName,
-            "vod_name": dir,
-            "vod_pic": '',
-            "vod_tag": '',
-            "vod_play_from": "播放",
-        }
-        if ver == 2:
-            drsp = self.postJson(baseurl + 'api/public/path', dirparam)
-            djo = json.loads(drsp.text)
-            dList = djo['data']['files']
-        elif ver == 3:
-            drsp = self.postJson(baseurl + 'api/fs/list', dirparam)
-            djo = json.loads(drsp.text)
-            dList = djo['data']['content']
-        playUrl = ''
-        for tempd in dList:
-            if 'mp4' in tempd['name'] or 'mkv' in tempd['name'] or 'TS' in tempd['name'] or 'flv' in tempd['name'] or 'rmvb' in tempd['name'] or 'mp3' in tempd['name'] or 'flac' in tempd['name'] or 'wav' in tempd['name']:
-            # 开始匹配视频
-                # 视频名称 name
-                name = tempd['name']
-                # 视频链接 url
-                fname = re.findall(r"(.*)/", fileName)[0] + '/' + name
-                url = baseurl + fname
-                # 开始找字幕 subt
-                vname = re.findall(r"(.*)\.", tempd['name'])[0]
-                vstr = re.findall(r"\'name\': \'(.*?)\'", str(dList))
-                if len(vstr) == 2:
-                    suball = vstr
-                else:
-                    suball = difflib.get_close_matches(vname, vstr, len(dList), cutoff=0.8)
-                for sub in suball:
-                    if sub.endswith(".ass") or sub.endswith(".srt"):
-                        subt = '@@@' + baseurl + dir + '/' +sub
-                ifsubt = 'subt' in locals().keys()
-                if ifsubt is False:
-                    playUrl = playUrl + '{0}${1}#'.format(name, url)
-                else:
-                    playUrl = playUrl + '{0}${1}{2}#'.format(name, url, subt)
-        vod['vod_play_url'] = playUrl
-        return vod
+	def custom_getPlay(self,id):
+		if self.ver == '' or self.baseurl == '':
+		    self.getVersion(id)
+		ver = self.ver
+		baseurl = self.baseurl
+		fileName = id.replace(baseurl, "")
+		dir = re.findall(r"(.*)/", fileName)[0].replace(baseurl, "")
+		dirparam = {
+		    "path": '/' + dir,
+		    "password": "",
+		    "page_num": 1,
+		    "page_size": 100
+		}
+		vod = {
+		    "vod_id": fileName,
+		    "vod_name": dir,
+		    "vod_pic": '',
+		    "vod_tag": '',
+		    "vod_play_from": "播放",
+		}
+		if ver == 2:
+		    drsp = self.postJson(baseurl + 'api/public/path', dirparam)
+		    djo = json.loads(drsp.text)
+		    dList = djo['data']['files']
+		elif ver == 3:
+		    drsp = self.postJson(baseurl + 'api/fs/list', dirparam)
+		    djo = json.loads(drsp.text)
+		    dList = djo['data']['content']
+		playUrl = ''
+		for tempd in dList:
+		    if 'mp4' in tempd['name'] or 'mkv' in tempd['name'] or 'TS' in tempd['name'] or 'flv' in tempd['name'] or 'rmvb' in tempd['name'] or 'mp3' in tempd['name'] or 'flac' in tempd['name'] or 'wav' in tempd['name']:
+		    # 开始匹配视频
+		        # 视频名称 name
+		        name = tempd['name']
+		        # 视频链接 url
+		        fname = re.findall(r"(.*)/", fileName)[0] + '/' + name
+		        url = baseurl + fname
+		        # 开始找字幕 subt
+		        vname = re.findall(r"(.*)\.", tempd['name'])[0]
+		        vstr = re.findall(r"\'name\': \'(.*?)\'", str(dList))
+		        if len(vstr) == 2:
+		            suball = vstr
+		        else:
+		            suball = difflib.get_close_matches(vname, vstr, len(dList), cutoff=0.8)
+		        for sub in suball:
+		            if sub.endswith(".ass") or sub.endswith(".srt"):
+		                subt = '@@@' + baseurl + dir + '/' +sub
+		        ifsubt = 'subt' in locals().keys()
+		        if ifsubt is False:
+		            playUrl = playUrl + '{0}${1}#'.format(name, url)
+		        else:
+		            playUrl = playUrl + '{0}${1}{2}#'.format(name, url, subt)
+		vod['vod_play_url'] = playUrl
+		return vod
+	def custom_getBaiduPlay(self,id):
+		id=id[5:]
+		print(id)
+		vod={}
+		return vod
