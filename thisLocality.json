@@ -23,6 +23,11 @@
 	{
 		"url": "clan://localhost/tvbox/1001.json",
 		"name": "精简(本地包)"
-        }
+        },
+	{
+		"url": "clan://localhost/tvbox/1004.json",
+		"name": "🚙测试"
+	}
+
     ]
 }
