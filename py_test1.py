@@ -103,89 +103,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 
 	def playerContent(self, flag, id, vipFlags):
 		result = {}
-		ifsub = '@@@' in id
-		if ifsub is True:
-		    ids = id.split('@@@')
-		    if self.ver == '' or self.baseurl == '':
-		        self.getVersion(ids[1])
-		    ver = self.ver
-		    baseurl = self.baseurl
-		    fileName = ids[1].replace(baseurl, "")
-		    vfileName = ids[0].replace(baseurl, "")
-		    param = {
-		        "path": '/' + fileName,
-		        "password": "",
-		        "page_num": 1,
-		        "page_size": 100
-		    }
-		    vparam = {
-		        "path": '/' + vfileName,
-		        "password": "",
-		        "page_num": 1,
-		        "page_size": 100
-		    }
-		    if ver == 2:
-		        rsp = self.postJson(baseurl + 'api/public/path', param)
-		        jo = json.loads(rsp.text)
-		        vodList = jo['data']['files'][0]
-		        subturl = vodList['url']
-		        vrsp = self.postJson(baseurl + 'api/public/path', vparam)
-		        vjo = json.loads(vrsp.text)
-		        vList = vjo['data']['files'][0]
-		        url = vList['url']
-		    elif ver == 3:
-		        rsp = self.postJson(baseurl + 'api/fs/get', param)
-		        jo = json.loads(rsp.text)
-		        vodList = jo['data']
-		        subturl = vodList['raw_url']
-		        vrsp = self.postJson(baseurl + 'api/fs/get', vparam)
-		        vjo = json.loads(vrsp.text)
-		        vList = vjo['data']
-		        url = vList['raw_url']
-		    if subturl.startswith('http') is False:
-		        head = re.findall(r"h.*?:", baseurl)[0]
-		        subturl = head + subturl
-		    if url.startswith('http') is False:
-		        head = re.findall(r"h.*?:", baseurl)[0]
-		        url = head + url
-		    urlfileName = urllib.parse.quote(fileName)
-		    subturl = subturl.replace(fileName, urlfileName)
-		    urlvfileName = urllib.parse.quote(vfileName)
-		    url = url.replace(vfileName, urlvfileName)
-		    result['subt'] = subturl
+		if flag!='百度网盘':
+			result=self.custom_playerContent(id=id)
 		else:
-		    if self.ver == '' or self.baseurl == '':
-		        self.getVersion(id)
-		    ver = self.ver
-		    baseurl = self.baseurl
-		    vfileName = id.replace(baseurl, "")
-		    vparam = {
-		        "path": '/' + vfileName,
-		        "password": "",
-		        "page_num": 1,
-		        "page_size": 100
-		    }
-		    if ver == 2:
-		        vrsp = self.postJson(baseurl + 'api/public/path', vparam)
-		        vjo = json.loads(vrsp.text)
-		        vList = vjo['data']['files'][0]
-		        url = vList['url']
-		    elif ver == 3:
-		        vrsp = self.postJson(baseurl + 'api/fs/get', vparam)
-		        vjo = json.loads(vrsp.text)
-		        vList = vjo['data']
-		        url = vList['raw_url']
-		    if url.startswith('http') is False:
-		        head = re.findall(r"h.*?:", baseurl)[0]
-		        url = head + url
-		    urlvfileName = urllib.parse.quote(vfileName)
-		    url = url.replace(vfileName, urlvfileName)
-		result["parse"] = 0
-		result["playUrl"] = ''
-		result["url"] = url
-		result["header"] = {
-		    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
-		}
+			result["parse"] = 1
+			result["playUrl"] =""
+			result["url"] = id
+			result["header"] = self.header
 		return result
 
 	config = {
@@ -195,9 +119,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 	header = {
 		"User-Agent":"Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Mobile Safari/537.36",
 		"Host": "pan.baidu.com",
-		"Referer": "http://www.xb6v.com/",
-		"Cookie":""
-
+		"Referer": "https://pan.baidu.com/",
+		"Cookie":"PSTM=1604824989; BIDUPSID=242A986F336B8BBFE138636E5294994A; H_WISE_SIDS_BFESS=110085_127969_179348_184716_189755_190616_191068_191249_192913_194085_194511_194519_194529_195342_196425_197242_197711_197948_197957_198265_199569_200596_200960_200993_201193_201699_202910_203190_203267_203310_203361_203504_204254_204264_204305_204535_204545_204701_204778_204864_204914_205218_205220_205241_205484_205569_205909_206007_206124_206168_206515_206681_206729_206804_206897_206911_207234_207364_207471_207488_207565_207671_207713_207716_207768_207831_207863_207893_207923_208050_208055_208061_208137_208165_208224_208226_208268_208270_208312_208344_208564_208687_208721_208755_208771_208890_209231; BDUSS=nVKWHN1VWthOFpqQXh5Z2J1MHhKVXJQZmptdlAzR3F3d0pHb3d5UTBadEN5MzVqRVFBQUFBJCQAAAAAAQAAAAEAAADbPqk20P7KpdfTMjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEI-V2NCPldja; BDUSS_BFESS=nVKWHN1VWthOFpqQXh5Z2J1MHhKVXJQZmptdlAzR3F3d0pHb3d5UTBadEN5MzVqRVFBQUFBJCQAAAAAAQAAAAEAAADbPqk20P7KpdfTMjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEI-V2NCPldja; BAIDUID=19C93899D50089D40967632F72585F67:FG=1; PANWEB=1; BAIDUID_BFESS=19C93899D50089D40967632F72585F67:FG=1; BAIDU_WISE_UID=wapp_1690174987606_165; ZFY=Pb1LsyQ67lTuPaUlz3fY:Aaa9laL:APWj07kMlDgSUAFI:C; csrfToken=g8Inve3QH9GHm6jRG3C9XMSH; STOKEN=2fff6cb0e330e38b04e90169ad03363f2af7f6c38a4b18e6da076728669352c8; Hm_lvt_7a3960b6f067eb0085b7f96ff5e660b0=1691129967; Hm_lpvt_7a3960b6f067eb0085b7f96ff5e660b0=1691129967; ab_sr=1.0.1_NjUyODdmYzcyZjk0MzZkNTk2ZGQzNThiMzQxNzM3M2I0NGIxMzNmYmQ1YTFiZDllMjg4ZWMyYjhlODhlNjk5N2NkODQ4ZjZkOTIyZjE1YjRiNTE4Mzg0ZWRkNjAzMjg4OTViZjBlMjI2YTgxZGY5OWYzYTMwZjU5ZDEwMjQ5NmE0N2IwNjU5NWMxY2Q2MTBhMmFmZTgzNzIyNTc5ZTUyZDE5YjE2YzllZTU5MzdiM2I3NzFmNDVlMmE1ZjY2Mzk5; PANPSC=8165459457226291555%3AKkwrx6t0uHBS3vas06GEmOL8WewRDWDPZiRMv5L2Uee%2Bp0%2F6razUKuQ4siUfSkANz81ttRoL0tBKQ4Dasb9%2FZstxnmHe8mH%2FVO0c7TtdgDSlxHihS2mgCRrA%2F7VXeEuWLvxjdeGWe14xHgLtt4aYIueFh%2BdfonnAY8uG8AM%2BY0Ih6uZoP3DwQ3ePlzJEAU4t4oRCM5jrTJ0BDChpkEtqiw%3D%3D; AB_EXPERIMENT=%7B%22PC_SESSION_COOKIE_SWITCH%22%3A%22ON%22%2C%22group_cloud_smallflow%22%3A%22%22%2C%22ORDER_SIX_MONTH_CHECK%22%3A%22ON%22%2C%22group_smallflow%22%3A%22off%22%2C%22CHROME80_SET_COOKIE%22%3A%22ON%22%2C%22group_smallflow_uri%22%3A%22%22%2C%22rccGetChannelInfoSink%22%3A%22ON%22%7D"
 	}
 
 	def localProxy(self, param):
@@ -284,11 +207,9 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return videos
 	def custom_getBaidu(self,cataloguePath):
 		CometURL=urllib.parse.quote(cataloguePath)
-		c='PSTM=1604824989; BIDUPSID=242A986F336B8BBFE138636E5294994A; H_WISE_SIDS_BFESS=110085_127969_179348_184716_189755_190616_191068_191249_192913_194085_194511_194519_194529_195342_196425_197242_197711_197948_197957_198265_199569_200596_200960_200993_201193_201699_202910_203190_203267_203310_203361_203504_204254_204264_204305_204535_204545_204701_204778_204864_204914_205218_205220_205241_205484_205569_205909_206007_206124_206168_206515_206681_206729_206804_206897_206911_207234_207364_207471_207488_207565_207671_207713_207716_207768_207831_207863_207893_207923_208050_208055_208061_208137_208165_208224_208226_208268_208270_208312_208344_208564_208687_208721_208755_208771_208890_209231; BDUSS=nVKWHN1VWthOFpqQXh5Z2J1MHhKVXJQZmptdlAzR3F3d0pHb3d5UTBadEN5MzVqRVFBQUFBJCQAAAAAAQAAAAEAAADbPqk20P7KpdfTMjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEI-V2NCPldja; BDUSS_BFESS=nVKWHN1VWthOFpqQXh5Z2J1MHhKVXJQZmptdlAzR3F3d0pHb3d5UTBadEN5MzVqRVFBQUFBJCQAAAAAAQAAAAEAAADbPqk20P7KpdfTMjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEI-V2NCPldja; BAIDUID=19C93899D50089D40967632F72585F67:FG=1; PANWEB=1; BAIDUID_BFESS=19C93899D50089D40967632F72585F67:FG=1; BAIDU_WISE_UID=wapp_1690174987606_165; ZFY=Pb1LsyQ67lTuPaUlz3fY:Aaa9laL:APWj07kMlDgSUAFI:C; csrfToken=g8Inve3QH9GHm6jRG3C9XMSH; STOKEN=2fff6cb0e330e38b04e90169ad03363f2af7f6c38a4b18e6da076728669352c8; Hm_lvt_7a3960b6f067eb0085b7f96ff5e660b0=1691129967; Hm_lpvt_7a3960b6f067eb0085b7f96ff5e660b0=1691129967; ab_sr=1.0.1_NjUyODdmYzcyZjk0MzZkNTk2ZGQzNThiMzQxNzM3M2I0NGIxMzNmYmQ1YTFiZDllMjg4ZWMyYjhlODhlNjk5N2NkODQ4ZjZkOTIyZjE1YjRiNTE4Mzg0ZWRkNjAzMjg4OTViZjBlMjI2YTgxZGY5OWYzYTMwZjU5ZDEwMjQ5NmE0N2IwNjU5NWMxY2Q2MTBhMmFmZTgzNzIyNTc5ZTUyZDE5YjE2YzllZTU5MzdiM2I3NzFmNDVlMmE1ZjY2Mzk5; PANPSC=8165459457226291555%3AKkwrx6t0uHBS3vas06GEmOL8WewRDWDPZiRMv5L2Uee%2Bp0%2F6razUKuQ4siUfSkANz81ttRoL0tBKQ4Dasb9%2FZstxnmHe8mH%2FVO0c7TtdgDSlxHihS2mgCRrA%2F7VXeEuWLvxjdeGWe14xHgLtt4aYIueFh%2BdfonnAY8uG8AM%2BY0Ih6uZoP3DwQ3ePlzJEAU4t4oRCM5jrTJ0BDChpkEtqiw%3D%3D; AB_EXPERIMENT=%7B%22PC_SESSION_COOKIE_SWITCH%22%3A%22ON%22%2C%22group_cloud_smallflow%22%3A%22%22%2C%22ORDER_SIX_MONTH_CHECK%22%3A%22ON%22%2C%22group_smallflow%22%3A%22off%22%2C%22CHROME80_SET_COOKIE%22%3A%22ON%22%2C%22group_smallflow_uri%22%3A%22%22%2C%22rccGetChannelInfoSink%22%3A%22ON%22%7D'
 		urlString = "https://pan.baidu.com/api/list?order=time&desc=1&showempty=0&web=1&page=1&num=100&dir=路径&t=0.5938627068731255&channel=chunlei&web=1&app_id=250528&bdstoken=27a95f9978ba628abcfaf87afb775f80&logid=MkQwNDREOEMyODE5RDRGN0UxNzQ3MTIxQThCQzQ3MkM6Rkc9MQ==&clienttype=0"
 		url=urlString.replace('路径',CometURL)
 		self.header['Referer']=url
-		self.header['Cookie']=c
 		html=self.custom_webReadFile(urlStr=url,header=self.header)
 		jRoot=json.loads(html)
 		if jRoot['errno']=='0':
@@ -392,6 +313,102 @@ class Spider(Spider):  # 元类 默认的元类 type
 		return vod
 	def custom_getBaiduPlay(self,id):
 		id=id[5:]
-		print(id)
-		vod={}
+		url=urllib.parse.quote(id,safe='')
+		url='https://pan.baidu.com/play/video#/video?path={0}&t=-1'.format(url)
+		# superiorUrl='/' if id.rfind('/')==0 else id[0:id.rfind('/')]
+		fileName=id[id.rfind('/')+1:]
+		vod = {
+		    "vod_id": url,
+		    "vod_name": fileName,
+		    "vod_pic": '',
+		    "vod_tag": '',
+		    "vod_play_from": "百度网盘",
+		}
+		vod['vod_play_url'] = url
 		return vod
+	def custom_playerContent(self,id):
+		result = {}
+		ifsub = '@@@' in id
+		if ifsub is True:
+		    ids = id.split('@@@')
+		    if self.ver == '' or self.baseurl == '':
+		        self.getVersion(ids[1])
+		    ver = self.ver
+		    baseurl = self.baseurl
+		    fileName = ids[1].replace(baseurl, "")
+		    vfileName = ids[0].replace(baseurl, "")
+		    param = {
+		        "path": '/' + fileName,
+		        "password": "",
+		        "page_num": 1,
+		        "page_size": 100
+		    }
+		    vparam = {
+		        "path": '/' + vfileName,
+		        "password": "",
+		        "page_num": 1,
+		        "page_size": 100
+		    }
+		    if ver == 2:
+		        rsp = self.postJson(baseurl + 'api/public/path', param)
+		        jo = json.loads(rsp.text)
+		        vodList = jo['data']['files'][0]
+		        subturl = vodList['url']
+		        vrsp = self.postJson(baseurl + 'api/public/path', vparam)
+		        vjo = json.loads(vrsp.text)
+		        vList = vjo['data']['files'][0]
+		        url = vList['url']
+		    elif ver == 3:
+		        rsp = self.postJson(baseurl + 'api/fs/get', param)
+		        jo = json.loads(rsp.text)
+		        vodList = jo['data']
+		        subturl = vodList['raw_url']
+		        vrsp = self.postJson(baseurl + 'api/fs/get', vparam)
+		        vjo = json.loads(vrsp.text)
+		        vList = vjo['data']
+		        url = vList['raw_url']
+		    if subturl.startswith('http') is False:
+		        head = re.findall(r"h.*?:", baseurl)[0]
+		        subturl = head + subturl
+		    if url.startswith('http') is False:
+		        head = re.findall(r"h.*?:", baseurl)[0]
+		        url = head + url
+		    urlfileName = urllib.parse.quote(fileName)
+		    subturl = subturl.replace(fileName, urlfileName)
+		    urlvfileName = urllib.parse.quote(vfileName)
+		    url = url.replace(vfileName, urlvfileName)
+		    result['subt'] = subturl
+		else:
+		    if self.ver == '' or self.baseurl == '':
+		        self.getVersion(id)
+		    ver = self.ver
+		    baseurl = self.baseurl
+		    vfileName = id.replace(baseurl, "")
+		    vparam = {
+		        "path": '/' + vfileName,
+		        "password": "",
+		        "page_num": 1,
+		        "page_size": 100
+		    }
+		    if ver == 2:
+		        vrsp = self.postJson(baseurl + 'api/public/path', vparam)
+		        vjo = json.loads(vrsp.text)
+		        vList = vjo['data']['files'][0]
+		        url = vList['url']
+		    elif ver == 3:
+		        vrsp = self.postJson(baseurl + 'api/fs/get', vparam)
+		        vjo = json.loads(vrsp.text)
+		        vList = vjo['data']
+		        url = vList['raw_url']
+		    if url.startswith('http') is False:
+		        head = re.findall(r"h.*?:", baseurl)[0]
+		        url = head + url
+		    urlvfileName = urllib.parse.quote(vfileName)
+		    url = url.replace(vfileName, urlvfileName)
+		result["parse"] = 0
+		result["playUrl"] = ''
+		result["url"] = url
+		result["header"] = {
+		    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36"
+		}
+		return result
