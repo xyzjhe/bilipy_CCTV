@@ -108,7 +108,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		else:
 			result["parse"] = 1
 			result["playUrl"] =""
-			result["url"] = id
+			result["url"] = 'https://pan.baidu.com/play/video#/video?path=%2F%E5%A4%AA%E7%A9%BA%E4%B9%8B%E6%97%85(VR).mp4&theme=light&from=home&from=pfile'
 			result["header"] = self.header
 		return result
 
@@ -318,7 +318,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		# superiorUrl='/' if id.rfind('/')==0 else id[0:id.rfind('/')]
 		fileName=id[id.rfind('/')+1:]
 		vod = {
-		    "vod_id": url,
+		    "vod_id": id,
 		    "vod_name": fileName,
 		    "vod_pic": '',
 		    "vod_tag": '',
