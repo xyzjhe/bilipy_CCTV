@@ -310,8 +310,6 @@ class Spider(Spider):  # 元类 默认的元类 type
 				tag='folder'
 				img='http://img1.3png.com/281e284a670865a71d91515866552b5f172b.png'
 			aid=vod['path']
-			if len(cataloguePath)>1:
-				aid=cataloguePath+aid
 			videos.append({
 		        "vod_id":  tid+aid,
 		        "vod_name": name,
