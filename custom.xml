@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<video>
+<rule Name="ikan6">
+<lineExpression value="PGRpdiBjbGFzcz0ibW9kdWxlLXRhYi1pdGVtLis/IiBkYXRhLWRyb3Bkb3duLXZhbHVlPSIoP1A8TmFtZT4uKz8pIj48c3Bhbj4uKz88L3NwYW4+Lio/PC9kaXY+" illustrate="线路名"/>
+<circuitFront value="bW9kdWxlLXBsYXktbGlzdC1iYXNl" illustrate="列表前字符"/>
+<circuitAfter value="PC9kaXY+" illustrate="列表后字符"/>
+<EpisodeExpression value="PGFcc2NsYXNzPSJtb2R1bGUtcGxheS1saXN0LWxpbmsiXHNocmVmPSIoP1A8dXJsPi4rPykiXHMqdGl0bGU9Ii4rPyI+PHNwYW4+KD9QPHRpdGxlPi4rPyk8L3NwYW4+PC9hPg==" illustrate="剧集表达式"/>
+<UrlFront value="aHR0cHM6Ly9pa2FuNi52aXA=" illustrate="地址前"/>
+<classificationExpression value="" illustrate="分类暂时留空"/>
+</rule>
+
+<rule Name="ktkkt2">
+<lineExpression value="PGgzIGNsYXNzPSJ0aXRsZSI+PHN0cm9uZz4oP1A8bmFtZT4uKz8pPC9zdHJvbmc+PHNwYW4gY2xhc3M9InRleHQtbXV0ZWQgcHVsbC1taWQiPg==" illustrate="线路名"/>
+<circuitFront value="PGRpdiBpZD0idmlkZW9fbGlzdF8=" illustrate="列表前字符"/>
+<circuitAfter value="PC9kaXY+" illustrate="列表后字符"/>
+<EpisodeExpression value="PGxpPjxhIHRpdGxlPVwnLis/XCdcc2hyZWY9XCcoP1A8dXJsPi4rPylcJyIrJ1xzdGFyZ2V0PSJfc2VsZiI+KD9QPHRpdGxlPi4rPyk8L2E+PC9saT4=" illustrate="剧集表达式"/>
+<UrlFront value="aHR0cHM6Ly93d3cua3Rra3QyLmNvbQ==" illustrate="地址前"/>
+<classificationExpression value="" illustrate="分类暂时留空"/>
+</rule>
+
+<rule Name="cctv">
+<lineExpression value="Pig/UDxuYW1lPr7nvK/B0LHtKTwvbGk+" illustrate="线路名"/>
+<circuitFront value="Ly/P4LnYsai1vA==" illustrate="列表前字符"/>
+<circuitAfter value="PC9zY3JpcHQ+" illustrate="列表后字符"/>
+<EpisodeExpression value="dGl0bGUnOicoP1A8dGl0bGU+Lis/KScsXHJcblxzKidpbWcnOicuKj8nLFxyXG5ccyonYnJpZWYnOicuKj8nLFxyXG5ccyondXJsJzonKD9QPHVybD4uKz8pJw==" illustrate="剧集表达式"/>
+<UrlFront value="" illustrate="地址前"/>
+<classificationExpression value="" illustrate="分类暂时留空"/>
+</rule>
+</video>
