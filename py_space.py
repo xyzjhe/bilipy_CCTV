@@ -104,6 +104,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vod_play_url.append(joinStr)
 		else:
 			pass
+		content=len(self.rule)
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -114,7 +115,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			"vod_remarks":"",
 			"vod_actor":"",
 			"vod_director":"",
-			"vod_content":""
+			"vod_content":str(content)
 		}
 		vod['vod_play_from'] =  "$$$".join(vod_play_from)
 		vod['vod_play_url'] = "$$$".join(vod_play_url)
