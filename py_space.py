@@ -103,10 +103,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 			pass
 		if self.rule!={}:
 			if len(self.rule['coverExpression'])>3:
-				logo=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['coverExpression'],Index=1)
+				temporary=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['coverExpression'],Index=1)
+				if temporary!="":
+					logo=temporary
 			if len(self.rule['contentExpression'])>3:
 				content=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['contentExpression'],Index=1)
-				print(content)
+			array[0]='List###{0}###{1}###{2}'.format(title,url,logo)
 		else:
 			content,area=''
 		vod = {
