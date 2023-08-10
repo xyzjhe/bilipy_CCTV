@@ -50,17 +50,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 			return result
 		if tid=='Collection':
 			Url='http://my.ie.2345.com/onlinefav/web/getAllData?action=getData&id=21492773&s=&d=Fri%20Mar%2003%202023%2008:45:08%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)'
-			videos = self.get_list(html=self.custom_webReadFile(urlStr=Url,header=self.header))
+			videos = self.custom_list(html=self.custom_webReadFile(urlStr=Url,header=self.header))
 		elif  tid=='weather':
 			Url = 'http://www.weather.com.cn/pubm/video_lianbo_2021.htm'
-			headers = {
-				"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36",
-				"Referer": "https://tv.cctv.com/"
-			}
-			htmlTxt=self.custom_webReadFile(urlStr=Url,header=headers)
+			htmlTxt=self.custom_webReadFile(urlStr=Url)
 			if len(htmlTxt)>13:
-				length=htmlTxt.rfind(')')
-				htmlTxt=htmlTxt[11:length]
+				htmlTxt=htmlTxt[11:htmlTxt.rfind(')')]
 				videos = self.get_list_weather(html=htmlTxt)
 		else:
 			pass
@@ -81,17 +76,19 @@ class Spider(Spider):  # 元类 默认的元类 type
 		vodItems=[]
 		vod_play_from=['线路',]
 		vod_play_url=[]
-		ruleName=self.custom_RegexGetText(Text=url,RegexText='https*://(w{3}\.){0,1}(.*?)(\.{0,1}/|$)',Index=2)
-		self.rule=self.custom_getRule(ruleName=ruleName)
 		if tid=='weather':
 			vodItems = [title+"$"+url]
 			joinStr = "#".join(vodItems)
 			vod_play_url.append(joinStr)
-		elif self.rule=={}:
+		elif tid=='play':
 			vodItems = [title+"$"+url]
 			joinStr = "#".join(vodItems)
 			vod_play_url.append(joinStr)
-		elif self.rule!={}:
+		elif tid=='List':
+			ruleName=self.custom_RegexGetText(Text=url,RegexText='https*://(w{3}\.){0,1}(.*?)(\.{0,1}/|$)',Index=2)
+			self.rule=self.custom_getRule(ruleName=ruleName)
+			if self.rule=={}:
+				return result
 			htmlTxt=self.custom_webReadFile(urlStr=url)
 			line=self.custom_txtLineList(Text=htmlTxt,RegexText=self.rule['lineExpression'],Index=2)
 			if len(line)<1:
@@ -104,7 +101,14 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vod_play_url.append(joinStr)
 		else:
 			pass
-		content=len(self.rule)
+		if self.rule!={}:
+			if len(self.rule['coverExpression'])>3:
+				logo=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['coverExpression'],Index=1)
+			if len(self.rule['contentExpression'])>3:
+				content=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['contentExpression'],Index=1)
+				print(content)
+		else:
+			content,area=''
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
@@ -136,10 +140,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 		}
 		parse=1
-		jx=self.ifJx(urlTxt=id)
+		jx=self.custom_ifJx(urlTxt=id)
 		if jx==1:
 			parse=1
-		if self.get_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
+		if self.custom_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
 			parse=0
 		if id.find('www.huya.com')>0:
 			headers= {
@@ -175,26 +179,25 @@ class Spider(Spider):  # 元类 默认的元类 type
 			returnTxt=Regex.group(Index)
 		return returnTxt	
 	#分类取结果
-	def get_list(self,html):
+	def custom_list(self,html):
 		patternTxt=r'<a href=\\"(http.+?)\\" title=\\"(.+?)\\" target=\\"_blank\\">(.+?)</a>'
 		pattern = re.compile(patternTxt)
 		ListRe=pattern.findall(html)
 		img ='http://photo.16pic.com/00/78/41/16pic_7841675_b.jpg'
 		videos = []
 		i=0
-		tdi=''
 		for vod in ListRe:
 			lastVideo = vod[0]
 			title =vod[1]
-			if title.find('_List')>1:
-				tdi='List'
-				title=title[0:len(title)-5]
+			if title.find('L-')==0:
+				tid='List'
+				title=title[2:]
 			else:
-				tdi='play'
+				tid='play'
 			if len(lastVideo) == 0:
 				continue
 			videos.append({
-				"vod_id":"{0}###{1}###{2}###{3}".format(tdi,title,lastVideo,img),
+				"vod_id":"{0}###{1}###{2}###{3}".format(tid,title,lastVideo,img),
 				"vod_name":title,
 				"vod_pic":img,
 				"vod_remarks":''
@@ -216,10 +219,10 @@ class Spider(Spider):  # 元类 默认的元类 type
 			html = response.read().decode(codeName)
 		return html
 	#判断是否要调用vip解析
-	def ifJx(self,urlTxt):
+	def custom_ifJx(self,urlTxt):
 		Isjiexi=0
 		RegexTxt=r'(youku.com|v.qq|bilibili|iqiyi.com)'
-		if self.get_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
+		if self.custom_RegexGetText(Text=urlTxt,RegexText=RegexTxt,Index=1)!='':
 			Isjiexi=1
 		return Isjiexi
 	#取集数

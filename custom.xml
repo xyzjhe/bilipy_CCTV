@@ -7,6 +7,8 @@
 <EpisodeExpression value="PGEgY2xhc3M9ImhpZGUiIGhyZWY9Iig/UDx1cmw+Lis/KSI+KD9QPHRpdGxlPi4rPyk8L2E+" illustrate="剧集表达式"/>
 <UrlFront value="aHR0cHM6Ly9pa2FuNi52aXA=" illustrate="地址前"/>
 <classificationExpression value="" illustrate="分类暂时留空"/>
+<coverExpression value="Y2xhc3M9ImRldGFpbC1waWMgbGF6eSBtYXNrLVxkIiBkYXRhLW9yaWdpbmFsPSIoLis/KSI=" illustrate="封面表达式"/>
+<contentExpression value="Y2xhc3M9ImNoZWNrIHRleHQgc2VsZWN0ZWQgY29yMyI+KC4rPyk8L2Rpdj4=" illustrate="简介表达式"/>
 </rule>
 
 <rule Name="ktkkt2">
@@ -16,6 +18,8 @@
 <EpisodeExpression value="PGxpPjxhIHRpdGxlPVwnLis/XCdcc2hyZWY9XCcoP1A8dXJsPi4rPylcJyIrJ1xzdGFyZ2V0PSJfc2VsZiI+KD9QPHRpdGxlPi4rPyk8L2E+PC9saT4=" illustrate="剧集表达式"/>
 <UrlFront value="aHR0cHM6Ly93d3cua3Rra3QyLmNvbQ==" illustrate="地址前"/>
 <classificationExpression value="" illustrate="分类暂时留空"/>
+<coverExpression value="" illustrate="封面表达式"/>
+<contentExpression value="" illustrate="简介表达式"/>
 </rule>
 
 <rule Name="cctv">
@@ -25,5 +29,7 @@
 <EpisodeExpression value="dGl0bGUnOicoP1A8dGl0bGU+Lis/KScsXHJcblxzKidpbWcnOicuKj8nLFxyXG5ccyonYnJpZWYnOicuKj8nLFxyXG5ccyondXJsJzonKD9QPHVybD4uKz8pJw==" illustrate="剧集表达式"/>
 <UrlFront value="" illustrate="地址前"/>
 <classificationExpression value="" illustrate="分类暂时留空"/>
+<coverExpression value="" illustrate="封面表达式"/>
+<contentExpression value="" illustrate="简介表达式"/>
 </rule>
 </video>
