@@ -143,16 +143,36 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 		}
 		parse=1
-		jx=self.custom_ifJx(urlTxt=id)
-		if jx==1:
-			parse=1
-		if self.custom_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
-			parse=0
+		jx=0
 		if id.find('www.huya.com')>0:
-			headers= {
-			'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36 SE 2.X MetaSr 1.0'
-		}
-		result["parse"] = 0
+				headers= {
+				'User-Agent':'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36 SE 2.X MetaSr 1.0'
+			}
+		elif self.rule=={} :
+			jx=self.custom_ifJx(urlTxt=id)
+			if jx==1:
+				parse=1
+			if self.custom_RegexGetText(Text=id,RegexText=r'(\.mp4)',Index=1)!='':
+				parse=0
+		elif self.rule!={}:
+			if len(self.rule['m3u8Expression'])>3:
+				htmlTxt=self.custom_webReadFile(urlStr=id)
+				m3u8Url=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['m3u8Expression'],Index=1)
+				if len(self.rule['isConvert'])>0:
+					m3u8Url=str(base64.b64decode(m3u8Url))
+					m3u8Url=self.custom_RegexGetText(Text=m3u8Url,RegexText=r'(https{0,1}:.+\.m3u8.*?)',Index=1)
+				if self.custom_RegexGetText(Text=m3u8Url,RegexText=r'(https{0,1}:.+\.m3u8.*?)',Index=1)!='':
+					id=m3u8Url
+					parse=0
+				else:
+					jx=self.custom_ifJx(urlTxt=id)
+					if jx==1:
+						parse=1
+			else:
+				jx=self.custom_ifJx(urlTxt=id)
+				if jx==1:
+					parse=1
+		result["parse"] = parse
 		result["playUrl"] =''
 		result["url"] = id
 		result['jx'] = jx#VIP解析
