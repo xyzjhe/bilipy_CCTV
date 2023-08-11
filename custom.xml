@@ -4,11 +4,14 @@
 <lineExpression value="PGkgY2xhc3M9ImZhIj4mI3hlOGI0OzwvaT4oLis/KTxzcGFuIGNsYXNzPSJiYWRnZSI+" illustrate="线路名"/>
 <circuitFront value="PHVsIGNsYXNzPSJhbnRob2xvZ3ktbGlzdC1wbGF5IHNpemUiPg==" illustrate="列表前字符"/>
 <circuitAfter value="PC9kaXY+" illustrate="列表后字符"/>
-<EpisodeExpression value="PGEgY2xhc3M9ImhpZGUiIGhyZWY9Iig/UDx1cmw+Lis/KSI+KD9QPHRpdGxlPi4rPyk8L2E+" illustrate="剧集表达式"/>
+<EpisodeExpression value="PGEgY2xhc3M9ImhpZGUiIGhyZWY9Iig/UDx1cmw+Lis/KS97MCwxfSI+KD9QPHRpdGxlPi4rPyk8L2E+" illustrate="剧集表达式"/>
 <UrlFront value="aHR0cHM6Ly9pa2FuNi52aXA=" illustrate="地址前"/>
 <classificationExpression value="" illustrate="分类暂时留空"/>
 <coverExpression value="Y2xhc3M9ImRldGFpbC1waWMgbGF6eSBtYXNrLVxkIiBkYXRhLW9yaWdpbmFsPSIoLis/KSI=" illustrate="封面表达式"/>
 <contentExpression value="Y2xhc3M9ImNoZWNrIHRleHQgc2VsZWN0ZWQgY29yMyI+KC4rPyk8L2Rpdj4=" illustrate="简介表达式"/>
+<m3u8Expression value="Ilx9LCJ1cmwiOiIoLnsxMCx9KSIsInVybF9uZXh0Ijo=" illustrate="视频地址"/>
+<isConvert value="MQ==" illustrate=""/>
+
 </rule>
 
 <rule Name="ktkkt2">
@@ -20,6 +23,9 @@
 <classificationExpression value="" illustrate="分类暂时留空"/>
 <coverExpression value="" illustrate="封面表达式"/>
 <contentExpression value="" illustrate="简介表达式"/>
+<m3u8Expression value="" illustrate="视频地址"/>
+<isConvert value="" illustrate=""/>
+
 </rule>
 
 <rule Name="cctv">
@@ -31,5 +37,8 @@
 <classificationExpression value="" illustrate="分类暂时留空"/>
 <coverExpression value="" illustrate="封面表达式"/>
 <contentExpression value="" illustrate="简介表达式"/>
+<m3u8Expression value="" illustrate="视频地址"/>
+<isConvert value="0" illustrate=""/>
+
 </rule>
 </video>

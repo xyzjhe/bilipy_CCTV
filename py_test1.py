@@ -110,7 +110,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				content=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['contentExpression'],Index=1)
 			array[0]='List###{0}###{1}###{2}'.format(title,url,logo)
 		else:
-			content,area=''
+			area=''
 			content=os.getcwd()
 		vod = {
 			"vod_id":array[0],
