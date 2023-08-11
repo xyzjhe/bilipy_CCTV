@@ -322,7 +322,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	def custom_list_Native(self):
 		videos = []
 		img ="http://i.i8tq.com/video/202010191603094992701_83.jpg"
-		NativeList=os.listdir('D:/')
+		NativeList=os.listdir('/')
 		for vod in NativeList:
 			url ='D:/'+vod
 			guid="{0}###{1}###{2}###{3}".format('Native',vod,url,img)
