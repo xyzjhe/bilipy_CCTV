@@ -112,7 +112,8 @@ class Spider(Spider):  # 元类 默认的元类 type
 			array[0]='List###{0}###{1}###{2}'.format(title,url,logo)
 		else:
 			area=''
-			content=os.getcwd()
+			NativeList=os.listdir(os.getcwd())
+			content=str(len(NativeList))
 		vod = {
 			"vod_id":array[0],
 			"vod_name":title,
