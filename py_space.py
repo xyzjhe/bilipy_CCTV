@@ -56,7 +56,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			htmlTxt=self.custom_webReadFile(urlStr=Url)
 			if len(htmlTxt)>13:
 				htmlTxt=htmlTxt[11:htmlTxt.rfind(')')]
-				videos = self.get_list_weather(html=htmlTxt)
+				videos = self.custom_list_weather(html=htmlTxt)
 		else:
 			pass
 		result['list'] = videos
@@ -85,8 +85,12 @@ class Spider(Spider):  # 元类 默认的元类 type
 			joinStr = "#".join(vodItems)
 			vod_play_url.append(joinStr)
 		elif tid=='List':
-			ruleName=self.custom_RegexGetText(Text=url,RegexText='https*://(w{3}\.){0,1}(.*?)(\.{0,1}/|$)',Index=2)
-			self.rule=self.custom_getRule(ruleName=ruleName)
+			Name=self.custom_RegexGetText(Text=url,RegexText='https*://(w{3}\.){0,1}(.*?)(\.{0,1}/|$)',Index=2)
+			if len(self.rule)>0:
+				if self.rule['Name']!=Name:
+					self.rule=self.custom_getRule(ruleName=Name)
+			else:
+				self.rule=self.custom_getRule(ruleName=Name)
 			if self.rule=={}:
 				return result
 			htmlTxt=self.custom_webReadFile(urlStr=url)
@@ -101,7 +105,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 				vod_play_url.append(joinStr)
 		else:
 			pass
-		if self.rule!={}:
+		if self.rule!={} and tid=='List':
 			if len(self.rule['coverExpression'])>3:
 				temporary=self.custom_RegexGetText(Text=htmlTxt,RegexText=self.rule['coverExpression'],Index=1)
 				if temporary!="":
@@ -280,7 +284,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			returnTxt.append(value)	
 		return returnTxt
 	#天气
-	def get_list_weather(self,html):
+	def custom_list_weather(self,html):
 		jRoot = json.loads(html)
 		if jRoot['message']!='success':
 			return []
@@ -313,6 +317,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		for vod in root:
 			if vod.attrib['Name']!=ruleName:
 				continue
+			ruleList['Name']=ruleName
 			for v in vod:
 				ruleList[v.tag]=str(base64.b64decode(v.attrib['value']),'utf-8')
 		return ruleList
