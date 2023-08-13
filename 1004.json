@@ -25,17 +25,6 @@
 		"quickSearch": 0,
 		"searchable": 0
       },
-      {
-		"key": "py_gitcafe",
-		"name": "测试1",
-		"type": 3,
-		"api": "py_gitcafe",
-		"searchable": 0,
-		"quickSearch": 0,
-		"filterable": 0,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_gitcafe.py"
-		
-     },
      {
 		"key": "py_test",
 		"name": "测试",
@@ -47,56 +36,15 @@
 		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_test1.py"
     },
     {
-		"key": "py_alist",
-		"name": "测试网盘",
+		"key": "csp_xpath_kanju5",
+		"name": "看剧网",
 		"type": 3,
-		"api": "py_alist",
+		"api": "csp_XYQBiu",
 		"searchable": 1,
 		"quickSearch": 0,
 		"filterable": 0,
-		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/py_ali1.py"
-    },
-       {
-		"key": "lziapi",
-		"name": "瓜分",
-		"type": 0,
-		"api": "https://cj.lziapi.com/api.php/provide/vod/at/xml/",
-		"searchable": 0,
-		"changeable": 0,
-		"categories": [
-		"国产剧",
-		"韩国剧",
-		"日本剧",
-		"综艺片",
-		"动作片",
-		"喜剧片",
-		"爱情片",
-		"科幻片",
-		"恐怖片",
-		"剧情片",
-		"战争片",
-		"台湾剧",
-		"香港剧",
-		"欧美剧",
-		"记录片",
-		"海外剧",
-		"泰国剧",
-		"大陆综艺",
-		"港台综艺",
-		"日韩综艺",
-		"欧美综艺",
-		"国产动漫",
-		"日韩动漫",
-		"欧美动漫",
-		"港台动漫",
-		"海外动漫",
-		"体育",
-		"足球",
-		"篮球",
-		"网球",
-		"斯诺克"
-		]
-     }
+		"ext": "https://agit.ai/lanhaidixingren/Tvbox/raw/branch/master/kanju5.json
+    }
 ],
 
       "parses": [
